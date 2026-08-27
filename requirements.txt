@@ -1,0 +1,43 @@
+# MPLADS Image Fraud & Anomaly Detection Module
+# Core dependencies — install with: pip install -r requirements.txt
+
+# Image processing
+Pillow>=10.0.0
+imagehash>=4.3.0
+piexif>=1.1.3        # writing EXIF (DateTimeOriginal/GPS) into fraud test cases
+
+# Numerical computing
+numpy>=1.24.0
+
+# Deep learning (CPU only — no CUDA required)
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+
+# Web framework
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+
+# Database
+pymongo[srv]>=4.6.0
+mongomock>=4.1.2
+
+# Data validation / config
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Auth (app/auth.py) — JWT + password hashing
+bcrypt>=4.1.0
+python-jose[cryptography]>=3.3.0
+
+# OCR receipt cross-check (app/ocr_analysis.py, Layer 5)
+easyocr>=1.7.0
+
+# Testing
+pytest>=7.4.0
+httpx>=0.24.0        # for FastAPI TestClient
+
+# Utilities
+python-dateutil>=2.8.0
+cloudinary>=1.41.0
