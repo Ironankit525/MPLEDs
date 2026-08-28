@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useOverview } from '../hooks/useOverview'
+import { getAiSummary } from '../api/stakeholder'
 import DailyVolumeChart from '../components/charts/DailyVolumeChart'
 import StatusBreakdownChart from '../components/charts/StatusBreakdownChart'
 import RiskBreakdownChart from '../components/charts/RiskBreakdownChart'
@@ -60,6 +61,8 @@ export default function StakeholderDashboardPage() {
             />
           </div>
 
+          <AiSummaryCard reloadKey={overview} />
+
           <div className="chart-grid">
             <div className="chart-card">
               <DailyVolumeChart data={dailyVolume} />
@@ -98,6 +101,48 @@ export default function StakeholderDashboardPage() {
           )}
         </>
       )}
+    </div>
+  )
+}
+
+// Narrative version of the figures above, drafted server-side by an LLM
+// (GET /api/stakeholder/ai-summary). The backend answers available:false
+// when the feature is unconfigured or generation failed, and this card
+// renders nothing in that case — the dashboard must never look broken
+// because an optional third-party API is down. Refetches whenever the
+// overview object changes (i.e. on load and on Refresh); the backend
+// caches by a hash of the figures, so unchanged data costs no API call.
+function AiSummaryCard({ reloadKey }) {
+  const [summary, setSummary] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    getAiSummary()
+      .then((res) => {
+        if (!cancelled) setSummary(res.available ? res : null)
+      })
+      .catch(() => {
+        if (!cancelled) setSummary(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [reloadKey])
+
+  if (!summary) return null
+
+  return (
+    <div className="chart-card" style={{ marginBottom: 20 }}>
+      <div className="chart-title">Summary</div>
+      {summary.summary.split(/\n{2,}/).map((paragraph, i) => (
+        <p key={i} style={{ margin: i === 0 ? '8px 0 0' : '10px 0 0', lineHeight: 1.6, maxWidth: '72ch' }}>
+          {paragraph}
+        </p>
+      ))}
+      <div className="stat-sub" style={{ marginTop: 12 }}>
+        Drafted by {summary.model} from the figures on this page
+        {summary.generated_at ? ` · ${new Date(summary.generated_at).toLocaleString()}` : ''}
+      </div>
     </div>
   )
 }

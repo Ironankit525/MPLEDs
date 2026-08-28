@@ -428,6 +428,22 @@ class DashboardSummaryResponse(BaseModel):
     )
 
 
+class AISummaryResponse(BaseModel):
+    """Narrative summary of the overview figures, drafted by an LLM
+    (`GET /api/stakeholder/ai-summary`). `available=False` means the
+    feature is unconfigured or the generation call failed — the client
+    should render the numeric dashboard without a summary, not an error.
+    """
+    available: bool
+    summary: Optional[str] = Field(None, description="Two paragraphs of plain prose; None when unavailable")
+    model: Optional[str] = Field(None, description="Model that drafted the text, e.g. gemini-2.5-flash")
+    generated_at: Optional[datetime] = Field(None, description="When this response was produced")
+    cached: bool = Field(False, description="True when reused from the in-process cache (same figures)")
+    reason: Optional[str] = Field(
+        None, description="Why unavailable: 'not_configured' or 'generation_failed'"
+    )
+
+
 # ── Admin ─────────────────────────────────────────────────────────────
 
 class AdminUserCreate(BaseModel):

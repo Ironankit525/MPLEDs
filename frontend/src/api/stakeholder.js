@@ -7,6 +7,14 @@ export function getStakeholderOverview() {
   return request('/api/stakeholder/overview')
 }
 
+// Two paragraphs of plain-prose narrative drafted by an LLM from the
+// same figures the overview returns. `available: false` is a normal
+// response (feature unconfigured, or the generation call failed) — the
+// dashboard renders numbers-only in that case, never an error.
+export function getAiSummary() {
+  return request('/api/stakeholder/ai-summary')
+}
+
 // Submissions that reached a Reviewer decision (APPROVED, REJECTED, or
 // SIGNED_OFF) — the Stakeholder's report table. PENDING_REVIEW/IN_REVIEW
 // items live in the Reviewer's queue, not here.

@@ -45,6 +45,16 @@ CLOUDINARY_API_KEY=<your Cloudinary API key>
 CLOUDINARY_API_SECRET=<your Cloudinary API secret>
 ```
 
+Optionally, add a `GEMINI_API_KEY` (from Google AI Studio) to enable
+the Stakeholder dashboard's AI-drafted narrative summary
+(`GET /api/stakeholder/ai-summary`, `app/report_summary.py`). Unlike
+the four values above it is **not** required: without it the endpoint
+answers `available: false` and the dashboard renders numbers-only —
+the same graceful-degradation posture as CLIP and EasyOCR. The model
+only phrases figures the backend has already computed; it is never
+asked to calculate anything, and results are cached in-process keyed
+by a hash of the figures so unchanged data never re-bills the API.
+
 All four are required at startup (`app/config.py`'s `Settings` class
 has no fallback default for `DATABASE_URL` or `JWT_SECRET_KEY`, on
 purpose — an earlier version of this module shipped a hardcoded Mongo
@@ -587,6 +597,7 @@ enforced gate, not a suggestion.
 | `POST` | `/api/reviews/{image_id}/claim` | reviewer | `PENDING_REVIEW` → `IN_REVIEW`; `409` if another reviewer holds it |
 | `POST` | `/api/reviews/{image_id}/decide` | reviewer | Approve/reject with a note (notes **required** to reject) |
 | `GET` | `/api/stakeholder/overview` | stakeholder | Volume, bottlenecks, completion rate, time-to-decision |
+| `GET` | `/api/stakeholder/ai-summary` | stakeholder | LLM-drafted narrative of the overview figures (requires `GEMINI_API_KEY`; answers `available: false`, never an error, when unset or the call fails) |
 | `GET` | `/api/stakeholder/submissions` | stakeholder | Fully processed submissions (the report table) |
 | `POST` | `/api/stakeholder/{image_id}/sign-off` | stakeholder | Final sign-off; only valid from `APPROVED` |
 | `POST` | `/api/admin/users` | admin | Create a user with any role |

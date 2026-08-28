@@ -56,12 +56,14 @@ from app.models import (
     PROJECT_STATUSES,
 )
 from app.auth import get_current_user, create_access_token, get_password_hash, verify_password, require_role
+from app.report_summary import generate_overview_summary
 from app.risk_engine import assess_image, RiskAssessment, ScoredFlag
 from app.schemas import (
     ActionRequiredItem,
     ActivityEvent,
     ActivityLogResponse,
     AdminUserCreate,
+    AISummaryResponse,
     AdminUserListResponse,
     AdminUserResponse,
     BulkStatusOverrideRequest,
@@ -804,16 +806,9 @@ async def decide_review(
 # partial.
 
 
-@app.get(
-    "/api/stakeholder/overview",
-    response_model=StakeholderOverviewResponse,
-    summary="Get dashboard aggregates",
-    description="Total volume, pipeline bottlenecks, completion rate, and time-to-decision — the Stakeholder dashboard's summary numbers.",
-)
-async def get_stakeholder_overview(
-    db: Database = Depends(get_db),
-    current_user: dict = Depends(require_role(ROLE_STAKEHOLDER)),
-) -> StakeholderOverviewResponse:
+def _compute_stakeholder_overview(db: Database) -> StakeholderOverviewResponse:
+    """The overview aggregates, shared by /overview and /ai-summary so the
+    narrative is always written from exactly the numbers the dashboard shows."""
     records = list(
         db.image_records.find(
             {},
@@ -873,6 +868,51 @@ async def get_stakeholder_overview(
         avg_hours_to_decision=avg_hours,
         daily_volume=daily_volume,
         top_flagged_districts=top_flagged_districts,
+    )
+
+
+@app.get(
+    "/api/stakeholder/overview",
+    response_model=StakeholderOverviewResponse,
+    summary="Get dashboard aggregates",
+    description="Total volume, pipeline bottlenecks, completion rate, and time-to-decision — the Stakeholder dashboard's summary numbers.",
+)
+async def get_stakeholder_overview(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_STAKEHOLDER)),
+) -> StakeholderOverviewResponse:
+    return _compute_stakeholder_overview(db)
+
+
+@app.get(
+    "/api/stakeholder/ai-summary",
+    response_model=AISummaryResponse,
+    summary="Get an AI-drafted narrative of the overview figures",
+    description=(
+        "Two paragraphs of plain prose written by an LLM from the same aggregates "
+        "/api/stakeholder/overview returns — the numbers are computed here, the model "
+        "only phrases them. Returns available=false (not an error) when GEMINI_API_KEY "
+        "is unset or generation fails, so the dashboard degrades to numbers-only."
+    ),
+)
+async def get_stakeholder_ai_summary(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_STAKEHOLDER)),
+) -> AISummaryResponse:
+    if not settings.GEMINI_API_KEY:
+        return AISummaryResponse(available=False, reason="not_configured")
+
+    overview = _compute_stakeholder_overview(db)
+    result = generate_overview_summary(overview.model_dump())
+    if result is None:
+        return AISummaryResponse(available=False, reason="generation_failed")
+
+    return AISummaryResponse(
+        available=True,
+        summary=result.summary,
+        model=result.model,
+        generated_at=datetime.now(timezone.utc),
+        cached=result.cached,
     )
 
 
