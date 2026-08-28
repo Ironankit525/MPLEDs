@@ -15,6 +15,17 @@ export function getAiSummary(refresh = false) {
   return request(`/api/stakeholder/ai-summary${refresh ? '?refresh=true' : ''}`)
 }
 
+// One grounded answer from the AI report assistant. `history` is the
+// visible conversation so far ([{role, text}]) so follow-up questions
+// resolve; the backend replays it to the model. Same availability
+// contract as the summaries: `available: false` is a normal response.
+export function askAiReport(question, history = []) {
+  return request('/api/stakeholder/ai-report', {
+    method: 'POST',
+    json: { question, history },
+  })
+}
+
 // Submissions that reached a Reviewer decision (APPROVED, REJECTED, or
 // SIGNED_OFF) — the Stakeholder's report table. PENDING_REVIEW/IN_REVIEW
 // items live in the Reviewer's queue, not here.

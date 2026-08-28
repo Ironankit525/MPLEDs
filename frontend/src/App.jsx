@@ -14,6 +14,7 @@ import ReviewQueuePage from './pages/ReviewQueuePage'
 import ReviewHistoryPage from './pages/ReviewHistoryPage'
 import ReviewWorkspacePage from './pages/ReviewWorkspacePage'
 import StakeholderDashboardPage from './pages/StakeholderDashboardPage'
+import StakeholderAiReportPage from './pages/StakeholderAiReportPage'
 import StakeholderReportsPage from './pages/StakeholderReportsPage'
 import StakeholderDetailPage from './pages/StakeholderDetailPage'
 import AdminSubmissionsPage from './pages/AdminSubmissionsPage'
@@ -119,6 +120,14 @@ export default function App() {
             element={
               <RequireRole role="stakeholder">
                 <StakeholderDashboardPage />
+              </RequireRole>
+            }
+          />
+          <Route
+            path="ai-report"
+            element={
+              <RequireRole role="stakeholder">
+                <StakeholderAiReportPage />
               </RequireRole>
             }
           />

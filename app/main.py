@@ -66,6 +66,7 @@ from app.auth import (
 from app.report_summary import (
     generate_admin_summary,
     generate_overview_summary,
+    generate_report_answer,
     generate_reviewer_summary,
 )
 from app.risk_engine import assess_image, RiskAssessment, ScoredFlag
@@ -74,6 +75,8 @@ from app.schemas import (
     ActivityEvent,
     ActivityLogResponse,
     AdminUserCreate,
+    AIReportRequest,
+    AIReportResponse,
     AISummaryResponse,
     AdminUserListResponse,
     AdminUserResponse,
@@ -1017,6 +1020,80 @@ async def get_stakeholder_ai_summary(
         model=result.model,
         generated_at=datetime.now(timezone.utc),
         cached=result.cached,
+    )
+
+
+@app.post(
+    "/api/stakeholder/ai-report",
+    response_model=AIReportResponse,
+    summary="Ask the AI report assistant a question",
+    description=(
+        "One grounded answer about the pipeline, drafted by an LLM from figures the "
+        "backend computes (the overview aggregates plus per-flag counts, per-district "
+        "breakdown, and the awaiting-sign-off list). The visible conversation is "
+        "replayed so follow-ups resolve. Returns available=false (not an error) when "
+        "GEMINI_API_KEY is unset or generation fails."
+    ),
+)
+async def ask_stakeholder_ai_report(
+    body: AIReportRequest,
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_STAKEHOLDER)),
+) -> AIReportResponse:
+    if not settings.GEMINI_API_KEY:
+        return AIReportResponse(available=False, reason="not_configured")
+
+    overview = _compute_stakeholder_overview(db)
+
+    flag_counts: dict[str, int] = {}
+    district_breakdown: dict[str, dict[str, int]] = {}
+    awaiting_sign_off: list[dict] = []
+    for r in db.image_records.find(
+        {}, {"flags": 1, "district": 1, "risk_level": 1, "status": 1, "work_id": 1}
+    ):
+        for f in r.get("flags") or []:
+            code = f.get("code") if isinstance(f, dict) else None
+            if code:
+                flag_counts[code] = flag_counts.get(code, 0) + 1
+        district = r.get("district")
+        if district:
+            d = district_breakdown.setdefault(
+                district, {"total": 0, "high_risk": 0, "awaiting_review": 0}
+            )
+            d["total"] += 1
+            if r.get("risk_level") == "HIGH":
+                d["high_risk"] += 1
+            if r.get("status") in (STATUS_PENDING_REVIEW, STATUS_IN_REVIEW):
+                d["awaiting_review"] += 1
+        if r.get("status") == STATUS_APPROVED:
+            awaiting_sign_off.append(
+                {
+                    "work_id": r.get("work_id", "?"),
+                    "district": district or "?",
+                    "risk_level": r.get("risk_level") or "?",
+                }
+            )
+
+    result = generate_report_answer(
+        figures={
+            "overview": overview.model_dump(),
+            "flag_counts": flag_counts,
+            "district_breakdown": [
+                {"district": name, **counts} for name, counts in sorted(district_breakdown.items())
+            ],
+            "awaiting_sign_off": awaiting_sign_off,
+        },
+        question=body.question,
+        history=[t.model_dump() for t in body.history],
+    )
+    if result is None:
+        return AIReportResponse(available=False, reason="generation_failed")
+
+    return AIReportResponse(
+        available=True,
+        answer=result.summary,
+        model=result.model,
+        generated_at=datetime.now(timezone.utc),
     )
 
 

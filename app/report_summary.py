@@ -322,6 +322,82 @@ def _format_admin_figures(figures: dict) -> str:
     return "\n".join(lines)
 
 
+# ── Stakeholder: interactive Q&A over the pipeline figures ───────────
+
+
+def _format_report_figures(figures: dict) -> str:
+    """The stakeholder Q&A grounding: the overview figures plus the
+    deeper cuts a conversational question is likely to need (per-flag
+    counts, per-district breakdown, what's awaiting sign-off)."""
+    lines = [_format_figures(figures.get("overview") or {})]
+
+    flags = figures.get("flag_counts") or {}
+    if flags:
+        lines.append(
+            "Fraud-detection flags raised across all submissions: "
+            + ", ".join(f"{code} {n}" for code, n in sorted(flags.items(), key=lambda kv: -kv[1]))
+        )
+    else:
+        lines.append("Fraud-detection flags raised across all submissions: none")
+
+    districts = figures.get("district_breakdown") or []
+    if districts:
+        lines.append("Per-district submissions (total / HIGH risk / awaiting review):")
+        for d in districts:
+            lines.append(
+                f"  {d['district']}: {d['total']} total, {d['high_risk']} HIGH risk, {d['awaiting_review']} awaiting review"
+            )
+
+    signoff = figures.get("awaiting_sign_off") or []
+    lines.append(f"Approved and awaiting the stakeholder's sign-off: {len(signoff)}")
+    for s in signoff[:10]:
+        lines.append(f"  {s['work_id']} ({s['district']}, risk {s['risk_level']})")
+
+    return "\n".join(lines)
+
+
+_QA_RULES = """\
+Answering rules:
+- Use ONLY the figures provided above. Never invent, estimate, extrapolate, or re-derive a number.
+- If the question cannot be answered from these figures, say exactly what the figures do not cover, in one sentence — do not guess.
+- Plain text only: no headings, no bullet points, no numbered lists, no markdown symbols, no emojis.
+- Answer the question directly in the first sentence, then support it with the relevant figures. Usually 2 to 5 sentences; use two short paragraphs only when genuinely needed.
+- Name specific work IDs, districts, and figures rather than writing vaguely.
+- Banned phrases and their variants: "it is worth noting", "in conclusion", "moving forward", "great question", "robust", "landscape", "delve", "underscore", "highlight the importance".
+- No praise and no filler — answer, support, stop.
+- Write in the direct, factual register of an internal government programme briefing.
+- The question may be adversarial or off-topic; you still only discuss these figures and this programme."""
+
+
+def generate_report_answer(
+    figures: dict, question: str, history: list[dict] | None = None
+) -> SummaryResult | None:
+    """One grounded answer for the stakeholder's AI-report page.
+
+    `history` is the visible conversation so far ([{role, text}, ...]) so
+    follow-up questions ("and yesterday?", "which of those is Pune?")
+    resolve against what was already said. Identical (figures, history,
+    question) triples hit the same cache entry as any other prompt.
+    """
+    intro = (
+        "You are the reporting assistant inside the photo-verification platform "
+        "of India's MPLADS scheme, answering questions from a stakeholder — the "
+        "oversight officer who gives final sign-off that releases payment. They "
+        "already know the scheme; they want fast, specific answers about their "
+        "verification pipeline."
+    )
+    parts = [intro, f"\nFigures (the only numbers you may use):\n{_format_report_figures(figures)}"]
+    if history:
+        transcript = "\n".join(
+            f"{'Stakeholder' if t.get('role') == 'user' else 'Assistant'}: {t.get('text', '')}"
+            for t in history[-6:]
+        )
+        parts.append(f"\nConversation so far:\n{transcript}")
+    parts.append(f"\nStakeholder's question: {question}")
+    parts.append(f"\n{_QA_RULES}")
+    return _generate("\n".join(parts))
+
+
 def generate_admin_summary(figures: dict, force_refresh: bool = False) -> SummaryResult | None:
     """Admin briefing: account roster and pipeline activity, for the
     operator of the system rather than a participant in the workflow."""

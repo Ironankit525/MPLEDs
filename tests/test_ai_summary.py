@@ -268,6 +268,92 @@ def test_each_audience_caches_separately(db_session):
     assert len(report_summary._cache) == 3
 
 
+# ── The stakeholder AI-report Q&A endpoint ───────────────────────────
+
+
+def test_ai_report_gating(db_session):
+    reviewer = _create_user_and_login(db_session, "qa_reviewer", "reviewer")
+    res = client.post(
+        "/api/stakeholder/ai-report",
+        headers={"Authorization": f"Bearer {reviewer['access_token']}"},
+        json={"question": "How is the pipeline?"},
+    )
+    assert res.status_code == 403
+
+
+def test_ai_report_requires_a_question(db_session):
+    headers = _stakeholder_headers(db_session)
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"):
+        assert (
+            client.post("/api/stakeholder/ai-report", headers=headers, json={"question": ""}).status_code
+            == 422
+        )
+
+
+def test_ai_report_answers_with_grounded_prompt(db_session):
+    headers = _stakeholder_headers(db_session)
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", return_value="Nothing is awaiting sign-off.") as mock_call:
+        res = client.post(
+            "/api/stakeholder/ai-report",
+            headers=headers,
+            json={
+                "question": "What is awaiting my sign-off?",
+                "history": [
+                    {"role": "user", "text": "Hello"},
+                    {"role": "assistant", "text": "The pipeline is empty."},
+                ],
+            },
+        )
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["available"] is True
+    assert body["answer"] == "Nothing is awaiting sign-off."
+    prompt = mock_call.call_args[0][0]
+    # The prompt carries the figures block, the replayed conversation,
+    # and the question itself.
+    assert "awaiting the stakeholder's sign-off" in prompt
+    assert "The pipeline is empty." in prompt
+    assert "What is awaiting my sign-off?" in prompt
+
+
+def test_ai_report_unconfigured_and_failure_degrade(db_session):
+    headers = _stakeholder_headers(db_session)
+    with patch.object(settings, "GEMINI_API_KEY", ""):
+        body = client.post(
+            "/api/stakeholder/ai-report", headers=headers, json={"question": "Hi"}
+        ).json()
+    assert body == {**body, "available": False, "reason": "not_configured"}
+
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", side_effect=RuntimeError("down")):
+        body = client.post(
+            "/api/stakeholder/ai-report", headers=headers, json={"question": "Hi"}
+        ).json()
+    assert body["available"] is False
+    assert body["reason"] == "generation_failed"
+
+
+def test_format_report_figures_includes_flags_and_districts():
+    figures = report_summary._format_report_figures(
+        {
+            "overview": {"total_submissions": 3, "completion_rate": 33.3},
+            "flag_counts": {"EXACT_DUPLICATE": 2, "GPS_MISSING": 5},
+            "district_breakdown": [
+                {"district": "Pune", "total": 2, "high_risk": 1, "awaiting_review": 1}
+            ],
+            "awaiting_sign_off": [{"work_id": "MP-1", "district": "Pune", "risk_level": "LOW"}],
+        }
+    )
+    assert "GPS_MISSING 5" in figures
+    # Sorted by count, most frequent first.
+    assert figures.index("GPS_MISSING 5") < figures.index("EXACT_DUPLICATE 2")
+    assert "Pune: 2 total, 1 HIGH risk, 1 awaiting review" in figures
+    assert "awaiting the stakeholder's sign-off: 1" in figures
+    assert "MP-1 (Pune, risk LOW)" in figures
+
+
 # ── Audience figure formatters ───────────────────────────────────────
 
 
