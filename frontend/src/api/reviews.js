@@ -15,8 +15,8 @@ export function getReviewHistory() {
 // wait, recent decision volume). `available: false` is a normal response
 // (feature unconfigured or the generation call failed) — the queue page
 // renders without the card in that case, never an error.
-export function getReviewerAiSummary() {
-  return request('/api/reviews/ai-summary')
+export function getReviewerAiSummary(refresh = false) {
+  return request(`/api/reviews/ai-summary${refresh ? '?refresh=true' : ''}`)
 }
 
 // PENDING_REVIEW -> IN_REVIEW under the calling reviewer. Also the way

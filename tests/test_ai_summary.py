@@ -157,6 +157,22 @@ def test_second_call_with_same_figures_is_cached(db_session):
     assert second["summary"] == first["summary"]
 
 
+def test_refresh_param_bypasses_cache(db_session):
+    """?refresh=true (the UI's Refresh button) drafts anew instead of
+    returning the cached text — but still stores the new draft, so a
+    later plain load reuses it."""
+    headers = _stakeholder_headers(db_session)
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", return_value="Fresh draft.") as mock_call:
+        client.get("/api/stakeholder/ai-summary", headers=headers)
+        forced = client.get("/api/stakeholder/ai-summary?refresh=true", headers=headers).json()
+        plain = client.get("/api/stakeholder/ai-summary", headers=headers).json()
+
+    assert mock_call.call_count == 2  # initial + forced; plain load hit the cache
+    assert forced["cached"] is False
+    assert plain["cached"] is True
+
+
 # ── Reviewer and admin variants ──────────────────────────────────────
 
 

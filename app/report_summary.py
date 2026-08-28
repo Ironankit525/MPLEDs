@@ -122,8 +122,12 @@ def _tidy(text: str) -> str:
     return "\n".join(line.rstrip() for line in text.splitlines()).strip()
 
 
-def _generate(prompt: str) -> SummaryResult | None:
+def _generate(prompt: str, force_refresh: bool = False) -> SummaryResult | None:
     """Shared core: cache lookup → Gemini call → tidy → cache store.
+
+    force_refresh skips the cache *read* (the user explicitly asked for a
+    fresh draft) but still stores the result, so the next non-forced load
+    reuses it.
 
     Returns None when the feature is unconfigured or the API call fails —
     the caller degrades to numbers-only, mirroring how the risk pipeline
@@ -135,7 +139,7 @@ def _generate(prompt: str) -> SummaryResult | None:
     key = _prompt_hash(prompt)
     now = time.monotonic()
 
-    cached = _cache.get(key)
+    cached = None if force_refresh else _cache.get(key)
     if cached and cached[1] > now:
         return SummaryResult(summary=cached[0], model=settings.GEMINI_MODEL, cached=True)
 
@@ -223,7 +227,7 @@ def _format_figures(overview: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_overview_summary(overview: dict) -> SummaryResult | None:
+def generate_overview_summary(overview: dict, force_refresh: bool = False) -> SummaryResult | None:
     """Stakeholder briefing: the whole pipeline, for the role that
     releases funds."""
     intro = (
@@ -233,7 +237,7 @@ def generate_overview_summary(overview: dict) -> SummaryResult | None:
         "the scheme; the figures below summarise work-completion photo "
         "submissions and their automated fraud-risk assessment."
     )
-    return _generate(_prompt(intro, _format_figures(overview)))
+    return _generate(_prompt(intro, _format_figures(overview)), force_refresh)
 
 
 # ── Reviewer: the current review queue ───────────────────────────────
@@ -269,7 +273,7 @@ def _format_reviewer_figures(figures: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_reviewer_summary(figures: dict) -> SummaryResult | None:
+def generate_reviewer_summary(figures: dict, force_refresh: bool = False) -> SummaryResult | None:
     """Reviewer briefing: what is sitting in the queue and how urgent it is."""
     intro = (
         "You are drafting a short work-queue briefing for a District/Nodal "
@@ -278,7 +282,7 @@ def generate_reviewer_summary(figures: dict) -> SummaryResult | None:
         "shared review queue. The reader decides what to review next, so lead "
         "with the highest-risk and longest-waiting work."
     )
-    return _generate(_prompt(intro, _format_reviewer_figures(figures)))
+    return _generate(_prompt(intro, _format_reviewer_figures(figures)), force_refresh)
 
 
 # ── Admin: accounts + system activity ────────────────────────────────
@@ -318,7 +322,7 @@ def _format_admin_figures(figures: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_admin_summary(figures: dict) -> SummaryResult | None:
+def generate_admin_summary(figures: dict, force_refresh: bool = False) -> SummaryResult | None:
     """Admin briefing: account roster and pipeline activity, for the
     operator of the system rather than a participant in the workflow."""
     intro = (
@@ -329,4 +333,4 @@ def generate_admin_summary(figures: dict) -> SummaryResult | None:
         "activity levels, where submissions are sitting, and anything unusual "
         "such as manual overrides."
     )
-    return _generate(_prompt(intro, _format_admin_figures(figures)))
+    return _generate(_prompt(intro, _format_admin_figures(figures)), force_refresh)

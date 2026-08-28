@@ -11,8 +11,8 @@ export function getStakeholderOverview() {
 // same figures the overview returns. `available: false` is a normal
 // response (feature unconfigured, or the generation call failed) — the
 // dashboard renders numbers-only in that case, never an error.
-export function getAiSummary() {
-  return request('/api/stakeholder/ai-summary')
+export function getAiSummary(refresh = false) {
+  return request(`/api/stakeholder/ai-summary${refresh ? '?refresh=true' : ''}`)
 }
 
 // Submissions that reached a Reviewer decision (APPROVED, REJECTED, or

@@ -728,6 +728,7 @@ async def get_review_history(
     ),
 )
 async def get_reviewer_ai_summary(
+    refresh: bool = False,
     db: Database = Depends(get_db),
     current_user: dict = Depends(require_role(ROLE_REVIEWER)),
 ) -> AISummaryResponse:
@@ -781,7 +782,8 @@ async def get_reviewer_ai_summary(
             decided_last_7_days += 1
 
     result = generate_reviewer_summary(
-        {
+        force_refresh=refresh,
+        figures={
             "pending_count": pending_count,
             "in_review_count": in_review_count,
             "queue_by_risk_level": queue_by_risk,
@@ -990,6 +992,7 @@ async def get_stakeholder_overview(
     ),
 )
 async def get_stakeholder_ai_summary(
+    refresh: bool = False,
     db: Database = Depends(get_db),
     current_user: dict = Depends(require_role(ROLE_STAKEHOLDER)),
 ) -> AISummaryResponse:
@@ -997,7 +1000,7 @@ async def get_stakeholder_ai_summary(
         return AISummaryResponse(available=False, reason="not_configured")
 
     overview = _compute_stakeholder_overview(db)
-    result = generate_overview_summary(overview.model_dump())
+    result = generate_overview_summary(overview.model_dump(), force_refresh=refresh)
     if result is None:
         return AISummaryResponse(available=False, reason="generation_failed")
 
@@ -1831,6 +1834,7 @@ async def admin_get_activity(
     ),
 )
 async def get_admin_ai_summary(
+    refresh: bool = False,
     db: Database = Depends(get_db),
     current_user: dict = Depends(require_role(ROLE_ADMIN)),
 ) -> AISummaryResponse:
@@ -1890,7 +1894,8 @@ async def get_admin_ai_summary(
                 events_last_7_days["admin_override"] = events_last_7_days.get("admin_override", 0) + 1
 
     result = generate_admin_summary(
-        {
+        force_refresh=refresh,
+        figures={
             "users_total": users_total,
             "users_by_role": users_by_role,
             "inactive_users": inactive_users,
