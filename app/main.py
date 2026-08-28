@@ -55,7 +55,14 @@ from app.models import (
     PROJECT_CANCELLED,
     PROJECT_STATUSES,
 )
-from app.auth import get_current_user, create_access_token, get_password_hash, verify_password, require_role
+from app.auth import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    get_current_user,
+    create_access_token,
+    get_password_hash,
+    verify_password,
+    require_role,
+)
 from app.report_summary import (
     generate_admin_summary,
     generate_overview_summary,
@@ -2097,7 +2104,13 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Database =
     # Accounts created before the role field existed default to
     # ROLE_SUBMITTER here (via .get) rather than failing login.
     role = user.get("role", ROLE_SUBMITTER)
-    access_token = create_access_token(data={"sub": user["username"], "role": role})
+    # expires_delta must be passed explicitly: create_access_token's own
+    # fallback is 15 minutes, not the documented 24h — omitting it here
+    # is what made every login expire mid-session.
+    access_token = create_access_token(
+        data={"sub": user["username"], "role": role},
+        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+    )
     return {"access_token": access_token, "token_type": "bearer", "role": role}
 
 
