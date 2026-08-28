@@ -50,3 +50,11 @@ export function bulkOverrideStatus(imageIds, statusValue, notes) {
 export function getActivity() {
   return request('/api/admin/activity')
 }
+
+// LLM-drafted operations note (accounts by role, submissions by status,
+// last-7-days workflow events, override counts). `available: false` is a
+// normal response (feature unconfigured or the generation call failed) —
+// the activity page renders without the card in that case, never an error.
+export function getAdminAiSummary() {
+  return request('/api/admin/ai-summary')
+}

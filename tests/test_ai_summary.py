@@ -1,7 +1,8 @@
-"""Tests for the AI-drafted overview summary (/api/stakeholder/ai-summary):
-role-gating, graceful degradation when unconfigured or when the Gemini
-call fails, the figures-hash cache, and the markdown sanitiser that
-backs the "no AI slop" formatting contract.
+"""Tests for the per-role AI-drafted summaries (/api/stakeholder/ai-summary,
+/api/reviews/ai-summary, /api/admin/ai-summary): role-gating on each,
+graceful degradation when unconfigured or when the Gemini call fails, the
+prompt-hash cache, the audience-specific figure formatters, and the
+markdown sanitiser that backs the "no AI slop" formatting contract.
 
 The Gemini HTTP call itself is always mocked — these tests verify the
 wiring and degradation behaviour, not the model's prose.
@@ -156,6 +157,146 @@ def test_second_call_with_same_figures_is_cached(db_session):
     assert second["summary"] == first["summary"]
 
 
+# ── Reviewer and admin variants ──────────────────────────────────────
+
+
+def test_reviewer_summary_gating(db_session):
+    stakeholder_headers = _stakeholder_headers(db_session)
+    assert client.get("/api/reviews/ai-summary", headers=stakeholder_headers).status_code == 403
+
+    submitter = _register_and_login("queue_submitter")
+    assert (
+        client.get(
+            "/api/reviews/ai-summary",
+            headers={"Authorization": f"Bearer {submitter['access_token']}"},
+        ).status_code
+        == 403
+    )
+
+
+def test_reviewer_summary_success(db_session):
+    reviewer = _create_user_and_login(db_session, "queue_reviewer", "reviewer")
+    headers = {"Authorization": f"Bearer {reviewer['access_token']}"}
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", return_value="The queue is empty.") as mock_call:
+        res = client.get("/api/reviews/ai-summary", headers=headers)
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["available"] is True
+    assert body["summary"] == "The queue is empty."
+    # The reviewer prompt is queue-shaped, not the stakeholder overview.
+    prompt = mock_call.call_args[0][0]
+    assert "review queue" in prompt
+    assert "waiting unclaimed" in prompt
+
+
+def test_admin_summary_gating(db_session):
+    reviewer = _create_user_and_login(db_session, "ops_reviewer", "reviewer")
+    assert (
+        client.get(
+            "/api/admin/ai-summary",
+            headers={"Authorization": f"Bearer {reviewer['access_token']}"},
+        ).status_code
+        == 403
+    )
+    stakeholder_headers = _stakeholder_headers(db_session)
+    assert client.get("/api/admin/ai-summary", headers=stakeholder_headers).status_code == 403
+
+
+def test_admin_summary_success(db_session):
+    admin = _create_user_and_login(db_session, "ops_admin", "admin")
+    headers = {"Authorization": f"Bearer {admin['access_token']}"}
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", return_value="The system is quiet.") as mock_call:
+        res = client.get("/api/admin/ai-summary", headers=headers)
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["available"] is True
+    assert body["summary"] == "The system is quiet."
+    # The admin prompt is accounts+activity-shaped. This test's fresh db
+    # holds exactly one account: the admin created above.
+    prompt = mock_call.call_args[0][0]
+    assert "user accounts" in prompt.lower()
+    assert "Total user accounts: 1" in prompt
+    assert "admin 1" in prompt
+
+
+def test_each_audience_caches_separately(db_session):
+    """Same database, three roles — three distinct prompts, three cache
+    entries, no cross-audience reuse."""
+    stakeholder_headers = _stakeholder_headers(db_session)
+    reviewer = _create_user_and_login(db_session, "cache_reviewer", "reviewer")
+    admin = _create_user_and_login(db_session, "cache_admin", "admin")
+
+    with patch.object(settings, "GEMINI_API_KEY", "test-key"), \
+         patch.object(report_summary, "_call_gemini", return_value="Prose.") as mock_call:
+        assert client.get("/api/stakeholder/ai-summary", headers=stakeholder_headers).json()["cached"] is False
+        assert (
+            client.get(
+                "/api/reviews/ai-summary",
+                headers={"Authorization": f"Bearer {reviewer['access_token']}"},
+            ).json()["cached"]
+            is False
+        )
+        assert (
+            client.get(
+                "/api/admin/ai-summary",
+                headers={"Authorization": f"Bearer {admin['access_token']}"},
+            ).json()["cached"]
+            is False
+        )
+
+    assert mock_call.call_count == 3
+    assert len(report_summary._cache) == 3
+
+
+# ── Audience figure formatters ───────────────────────────────────────
+
+
+def test_format_reviewer_figures():
+    figures = report_summary._format_reviewer_figures(
+        {
+            "pending_count": 5,
+            "in_review_count": 2,
+            "queue_by_risk_level": {"HIGH": 3, "LOW": 4},
+            "oldest_pending_hours": 49.5,
+            "high_risk_districts": [{"district": "Pune", "count": 2}, {"district": "Nagpur", "count": 1}],
+            "decided_last_7_days": 11,
+        }
+    )
+    assert "waiting unclaimed: 5" in figures
+    assert "under review: 2" in figures
+    assert "HIGH 3" in figures
+    assert "49.5 hours" in figures
+    assert "Pune 2, Nagpur 1" in figures
+    assert "last 7 days (all reviewers): 11" in figures
+
+
+def test_format_admin_figures():
+    figures = report_summary._format_admin_figures(
+        {
+            "users_total": 7,
+            "users_by_role": {"submitter": 4, "reviewer": 1, "stakeholder": 1, "admin": 1},
+            "inactive_users": 1,
+            "submissions_total": 12,
+            "by_status": {"PENDING_REVIEW": 2, "APPROVED": 10, "IN_REVIEW": 0},
+            "events_last_7_days": {"submitted": 6, "approved": 4, "admin_override": 1},
+            "admin_overrides_total": 3,
+        }
+    )
+    assert "Total user accounts: 7" in figures
+    assert "submitter 4" in figures
+    assert "Deactivated accounts: 1" in figures
+    # Enum codes are humanized so the model's echo reads as prose.
+    assert "admin override 1" in figures
+    assert "approved 10" in figures
+    assert "overrides ever recorded: 3" in figures
+    # Zero-count statuses are noise the model would be tempted to narrate.
+    assert "in review" not in figures
+
+
 # ── The anti-slop sanitiser ──────────────────────────────────────────
 
 
@@ -174,6 +315,13 @@ def test_tidy_strips_markdown_artifacts():
     assert "42 submissions" in cleaned
     assert "83.3%" in cleaned
     assert "\n\n\n" not in cleaned
+
+
+def test_tidy_preserves_underscored_identifiers():
+    """Regression: _tidy used to strip underscores as markdown emphasis,
+    mangling echoed identifiers (SIGNED_OFF became SIGNEDOFF in live
+    output before this was caught)."""
+    assert "SIGNED_OFF" in report_summary._tidy("Currently 11 SIGNED_OFF items.")
 
 
 def test_format_figures_uses_only_computed_numbers():

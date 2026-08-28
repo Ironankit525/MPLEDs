@@ -56,7 +56,11 @@ from app.models import (
     PROJECT_STATUSES,
 )
 from app.auth import get_current_user, create_access_token, get_password_hash, verify_password, require_role
-from app.report_summary import generate_overview_summary
+from app.report_summary import (
+    generate_admin_summary,
+    generate_overview_summary,
+    generate_reviewer_summary,
+)
 from app.risk_engine import assess_image, RiskAssessment, ScoredFlag
 from app.schemas import (
     ActionRequiredItem,
@@ -710,6 +714,96 @@ async def get_review_history(
     )
     images = [_record_to_response(r) for r in records]
     return SubmissionListResponse(images=images, count=len(images))
+
+
+@app.get(
+    "/api/reviews/ai-summary",
+    response_model=AISummaryResponse,
+    summary="Get an AI-drafted briefing of the review queue",
+    description=(
+        "Two paragraphs of plain prose written by an LLM from queue figures the "
+        "backend computes (pending/claimed counts, risk breakdown, longest wait, "
+        "recent decision volume). Returns available=false (not an error) when "
+        "GEMINI_API_KEY is unset or generation fails."
+    ),
+)
+async def get_reviewer_ai_summary(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_REVIEWER)),
+) -> AISummaryResponse:
+    if not settings.GEMINI_API_KEY:
+        return AISummaryResponse(available=False, reason="not_configured")
+
+    now = datetime.now(timezone.utc)
+    queue = list(
+        db.image_records.find(
+            {"status": {"$in": [STATUS_PENDING_REVIEW, STATUS_IN_REVIEW]}},
+            {"status": 1, "risk_level": 1, "district": 1, "uploaded_at": 1},
+        )
+    )
+
+    pending_count = 0
+    in_review_count = 0
+    queue_by_risk: dict[str, int] = {}
+    high_risk_districts: dict[str, int] = {}
+    oldest_pending_hours: Optional[float] = None
+    for r in queue:
+        if r.get("status") == STATUS_IN_REVIEW:
+            in_review_count += 1
+        else:
+            pending_count += 1
+            uploaded_at = r.get("uploaded_at")
+            if uploaded_at is not None:
+                if uploaded_at.tzinfo is None:
+                    uploaded_at = uploaded_at.replace(tzinfo=timezone.utc)
+                waited = round((now - uploaded_at).total_seconds() / 3600, 1)
+                if waited >= 0 and (oldest_pending_hours is None or waited > oldest_pending_hours):
+                    oldest_pending_hours = waited
+        risk = r.get("risk_level")
+        if risk:
+            queue_by_risk[risk] = queue_by_risk.get(risk, 0) + 1
+            if risk == "HIGH" and r.get("district"):
+                high_risk_districts[r["district"]] = high_risk_districts.get(r["district"], 0) + 1
+
+    # Counted in Python (not with a $gte query) for the same
+    # mongomock-compatibility reason as the stakeholder overview: stored
+    # reviewed_at values are tz-naive in some writers and tz-aware in
+    # others, and comparing those inside a Mongo query is unreliable.
+    seven_days_ago = now - timedelta(days=7)
+    decided_last_7_days = 0
+    for r in db.image_records.find({"reviewed_at": {"$ne": None}}, {"reviewed_at": 1}):
+        reviewed_at = r.get("reviewed_at")
+        if reviewed_at is None:
+            continue
+        if reviewed_at.tzinfo is None:
+            reviewed_at = reviewed_at.replace(tzinfo=timezone.utc)
+        if reviewed_at >= seven_days_ago:
+            decided_last_7_days += 1
+
+    result = generate_reviewer_summary(
+        {
+            "pending_count": pending_count,
+            "in_review_count": in_review_count,
+            "queue_by_risk_level": queue_by_risk,
+            "oldest_pending_hours": oldest_pending_hours,
+            "high_risk_districts": sorted(
+                ({"district": d, "count": c} for d, c in high_risk_districts.items()),
+                key=lambda x: x["count"],
+                reverse=True,
+            )[:5],
+            "decided_last_7_days": decided_last_7_days,
+        }
+    )
+    if result is None:
+        return AISummaryResponse(available=False, reason="generation_failed")
+
+    return AISummaryResponse(
+        available=True,
+        summary=result.summary,
+        model=result.model,
+        generated_at=datetime.now(timezone.utc),
+        cached=result.cached,
+    )
 
 
 @app.post(
@@ -1723,6 +1817,99 @@ async def admin_get_activity(
     events.sort(key=lambda e: e.at, reverse=True)
     events = events[:50]
     return ActivityLogResponse(events=events, count=len(events))
+
+
+@app.get(
+    "/api/admin/ai-summary",
+    response_model=AISummaryResponse,
+    summary="Get an AI-drafted operations note for the whole system",
+    description=(
+        "Two paragraphs of plain prose written by an LLM from system figures the "
+        "backend computes (accounts by role, submissions by status, last-7-days "
+        "workflow events, override counts). Returns available=false (not an "
+        "error) when GEMINI_API_KEY is unset or generation fails."
+    ),
+)
+async def get_admin_ai_summary(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_ADMIN)),
+) -> AISummaryResponse:
+    if not settings.GEMINI_API_KEY:
+        return AISummaryResponse(available=False, reason="not_configured")
+
+    users_by_role: dict[str, int] = {}
+    inactive_users = 0
+    users_total = 0
+    for u in db.users.find({}, {"role": 1, "is_active": 1}):
+        users_total += 1
+        role = u.get("role") or ROLE_SUBMITTER
+        users_by_role[role] = users_by_role.get(role, 0) + 1
+        if u.get("is_active") is False:
+            inactive_users += 1
+
+    now = datetime.now(timezone.utc)
+    seven_days_ago = now - timedelta(days=7)
+
+    def _within_week(value) -> bool:
+        if value is None:
+            return False
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=timezone.utc)
+        return value >= seven_days_ago
+
+    submissions_total = 0
+    by_status: dict[str, int] = dict.fromkeys(WORKFLOW_STATUSES, 0)
+    events_last_7_days: dict[str, int] = {}
+    admin_overrides_total = 0
+    for r in db.image_records.find(
+        {},
+        {
+            "status": 1,
+            "uploaded_at": 1,
+            "reviewed_at": 1,
+            "reviewed_by_username": 1,
+            "signed_off_at": 1,
+            "admin_override_at": 1,
+            "admin_override_by_username": 1,
+        },
+    ):
+        submissions_total += 1
+        status_val = r.get("status") or STATUS_PENDING_REVIEW
+        by_status[status_val] = by_status.get(status_val, 0) + 1
+
+        if _within_week(r.get("uploaded_at")):
+            events_last_7_days["submitted"] = events_last_7_days.get("submitted", 0) + 1
+        if r.get("reviewed_by_username") and _within_week(r.get("reviewed_at")):
+            decision = "rejected" if r.get("status") == STATUS_REJECTED else "approved"
+            events_last_7_days[decision] = events_last_7_days.get(decision, 0) + 1
+        if _within_week(r.get("signed_off_at")):
+            events_last_7_days["signed_off"] = events_last_7_days.get("signed_off", 0) + 1
+        if r.get("admin_override_by_username"):
+            admin_overrides_total += 1
+            if _within_week(r.get("admin_override_at")):
+                events_last_7_days["admin_override"] = events_last_7_days.get("admin_override", 0) + 1
+
+    result = generate_admin_summary(
+        {
+            "users_total": users_total,
+            "users_by_role": users_by_role,
+            "inactive_users": inactive_users,
+            "submissions_total": submissions_total,
+            "by_status": by_status,
+            "events_last_7_days": events_last_7_days,
+            "admin_overrides_total": admin_overrides_total,
+        }
+    )
+    if result is None:
+        return AISummaryResponse(available=False, reason="generation_failed")
+
+    return AISummaryResponse(
+        available=True,
+        summary=result.summary,
+        model=result.model,
+        generated_at=datetime.now(timezone.utc),
+        cached=result.cached,
+    )
 
 
 @app.get(

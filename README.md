@@ -46,14 +46,17 @@ CLOUDINARY_API_SECRET=<your Cloudinary API secret>
 ```
 
 Optionally, add a `GEMINI_API_KEY` (from Google AI Studio) to enable
-the Stakeholder dashboard's AI-drafted narrative summary
-(`GET /api/stakeholder/ai-summary`, `app/report_summary.py`). Unlike
-the four values above it is **not** required: without it the endpoint
-answers `available: false` and the dashboard renders numbers-only —
-the same graceful-degradation posture as CLIP and EasyOCR. The model
-only phrases figures the backend has already computed; it is never
-asked to calculate anything, and results are cached in-process keyed
-by a hash of the figures so unchanged data never re-bills the API.
+the AI-drafted narrative summaries (`app/report_summary.py`) — one per
+oversight surface, each written for its own audience from its own
+figures: `GET /api/stakeholder/ai-summary` (whole-pipeline oversight),
+`GET /api/reviews/ai-summary` (the reviewer's queue), and
+`GET /api/admin/ai-summary` (accounts + system activity). Unlike the
+four values above it is **not** required: without it the endpoints
+answer `available: false` and the pages render numbers-only — the same
+graceful-degradation posture as CLIP and EasyOCR. The model only
+phrases figures the backend has already computed; it is never asked to
+calculate anything, and results are cached in-process keyed by a hash
+of the full prompt so unchanged data never re-bills the API.
 
 All four are required at startup (`app/config.py`'s `Settings` class
 has no fallback default for `DATABASE_URL` or `JWT_SECRET_KEY`, on
@@ -594,6 +597,7 @@ enforced gate, not a suggestion.
 | `POST` | `/api/sessions/validate` | any | Check whether a camera-session token is still valid/unused |
 | `GET` | `/api/reviews/queue` | reviewer | Submissions awaiting a decision, highest risk first |
 | `GET` | `/api/reviews/history` | reviewer | Submissions that reached a decision |
+| `GET` | `/api/reviews/ai-summary` | reviewer | LLM-drafted briefing of the current queue (see `/api/stakeholder/ai-summary` for the availability contract) |
 | `POST` | `/api/reviews/{image_id}/claim` | reviewer | `PENDING_REVIEW` → `IN_REVIEW`; `409` if another reviewer holds it |
 | `POST` | `/api/reviews/{image_id}/decide` | reviewer | Approve/reject with a note (notes **required** to reject) |
 | `GET` | `/api/stakeholder/overview` | stakeholder | Volume, bottlenecks, completion rate, time-to-decision |
@@ -608,6 +612,7 @@ enforced gate, not a suggestion.
 | `POST` | `/api/admin/submissions/{image_id}/override-status` | admin | Manual status correction, recorded as its own audit event |
 | `POST` | `/api/admin/submissions/bulk-override-status` | admin | The same override applied to many submissions at once |
 | `GET` | `/api/admin/activity` | admin | Recent submit/review/sign-off/override events |
+| `GET` | `/api/admin/ai-summary` | admin | LLM-drafted operations note: accounts, statuses, last-7-days events (same availability contract) |
 
 ### Where location comes from, and what it proves
 

@@ -415,7 +415,9 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
     # Summarising one screen of pre-computed figures is a trivial task,
     # so default to the cheapest/fastest tier rather than a pro model.
-    GEMINI_MODEL: str = "gemini-2.5-flash"
+    # (gemini-2.5-flash is no longer served to new API accounts — the
+    # API's own 404 message names this as the replacement.)
+    GEMINI_MODEL: str = "gemini-3.6-flash"
     # Bounds how long an already-generated summary is reused. Freshness
     # does not depend on this: the cache key is a hash of the figures,
     # so any data change regenerates immediately regardless of TTL.
