@@ -77,36 +77,58 @@ def _prompt_hash(prompt: str) -> str:
     return hashlib.sha256(f"{settings.GEMINI_MODEL}\n{prompt}".encode()).hexdigest()
 
 
+# One retry on transient upstream trouble (overload/rate-pressure).
+# Anything else — auth, quota-exhausted-for-the-day, bad request — fails
+# immediately; retrying those only adds latency to the same answer.
+_RETRYABLE_STATUS = {429, 500, 502, 503}
+_RETRY_DELAY_SECONDS = 2.0
+
+
 def _call_gemini(prompt: str) -> str:
-    """One generateContent call. Raises on any HTTP or shape problem."""
-    response = httpx.post(
-        GEMINI_ENDPOINT.format(model=settings.GEMINI_MODEL),
-        headers={"x-goog-api-key": settings.GEMINI_API_KEY},
-        json={
-            "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {
-                "temperature": 0.2,
-                # Thinking tokens count against maxOutputTokens on
-                # gemini-3.6 models — 1024 was measured to truncate the
-                # prose mid-sentence (finishReason=MAX_TOKENS), which is
-                # what a degenerate comma-list output turned out to be.
-                "maxOutputTokens": 4096,
-                # The summary needs phrasing, not reasoning — keep
-                # "thinking" spend minimal for latency and cost. (The
-                # 2.5-era {"thinkingBudget": 0} form is rejected with
-                # HTTP 400 by gemini-3.6 models; thinkingLevel is the
-                # current syntax.)
-                "thinkingConfig": {"thinkingLevel": "LOW"},
-            },
-        },
-        timeout=REQUEST_TIMEOUT_SECONDS,
-    )
+    """One generateContent call (one retry on a transient upstream
+    error). Raises on any HTTP or shape problem."""
+    for attempt in (1, 2):
+        response = httpx.post(
+            GEMINI_ENDPOINT.format(model=settings.GEMINI_MODEL),
+            headers={"x-goog-api-key": settings.GEMINI_API_KEY},
+            json=_request_body(prompt),
+            timeout=REQUEST_TIMEOUT_SECONDS,
+        )
+        if response.status_code in _RETRYABLE_STATUS and attempt == 1:
+            logger.info(
+                "Gemini returned %s — retrying once in %.0fs",
+                response.status_code,
+                _RETRY_DELAY_SECONDS,
+            )
+            time.sleep(_RETRY_DELAY_SECONDS)
+            continue
+        break
     response.raise_for_status()
     body = response.json()
     text = body["candidates"][0]["content"]["parts"][0]["text"]
     if not text.strip():
         raise ValueError("Gemini returned an empty summary")
     return text
+
+
+def _request_body(prompt: str) -> dict:
+    return {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "temperature": 0.2,
+            # Thinking tokens count against maxOutputTokens on
+            # gemini-3.6+ models — 1024 was measured to truncate the
+            # prose mid-sentence (finishReason=MAX_TOKENS), which is
+            # what a degenerate comma-list output turned out to be.
+            "maxOutputTokens": 4096,
+            # The summary needs phrasing, not reasoning — keep
+            # "thinking" spend minimal for latency and cost. (The
+            # 2.5-era {"thinkingBudget": 0} form is rejected with
+            # HTTP 400 by gemini-3.6+ models; thinkingLevel is the
+            # current syntax.)
+            "thinkingConfig": {"thinkingLevel": "LOW"},
+        },
+    }
 
 
 def _tidy(text: str) -> str:
