@@ -179,6 +179,10 @@ def main() -> int:
                 print(f"       {len(rows)} rows -> {per_file.name}")
 
         manifest_path = OUT_DIR / "manifest.csv"
+        # Downloaded datasets first: 29 of 35 catalog entries are dead
+        # upstream, and alphabetical order buried the 6 real ones under
+        # a wall of UNAVAILABLE rows.
+        manifest_rows.sort(key=lambda r: (r[-1] != "OK", r[0]))
         with open(manifest_path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["dataset_id", "title", "resource_uuid", "file", "data_rows", "status"])
