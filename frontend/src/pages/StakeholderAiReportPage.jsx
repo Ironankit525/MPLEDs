@@ -240,10 +240,6 @@ function AssistantTurn({ turn }) {
             {paragraph}
           </p>
         ))}
-        <div className="stat-sub" style={{ marginTop: 8 }}>
-          {turn.model}
-          {turn.at ? ` · ${new Date(turn.at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}
-        </div>
       </div>
     </div>
   )

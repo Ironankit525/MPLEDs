@@ -60,17 +60,19 @@ class SummaryResult:
 # officer's briefing note rather than a chatbot answer. _tidy() enforces
 # the formatting rules again after the fact in case the model slips.
 _STYLE_RULES = """\
-Write the summary as exactly two short paragraphs of plain prose, 60 to 120 words in total.
+Write two short paragraphs of plain prose, 50 to 110 words in total, in the voice of an experienced colleague catching someone up at their desk — natural, direct, and specific.
 
 Hard rules:
 - Use ONLY the figures provided above. Never invent, estimate, extrapolate, or re-derive a number.
+- Do not recite every figure. Pick the handful that actually matter to the reader, connect them into a story, and leave the rest out — a person summarising skips the unremarkable.
+- Vary your sentence shapes. Never produce a mechanical run like "X are approved, Y are rejected, Z are pending" more than once, and never mirror the figures' own label wording back ("share of submissions that reached a final decision" should become something a person would say, like "about three in four are through").
 - Plain text only: no headings, no bullet points, no numbered lists, no markdown symbols, no emojis.
 - Name specific districts and figures rather than writing vaguely ("Pune accounts for 3 of 4 high-risk submissions", not "some districts show elevated risk").
-- Do not open with "This report", "This summary", "Overall" or any sentence describing the document itself. Start directly with a finding.
-- Banned phrases and their variants: "it is worth noting", "in conclusion", "moving forward", "continued monitoring is recommended", "robust", "landscape", "delve", "underscore", "highlight the importance".
-- No recommendations and no praise — state what the figures show and stop.
-- If submission volume is small, say so plainly instead of drawing trend conclusions from it.
-- Write in the direct, factual register of an internal government programme briefing."""
+- Do not open with "This report", "This summary", "Overall" or any sentence describing the document itself. Start with the thing the reader most needs to know.
+- Banned phrases and their variants: "it is worth noting", "in conclusion", "moving forward", "continued monitoring is recommended", "robust", "landscape", "delve", "underscore", "highlight the importance", "currently stands at", "recorded a total of".
+- No recommendations and no praise — say what's happening and stop.
+- If there isn't much data yet, say so the way a person would ("still early days — only 18 photos in so far"), not as a caveat clause.
+- The register is a quick internal note between colleagues who know the scheme, not a formal report and not marketing."""
 
 
 def _prompt_hash(prompt: str) -> str:

@@ -40,10 +40,6 @@ export default function AiSummaryCard({ fetcher, reloadKey, style }) {
           {paragraph}
         </p>
       ))}
-      <div className="stat-sub" style={{ marginTop: 12 }}>
-        Drafted by {summary.model} from the figures on this page
-        {summary.generated_at ? ` · ${new Date(summary.generated_at).toLocaleString()}` : ''}
-      </div>
     </div>
   )
 }
