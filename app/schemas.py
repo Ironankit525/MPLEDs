@@ -215,6 +215,219 @@ class StakeholderOverviewResponse(BaseModel):
     top_flagged_districts: list[dict[str, Any]] = Field(default_factory=list)
 
 
+# ── Projects & Submitter dashboard ────────────────────────────────────
+
+class ProjectPhaseSchema(BaseModel):
+    """One milestone. `is_complete` is set by a reviewer/admin, never by
+    the contractor whose payment depends on it — see app/models.py's
+    ProjectPhase docstring."""
+
+    name: str
+    order: int = 0
+    is_complete: bool = False
+    completed_at: Optional[datetime] = None
+    completed_by_username: Optional[str] = None
+
+
+class ProjectCreateRequest(BaseModel):
+    """Body for `POST /api/admin/projects` — registering a sanctioned
+    work and (optionally) awarding it to a contractor."""
+
+    work_id: str = Field(..., description="MPLADS work identifier — the join key to ImageRecord.work_id")
+    title: str
+    district: str
+    sanctioned_amount: float = Field(..., ge=0, description="Total budget for this work")
+    work_type: Optional[str] = None
+    state: Optional[str] = None
+    mp_name: Optional[str] = None
+    assigned_to_username: Optional[str] = Field(
+        None, description="Contractor/submitter this work is awarded to. Unassigned projects appear on no submitter dashboard."
+    )
+    sanction_date: Optional[datetime] = None
+    expected_completion_date: Optional[datetime] = None
+    phase_names: list[str] = Field(
+        default_factory=list,
+        description="Milestone names in execution order; progress_percent is completed/total of these.",
+    )
+
+
+class ProjectAssignRequest(BaseModel):
+    assigned_to_username: Optional[str] = Field(
+        None, description="Set to null to unassign the work."
+    )
+
+
+class ProjectStatusUpdateRequest(BaseModel):
+    status: str
+
+    @field_validator("status")
+    @classmethod
+    def _validate_status(cls, v: str) -> str:
+        from app.models import PROJECT_STATUSES
+
+        if v not in PROJECT_STATUSES:
+            raise ValueError(f"status must be one of: {', '.join(PROJECT_STATUSES)}")
+        return v
+
+
+class PhaseCompleteRequest(BaseModel):
+    """Body for `PATCH /api/projects/{work_id}/phases/{order}` —
+    reviewer/admin only."""
+
+    is_complete: bool = True
+
+
+class ProjectFinancials(BaseModel):
+    """The money figures for one project (or a portfolio rollup).
+
+    Buckets are defined by the *submission status* of each claim, so a
+    rejected or still-pending claim never silently counts as spent:
+
+      amount_utilised   = APPROVED + SIGNED_OFF   ("funds used")
+      amount_disbursed  = SIGNED_OFF only          ("funds released")
+      amount_pending_disbursement = APPROVED, not yet signed off
+      amount_awaiting_decision    = PENDING_REVIEW + IN_REVIEW
+      amount_rejected             = REJECTED (does NOT reduce the budget)
+      amount_remaining  = sanctioned - amount_utilised
+
+    Note amount_utilised == amount_disbursed + amount_pending_disbursement
+    by construction; they are reported separately because "approved" and
+    "actually released" are different things to a contractor chasing
+    payment. Only amount_utilised is subtracted from the budget.
+    """
+
+    sanctioned_amount: float = 0.0
+    amount_utilised: float = 0.0
+    amount_disbursed: float = 0.0
+    amount_pending_disbursement: float = 0.0
+    amount_awaiting_decision: float = 0.0
+    amount_rejected: float = 0.0
+    amount_remaining: float = 0.0
+    utilisation_percent: float = Field(
+        0.0, description="amount_utilised / sanctioned_amount * 100; 0.0 when the budget is 0"
+    )
+
+
+class ProjectSummaryResponse(BaseModel):
+    """One project as shown on the contractor's project list."""
+
+    work_id: str
+    title: str
+    work_type: Optional[str] = None
+    district: str
+    status: str
+    assigned_to_username: Optional[str] = None
+
+    financials: ProjectFinancials
+
+    phases: list[ProjectPhaseSchema] = Field(default_factory=list)
+    progress_percent: float = Field(
+        0.0,
+        description=(
+            "Completed phases / total phases * 100. When a project has NO phases "
+            "defined, this falls back to 100 for COMPLETED and 0 otherwise — see "
+            "progress_basis to tell which of the two you're looking at."
+        ),
+    )
+    progress_basis: str = Field(
+        "phases", description="'phases' (milestone-derived) or 'status' (no phases defined — coarse fallback)"
+    )
+
+    sanction_date: Optional[datetime] = None
+    expected_completion_date: Optional[datetime] = None
+    is_overdue: bool = False
+    days_remaining: Optional[int] = Field(
+        None, description="Days until expected_completion_date; negative when overdue, null when no date set"
+    )
+
+    total_submissions: int = 0
+    submissions_by_status: dict[str, int] = Field(default_factory=dict)
+    flagged_submissions: int = Field(0, description="Submissions whose automated risk_level was MEDIUM or HIGH")
+
+
+class ProjectListResponse(BaseModel):
+    projects: list[ProjectSummaryResponse] = Field(default_factory=list)
+    count: int = 0
+
+
+class DeadlineItem(BaseModel):
+    work_id: str
+    title: str
+    expected_completion_date: datetime
+    days_remaining: int
+    is_overdue: bool
+
+
+class ActionRequiredItem(BaseModel):
+    """A rejected submission the contractor needs to do something about.
+
+    `reason` is the reviewer's own note — the human explanation — not the
+    detector's internal evidence.
+    """
+
+    image_id: str
+    work_id: str
+    uploaded_at: datetime
+    reviewed_at: Optional[datetime] = None
+    reason: Optional[str] = None
+
+
+class DashboardSummaryResponse(BaseModel):
+    """Everything on the contractor/submitter's landing dashboard, in one
+    call — portfolio finances, project counts, and compliance standing.
+
+    Scoped to the logged-in submitter: only projects assigned to them and
+    only submissions they uploaded.
+    """
+
+    # ── Money ────────────────────────────────────────────────────────
+    financials: ProjectFinancials
+
+    # ── Portfolio ────────────────────────────────────────────────────
+    projects_assigned: int = 0
+    projects_completed: int = 0
+    projects_in_progress: int = 0
+    projects_not_started: int = 0
+    projects_cancelled: int = 0
+    projects_overdue: int = 0
+    overall_progress_percent: float = Field(
+        0.0, description="Mean of each assigned project's progress_percent (unweighted)"
+    )
+
+    # ── Compliance standing ──────────────────────────────────────────
+    total_submissions: int = 0
+    submissions_by_status: dict[str, int] = Field(default_factory=dict)
+    flagged_submissions: int = 0
+    action_required_count: int = Field(0, description="Rejected submissions needing resubmission")
+    approval_rate: float = Field(
+        0.0, description="% of decided submissions that were approved; 0.0 when none are decided yet"
+    )
+    average_risk_score: Optional[float] = Field(
+        None, description="Mean automated risk score across this submitter's submissions"
+    )
+    flag_reasons: dict[str, int] = Field(
+        default_factory=dict,
+        description=(
+            "Counts of plain-language flag categories. Deliberately NOT the raw "
+            "detector codes or their numeric evidence — see app/main.py's "
+            "_PUBLIC_FLAG_LABELS for why."
+        ),
+    )
+
+    # ── What to do next ──────────────────────────────────────────────
+    action_required: list[ActionRequiredItem] = Field(default_factory=list)
+    upcoming_deadlines: list[DeadlineItem] = Field(default_factory=list)
+
+    # ── Data-quality caveat ──────────────────────────────────────────
+    unbudgeted_submission_count: int = Field(
+        0,
+        description=(
+            "Submissions whose work_id has no Project document, so their claimed "
+            "amounts are counted in no budget. Non-zero means projects need registering."
+        ),
+    )
+
+
 # ── Admin ─────────────────────────────────────────────────────────────
 
 class AdminUserCreate(BaseModel):

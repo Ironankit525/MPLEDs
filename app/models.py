@@ -87,6 +87,89 @@ WORKFLOW_STATUSES = (
 FINAL_STAGE_STATUSES = (STATUS_APPROVED, STATUS_REJECTED, STATUS_SIGNED_OFF)
 
 
+# Lifecycle of a Project (a sanctioned MPLADS work), distinct from
+# WORKFLOW_STATUSES above — those track one *photo submission* through
+# human review; these track the *work itself* from award to completion.
+# A project can be IN_PROGRESS while individual submissions against it
+# are still PENDING_REVIEW, and vice versa.
+PROJECT_NOT_STARTED = "NOT_STARTED"
+PROJECT_IN_PROGRESS = "IN_PROGRESS"
+PROJECT_COMPLETED = "COMPLETED"
+PROJECT_CANCELLED = "CANCELLED"
+PROJECT_STATUSES = (
+    PROJECT_NOT_STARTED,
+    PROJECT_IN_PROGRESS,
+    PROJECT_COMPLETED,
+    PROJECT_CANCELLED,
+)
+
+
+class ProjectPhase(BaseModel):
+    """One milestone in a project's execution (e.g. "Foundation laid",
+    "Phase 1 receipts submitted", "Final inspection").
+
+    Deliberately NOT self-reported by the contractor: `is_complete` is
+    written only by the Reviewer/Admin endpoints, never by the submitter
+    whose payment depends on it. A contractor marking their own progress
+    would defeat the point of a verification system — progress here is
+    an assertion by the verifying officer, not by the claimant.
+    """
+
+    name: str
+    order: int = 0
+    is_complete: bool = False
+    completed_at: Optional[datetime] = None
+    completed_by_username: Optional[str] = None
+
+
+class Project(MongoDocument):
+    """A sanctioned MPLADS work — the entity that owns a budget, a
+    deadline, and an assigned contractor.
+
+    This is the missing link that makes a contractor dashboard possible.
+    Before this model existed, ``work_id`` was only ever a free-text
+    string stamped onto each ``ImageRecord``: there was nothing that
+    knew a work's budget, who it was awarded to, or when it was due, so
+    "funds remaining" / "projects assigned" / "% complete" could not be
+    computed at all. Every financial and portfolio figure on the
+    Submitter dashboard is a rollup of ImageRecords joined to this
+    document by ``work_id``.
+
+    ``work_id`` is the join key and is unique (see the index in
+    app/database.py's init_db) — ImageRecord.work_id is free-text and
+    may reference a work_id with no Project document yet (e.g. a photo
+    uploaded before the work was registered); the dashboard treats
+    those as unbudgeted rather than dropping them silently.
+    """
+
+    work_id: str
+    title: str
+    work_type: Optional[str] = None
+    district: str
+    state: Optional[str] = None
+    mp_name: Optional[str] = None
+
+    # Assignment — the contractor/agency this work is awarded to. Their
+    # dashboard is scoped by assigned_to_user_id, so an unassigned
+    # project appears on no submitter's dashboard (only the admin's).
+    assigned_to_user_id: Optional[str] = None
+    assigned_to_username: Optional[str] = None
+
+    # Budget. sanctioned_amount is the denominator for every
+    # "funds remaining"/"utilisation %" figure.
+    sanctioned_amount: float = 0.0
+
+    sanction_date: Optional[datetime] = None
+    expected_completion_date: Optional[datetime] = None
+
+    phases: List[ProjectPhase] = Field(default_factory=list)
+    status: str = PROJECT_NOT_STARTED
+
+    created_by_user_id: Optional[str] = None
+    created_by_username: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
 class User(MongoDocument):
     username: str
     password_hash: str
@@ -124,6 +207,18 @@ class ImageRecord(MongoDocument):
     state: Optional[str] = None
     mp_name: Optional[str] = None
     sanction_date: Optional[datetime] = None
+
+    # The expenditure this submission claims against its work's budget.
+    # Previously this arrived as a form field on /api/images/submit, was
+    # handed to the OCR layer to cross-check against the receipt
+    # (RECEIPT_AMOUNT_MISMATCH), and then thrown away — nothing persisted
+    # it, so no "funds utilised / remaining" figure could ever be
+    # computed. Now stored, and summed by the dashboard rollup over
+    # APPROVED/SIGNED_OFF records only (a claim that was rejected, or is
+    # still awaiting review, must not count against the budget).
+    # Optional because records stored before this field existed have no
+    # value for it; the rollup treats those as 0 rather than guessing.
+    claimed_amount: Optional[float] = None
 
     # Storage and hashing
     file_path: str

@@ -139,6 +139,9 @@ def assess_image(
     sanction_date: datetime | None,
     session: Database,
     claimed_amount: float | None = None,
+    captured_latitude: float | None = None,
+    captured_longitude: float | None = None,
+    geolocation_accuracy: float | None = None,
 ) -> RiskAssessment:
     """Run the full fraud detection pipeline on a single image.
 
@@ -170,6 +173,24 @@ def assess_image(
                         caller (scripts/evaluate_detection.py,
                         scripts/measure_latency.py, the test suite)
                         works unchanged without it.
+        captured_latitude:   Latitude reported by the submitting device's
+        captured_longitude:  browser at capture time (navigator.geolocation),
+                             if the user granted location permission. Used
+                             as a fallback for the district-distance check
+                             when the image carries no GPS EXIF. The
+                             frontend has always sent these and the record
+                             has always stored them, but until now nothing
+                             read them — so GPS_MISSING fired even when the
+                             device had reported a perfectly good location.
+        geolocation_accuracy: Reported accuracy radius in metres. Actually
+                             used, not just recorded: a fix coarser than
+                             settings.GPS_DEVICE_MAX_ACCURACY_M is discarded
+                             (an IP-derived fix can be 10-100+ km out and
+                             would otherwise cause a false GPS_DISTRICT_MISMATCH),
+                             and a usable fix's own uncertainty is subtracted
+                             from the measured distance before comparing to
+                             the threshold — see app/exif_analysis.py's
+                             _gps_district_flag.
 
     Returns:
         RiskAssessment with the full explainable result.
@@ -495,13 +516,26 @@ def assess_image(
     assessment.layers_run.append("exif")
 
     district_coords = _get_district_coords(district, session)
-    exif_flags = analyse_metadata(image_path, sanction_date, district, district_coords)
+
+    # Only treat the device fix as usable if BOTH components are present —
+    # a half-supplied pair would otherwise silently become (lat, None).
+    device_coords: tuple[float, float] | None = None
+    if captured_latitude is not None and captured_longitude is not None:
+        device_coords = (captured_latitude, captured_longitude)
+
+    exif_flags = analyse_metadata(
+        image_path, sanction_date, district, district_coords, device_coords, geolocation_accuracy
+    )
 
     # Extract metadata for the response
     gps = extract_gps(image_path)
     capture_dt = extract_capture_datetime(image_path)
     if gps:
         assessment.gps_coords = [gps[0], gps[1]]
+    elif device_coords:
+        # Report the device fix so the dashboard has coordinates to show
+        # for an EXIF-less submission instead of a blank location.
+        assessment.gps_coords = [device_coords[0], device_coords[1]]
     if capture_dt:
         assessment.capture_date = capture_dt.isoformat()
 
@@ -736,8 +770,24 @@ def _resolve_conditional_flags(assessment: RiskAssessment, pending: list[ScoredF
 
     General mechanism (Task 4): driven entirely by settings.CONDITIONAL_FLAG_WEIGHTS
     — this function never mentions a specific flag code. For each pending
-    flag, picks the "with_others" branch if ANY other flag is present on
-    the assessment, else "alone", and mutates the ScoredFlag in place.
+    flag, picks the "with_others" branch if another flag that actually
+    contributed risk (points_added > 0) is present on the assessment,
+    else "alone", and mutates the ScoredFlag in place.
+
+    Zero-point flags don't count toward "with_others" — they're purely
+    informational absences (GPS_MISSING: no location from any source,
+    scored 0), not an independent aggravating signal. Counting them
+    would mean EXIF_STRIPPED escalates to its harsher 15-point weight
+    just because a SECOND fact is also unknown, on a submission where
+    nothing actually suspicious was found — exactly the alert-fatigue
+    case this mechanism exists to avoid (see this file's module
+    docstring / the README's Risk Scoring section), and exactly what
+    happened in practice: analyse_metadata() started also reporting
+    GPS_MISSING for an EXIF-less photo with no device location either,
+    which is the common case (WhatsApp/web forms strip EXIF, and most
+    submitters won't have granted browser geolocation) — silently
+    tripping every such submission from the lenient "alone" branch to
+    "with_others" with nothing genuinely new having been found.
 
     Args:
         assessment: The in-progress RiskAssessment (already has every
@@ -754,7 +804,9 @@ def _resolve_conditional_flags(assessment: RiskAssessment, pending: list[ScoredF
         rule = settings.CONDITIONAL_FLAG_WEIGHTS.get(flag.code)
         if rule is None:
             continue  # shouldn't happen — caller only queues known codes
-        other_flags_present = any(f.code != flag.code for f in assessment.flags)
+        other_flags_present = any(
+            f.code != flag.code and f.points_added > 0 for f in assessment.flags
+        )
         branch = rule["with_others"] if other_flags_present else rule["alone"]
         flag.points_added = branch["points"]
         flag.severity = branch["severity"]

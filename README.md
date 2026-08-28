@@ -118,8 +118,8 @@ Every flag includes a `code`, `severity`, `human_message`, and `evidence` dict s
 | `EXIF_STRIPPED` | MEDIUM | No EXIF metadata (possible deliberate removal) |
 | `PHOTO_PREDATES_SANCTION` | HIGH | Photo taken before the work was sanctioned |
 | `PHOTO_FUTURE_DATED` | HIGH | Photo has a future capture date (clock manipulation) |
-| `GPS_MISSING` | LOW | No GPS coordinates in EXIF |
-| `GPS_DISTRICT_MISMATCH` | HIGH | Photo GPS is far from the claimed district |
+| `GPS_MISSING` | LOW | No location from **either** source — no GPS in EXIF *and* no location reported by the submitting device |
+| `GPS_DISTRICT_MISMATCH` | HIGH | Location is far from the claimed district. `evidence.coords_source` records whether it came from the image's EXIF (`exif`) or the browser's `navigator.geolocation` (`device`) |
 | `SOFTWARE_EDITED` | MEDIUM | EXIF indicates image editing software was used |
 | `IMAGE_TAMPERED` | HIGH | Error Level Analysis found inconsistent JPEG compression regions (splicing/copy-move/editing) |
 | `SCREENSHOT_DETECTED` | HIGH | Unnaturally uniform ELA error levels — likely a screenshot or generated image, not a camera photo |
@@ -597,6 +597,72 @@ enforced gate, not a suggestion.
 | `POST` | `/api/admin/submissions/{image_id}/override-status` | admin | Manual status correction, recorded as its own audit event |
 | `POST` | `/api/admin/submissions/bulk-override-status` | admin | The same override applied to many submissions at once |
 | `GET` | `/api/admin/activity` | admin | Recent submit/review/sign-off/override events |
+
+### Where location comes from, and what it proves
+
+The district-distance check uses **EXIF GPS when the image carries it,
+and the submitting device's browser location (`navigator.geolocation`,
+sent as `captured_latitude`/`captured_longitude`) when it doesn't.**
+Most legitimate upload paths — WhatsApp, web forms, in-browser canvas
+capture — strip EXIF entirely, so an EXIF-only check simply never ran
+for them. `GPS_MISSING` now means "no location from either source",
+and every `GPS_DISTRICT_MISMATCH` records which source it used in
+`evidence.coords_source`.
+
+**Neither source is proof.** EXIF GPS can be written by anyone with
+`piexif` (this project's own retracted calibration corpus did exactly
+that — see the Calibration section), and browser coordinates are
+supplied by the client and can be overridden in devtools or by a mock
+location provider. They raise the cost of a false location claim; they
+do not verify one. Genuine capture attestation needs a native app with
+Play Integrity / App Attest, which this module does not have.
+
+The upload UI offers **"Take a photo"** (a file input with
+`capture="environment"`, which opens the phone's rear camera) alongside
+**"Choose from device"**. The native camera path is deliberate: an
+in-page `getUserMedia` + `<canvas>` capture produces a JPEG with **no
+EXIF at all**, so every honest in-app photo would arrive stripped of
+the camera model, timestamp and GPS the detection layers depend on —
+and would trip `EXIF_STRIPPED`. The native camera returns a real camera
+JPEG with its metadata intact. On desktop, `capture` is ignored and the
+button falls back to an ordinary file picker.
+
+### GPS accuracy is used, not just collected
+
+`navigator.geolocation` reports GPS-chip (~5–20 m), WiFi (~20–100 m),
+cell-tower (~0.5–5 km), and **IP geolocation** (routinely 10–100+ km,
+and can resolve to an ISP hub in a different city) through the
+identical API — a desktop submitter, or a phone that denied precise
+location, can trigger any of them. The browser also reports an
+`accuracy` radius (metres) alongside the coordinates, and the district
+check uses it two ways:
+
+- A fix coarser than `GPS_DEVICE_MAX_ACCURACY_M` (50 km, matching
+  `GPS_MAX_DISTANCE_KM` — once uncertainty is as large as the whole
+  tolerance, the fix carries no information about the question being
+  asked) is **discarded outright**, treated as if no device location
+  had been reported at all, rather than compared to the district.
+- A usable fix's own accuracy is **subtracted from the measured
+  distance** before comparing to the threshold — a fix reporting "52 km
+  away, ±10 km" could genuinely be 42 km away, so it is not accused of
+  being outside the district. This only ever reduces the effective
+  distance, never manufactures a flag; `GPS_DISTRICT_MISMATCH`'s
+  evidence always includes the raw `distance_km`, the `accuracy_km`
+  applied, and the resulting `effective_distance_km` together, so a
+  reviewer sees the reasoning, not just the verdict.
+
+This only applies to the device-location fallback — EXIF GPS carries
+no comparable accuracy figure and is never adjusted.
+
+**Known limitation, not yet fixed:** `GPS_MAX_DISTANCE_KM` (50 km) is
+one global radius from a district *centre point*, never empirically
+calibrated (`scripts/calibrate_thresholds.py` covers pHash and CLIP
+only). Several real districts exceed it — Pune's equivalent radius is
+~70 km, Nagpur ~56 km, Jaipur ~60 km — so a genuine photo at the edge
+of one of those can still be flagged. It is simultaneously far too
+loose for small districts (Chennai's equivalent radius is ~12 km).
+Fixing this properly needs district boundary polygons, or at minimum a
+per-district radius, not one number for every district.
 
 ### Auth + camera-session anti-fraud gate
 

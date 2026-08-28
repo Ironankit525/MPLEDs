@@ -94,7 +94,13 @@ def init_db() -> None:
     db.users.create_index("username", unique=True)
     db.sessions.create_index("token", unique=True)
     db.image_records.create_index("work_id")
-    
+
+    # Projects: work_id is the join key from ImageRecord.work_id and must
+    # identify exactly one work, hence unique. assigned_to_user_id is the
+    # filter behind every submitter-dashboard query.
+    db.projects.create_index("work_id", unique=True)
+    db.projects.create_index("assigned_to_user_id")
+
     logger.info("MongoDB indexes verified.")
 
     # Seed districts

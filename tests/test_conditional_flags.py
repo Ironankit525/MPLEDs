@@ -51,7 +51,15 @@ def _make_image(path: Path, seed: int = 0) -> Path:
 
 class TestConditionalExifWeight:
     def test_exif_stripped_alone_scores_five_points_low(self, db_session: Database, tmp_path: Path) -> None:
-        """No EXIF, no other flags -> the 'alone' branch: 5 pts, LOW."""
+        """No EXIF, no other RISK-CARRYING flag -> the 'alone' branch: 5
+        pts, LOW. GPS_MISSING also fires here (no EXIF GPS and no device
+        location were provided either), but it's a zero-point
+        informational flag — a second unknown fact, not an independent
+        aggravating one — so it must not itself trip EXIF_STRIPPED into
+        the harsher 'with_others' branch. See
+        _resolve_conditional_flags's docstring for why "other flag
+        present" is defined by points_added > 0, not just any co-occurring
+        code."""
         image_path = _make_image(tmp_path / "solo.jpg", seed=1)
 
         # Disable CLIP and ELA so only EXIF flags fire
@@ -72,7 +80,8 @@ class TestConditionalExifWeight:
         assert len(exif_flags) == 1
         assert exif_flags[0].points_added == 5
         assert exif_flags[0].severity == "LOW"
-        assert len(assessment.flags) == 1, f"Expected only EXIF_STRIPPED, got {[f.code for f in assessment.flags]}"
+        assert {f.code for f in assessment.flags} == {"EXIF_STRIPPED", "GPS_MISSING"}
+        assert next(f for f in assessment.flags if f.code == "GPS_MISSING").points_added == 0
         assert assessment.risk_score == 5
         assert assessment.risk_level == "LOW"
 

@@ -128,7 +128,37 @@ class Settings(BaseSettings):
 
     # 50 km is generous enough to cover large districts while catching
     # blatant cross-district fraud (photos 200-400+ km away).
+    #
+    # KNOWN LIMITATION, not yet fixed: this is a single global radius
+    # measured from a district CENTRE point, and several real districts
+    # are larger than it — Pune (~15,600 km2) has an equivalent radius
+    # of ~70 km, Nagpur ~56 km, Jaipur ~60 km. A genuine photo taken at
+    # the edge of one of those would sit beyond 50 km from the centroid
+    # and be flagged HIGH. Conversely it is far too loose for small
+    # districts (Chennai's equivalent radius is ~12 km, so 50 km spans
+    # several neighbouring districts). Properly fixing this needs
+    # district boundary polygons, or at minimum a per-district radius,
+    # rather than one number for all of them. This value has also never
+    # been empirically calibrated — scripts/calibrate_thresholds.py
+    # covers pHash and CLIP only, and merely COUNTS GPS-bearing photos
+    # as a corpus gate.
     GPS_MAX_DISTANCE_KM: float = 50.0
+
+    # A browser's navigator.geolocation fix can come from a GPS chip
+    # (~5-20 m), WiFi positioning (~20-100 m), cell towers (~0.5-5 km),
+    # or — on a desktop, or when precise location is denied — from IP
+    # geolocation, which is routinely 10-100+ km out and can resolve to
+    # an ISP hub in an entirely different city. All of these arrive
+    # through the same API; only the reported `accuracy` radius tells
+    # them apart.
+    #
+    # Above this bound the fix cannot distinguish "inside the district"
+    # from "outside" at all, so it is not used for the district check
+    # (the submission is treated as having no device location rather
+    # than being judged on a guess). Set equal to GPS_MAX_DISTANCE_KM:
+    # once the uncertainty is as large as the entire tolerance, the
+    # measurement carries no information about the question being asked.
+    GPS_DEVICE_MAX_ACCURACY_M: float = 50_000.0
 
     # ── ELA (Error Level Analysis) ───────────────────────────────────
 

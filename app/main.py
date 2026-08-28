@@ -49,10 +49,16 @@ from app.models import (
     STATUS_SIGNED_OFF,
     FINAL_STAGE_STATUSES,
     WORKFLOW_STATUSES,
+    PROJECT_NOT_STARTED,
+    PROJECT_IN_PROGRESS,
+    PROJECT_COMPLETED,
+    PROJECT_CANCELLED,
+    PROJECT_STATUSES,
 )
 from app.auth import get_current_user, create_access_token, get_password_hash, verify_password, require_role
 from app.risk_engine import assess_image, RiskAssessment, ScoredFlag
 from app.schemas import (
+    ActionRequiredItem,
     ActivityEvent,
     ActivityLogResponse,
     AdminUserCreate,
@@ -60,7 +66,17 @@ from app.schemas import (
     AdminUserResponse,
     BulkStatusOverrideRequest,
     BulkStatusOverrideResponse,
+    DashboardSummaryResponse,
+    DeadlineItem,
     DuplicateCluster,
+    PhaseCompleteRequest,
+    ProjectAssignRequest,
+    ProjectCreateRequest,
+    ProjectFinancials,
+    ProjectListResponse,
+    ProjectPhaseSchema,
+    ProjectStatusUpdateRequest,
+    ProjectSummaryResponse,
     DuplicatesResponse,
     ErrorResponse,
     FlagResponse,
@@ -296,6 +312,7 @@ def _store_image_record(
     storage_path: str,
     session: Database,
     current_user: dict,
+    claimed_amount: float | None = None,
     captured_latitude: float | None = None,
     captured_longitude: float | None = None,
     geolocation_accuracy: float | None = None,
@@ -340,6 +357,7 @@ def _store_image_record(
         "state": state,
         "mp_name": mp_name,
         "sanction_date": sanction_date,
+        "claimed_amount": claimed_amount,
         "file_path": storage_path,
         "sha256": assessment.sha256 or "",
         "phash": assessment.phash or "",
@@ -390,6 +408,12 @@ async def check_image(
     mp_name: Optional[str] = Form(None),
     sanction_date: Optional[str] = Form(None),
     claimed_amount: Optional[float] = Form(None),
+    # Accepted here too so the dry run genuinely mirrors /submit — without
+    # these, /check would report GPS_MISSING on a submission that /submit
+    # would score fine, which defeats the point of a preview.
+    captured_latitude: Optional[float] = Form(None),
+    captured_longitude: Optional[float] = Form(None),
+    geolocation_accuracy: Optional[float] = Form(None),
     db: Database = Depends(get_db),
     current_user: dict = Depends(require_role(ROLE_SUBMITTER, ROLE_ADMIN)),
 ) -> RiskAssessmentResponse:
@@ -419,6 +443,9 @@ async def check_image(
             sanction_date=parsed_date,
             session=db,
             claimed_amount=claimed_amount,
+            captured_latitude=captured_latitude,
+            captured_longitude=captured_longitude,
+            geolocation_accuracy=geolocation_accuracy,
         )
         return _assessment_to_response(assessment)
     except ImageProcessingError as e:
@@ -478,6 +505,9 @@ async def submit_image(
             sanction_date=parsed_date,
             session=db,
             claimed_amount=claimed_amount,
+            captured_latitude=captured_latitude,
+            captured_longitude=captured_longitude,
+            geolocation_accuracy=geolocation_accuracy,
         )
 
         # Check and consume the session token if provided
@@ -520,6 +550,7 @@ async def submit_image(
             storage_path=final_storage_path,
             session=db,
             current_user=current_user,
+            claimed_amount=claimed_amount,
             captured_latitude=captured_latitude,
             captured_longitude=captured_longitude,
             geolocation_accuracy=geolocation_accuracy,
@@ -897,6 +928,496 @@ async def sign_off_submission(
         },
     )
     return _record_to_response(db.image_records.find_one({"_id": oid}))
+
+
+# ── Projects & the Submitter (contractor) dashboard ─────────────────
+# A Project is the entity that owns a budget, a deadline, and an
+# assignee — see app/models.py's Project docstring for why none of the
+# contractor dashboard's financial or portfolio figures were computable
+# before it existed.
+#
+# Every aggregate below is a plain Python loop over find() results
+# rather than a Mongo aggregation pipeline, matching the deliberate
+# choice already documented above /api/stakeholder/overview: it keeps
+# these endpoints correct against both real MongoDB and the mongomock
+# the test suite runs on, whose aggregation-operator support is partial.
+
+# Plain-language categories shown to the CONTRACTOR in place of raw
+# detector output. This is a security boundary, not just wording: a
+# flag's `evidence` dict carries the exact numbers that produced it
+# (pHash Hamming distance vs. threshold, GPS radius in km, CLIP cosine
+# similarity). Handing those to the person being screened tells them
+# precisely how much further to crop, or how far off-site they can
+# stray, before the next upload clears — it turns the detector into a
+# tuning aid for evasion.
+#
+# The reviewer/stakeholder/admin surfaces are unchanged and still return
+# full evidence; only this submitter-facing rollup is reduced to
+# categories. An unrecognised code falls back to a generic label rather
+# than leaking the raw code itself.
+_PUBLIC_FLAG_LABELS: dict[str, str] = {
+    "EXACT_DUPLICATE": "Photo already submitted for another work",
+    "PERCEPTUAL_DUPLICATE": "Photo already submitted for another work",
+    "PERCEPTUAL_SUSPICIOUS": "Photo closely resembles an earlier submission",
+    "SEMANTIC_DUPLICATE": "Photo shows a site already submitted for another work",
+    "SEMANTIC_SUSPICIOUS": "Photo resembles a site submitted for another work",
+    "CROSS_DISTRICT_MATCH": "Matching photo belongs to a different district",
+    "CROSS_MP_MATCH": "Matching photo belongs to a different constituency",
+    "CONTENT_MISMATCH": "Photo may not show the declared type of work",
+    "CONTENT_MISMATCH_SEVERE": "Photo does not show the declared type of work",
+    "EXIF_STRIPPED": "Photo metadata is missing",
+    "GPS_MISSING": "Photo has no location data",
+    "GPS_DISTRICT_MISMATCH": "Photo location does not match the work site",
+    "PHOTO_PREDATES_SANCTION": "Photo was taken before the work was sanctioned",
+    "PHOTO_FUTURE_DATED": "Photo carries an invalid capture date",
+    "SOFTWARE_EDITED": "Photo was processed with image-editing software",
+    "IMAGE_TAMPERED": "Photo shows signs of editing",
+    "SCREENSHOT_DETECTED": "File appears to be a screenshot, not a camera photo",
+    "PHOTO_OF_PHOTO": "Appears to be a photo of a printed photo or a screen",
+    "RECEIPT_AMOUNT_MISMATCH": "Receipt amount does not match the claimed amount",
+    "RECEIPT_DATE_BEFORE_SANCTION": "Receipt is dated before the work was sanctioned",
+}
+_GENERIC_FLAG_LABEL = "Flagged for manual verification"
+
+# risk_level values that count as "flagged" on the contractor's view.
+_FLAGGED_RISK_LEVELS = ("MEDIUM", "HIGH")
+
+
+def _as_utc(value: Optional[datetime]) -> Optional[datetime]:
+    """Normalise a datetime read back from Mongo to timezone-aware UTC.
+
+    PyMongo returns naive datetimes (BSON has no offset), so comparing
+    one against datetime.now(timezone.utc) raises TypeError. Same
+    normalisation the stakeholder overview does inline.
+    """
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value
+
+
+def _compute_financials(records: list[dict], sanctioned_amount: float) -> ProjectFinancials:
+    """Roll a set of submissions up into the money figures.
+
+    Bucketed by each submission's workflow status so that a claim which
+    was rejected, or is still sitting in the review queue, never counts
+    as spent — see ProjectFinancials' docstring for the exact
+    definitions. Records with no claimed_amount (submitted before that
+    field was persisted) contribute 0 rather than being guessed at.
+    """
+    disbursed = 0.0
+    pending_disbursement = 0.0
+    awaiting_decision = 0.0
+    rejected = 0.0
+
+    for r in records:
+        amount = r.get("claimed_amount") or 0.0
+        status_val = r.get("status") or STATUS_PENDING_REVIEW
+        if status_val == STATUS_SIGNED_OFF:
+            disbursed += amount
+        elif status_val == STATUS_APPROVED:
+            pending_disbursement += amount
+        elif status_val == STATUS_REJECTED:
+            rejected += amount
+        else:  # PENDING_REVIEW / IN_REVIEW
+            awaiting_decision += amount
+
+    utilised = disbursed + pending_disbursement
+    return ProjectFinancials(
+        sanctioned_amount=round(sanctioned_amount, 2),
+        amount_utilised=round(utilised, 2),
+        amount_disbursed=round(disbursed, 2),
+        amount_pending_disbursement=round(pending_disbursement, 2),
+        amount_awaiting_decision=round(awaiting_decision, 2),
+        amount_rejected=round(rejected, 2),
+        amount_remaining=round(sanctioned_amount - utilised, 2),
+        utilisation_percent=round((utilised / sanctioned_amount) * 100, 1) if sanctioned_amount else 0.0,
+    )
+
+
+def _project_progress(project: dict) -> tuple[float, str]:
+    """Return (percent, basis) for a project's completion.
+
+    Phase-derived when milestones are defined. With no phases there is
+    nothing real to measure, so it falls back to the coarse
+    status-derived value and says so via `basis` — reporting a
+    confident-looking 0%/100% without flagging which of the two
+    calculations produced it would be misleading on a dashboard whose
+    whole purpose is to be trusted.
+    """
+    phases = project.get("phases") or []
+    if phases:
+        complete = sum(1 for p in phases if p.get("is_complete"))
+        return round((complete / len(phases)) * 100, 1), "phases"
+    return (100.0 if project.get("status") == PROJECT_COMPLETED else 0.0), "status"
+
+
+def _project_to_summary(project: dict, records: list[dict]) -> ProjectSummaryResponse:
+    """Build one project's dashboard row from the project document and
+    the submissions made against it."""
+    now = datetime.now(timezone.utc)
+    expected = _as_utc(project.get("expected_completion_date"))
+    status_val = project.get("status") or PROJECT_NOT_STARTED
+
+    days_remaining = None
+    is_overdue = False
+    if expected is not None:
+        days_remaining = (expected - now).days
+        # A finished or abandoned work can't be "overdue" — only live
+        # ones can still be late.
+        is_overdue = expected < now and status_val not in (PROJECT_COMPLETED, PROJECT_CANCELLED)
+
+    by_status: dict[str, int] = dict.fromkeys(WORKFLOW_STATUSES, 0)
+    flagged = 0
+    for r in records:
+        by_status[r.get("status") or STATUS_PENDING_REVIEW] = (
+            by_status.get(r.get("status") or STATUS_PENDING_REVIEW, 0) + 1
+        )
+        if r.get("risk_level") in _FLAGGED_RISK_LEVELS:
+            flagged += 1
+
+    progress, basis = _project_progress(project)
+
+    return ProjectSummaryResponse(
+        work_id=project["work_id"],
+        title=project.get("title", ""),
+        work_type=project.get("work_type"),
+        district=project.get("district", ""),
+        status=status_val,
+        assigned_to_username=project.get("assigned_to_username"),
+        financials=_compute_financials(records, project.get("sanctioned_amount") or 0.0),
+        phases=[ProjectPhaseSchema(**p) for p in sorted(project.get("phases") or [], key=lambda p: p.get("order", 0))],
+        progress_percent=progress,
+        progress_basis=basis,
+        sanction_date=project.get("sanction_date"),
+        expected_completion_date=project.get("expected_completion_date"),
+        is_overdue=is_overdue,
+        days_remaining=days_remaining,
+        total_submissions=len(records),
+        submissions_by_status=by_status,
+        flagged_submissions=flagged,
+    )
+
+
+def _resolve_assignee(db: Database, username: Optional[str]) -> tuple[Optional[str], Optional[str]]:
+    """Look up (user_id, username) for an assignment, or (None, None) to
+    unassign. 404s on an unknown username rather than silently creating
+    a project nobody can see."""
+    if not username:
+        return None, None
+    user = db.users.find_one({"username": username})
+    if not user:
+        raise HTTPException(status_code=404, detail=f"No user named '{username}'.")
+    return str(user["_id"]), user["username"]
+
+
+@app.post(
+    "/api/admin/projects",
+    response_model=ProjectSummaryResponse,
+    summary="Register a sanctioned work",
+    description="Creates a Project — the budget/deadline/assignee record that the contractor dashboard rolls up against.",
+)
+async def create_project(
+    body: ProjectCreateRequest,
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_ADMIN)),
+) -> ProjectSummaryResponse:
+    if db.projects.find_one({"work_id": body.work_id}):
+        raise HTTPException(status_code=409, detail=f"A project already exists for work_id '{body.work_id}'.")
+
+    assignee_id, assignee_name = _resolve_assignee(db, body.assigned_to_username)
+
+    doc = {
+        "work_id": body.work_id,
+        "title": body.title,
+        "work_type": body.work_type,
+        "district": body.district,
+        "state": body.state,
+        "mp_name": body.mp_name,
+        "assigned_to_user_id": assignee_id,
+        "assigned_to_username": assignee_name,
+        "sanctioned_amount": body.sanctioned_amount,
+        "sanction_date": body.sanction_date,
+        "expected_completion_date": body.expected_completion_date,
+        "phases": [
+            {"name": name, "order": i, "is_complete": False, "completed_at": None, "completed_by_username": None}
+            for i, name in enumerate(body.phase_names)
+        ],
+        "status": PROJECT_NOT_STARTED,
+        "created_by_user_id": current_user.get("id"),
+        "created_by_username": current_user.get("username"),
+        "created_at": datetime.now(timezone.utc),
+    }
+    result = db.projects.insert_one(doc)
+    doc["_id"] = result.inserted_id
+
+    # A brand-new project has no submissions yet, but reuse the same
+    # builder so the response shape can never drift from the list view's.
+    records = list(db.image_records.find({"work_id": body.work_id}))
+    return _project_to_summary(doc, records)
+
+
+@app.get(
+    "/api/admin/projects",
+    response_model=ProjectListResponse,
+    summary="List all projects",
+    description="Every registered work with its financial and progress rollup — the Admin's project register.",
+)
+async def list_all_projects(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_ADMIN)),
+) -> ProjectListResponse:
+    projects = list(db.projects.find().sort("created_at", -1))
+    records_by_work: dict[str, list[dict]] = {}
+    for r in db.image_records.find({}, {"work_id": 1, "status": 1, "risk_level": 1, "claimed_amount": 1}):
+        records_by_work.setdefault(r.get("work_id"), []).append(r)
+
+    summaries = [_project_to_summary(p, records_by_work.get(p["work_id"], [])) for p in projects]
+    return ProjectListResponse(projects=summaries, count=len(summaries))
+
+
+@app.patch(
+    "/api/admin/projects/{work_id}/assign",
+    response_model=ProjectSummaryResponse,
+    summary="Assign or reassign a work",
+    description="Awards a project to a contractor (or unassigns it with a null username).",
+)
+async def assign_project(
+    work_id: str,
+    body: ProjectAssignRequest,
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_ADMIN)),
+) -> ProjectSummaryResponse:
+    project = db.projects.find_one({"work_id": work_id})
+    if not project:
+        raise HTTPException(status_code=404, detail=f"No project for work_id '{work_id}'.")
+
+    assignee_id, assignee_name = _resolve_assignee(db, body.assigned_to_username)
+    db.projects.update_one(
+        {"work_id": work_id},
+        {"$set": {"assigned_to_user_id": assignee_id, "assigned_to_username": assignee_name}},
+    )
+    updated = db.projects.find_one({"work_id": work_id})
+    return _project_to_summary(updated, list(db.image_records.find({"work_id": work_id})))
+
+
+@app.patch(
+    "/api/admin/projects/{work_id}/status",
+    response_model=ProjectSummaryResponse,
+    summary="Set a project's lifecycle status",
+    description="NOT_STARTED / IN_PROGRESS / COMPLETED / CANCELLED. Distinct from a submission's review status.",
+)
+async def update_project_status(
+    work_id: str,
+    body: ProjectStatusUpdateRequest,
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_ADMIN)),
+) -> ProjectSummaryResponse:
+    project = db.projects.find_one({"work_id": work_id})
+    if not project:
+        raise HTTPException(status_code=404, detail=f"No project for work_id '{work_id}'.")
+
+    db.projects.update_one({"work_id": work_id}, {"$set": {"status": body.status}})
+    updated = db.projects.find_one({"work_id": work_id})
+    return _project_to_summary(updated, list(db.image_records.find({"work_id": work_id})))
+
+
+@app.patch(
+    "/api/projects/{work_id}/phases/{order}",
+    response_model=ProjectSummaryResponse,
+    summary="Mark a project milestone complete",
+    description="Reviewer/Admin only — a contractor cannot mark their own progress, since progress drives payment.",
+)
+async def set_phase_completion(
+    work_id: str,
+    order: int,
+    body: PhaseCompleteRequest,
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(require_role(ROLE_REVIEWER, ROLE_ADMIN)),
+) -> ProjectSummaryResponse:
+    """Deliberately gated to Reviewer/Admin, not the assigned submitter.
+
+    Progress percentage feeds the funds/completion view an oversight body
+    reads, so letting the contractor set it would let the claimant
+    certify their own work — the exact conflict of interest this module
+    exists to remove.
+    """
+    project = db.projects.find_one({"work_id": work_id})
+    if not project:
+        raise HTTPException(status_code=404, detail=f"No project for work_id '{work_id}'.")
+
+    phases = project.get("phases") or []
+    target = next((p for p in phases if p.get("order") == order), None)
+    if target is None:
+        raise HTTPException(status_code=404, detail=f"Project '{work_id}' has no phase with order {order}.")
+
+    target["is_complete"] = body.is_complete
+    target["completed_at"] = datetime.now(timezone.utc) if body.is_complete else None
+    target["completed_by_username"] = current_user.get("username") if body.is_complete else None
+
+    db.projects.update_one({"work_id": work_id}, {"$set": {"phases": phases}})
+    updated = db.projects.find_one({"work_id": work_id})
+    return _project_to_summary(updated, list(db.image_records.find({"work_id": work_id})))
+
+
+@app.get(
+    "/api/projects/mine",
+    response_model=ProjectListResponse,
+    summary="My assigned projects",
+    description="Every work awarded to the logged-in contractor, with per-project budget, progress, and submission counts.",
+)
+async def get_my_projects(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(get_current_user),
+) -> ProjectListResponse:
+    projects = list(db.projects.find({"assigned_to_user_id": current_user["id"]}))
+
+    # Scope submissions to the caller's OWN uploads, not every upload
+    # against the work_id: another agency's submission on a shared work
+    # is not this contractor's to see (same own-files-only rule
+    # /api/images/mine follows).
+    records_by_work: dict[str, list[dict]] = {}
+    for r in db.image_records.find(
+        {"submitted_by_user_id": current_user["id"]},
+        {"work_id": 1, "status": 1, "risk_level": 1, "claimed_amount": 1},
+    ):
+        records_by_work.setdefault(r.get("work_id"), []).append(r)
+
+    summaries = [_project_to_summary(p, records_by_work.get(p["work_id"], [])) for p in projects]
+    summaries.sort(key=lambda s: (not s.is_overdue, s.work_id))  # overdue first
+    return ProjectListResponse(projects=summaries, count=len(summaries))
+
+
+@app.get(
+    "/api/dashboard/summary",
+    response_model=DashboardSummaryResponse,
+    summary="Contractor dashboard summary",
+    description="One call for the whole Submitter landing page: portfolio finances, project counts, compliance standing, and what needs action.",
+)
+async def get_dashboard_summary(
+    db: Database = Depends(get_db),
+    current_user: dict = Depends(get_current_user),
+) -> DashboardSummaryResponse:
+    """Portfolio rollup for the logged-in contractor.
+
+    Scoped two ways at once — projects assigned to this user, and
+    submissions uploaded by this user. Submissions whose work_id has no
+    Project document can't be attributed to any budget; rather than
+    dropping them silently (which would make the money figures quietly
+    understate reality) they're counted in unbudgeted_submission_count
+    so the dashboard can say so.
+    """
+    user_id = current_user["id"]
+    projects = list(db.projects.find({"assigned_to_user_id": user_id}))
+    my_work_ids = {p["work_id"] for p in projects}
+
+    all_my_records = list(db.image_records.find({"submitted_by_user_id": user_id}))
+
+    budgeted_records: list[dict] = []
+    unbudgeted_count = 0
+    records_by_work: dict[str, list[dict]] = {}
+    for r in all_my_records:
+        work_id = r.get("work_id")
+        if work_id in my_work_ids:
+            budgeted_records.append(r)
+            records_by_work.setdefault(work_id, []).append(r)
+        else:
+            unbudgeted_count += 1
+
+    # ── Money ────────────────────────────────────────────────────────
+    total_sanctioned = sum(p.get("sanctioned_amount") or 0.0 for p in projects)
+    financials = _compute_financials(budgeted_records, total_sanctioned)
+
+    # ── Portfolio ────────────────────────────────────────────────────
+    now = datetime.now(timezone.utc)
+    counts = dict.fromkeys(PROJECT_STATUSES, 0)
+    overdue = 0
+    progress_values: list[float] = []
+    deadlines: list[DeadlineItem] = []
+
+    for p in projects:
+        status_val = p.get("status") or PROJECT_NOT_STARTED
+        counts[status_val] = counts.get(status_val, 0) + 1
+
+        percent, _basis = _project_progress(p)
+        progress_values.append(percent)
+
+        expected = _as_utc(p.get("expected_completion_date"))
+        if expected is not None and status_val not in (PROJECT_COMPLETED, PROJECT_CANCELLED):
+            days = (expected - now).days
+            if expected < now:
+                overdue += 1
+            deadlines.append(
+                DeadlineItem(
+                    work_id=p["work_id"],
+                    title=p.get("title", ""),
+                    expected_completion_date=p["expected_completion_date"],
+                    days_remaining=days,
+                    is_overdue=expected < now,
+                )
+            )
+
+    deadlines.sort(key=lambda d: d.days_remaining)
+
+    # ── Compliance standing ──────────────────────────────────────────
+    by_status: dict[str, int] = dict.fromkeys(WORKFLOW_STATUSES, 0)
+    flagged = 0
+    risk_scores: list[int] = []
+    flag_reasons: dict[str, int] = {}
+    action_required: list[ActionRequiredItem] = []
+
+    for r in all_my_records:
+        status_val = r.get("status") or STATUS_PENDING_REVIEW
+        by_status[status_val] = by_status.get(status_val, 0) + 1
+
+        if r.get("risk_level") in _FLAGGED_RISK_LEVELS:
+            flagged += 1
+
+        score = r.get("risk_score")
+        if score is not None:
+            risk_scores.append(score)
+
+        for f in r.get("flags") or []:
+            label = _PUBLIC_FLAG_LABELS.get(f.get("code"), _GENERIC_FLAG_LABEL)
+            flag_reasons[label] = flag_reasons.get(label, 0) + 1
+
+        if status_val == STATUS_REJECTED:
+            action_required.append(
+                ActionRequiredItem(
+                    image_id=str(r["_id"]),
+                    work_id=r.get("work_id", ""),
+                    uploaded_at=r["uploaded_at"],
+                    reviewed_at=r.get("reviewed_at"),
+                    reason=r.get("reviewer_notes"),
+                )
+            )
+
+    action_required.sort(key=lambda a: a.uploaded_at, reverse=True)
+
+    decided = by_status.get(STATUS_APPROVED, 0) + by_status.get(STATUS_SIGNED_OFF, 0) + by_status.get(STATUS_REJECTED, 0)
+    approved = by_status.get(STATUS_APPROVED, 0) + by_status.get(STATUS_SIGNED_OFF, 0)
+
+    return DashboardSummaryResponse(
+        financials=financials,
+        projects_assigned=len(projects),
+        projects_completed=counts.get(PROJECT_COMPLETED, 0),
+        projects_in_progress=counts.get(PROJECT_IN_PROGRESS, 0),
+        projects_not_started=counts.get(PROJECT_NOT_STARTED, 0),
+        projects_cancelled=counts.get(PROJECT_CANCELLED, 0),
+        projects_overdue=overdue,
+        overall_progress_percent=round(sum(progress_values) / len(progress_values), 1) if progress_values else 0.0,
+        total_submissions=len(all_my_records),
+        submissions_by_status=by_status,
+        flagged_submissions=flagged,
+        action_required_count=len(action_required),
+        approval_rate=round((approved / decided) * 100, 1) if decided else 0.0,
+        average_risk_score=round(sum(risk_scores) / len(risk_scores), 1) if risk_scores else None,
+        flag_reasons=flag_reasons,
+        action_required=action_required[:20],
+        upcoming_deadlines=deadlines[:10],
+        unbudgeted_submission_count=unbudgeted_count,
+    )
 
 
 # ── Admin: user management & full override control ──────────────────

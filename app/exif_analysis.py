@@ -233,11 +233,75 @@ def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return R * c
 
 
+def _gps_district_flag(
+    lat: float,
+    lon: float,
+    district: str | None,
+    district_coords: tuple[float, float],
+    source: str,
+    accuracy_km: float | None = None,
+) -> Flag | None:
+    """Flag coordinates that sit too far from the claimed district centre.
+
+    ``source`` records where the coordinates came from ("exif" or
+    "device") — both are ultimately client-supplied and neither is
+    proof (this project's own README documents a corpus whose GPS EXIF
+    was fabricated with piexif), but a reviewer should be able to see
+    which one the finding rests on.
+
+    ``accuracy_km`` (device fixes only — EXIF GPS doesn't report one)
+    is subtracted from the measured distance before comparing to the
+    threshold, giving the submission the benefit of a device fix's own
+    stated uncertainty rather than treating it as exact. A fix reporting
+    "52 km away, +/- 10 km" could genuinely be 42 km away — inside the
+    district — so it is not accused of being outside it. This only ever
+    REDUCES the effective distance, so it can prevent a flag but never
+    manufacture one; the raw measured distance is still recorded in the
+    evidence either way.
+    """
+    dist_km = haversine_km(lat, lon, district_coords[0], district_coords[1])
+    effective_km = dist_km - accuracy_km if accuracy_km is not None else dist_km
+    if effective_km <= settings.GPS_MAX_DISTANCE_KM:
+        return None
+
+    where = (
+        "Photograph GPS coordinates are"
+        if source == "exif"
+        else "The location reported by the submitting device is"
+    )
+    uncertainty_note = (
+        f" (accounting for the device's own reported accuracy of "
+        f"+/-{accuracy_km:.1f} km)"
+        if accuracy_km is not None
+        else ""
+    )
+    return Flag(
+        code="GPS_DISTRICT_MISMATCH",
+        severity="HIGH",
+        human_message=(
+            f"{where} {dist_km:.1f} km from the "
+            f"claimed district ({district}){uncertainty_note}. The maximum "
+            f"allowed distance is {settings.GPS_MAX_DISTANCE_KM} km."
+        ),
+        evidence={
+            "photo_coords": [lat, lon],
+            "coords_source": source,
+            "district_centre": [district_coords[0], district_coords[1]],
+            "distance_km": round(dist_km, 1),
+            "accuracy_km": round(accuracy_km, 1) if accuracy_km is not None else None,
+            "effective_distance_km": round(effective_km, 1),
+            "threshold_km": settings.GPS_MAX_DISTANCE_KM,
+        },
+    )
+
+
 def analyse_metadata(
     image_path: str,
     sanction_date: datetime | None,
     district: str | None,
     district_coords: tuple[float, float] | None = None,
+    device_coords: tuple[float, float] | None = None,
+    device_accuracy_m: float | None = None,
 ) -> list[Flag]:
     """Run all metadata anomaly checks on a single image.
 
@@ -252,12 +316,49 @@ def analyse_metadata(
         district:        Claimed district name (for GPS comparison).
         district_coords: (lat, lon) of the district centre.  If not
                          provided, GPS distance check is skipped.
+        device_coords:   (lat, lon) reported by the submitting device's
+                         browser at capture time, if the user granted
+                         location permission.  Used as a fallback when
+                         the image itself carries no GPS EXIF — many
+                         legitimate paths (WhatsApp, web upload forms,
+                         in-browser camera capture) strip EXIF entirely,
+                         so without this the district check would simply
+                         never run for them.
+        device_accuracy_m: Accuracy radius (metres) the browser reported
+                         alongside device_coords. navigator.geolocation
+                         returns this for GPS, WiFi, cell-tower, AND IP
+                         geolocation alike — IP-based fixes are routinely
+                         tens to 100+ km out, so without this a desktop
+                         submitter (or a phone that denied precise
+                         location) could get GPS_DISTRICT_MISMATCH from
+                         nothing more than an ISP hub in another city.
+                         A fix coarser than settings.GPS_DEVICE_MAX_ACCURACY_M
+                         is discarded entirely (treated as no device
+                         location); a usable fix's own accuracy is
+                         subtracted from the measured distance before
+                         comparing to the threshold — see
+                         _gps_district_flag's docstring.
 
     Returns:
         List of Flag objects (may be empty if no issues found).
     """
     flags: list[Flag] = []
     exif = extract_exif(image_path)
+
+    # A fix this imprecise cannot distinguish "inside the district" from
+    # "outside" at all — discard it up front so every check below
+    # (GPS_MISSING's fallback, the district-distance check) treats this
+    # submission exactly as if no device location had been reported.
+    device_location_too_imprecise = False
+    if device_coords is not None and device_accuracy_m is not None:
+        if device_accuracy_m > settings.GPS_DEVICE_MAX_ACCURACY_M:
+            device_location_too_imprecise = True
+            device_coords = None
+    accuracy_km = (
+        device_accuracy_m / 1000.0
+        if device_coords is not None and device_accuracy_m is not None
+        else None
+    )
 
     # ── Check 1: EXIF presence ───────────────────────────────────────
     if not exif:
@@ -272,7 +373,20 @@ def analyse_metadata(
             ),
             evidence={"exif_tag_count": 0},
         ))
-        return flags  # No further checks possible without EXIF
+        # Deliberately NOT returning here. Checks 2/3/6 read fields off
+        # `exif` (capture date, Software tag) that are simply absent from
+        # an empty dict, so they no-op correctly on their own — no need
+        # to skip them explicitly. Check 4/5 (GPS) matter a great deal
+        # even with no EXIF: the device may still have reported a
+        # location, and an EXIF-less photo taken 300 km from the claimed
+        # district is exactly the case worth catching. An earlier version
+        # of this function returned immediately here with its own
+        # partial copy of the GPS logic — which handled "device reported
+        # a usable location" but never emitted GPS_MISSING for "device
+        # reported nothing, or something too imprecise to use", silently
+        # dropping that information for every EXIF-less upload. Falling
+        # through to the one shared Check 4 below fixes that by
+        # construction instead of maintaining two copies of the logic.
 
     # ── Check 2: Capture date vs sanction date ───────────────────────
     capture_dt = extract_capture_datetime(image_path)
@@ -311,37 +425,50 @@ def analyse_metadata(
         ))
 
     # ── Check 4: GPS presence ────────────────────────────────────────
+    # EXIF GPS is preferred (it is bound to the image file rather than
+    # sent alongside it), with the device's reported location as a
+    # fallback. GPS_MISSING now means "no location from EITHER source",
+    # which is the thing actually worth telling a reviewer — it used to
+    # fire even when the browser had supplied perfectly good coordinates.
     gps = extract_gps(image_path)
-    if gps is None:
+    coords_source = "exif" if gps else ("device" if device_coords else None)
+    effective_coords = gps or device_coords
+
+    if effective_coords is None:
+        if device_location_too_imprecise:
+            gps_missing_message = (
+                "This photograph does not contain GPS coordinates. The submitting "
+                "device did report a location, but its accuracy was too coarse "
+                f"(over {settings.GPS_DEVICE_MAX_ACCURACY_M / 1000:.0f} km) to "
+                "usefully confirm or dispute the claimed work site, so it was not used."
+            )
+        else:
+            gps_missing_message = (
+                "This photograph does not contain GPS coordinates, and the "
+                "submitting device did not report a location either. "
+                "While not conclusive on its own, GPS helps verify "
+                "that the photo was taken at the claimed work site."
+            )
         flags.append(Flag(
             code="GPS_MISSING",
             severity="LOW",
-            human_message=(
-                "This photograph does not contain GPS coordinates. "
-                "While not conclusive on its own, GPS helps verify "
-                "that the photo was taken at the claimed work site."
-            ),
-            evidence={"gps_tags_present": False},
+            human_message=gps_missing_message,
+            evidence={
+                "gps_tags_present": False,
+                "device_location_reported": device_location_too_imprecise,
+                "device_location_too_imprecise": device_location_too_imprecise,
+            },
         ))
     elif district_coords:
         # ── Check 5: GPS vs district centre ──────────────────────────
-        dist_km = haversine_km(gps[0], gps[1], district_coords[0], district_coords[1])
-        if dist_km > settings.GPS_MAX_DISTANCE_KM:
-            flags.append(Flag(
-                code="GPS_DISTRICT_MISMATCH",
-                severity="HIGH",
-                human_message=(
-                    f"Photograph GPS coordinates are {dist_km:.1f} km from the "
-                    f"claimed district ({district}). The maximum allowed distance "
-                    f"is {settings.GPS_MAX_DISTANCE_KM} km."
-                ),
-                evidence={
-                    "photo_coords": [gps[0], gps[1]],
-                    "district_centre": [district_coords[0], district_coords[1]],
-                    "distance_km": round(dist_km, 1),
-                    "threshold_km": settings.GPS_MAX_DISTANCE_KM,
-                },
-            ))
+        # accuracy_km only applies to a device fix — EXIF GPS carries no
+        # comparable uncertainty figure.
+        district_flag = _gps_district_flag(
+            effective_coords[0], effective_coords[1], district, district_coords, coords_source,
+            accuracy_km if coords_source == "device" else None,
+        )
+        if district_flag:
+            flags.append(district_flag)
 
     # ── Check 6: Editing software ────────────────────────────────────
     software = exif.get("Software", "")
