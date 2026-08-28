@@ -31,6 +31,7 @@ export default function UploadDropzone({ file, onChange, error }) {
   const [localError, setLocalError] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
   const inputRef = useRef(null)
+  const cameraInputRef = useRef(null)
 
   // The object URL is an external resource keyed on the `file` prop's
   // identity — created when a file is selected, revoked when it
@@ -74,7 +75,12 @@ export default function UploadDropzone({ file, onChange, error }) {
   const handleRemove = () => {
     setLocalError(null)
     onChange(null)
+    // Both inputs, not just the browse one: a file input won't fire
+    // change when the same file is picked again, so leaving the camera
+    // input populated would make "remove, then retake" appear to do
+    // nothing if the device hands back an identically-named capture.
     if (inputRef.current) inputRef.current.value = ''
+    if (cameraInputRef.current) cameraInputRef.current.value = ''
   }
 
   const shownError = error || localError
@@ -126,7 +132,52 @@ export default function UploadDropzone({ file, onChange, error }) {
           onChange={(e) => handleFiles(e.target.files)}
           className="visually-hidden"
         />
+
+        {/* Separate input carrying capture="environment", which asks a
+            mobile browser to open the rear camera directly. It is a
+            SEPARATE element rather than an attribute toggled on the one
+            above because a file input's `capture` is read when the
+            picker opens — sharing one input would mean the last button
+            pressed silently decided the behaviour of the other.
+
+            Why the native camera rather than an in-page getUserMedia
+            preview: a canvas-encoded capture carries NO EXIF at all, so
+            every honest in-app photo would arrive stripped of the
+            camera model, timestamp and GPS the detection layers rely on
+            — and would trip EXIF_STRIPPED. The native camera app
+            returns a real camera JPEG with its metadata intact.
+
+            On desktop this falls back to an ordinary file picker, which
+            is why the button is labelled by what it does rather than
+            promising a camera that isn't there. */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={(e) => handleFiles(e.target.files)}
+          className="visually-hidden"
+        />
       </div>
+
+      <div className="cluster" style={{ gap: 12, justifyContent: 'center' }}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => cameraInputRef.current?.click()}
+        >
+          <Icon name="camera" size={16} />
+          Take a photo
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={() => inputRef.current?.click()}>
+          <Icon name="image" size={16} />
+          Choose from device
+        </button>
+      </div>
+      <p className="hint" style={{ textAlign: 'center' }}>
+        A photo taken now keeps its camera metadata and location, which strengthens the fraud check.
+      </p>
+
       {shownError && <p style={{ color: 'var(--color-danger)', fontSize: 13 }}>{shownError}</p>}
     </div>
   )
