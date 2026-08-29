@@ -276,6 +276,22 @@ def _assessment_to_response(assessment: RiskAssessment) -> RiskAssessmentRespons
                 )
                 for m in dr.semantic_matches
             ],
+            geometric_matches=[
+                MatchResponse(
+                    matched_work_id=m.matched_record.work_id,
+                    matched_district=m.matched_record.district,
+                    matched_mp_name=m.matched_record.mp_name,
+                    matched_image_path=m.matched_record.file_path or "",
+                    similarity_metric=m.similarity_metric,
+                    raw_score=m.raw_score,
+                    confidence=m.confidence,
+                    same_work=m.same_work,
+                    cross_work=m.cross_work,
+                    cross_district=m.cross_district,
+                    cross_mp=m.cross_mp,
+                )
+                for m in dr.geometric_matches
+            ],
             has_cross_work_match=dr.has_cross_work_match,
             has_cross_district_match=dr.has_cross_district_match,
             has_cross_mp_match=dr.has_cross_mp_match,
@@ -363,6 +379,31 @@ def _store_image_record(
         except ImageProcessingError as e:
             logger.warning("Tiled pHash computation failed for storage: %s", e)
 
+    # ORB keypoint features (Layer 6) — persisted because file_path may
+    # become a Cloudinary URL after upload, so future candidates cannot
+    # recompute this record's features from a local file. ~60 KB/record
+    # at the default settings (see app/keypoint_match.py).
+    orb_features_bytes = None
+    color_signature_bytes = None
+    if settings.ENABLE_KEYPOINT_MATCH:
+        try:
+            from app.keypoint_match import (
+                compute_color_signature,
+                extract_orb_features,
+                serialize_features,
+            )
+
+            features = extract_orb_features(local_file_path)
+            if features is not None:
+                orb_features_bytes = serialize_features(features)
+            # The retrieval index for the features above — without it a
+            # stored record is invisible to Layer 6 whenever CLIP is off.
+            signature = compute_color_signature(local_file_path)
+            if signature is not None:
+                color_signature_bytes = signature.tobytes()
+        except Exception as e:
+            logger.warning("ORB/colour-signature extraction failed for storage: %s", e)
+
     gps = extract_gps(local_file_path)
     capture_dt = extract_capture_datetime(local_file_path)
 
@@ -380,6 +421,8 @@ def _store_image_record(
         "dhash": assessment.dhash,
         "embedding": embedding_bytes,
         "tile_phashes": tile_phashes_json,
+        "orb_features": orb_features_bytes,
+        "color_signature": color_signature_bytes,
         "photo_timestamp": capture_dt,
         "gps_latitude": gps[0] if gps else None,
         "gps_longitude": gps[1] if gps else None,
@@ -1182,6 +1225,7 @@ _PUBLIC_FLAG_LABELS: dict[str, str] = {
     "PERCEPTUAL_SUSPICIOUS": "Photo closely resembles an earlier submission",
     "SEMANTIC_DUPLICATE": "Photo shows a site already submitted for another work",
     "SEMANTIC_SUSPICIOUS": "Photo resembles a site submitted for another work",
+    "GEOMETRIC_DUPLICATE": "Photo already submitted for another work",
     "CROSS_DISTRICT_MATCH": "Matching photo belongs to a different district",
     "CROSS_MP_MATCH": "Matching photo belongs to a different constituency",
     "CONTENT_MISMATCH": "Photo may not show the declared type of work",

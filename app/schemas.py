@@ -38,7 +38,7 @@ class MatchResponse(BaseModel):
     matched_district: str
     matched_mp_name: Optional[str] = None
     matched_image_path: str
-    similarity_metric: str = Field(..., description="Which layer found this: sha256, phash, dhash, clip")
+    similarity_metric: str = Field(..., description="Which layer found this: sha256, phash, dhash, tiled_phash, clip, orb")
     raw_score: float = Field(..., description="Raw similarity value (distance or cosine sim)")
     confidence: str = Field(..., description="CERTAIN, LIKELY, or POSSIBLE")
     same_work: bool = False
@@ -52,6 +52,10 @@ class DuplicateReportResponse(BaseModel):
     exact_matches: list[MatchResponse] = []
     perceptual_matches: list[MatchResponse] = []
     semantic_matches: list[MatchResponse] = []
+    geometric_matches: list[MatchResponse] = Field(
+        default_factory=list,
+        description="ORB+RANSAC homography-verified matches (Layer 6); raw_score is the inlier count",
+    )
     has_cross_work_match: bool = False
     has_cross_district_match: bool = False
     has_cross_mp_match: bool = False

@@ -84,6 +84,38 @@ def real_pairs() -> list[Path]:
     return found
 
 
+@pytest.fixture(scope="module")
+def same_scene_pairs(real_pairs: list[Path]) -> list[tuple[Path, Path]]:
+    """Photos of one physical scene, grouped by the `<scene>_<variant>`
+    filename convention data/real_images/README.md specifies.
+
+    This used to be `real_pairs[0]` vs `real_pairs[1]` — whichever two
+    files happened to sort first. That passed only by luck: nothing
+    guaranteed the first two entries were the same scene, so dropping in
+    a photo whose name sorted earlier would have silently turned this
+    into a comparison of two unrelated images that then "failed" for a
+    reason having nothing to do with CLIP.
+
+    `_wide` variants are excluded here on purpose — they are a large
+    viewpoint change, which is a measurably harder case that no safe
+    threshold catches (see test_large_viewpoint_change_is_a_known_gap).
+    """
+    scenes: dict[str, list[Path]] = {}
+    for p in real_pairs:
+        if "_wide" in p.stem:
+            continue
+        scenes.setdefault(p.stem.split("_")[0], []).append(p)
+
+    pairs = [(v[0], v[1]) for v in scenes.values() if len(v) >= 2]
+    if not pairs:
+        pytest.skip(
+            "No same-scene group found in data/real_images/pairs/. Name files "
+            "<scene>_<variant>.jpg (e.g. scene1_a.jpg, scene1_b.jpg) — see "
+            "data/real_images/README.md."
+        )
+    return pairs
+
+
 @pytest.fixture
 def sample_image() -> Path:
     """Any valid image works here — this fixture is used only for structural
@@ -112,13 +144,66 @@ class TestClipIntegration:
         cosine = float(np.dot(emb_a, emb_b))
         assert cosine > 0.999, f"Identical-image cosine similarity {cosine} is not ~1.0"
 
-    def test_same_scene_different_angle(self, clip_engine, real_pairs: list[Path]) -> None:
-        emb_a = clip_engine.embed_image(str(real_pairs[0]))
-        emb_b = clip_engine.embed_image(str(real_pairs[1]))
-        cosine = float(np.dot(emb_a, emb_b))
-        assert cosine > settings.EMBEDDING_DUPLICATE_THRESHOLD, (
-            f"Same-scene cosine similarity {cosine:.3f} did not exceed "
-            f"EMBEDDING_DUPLICATE_THRESHOLD={settings.EMBEDDING_DUPLICATE_THRESHOLD}"
+    def test_same_scene_different_angle(
+        self, clip_engine, same_scene_pairs: list[tuple[Path, Path]]
+    ) -> None:
+        """Every same-scene pair must clear EMBEDDING_DUPLICATE_THRESHOLD.
+
+        Checks all scene groups rather than one arbitrary pair — this is
+        the single behaviour Layer 3 exists for (catching a re-submitted
+        site that the hash layers cannot see), so one lucky pair passing
+        is not evidence the threshold is right.
+        """
+        failures = []
+        for a, b in same_scene_pairs:
+            cosine = float(np.dot(clip_engine.embed_image(str(a)), clip_engine.embed_image(str(b))))
+            if cosine <= settings.EMBEDDING_DUPLICATE_THRESHOLD:
+                failures.append(f"{a.name} <-> {b.name}: {cosine:.4f}")
+
+        assert not failures, (
+            f"{len(failures)}/{len(same_scene_pairs)} same-scene pairs did not exceed "
+            f"EMBEDDING_DUPLICATE_THRESHOLD={settings.EMBEDDING_DUPLICATE_THRESHOLD}: "
+            + "; ".join(failures)
+        )
+
+    def test_large_viewpoint_change_is_a_known_gap(
+        self, clip_engine, real_pairs: list[Path]
+    ) -> None:
+        """A `_wide` variant is the same place shot with the camera
+        panned substantially. Measured 2026-08-29: scene1_a vs
+        scene1_c_wide scores 0.8355 — BELOW the highest genuinely
+        different-image pair in the corpus (0.8624, a bridge vs a road).
+
+        The distributions overlap there, so no threshold separates them:
+        catching this pair means accepting false positives on unrelated
+        sites. Asserted as a documented gap rather than quietly omitted,
+        so a future embedding model or threshold change that DOES close
+        it has a concrete signal to beat — if this starts failing, the
+        gap has closed; update the expectation and app/config.py's
+        EMBEDDING_DUPLICATE_THRESHOLD note rather than deleting the test.
+        """
+        wide = [p for p in real_pairs if "_wide" in p.stem]
+        if not wide:
+            pytest.skip("No `_wide` variant in data/real_images/pairs/ to measure the gap against.")
+
+        gap_confirmed = []
+        for w in wide:
+            scene = w.stem.split("_")[0]
+            base = next((p for p in real_pairs if p.stem == f"{scene}_a"), None)
+            if base is None:
+                continue
+            cosine = float(np.dot(clip_engine.embed_image(str(base)), clip_engine.embed_image(str(w))))
+            gap_confirmed.append((f"{base.name} <-> {w.name}", cosine))
+
+        if not gap_confirmed:
+            pytest.skip("No `<scene>_a` counterpart found for any `_wide` variant.")
+
+        still_missed = [f"{name}: {c:.4f}" for name, c in gap_confirmed if c <= settings.EMBEDDING_DUPLICATE_THRESHOLD]
+        assert still_missed, (
+            "Large-viewpoint pairs now clear EMBEDDING_DUPLICATE_THRESHOLD "
+            f"({settings.EMBEDDING_DUPLICATE_THRESHOLD}): "
+            f"{[(n, round(c, 4)) for n, c in gap_confirmed]}. The documented gap has closed — "
+            "update this test and the README's Known limitations section."
         )
 
     def test_unrelated_images_below_suspicious_threshold(self, clip_engine, real_images: list[Path]) -> None:

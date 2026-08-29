@@ -114,13 +114,31 @@ Guidance for the photos themselves:
 
 ## `pairs/` subfolder
 
-Currently empty. Add **at least 3 pairs (6 photos)** of the exact same
-physical scene, each taken from a different angle or distance, into
+**Populated** as of 2026-08-29: 4 scenes (9 photos), real second camera
+angles, used to calibrate `EMBEDDING_DUPLICATE_THRESHOLD` — see the main
+README's Known limitations for the measured result.
+
+Add **at least 3 pairs (6 photos)** of the exact same physical scene,
+each taken from a different angle or distance, into
 `data/real_images/pairs/`. These are used by
 `tests/test_clip_integration.py`'s "same scene, different angle" test —
 CLIP should recognise these as semantically similar even though their
-pixel-level hashes are completely different. Name them so pairs are
-identifiable, e.g. `scene1_a.jpg`, `scene1_b.jpg`.
+pixel-level hashes are completely different.
+
+**Naming is load-bearing, not cosmetic.** Files must be
+`<scene>_<variant>.jpg` — e.g. `scene1_a.jpg`, `scene1_b.jpg`. The test
+groups photos into scenes by the part of the filename before the first
+underscore, so a file that doesn't follow this lands in its own group
+and is silently skipped. (It previously just compared the first two
+files in alphabetical order, which passed only by luck — it would have
+compared two unrelated photos the moment someone added a file sorting
+earlier. Fixed 2026-08-29.)
+
+Optionally add a `_wide` variant — the same place with the camera panned
+substantially, e.g. `scene1_c_wide.jpg`. These are excluded from the
+main same-scene assertion and drive
+`test_large_viewpoint_change_is_a_known_gap` instead, which pins the
+measured ceiling of CLIP's viewpoint tolerance.
 
 **This must be two genuinely different photographs of the same real
 scene** — not one photo cropped or resized to produce a second file. The

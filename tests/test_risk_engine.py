@@ -283,6 +283,20 @@ class TestSemanticDuplicateScoring:
     """CLIP similarity is correlated evidence and must not stack per neighbour."""
 
     @staticmethod
+    def _mid_suspicious_band() -> float:
+        """A similarity squarely inside the SUSPICIOUS band.
+
+        Was hardcoded as ``EMBEDDING_SUSPICIOUS_THRESHOLD + 0.05``, which
+        silently assumed the band was at least 0.05 wide — true when it
+        was 0.85–0.95, but the 2026-08-29 calibration narrowed it to
+        0.85–0.90, putting +0.05 exactly ON the duplicate threshold and
+        making the case land in the wrong branch. Deriving the midpoint
+        from both thresholds tests the intended behaviour (mid-band ->
+        SEMANTIC_SUSPICIOUS) at any future calibration.
+        """
+        return (settings.EMBEDDING_SUSPICIOUS_THRESHOLD + settings.EMBEDDING_DUPLICATE_THRESHOLD) / 2
+
+    @staticmethod
     def _match(work_id: str, similarity: float) -> Match:
         record = ImageRecord(
             work_id=work_id,
@@ -329,7 +343,7 @@ class TestSemanticDuplicateScoring:
         assessment = self._assess_with_matches(
             db_session,
             sample_image,
-            [self._match("WORK-WEAK", settings.EMBEDDING_SUSPICIOUS_THRESHOLD + 0.05)],
+            [self._match("WORK-WEAK", self._mid_suspicious_band())],
         )
 
         semantic_flags = [f for f in assessment.flags if f.code.startswith("SEMANTIC_")]
@@ -346,7 +360,7 @@ class TestSemanticDuplicateScoring:
             sample_image,
             [
                 self._match("WORK-STRONG", settings.EMBEDDING_DUPLICATE_THRESHOLD + 0.01),
-                self._match("WORK-WEAK", settings.EMBEDDING_SUSPICIOUS_THRESHOLD + 0.05),
+                self._match("WORK-WEAK", self._mid_suspicious_band()),
             ],
         )
 

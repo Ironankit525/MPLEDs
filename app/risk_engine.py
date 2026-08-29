@@ -256,6 +256,27 @@ def assess_image(
     else:
         assessment.layers_skipped.append("clip")
 
+    # ── Step 2.5: Extract ORB keypoints + colour signature (Layer 6) ──
+    # Runs independently of CLIP: the colour signature is its own
+    # retrieval index, so the crop/rotation coverage this layer provides
+    # survives ENABLE_CLIP=False. When CLIP IS on, its embedding is
+    # passed through as a second retrieval signature (union), not as a
+    # requirement.
+    orb_features = None
+    color_signature = None
+    if settings.ENABLE_KEYPOINT_MATCH:
+        try:
+            from app.keypoint_match import compute_color_signature, extract_orb_features
+
+            orb_features = extract_orb_features(image_path)
+            color_signature = compute_color_signature(image_path)
+        except Exception as e:  # OpenCV failures must never sink an assessment
+            logger.warning("ORB/colour-signature extraction failed: %s", e)
+    if orb_features is not None:
+        assessment.layers_run.append("keypoint")
+    else:
+        assessment.layers_skipped.append("keypoint")
+
     # ── Step 3: Run duplicate search ─────────────────────────────────
     if phash is not None:
         dup_report = search_all_layers(
@@ -269,6 +290,8 @@ def assess_image(
             session=session,
             phash_rotation_variants=phash_rotation_variants,
             tile_hashes=tile_hashes,
+            orb_features=orb_features,
+            color_signature=color_signature,
         )
         assessment.duplicate_report = dup_report
 
@@ -512,6 +535,74 @@ def assess_image(
                     points_added=cm_points,
                 ))
 
+        # Score the strongest cross-work geometric (ORB+RANSAC) match.
+        # Same strongest-only convention as the semantic block above —
+        # several geometric hits on one incoming photo are correlated
+        # evidence of one re-use, not several frauds. Unlike CLIP
+        # similarity there is no "suspicious" tier: at the calibrated
+        # inlier threshold the measured false-positive rate is 0/190
+        # with a ~2x margin, so a firing is duplicate-tier evidence.
+        geometric_cross_work_matches = [
+            m for m in dup_report.geometric_matches if m.cross_work
+        ]
+        if geometric_cross_work_matches:
+            match = max(geometric_cross_work_matches, key=lambda item: item.raw_score)
+            points = settings.WEIGHT_GEOMETRIC_DUPLICATE_CROSS_WORK
+            total_points += points
+            assessment.flags.append(ScoredFlag(
+                code="GEOMETRIC_DUPLICATE",
+                severity="HIGH",
+                message=(
+                    "Keypoint analysis matched this photograph to evidence submitted "
+                    "for a different work: the images share the same physical scene "
+                    "geometry despite cropping, rotation, or re-framing that defeats "
+                    "pixel-level comparison."
+                ),
+                evidence={
+                    "matched_work_id": match.matched_record.work_id,
+                    "matched_district": match.matched_record.district,
+                    "ransac_inliers": int(match.raw_score),
+                    "inlier_threshold": settings.ORB_INLIER_THRESHOLD,
+                    "additional_geometric_matches": len(geometric_cross_work_matches) - 1,
+                    "matched_image_path": match.matched_record.file_path,
+                },
+                points_added=points,
+            ))
+
+            if match.cross_district:
+                cd_points = settings.WEIGHT_CROSS_DISTRICT
+                total_points += cd_points
+                assessment.flags.append(ScoredFlag(
+                    code="CROSS_DISTRICT_MATCH",
+                    severity="HIGH",
+                    message=(
+                        f"The geometrically matched image belongs to a different "
+                        f"district ({match.matched_record.district})."
+                    ),
+                    evidence={
+                        "candidate_district": district,
+                        "matched_district": match.matched_record.district,
+                    },
+                    points_added=cd_points,
+                ))
+
+            if match.cross_mp:
+                cm_points = settings.WEIGHT_CROSS_MP
+                total_points += cm_points
+                assessment.flags.append(ScoredFlag(
+                    code="CROSS_MP_MATCH",
+                    severity="HIGH",
+                    message=(
+                        f"The geometrically matched image belongs to a different MP "
+                        f"({match.matched_record.mp_name})."
+                    ),
+                    evidence={
+                        "candidate_mp": mp_name,
+                        "matched_mp": match.matched_record.mp_name,
+                    },
+                    points_added=cm_points,
+                ))
+
     # ── Step 4: EXIF metadata analysis ───────────────────────────────
     assessment.layers_run.append("exif")
 
@@ -600,7 +691,12 @@ def assess_image(
                     points_added=points,
                 ))
 
-            if ela_result.is_screenshot:
+            # Gated OFF by default: measured 2026-08-29 at a 100%
+            # false-positive rate on real camera photographs (29/29) —
+            # a high-quality phone JPEG re-saves as losslessly as a
+            # rendered image, so ELA uniformity cannot tell them apart.
+            # See ENABLE_SCREENSHOT_DETECTION in app/config.py.
+            if settings.ENABLE_SCREENSHOT_DETECTION and ela_result.is_screenshot:
                 points = settings.WEIGHT_SCREENSHOT_DETECTED
                 total_points += points
                 assessment.flags.append(ScoredFlag(

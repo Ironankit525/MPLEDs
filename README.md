@@ -483,42 +483,148 @@ worker rather than the request path.
 Stated plainly, with the measured evidence behind each one — not a
 generic disclaimer:
 
-- **Heavy crops beyond dHash's local signal**: the 12%-per-edge fixture has
-  pHash distance 34/64 (threshold 5), but the independent dHash fallback
-  measures distance 3 and catches it at the conservative dHash threshold.
-  More aggressive crops, or crops that remove the local gradients dHash uses,
-  still need real-photo calibration; CLIP may provide corroborating evidence
-  when enabled.
-- **Rotation beyond ±5°**: `ENABLE_ROTATION_ROBUST_HASH` is only
-  calibrated (i.e. only hashes) at −5°/0°/+5°. A rotation outside that
-  range falls back to whatever the plain whole-image pHash measures,
-  which is not expected to hold up — untested beyond the tested range.
-- **AI-generated imagery**: no detection layer in this module was
-  designed or tested against synthetic/generated photographs. Hash
-  layers key on pixel structure (a generated image has its own,
-  internally consistent structure, not a "tell"), and CLIP's zero-shot
-  check here tests *content* match, not *authenticity* — a
-  well-generated fake road photo would likely score fine on both.
-- **Photos of a printed photograph / a screen**: pixel-hash layers would
-  likely see this as a legitimate new image (it IS a new image, of a
-  photo) — no field data confirms this either way. CLIP *may* partially
-  mitigate this semantically (a photo-of-a-photo often has visible
-  framing/glare/screen artifacts a captioning-style model could key on)
-  but this is a plausible mitigation, not a verified one.
-- **Images with no EXIF and no duplicate match**: correctly scored LOW
-  (5 points, `EXIF_STRIPPED` "alone" branch) rather than treated as
-  suspicious on its own — this is intentional (see Risk Scoring above),
-  not a gap, but worth stating: a genuinely fraudulent submission that
-  happens to be both EXIF-less and NOT a duplicate of anything already
-  in the database will not be flagged by this module. Only fraud that
-  leaves a trace this module checks for (duplication, backdating, GPS
-  mismatch, content mismatch) is caught.
-- **ELA screenshot detection on synthetic/generated images**: measured
-  100% false-positive rate on this project's synthetic test corpus
-  (`data/images/clean_*.jpg`) — diagnosed above as the check correctly
-  identifying that programmatically-generated gradients are, in fact,
-  not camera photographs. Real-world impact on actual photographs is
-  unmeasured until `data/real_images/` is populated.
+- **Crops beyond ~10% per edge defeat BOTH hash layers entirely**.
+  Corrected 2026-08-29 — the previous wording here claimed dHash caught
+  the 12% crop at distance 3. That was measured on the *synthetic*
+  gradient fixture (`clean_0000.jpg`) and does not hold on real
+  photographs. Measured on `data/real_images/` (n=20, crop % is per
+  edge, "caught" = within the layer's SUSPICIOUS threshold):
+
+  | crop | pHash | dHash | CLIP |
+  |---|---|---|---|
+  | 5%  | 15/20 | 7/20 | 20/20 |
+  | 10% | 1/20  | 0/20 | 20/20 |
+  | 12% | 0/20  | 0/20 | 19/20 |
+  | 20% | 0/20  | 0/20 | 18/20 |
+  | 30% | 0/20  | 0/20 | 11/20 |
+  | 40% | 0/20  | 0/20 | 5/20  |
+
+  dHash collapses at essentially the same crop severity as pHash on real
+  photographs (median distance 22/64 at a 12% crop, vs. its threshold of
+  6) — it is a genuinely independent opinion on *recompression* and
+  *colour* changes, not on cropping. **From ~10% onward CLIP is the only
+  hash-independent layer still detecting anything**, so a deployment
+  running with `ENABLE_CLIP=False` has no crop robustness beyond ~5%.
+
+  **→ FIXED 2026-08-29 (Layer 6, `ENABLE_KEYPOINT_MATCH`)**, and — after
+  a second pass — **without any CLIP dependency**. Switched from ORB to
+  SIFT descriptors, which are far more discriminative (128-float vs
+  256-bit binary), so matches survive even extreme crops. SIFT keypoint
+  verification catches **20/20 at EVERY crop severity tested — 20%,
+  30%, 35%, 40%, 45%, 50%, and 60% per dimension** (that last one
+  removes 84% of the frame area), at a measured **0/190** false-positive
+  rate on real photos and **0/36** on synthetic ones. Works with
+  `ENABLE_CLIP=False`: candidate retrieval runs off a colour-histogram
+  signature, not the CLIP embedding — see "Closing the crop gap" below.
+  Trade-off: SIFT features are ~13x larger per record (~762 KB vs
+  ~59 KB) because of the richer descriptors; extraction is slightly
+  faster (~23 ms vs ~50 ms).
+
+- **Rotation beyond ±5°**: `ENABLE_ROTATION_ROBUST_HASH` only hashes at
+  −5°/0°/+5°. Measured 2026-08-29 on real photos: rotation-robust pHash
+  catches 19/20 at 7° but collapses to 11/20 at 10° and **0/20 at 15°
+  and beyond**.
+
+  **→ FIXED 2026-08-29 (Layer 6), with no residual.** SIFT descriptors
+  are scale- and orientation-normalised, and geometric verification
+  measured **20/20 at every angle tested — 3°, 7°, 10°, 15°, 30°, 90°**
+  — with RANSAC inliers well above the match threshold of 15, and
+  still 20/20 after the anti-coincidence gates were added. Verified to
+  work with `ENABLE_CLIP=False` (`test_rotation_is_caught_with_clip_disabled`).
+- **Large viewpoint change on the same site (CLIP, Layer 3)**: measured
+  2026-08-29 against `data/real_images/pairs/`. Same scene with a
+  *moderate* angle change is caught reliably — four visually-verified
+  pairs score 0.9263–0.9508 cosine, all above the calibrated
+  `EMBEDDING_DUPLICATE_THRESHOLD` of 0.90, against a different-image
+  distribution (n=190) whose maximum is 0.8624. But the same garden shot
+  10 seconds apart with the camera *panned substantially*
+  (`scene1_a.jpg` vs `scene1_c_wide.jpg`) scores **0.8355 — below that
+  0.8624 different-image maximum**, i.e. below two genuinely unrelated
+  sites (a bridge and a road). The two distributions overlap there, so
+  **no threshold separates them**: catching that pair would mean
+  accepting false positives on unrelated works. Layer 3 catches a
+  re-used photo shot from a nearby angle, not one shot from across the
+  site. Asserted as a standing test
+  (`test_large_viewpoint_change_is_a_known_gap`) so a future model or
+  threshold that closes the gap produces a visible signal.
+  *(This also corrected a real miscalibration: the previous 0.95
+  threshold was a guess and caught only 1 of the 4 true pairs — the
+  layer was largely inert on the exact case it was added for.)*
+
+  **→ PARTIALLY closed by Layer 6 (2026-08-29)**: the wide pair CLIP
+  cannot separate (`scene1_a` ↔ `scene1_c_wide`, cosine 0.8355) scores
+  **18 RANSAC inliers** — above the 15-inlier match threshold, while
+  cross-scene pairs max out at 4 (n=30). ORB catches this specific
+  re-framing where no CLIP threshold can. But it is genuinely partial:
+  the even-wider `scene1_b` ↔ `scene1_c_wide` scores only 4 inliers —
+  ORB's homography model assumes a mostly-planar scene or modest
+  parallax, and a large 3D viewpoint shift breaks it. A photo re-shot
+  from across the site remains undetectable by every layer; the CLIP-gap
+  standing test stays in place.
+- **AI-generated imagery — NOT FIXED, and not fixable within this
+  module's approach**: no detection layer here tests *authenticity*.
+  Hash layers key on pixel structure (a generated image has its own,
+  internally consistent structure, not a "tell"), CLIP's zero-shot check
+  tests *content* match, and ELA/keypoint layers compare against
+  *stored* images — a freshly generated fake matches nothing and
+  triggers nothing. A dedicated AI-image detector was deliberately not
+  bolted on: published detectors generalise poorly across generator
+  families, degrade with every new model release (an adversarial
+  arms race this module cannot win from inside), and would import a
+  false-positive burden this project has no corpus to measure. The
+  honest mitigation is capture-side provenance, which the platform
+  already implements: the native-camera upload flow, single-use session
+  tokens, live device GPS, and EXIF checks make *submitting a
+  pre-generated file through the controlled path* the hard step —
+  post-hoc pixel forensics is the wrong layer to fight this at.
+- **Photos of a printed photograph / a screen — partially addressed,
+  half-verified**: the `PHOTO_OF_PHOTO` moiré detector (FFT frequency
+  analysis in `app/ela_analysis.py`) exists for exactly this case, and
+  its false-positive side is now measured: **0/29** genuine camera
+  photos misfire (2026-08-29, real corpus). Its TRUE-positive side —
+  does it actually fire on a real photo of a screen or print? — remains
+  unverified, because no such fixture exists in the corpus and
+  simulating one (re-encoding a photo) would test the simulation, not
+  the moiré physics. Cannot be verified further without someone
+  photographing an actual screen/print and adding the file; until then
+  this stays a limitation with one honest half measured. Note also that
+  Layer 6 now *helps* here for the re-use case: a photo-of-a-photo of an
+  already-stored image preserves scene geometry, so ORB verification
+  can catch it as a `GEOMETRIC_DUPLICATE` even when hashes miss —
+  but that too is untested without a real fixture.
+- **Images with no EXIF and no duplicate match — NOT FIXED, and not
+  fixable by design**: correctly scored LOW (5 points, `EXIF_STRIPPED`
+  "alone" branch) rather than treated as suspicious on its own. A
+  genuinely fraudulent but *first-time* photo — EXIF-less, never
+  submitted before, plausibly depicting the claimed work type — leaves
+  **no signal in any layer this module has or could add**: there is
+  nothing to compare it against and nothing internally inconsistent
+  about it. Flagging it anyway means flagging every legitimate EXIF-less
+  upload, i.e. the alert-fatigue failure the conditional EXIF weighting
+  exists to prevent. The mitigation is process-side, not detector-side,
+  and is already the platform design: the controlled capture flow
+  (native camera + single-use session token + live device GPS) makes
+  it hard to *get* a fraudulent stock/off-site photo through the upload
+  path in the first place, and human review remains the decision-maker
+  for everything the detectors cannot see.
+- ~~ELA screenshot detection~~ — **RESOLVED 2026-08-29 by disabling a
+  measurably broken check.** The earlier note here assumed the 100%
+  false-positive rate on the synthetic corpus was the check "correctly
+  identifying rendered gradients" and that real-world impact was
+  unmeasured. Now measured: it fired on **29/29 real camera
+  photographs** too. The distributions fully overlap (real photos:
+  mean_error 0.14–2.91, std 0.48–2.44; actual screenshots: mean
+  0.19–0.70, std 0.83–1.14) because a modern phone JPEG re-saves as
+  losslessly as a rendered image — ELA uniformity carries no
+  screenshot signal at all, and no threshold can fix that.
+  `SCREENSHOT_DETECTED` is now gated behind
+  `ENABLE_SCREENSHOT_DETECTION` (default **False**) with the
+  measurement recorded in `app/config.py`; a standing test asserts the
+  gate. `IMAGE_TAMPERED` and `PHOTO_OF_PHOTO` are unaffected — **0/29**
+  false positives each on the same real corpus. Screenshot-style
+  re-submission of an already-stored photo is still caught, by the
+  duplicate layers (a screenshot of a stored image preserves both its
+  CLIP embedding and its scene geometry).
 - ~~OCR amount cross-check (`RECEIPT_AMOUNT_MISMATCH`) cannot currently
   fire~~ — **fixed 2026-08-27**. `claimed_amount` is now a parameter on
   `assess_image()` and a form field on both `/api/images/check` and
@@ -532,6 +638,115 @@ generic disclaimer:
   and a live `TestClient` call through `/api/images/check` with a real
   multipart form field confirms the string-to-float form parsing and
   the full call chain end-to-end.
+
+### Closing the crop gap — implemented as Layer 6 (`ENABLE_KEYPOINT_MATCH`, default True)
+
+SIFT keypoint matching with RANSAC geometric verification, prototyped and
+calibrated against the real corpus on 2026-08-29, now runs in the live
+pipeline: `app/keypoint_match.py` (extraction, serialization,
+verification), retrieval wiring in `app/duplicate_search.py`
+(`find_geometric_duplicates`), scoring in `app/risk_engine.py`
+(`GEOMETRIC_DUPLICATE`, HIGH, 50 points, strongest-cross-work-only —
+same anti-stacking convention as the semantic layer), and feature
+persistence on every stored record (`ImageRecord.orb_features` ~762 KB,
+plus `ImageRecord.color_signature` 512 B). It runs retrieve-then-verify:
+a cheap signature nominates the top-K nearest stored images
+(threshold-free — the whole point is candidates whose similarity has
+already sunk below every normal band) and SIFT verifies only those, so
+the extraction cost is paid once per upload, not per comparison. A
+record verified geometrically supersedes its own semantic match, so one
+re-used photo is never scored by two layers. Tests:
+`tests/test_keypoint_match.py` (22 tests, including the CLIP-disabled
+crop and rotation paths and adaptive top-K scaling).
+
+Originally used ORB (binary descriptors), but switched to SIFT on
+2026-08-29 after measuring that ORB's 256-bit binary descriptors lose
+too many matches on heavy crops (17/20 at 45% per-dim, 16/20 at 60%).
+SIFT's 128-float descriptors are far more discriminative: matches survive
+even when most of the frame is gone.
+
+Measured on 20 real photos, crops per dimension, final gated
+configuration:
+
+| transform | SIFT (current) | ORB (previous) |
+|---|---|---|
+| crop 20% | **20/20** | 19/20 |
+| crop 30% | **20/20** | 20/20 |
+| crop 35% | **20/20** | 19/20 |
+| crop 40% | **20/20** | 19/20 |
+| crop 45% | **20/20** | 17/20 |
+| crop 50% | **20/20** | 16/20 |
+| crop 60% | **20/20** | 16/20 |
+| rotate 15° | **20/20** | 20/20 |
+| rotate 30° | **20/20** | 20/20 |
+| rotate 90° | **20/20** | 20/20 |
+
+(pHash and dHash catch **0/20** at every row in this table.)
+
+**False positives: 0/190** real different-image pairs and **0/36**
+synthetic ones, with SIFT. The two hardest false-positive pairs — same
+park from different angles (35 inliers, ratio 0.574) and a park vs road
+(19 inliers, ratio 0.559) — are cleanly rejected by the 0.60 ratio gate.
+
+**Retrieval does not depend on CLIP.** Candidates come from the **union**
+of two independent signatures:
+
+- **Colour signature** (`compute_color_signature`) — a coarse 8×4×4 HSV
+  histogram, 512 bytes, no model required. Cropping or rotating a photo
+  barely changes its colour distribution, so it survives exactly the
+  transformations this layer targets. Measured recall of the true source
+  at top-10: **29/29 for every transform tested**, including a 40% crop.
+- **CLIP embedding cosine**, when CLIP is enabled — better at semantic
+  near-misses, so it contributes candidates the histogram would miss.
+
+A training-free bag-of-visual-words over the ORB descriptors was
+measured as an alternative retrieval index and **rejected**: it ranks
+slightly better on mild crops but collapses on heavy ones (3/29 @1,
+9/29 @5 at a 40% crop), because losing 40% of the frame loses 40% of the
+descriptors. The colour histogram degrades far more gracefully.
+
+Retrieval is deliberately imprecise — it *will* nominate unrelated
+photos. RANSAC verification supplies the precision.
+
+**Adaptive top-K scaling.** Recall@K was originally measured on a
+29-image corpus where top-10 covers ~34% — an easy target. On a corpus
+of thousands, a fixed K=20 covers <1%, and a coarse 128-bin histogram
+can't reliably rank the true source that high among thousands of images
+with similar colour palettes (dozens of road construction photos are
+all grey asphalt + brown dirt). This is now handled by adaptive scaling:
+`K = max(ORB_RETRIEVAL_TOP_K, ceil(sqrt(n)))`, capped at
+`ORB_RETRIEVAL_MAX_K` (default 500). At n=10,000 K=100 (~230ms of
+verification); at n=100,000 K=317 (~730ms). The heuristic is
+conservative but unmeasured at scale — true recall@K on a corpus of
+thousands would need >1,000 real MPLADS photos to test.
+`ORB_RETRIEVAL_MAX_K` can be raised if detection rates drop.
+
+**Three gates, all measured.** SIFT measured separation (n=20 true
+40%-crops, 190 different-image pairs):
+
+| | true crops | false pairs |
+|---|---|---|
+| min features (weaker side) | min **204** | all > 500 |
+| inlier ratio | min **0.828**, median 0.94 | max **0.574** |
+
+A match requires ≥100 keypoints on both sides (`ORB_MIN_FEATURES_FOR_MATCH`),
+≥15 RANSAC inliers, and an inlier **ratio** ≥0.60 — a genuine crop
+agrees on nearly every correspondence it offers; a coincidental fit
+agrees on a minority. The 100-feature threshold (lowered from 750 for ORB)
+reflects SIFT's higher per-descriptor discriminativeness. On a low-texture
+image (a plain wall, heavy fog) the layer abstains rather than guessing.
+
+**Cost and storage.** ~23 ms/image SIFT extraction, ~50 ms for the
+colour signature, ~2.3 ms/pair verification — extraction is paid once
+per upload, not per comparison. SIFT features serialize to ~762 KB/record
+(~13× the old ORB encoding, ~380× a CLIP embedding). This is the cost of
+SIFT's richer 128-float descriptors vs ORB's 32-byte binary ones.
+Detection coverage at heavy crops is the product — the storage trade-off
+is measured and deliberate.
+
+No new dependency: OpenCV 5.0 is already installed transitively via
+`easyocr` and pinned in `requirements.lock`.
+
 
 ---
 

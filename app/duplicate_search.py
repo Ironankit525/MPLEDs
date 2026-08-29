@@ -74,7 +74,7 @@ class Match:
 
 @dataclass
 class DuplicateReport:
-    """Unified report from all three duplicate detection layers.
+    """Unified report from all duplicate detection layers.
 
     Aggregates results and exposes boolean flags for the most serious
     cross-boundary matches (cross-work, cross-district, cross-MP).
@@ -82,6 +82,11 @@ class DuplicateReport:
     exact_matches: list[Match] = field(default_factory=list)
     perceptual_matches: list[Match] = field(default_factory=list)
     semantic_matches: list[Match] = field(default_factory=list)
+    # Layer 6: ORB+RANSAC homography-verified matches. raw_score is the
+    # inlier count. A record that is both semantically similar AND
+    # geometrically verified appears HERE only (geometric evidence
+    # supersedes the weaker cosine similarity for the same record).
+    geometric_matches: list[Match] = field(default_factory=list)
     has_cross_work_match: bool = False
     has_cross_district_match: bool = False
     has_cross_mp_match: bool = False
@@ -89,7 +94,10 @@ class DuplicateReport:
     @property
     def all_matches(self) -> list[Match]:
         """All matches across all layers, for iteration."""
-        return self.exact_matches + self.perceptual_matches + self.semantic_matches
+        return (
+            self.exact_matches + self.perceptual_matches
+            + self.semantic_matches + self.geometric_matches
+        )
 
     @property
     def has_any_match(self) -> bool:
@@ -420,6 +428,170 @@ def find_semantic_duplicates(
     return matches
 
 
+# ── Layer 6: ORB geometric verification (retrieve-then-verify) ──────
+
+def _top_k_by_signature(
+    records: list[ImageRecord],
+    query: np.ndarray,
+    attribute: str,
+    top_k: int,
+) -> list[int]:
+    """Indices of the top-K records by cosine similarity on a stored
+    float32 signature blob (`embedding` or `color_signature`).
+
+    Records missing that signature, or carrying one of the wrong length
+    (e.g. written under different COLOR_SIGNATURE_* bin settings), are
+    skipped rather than crashing the stack — a signature-shape change
+    must degrade retrieval, not break assessment.
+    """
+    vectors: list[np.ndarray] = []
+    indices: list[int] = []
+    for i, record in enumerate(records):
+        blob = getattr(record, attribute, None)
+        if not blob:
+            continue
+        vector = np.frombuffer(blob, dtype=np.float32)
+        if vector.shape != query.shape:
+            continue
+        vectors.append(vector)
+        indices.append(i)
+
+    if not vectors:
+        return []
+
+    similarities = np.stack(vectors) @ query
+    order = np.argsort(similarities)[::-1][:top_k]
+    return [indices[int(i)] for i in order]
+
+
+def _effective_top_k(corpus_size: int, configured_k: int) -> int:
+    """Scale top-K with corpus size so retrieval recall doesn't degrade.
+
+    At n=29, configured_k=20 already covers two-thirds of the corpus.
+    At n=10,000, the same K=20 covers only 0.2% — a coarse 128-bin
+    colour histogram can't reliably rank the true source that high among
+    thousands of images with similar palettes (think dozens of road
+    construction photos that are all grey asphalt + brown dirt).
+
+    Heuristic: K = max(configured_k, ceil(sqrt(n))), capped at
+    ORB_RETRIEVAL_MAX_K.
+
+    Examples:
+        n=29     -> K=20   (configured floor)
+        n=100    -> K=20   (configured floor)
+        n=400    -> K=20   (sqrt(400)=20, same as floor)
+        n=1,000  -> K=32   (sqrt, ~74ms verification)
+        n=5,000  -> K=71   (~163ms)
+        n=10,000 -> K=100  (~230ms)
+        n=50,000 -> K=224  (~515ms)
+        n=100,000-> K=317  (~730ms)
+        n=500,000-> K=500  (cap, ~1.15s)
+
+    Verification cost is ~2.3 ms/candidate — the cap at 500 keeps the
+    worst case under ~1.2 seconds, acceptable for an assessment pipeline
+    that already runs SIFT extraction, CLIP, OCR, and ELA.
+    """
+    import math
+
+    cap = settings.ORB_RETRIEVAL_MAX_K
+    scaled = max(configured_k, math.ceil(math.sqrt(corpus_size)))
+    return min(scaled, cap)
+
+
+def find_geometric_duplicates(
+    candidate_features,  # app.keypoint_match.ORBFeatures
+    session: Database,
+    embedding: Optional[np.ndarray] = None,
+    color_signature: Optional[np.ndarray] = None,
+    top_k: int | None = None,
+    inlier_threshold: int | None = None,
+) -> list[tuple[ImageRecord, int]]:
+    """Geometrically verify the most promising stored images against the
+    candidate's SIFT keypoints.
+
+    Retrieval is deliberately threshold-free: the whole point of this
+    layer is catching heavy crops and large rotations whose similarity
+    has already sunk BELOW every normal band (a 30% crop averages ~0.85
+    CLIP cosine and keeps falling). Top-K still surfaces the true source,
+    and RANSAC verification supplies the certainty retrieval cannot —
+    measured 0/190 false positives, because unrelated images max out at
+    35 inliers with ratio 0.574 against the ratio gate of 0.60.
+
+    Top-K scales adaptively with corpus size: at n≤400 the configured
+    floor (20) applies; beyond that K grows as √n, capped at
+    ORB_RETRIEVAL_MAX_K (default 500). This addresses the documented
+    concern that a 128-bin colour histogram's Recall@K degrades when
+    thousands of images compete for the same colour-space bins. The
+    verification cost scales as O(√n) — at 10K images ~230ms, at 100K
+    ~730ms — acceptable for an assessment pipeline.
+
+    Candidates are the UNION of two independent retrieval signatures:
+    CLIP embedding cosine (when CLIP is enabled) and the colour
+    signature (always available). The union is what makes this layer
+    work with ENABLE_CLIP=False — with neither signature supplied there
+    is no cheap way to nominate candidates and the layer returns nothing
+    rather than falling back to an O(n) descriptor scan.
+
+    Only records that stored SIFT/ORB features can be verified (file_path
+    may be a remote Cloudinary URL, so recomputing them here is not an
+    option).
+
+    Returns (record, inlier_count) for candidates meeting the inlier
+    threshold, strongest first.
+    """
+    from app.keypoint_match import deserialize_features, verify_geometric_match
+
+    configured_k = top_k if top_k is not None else settings.ORB_RETRIEVAL_TOP_K
+    if inlier_threshold is None:
+        inlier_threshold = settings.ORB_INLIER_THRESHOLD
+    if embedding is None and color_signature is None:
+        return []
+
+    records_raw = list(session.image_records.find({"orb_features": {"$ne": None}}))
+    if not records_raw:
+        return []
+    records = [ImageRecord(**doc) for doc in records_raw]
+
+    # Scale top-K with corpus size — the key fix for Recall@K at scale.
+    effective_k = _effective_top_k(len(records), configured_k)
+    if effective_k != configured_k:
+        logger.debug(
+            "Adaptive top-K: corpus=%d, configured=%d, effective=%d",
+            len(records), configured_k, effective_k,
+        )
+
+    candidate_indices: list[int] = []
+    for query, attribute in ((embedding, "embedding"), (color_signature, "color_signature")):
+        if query is None:
+            continue
+        for idx in _top_k_by_signature(records, query, attribute, effective_k):
+            if idx not in candidate_indices:
+                candidate_indices.append(idx)
+
+    matches: list[tuple[ImageRecord, int]] = []
+    for idx in candidate_indices:
+        record = records[idx]
+        stored = deserialize_features(record.orb_features)
+        if stored is None:
+            continue
+        verdict = verify_geometric_match(candidate_features, stored)
+        if verdict.is_match and verdict.inliers >= inlier_threshold:
+            matches.append((record, verdict.inliers))
+        elif verdict.reject_reason not in (None, "too_few_inliers"):
+            # Log near-misses that were rejected by a GATE rather than
+            # by simply not matching — these are the cases worth seeing
+            # if this layer ever seems to under-report.
+            logger.info(
+                "Geometric verification rejected %s: %s (inliers=%d ratio=%.2f minfeat=%d)",
+                record.work_id, verdict.reject_reason, verdict.inliers,
+                verdict.inlier_ratio, verdict.min_features,
+            )
+
+    matches.sort(key=lambda x: x[1], reverse=True)
+    return matches
+
+
+
 # ── Unified search across all layers ────────────────────────────────
 
 def search_all_layers(
@@ -433,6 +605,8 @@ def search_all_layers(
     session: Database,
     phash_rotation_variants: list[str] | None = None,
     tile_hashes: list[str] | None = None,
+    orb_features=None,  # app.keypoint_match.ORBFeatures | None
+    color_signature: Optional[np.ndarray] = None,
 ) -> DuplicateReport:
     """Run all three detection layers and return a unified duplicate report.
 
@@ -581,6 +755,48 @@ def search_all_layers(
             )
             report.semantic_matches.append(match)
             seen_record_ids.add(record_key(record))
+
+    # ── Layer 6: ORB geometric verification (retrieve-then-verify) ───
+    # Needs the candidate's ORB features plus at least one retrieval
+    # signature. The colour signature is always available, so unlike the
+    # first version of this layer it no longer goes dark when
+    # ENABLE_CLIP is False; CLIP simply adds a second, complementary
+    # set of candidates when present.
+    if settings.ENABLE_KEYPOINT_MATCH and orb_features is not None:
+        geometric = find_geometric_duplicates(
+            orb_features, session, embedding=embedding, color_signature=color_signature
+        )
+        # A record can be nominated by CLIP and verified here while also
+        # sitting in semantic_matches. Keep only the geometric finding
+        # for that record — it supersedes the cosine similarity (same
+        # evidence, higher certainty), and keeping both would let
+        # risk_engine score one re-used photo twice.
+        geometric_keys = set()
+        for record, inliers in geometric:
+            key = record_key(record)
+            geometric_keys.add(key)
+            if key in seen_record_ids and not any(
+                record_key(m.matched_record) == key for m in report.semantic_matches
+            ):
+                continue  # already found by exact/perceptual layers — their evidence stands
+
+            match = _classify_match(
+                matched_record=record,
+                candidate_work_id=work_id,
+                candidate_district=district,
+                candidate_mp_name=mp_name,
+                similarity_metric="orb",
+                raw_score=float(inliers),
+                confidence="CERTAIN",
+            )
+            report.geometric_matches.append(match)
+            seen_record_ids.add(key)
+
+        if geometric_keys:
+            report.semantic_matches = [
+                m for m in report.semantic_matches
+                if record_key(m.matched_record) not in geometric_keys
+            ]
 
     # ── Compute aggregate cross-boundary flags ───────────────────────
     for m in report.all_matches:

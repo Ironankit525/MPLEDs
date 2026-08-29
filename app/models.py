@@ -230,6 +230,21 @@ class ImageRecord(MongoDocument):
     # Raw embedding bytes (vector)
     embedding: Optional[bytes] = None
 
+    # ORB keypoint features (Layer 6, gated by ENABLE_KEYPOINT_MATCH) —
+    # serialized via app.keypoint_match.serialize_features (~40 bytes per
+    # feature, ~60 KB at the default 1500). Stored so a future candidate
+    # can be geometrically verified against this record without
+    # re-downloading the image (file_path may be a Cloudinary URL, not a
+    # local file). None on records stored before the layer existed or
+    # while the flag is off.
+    orb_features: Optional[bytes] = None
+
+    # Coarse HSV colour histogram (float32, 512 bytes) — Layer 6's
+    # CLIP-free retrieval index. Stored alongside orb_features so
+    # candidate nomination works with ENABLE_CLIP=False; see
+    # app.keypoint_match.compute_color_signature.
+    color_signature: Optional[bytes] = None
+
     # EXIF/GPS Metadata
     photo_timestamp: Optional[datetime] = None
     gps_latitude: Optional[float] = None

@@ -94,13 +94,145 @@ class Settings(BaseSettings):
 
     # ── Layer 3: CLIP embedding similarity ───────────────────────────
 
-    # cosine similarity ≥ 0.95 flags as SEMANTIC_DUPLICATE.
-    # E.g. same scene taken from a slightly different angle/distance.
-    EMBEDDING_DUPLICATE_THRESHOLD: float = 0.95
+    # Cosine similarity >= this flags as SEMANTIC_DUPLICATE — the same
+    # scene photographed again from a different angle/distance, which is
+    # exactly what Layer 3 exists to catch and what the hash layers
+    # cannot see.
+    #
+    # Calibrated 2026-08-29 against data/real_images/ (measured, not
+    # guessed — the previous 0.95 was a guess and was badly too tight):
+    #
+    #   Same scene, moderate angle change (n=4 pairs, verified visually,
+    #   2-3s apart in data/real_images/pairs/):
+    #       0.9263, 0.9269, 0.9435, 0.9508     (min 0.9263)
+    #   Genuinely different images (n=190 pairs, main corpus):
+    #       min 0.3454  p50 0.6050  p95 0.8018  p99 0.8408  max 0.8624
+    #
+    #   Clean gap between 0.8624 and 0.9263. At 0.90:
+    #       true-positive rate  4/4    (100%)
+    #       false-positive rate 0/190  (0%)
+    #   with ~0.026 margin below the lowest true pair and ~0.038 above
+    #   the highest different-image pair.
+    #
+    #   At the old 0.95 this caught 1 of those 4 pairs (25%) — it sat
+    #   above nearly the whole true-duplicate distribution, so the layer
+    #   was mostly inert on the case it was added for.
+    #
+    # KNOWN LIMIT (measured, documented in the README rather than hidden):
+    # a LARGE viewpoint change is not caught at any safe threshold. Two
+    # shots of the same garden 10s apart with the camera panned score
+    # 0.8355 — BELOW the different-image maximum of 0.8624 (two
+    # unrelated sites: a bridge and a road). The distributions overlap
+    # there, so no single value separates them; catching that pair would
+    # mean accepting false positives on genuinely different sites.
+    EMBEDDING_DUPLICATE_THRESHOLD: float = 0.90
 
-    # 0.85–<0.95 is "same general subject, possibly same location" —
-    # warrants human review but isn't conclusive on its own.
+    # 0.85–<0.90 is "same general subject, possibly same location" —
+    # warrants human review but isn't conclusive on its own. Measured
+    # false-positive rate at 0.85 on the 190 different-image pairs above:
+    # 1/190 (0.5%), the single bridge/road pair at 0.8624. Kept as-is —
+    # a 0.5% rate is acceptable for a flag that asks for a human look
+    # rather than blocking payment.
     EMBEDDING_SUSPICIOUS_THRESHOLD: float = 0.85
+
+    # ── Layer 6: SIFT keypoint geometric verification ──────────────────
+    # Closes the measured crop/rotation gap (README "Known limitations"):
+    # crops beyond ~10% per edge defeat BOTH hash layers on real photos,
+    # and rotation beyond ~7° defeats even rotation-robust pHash.
+    #
+    # Switched from ORB to SIFT 2026-08-29: SIFT's 128-float descriptors
+    # are far more discriminative than ORB's 256-bit binary strings,
+    # so matches survive much heavier crops:
+    #
+    # Calibrated on data/real_images/ (n=20, 190 different-image pairs):
+    #   SIFT crops (per-dim cut):
+    #     30% -> 20/20, 35% -> 19/20, 40% -> 20/20, 45% -> 20/20,
+    #     50% -> 20/20, 60% -> 20/20
+    #   rotation: 20/20 at EVERY angle tested (3°..90°)
+    #   different images: max 35 inliers at ratio 0.574 -> 0/190 FP
+    #     with ratio gate >= 0.60
+    #
+    # vs previous ORB results at same thresholds:
+    #     40% -> 19/20, 45% -> 17/20, 60% -> 16/20
+    #
+    # Trade-off: SIFT features are ~13x larger per record (~762 KB vs
+    # ~59 KB at 1500 features) because descriptors are float32×128
+    # instead of uint8×32. Extraction is faster (~23 ms vs ~50 ms).
+    #
+    # Runs retrieve-then-verify: ~23ms/image extraction is too slow for
+    # an O(n) primary scan, so a cheap signature retrieves the top-K
+    # nearest stored images (no similarity floor — the whole point is
+    # candidates whose similarity has already sunk out of the normal
+    # bands) and SIFT geometrically verifies ONLY those.
+    #
+    # Retrieval uses the UNION of two independent signatures:
+    #   - CLIP embedding cosine, when CLIP is enabled; and
+    #   - COLOR_SIGNATURE (below), which always works.
+    # The colour signature exists specifically so this layer does not
+    # depend on CLIP: an earlier version retrieved by CLIP alone, which
+    # silently disabled the crop/rotation fixes whenever ENABLE_CLIP was
+    # False. Union rather than either-or, because CLIP ranks semantic
+    # near-misses better while the histogram survives heavy crops better.
+    ENABLE_KEYPOINT_MATCH: bool = True
+    ORB_MAX_FEATURES: int = 1500
+    ORB_MAX_DIMENSION: int = 1000          # downscale longest side before extraction
+    ORB_RATIO_TEST: float = 0.75           # Lowe's ratio for descriptor matching
+    ORB_RANSAC_REPROJ_THRESHOLD: float = 5.0
+    ORB_INLIER_THRESHOLD: int = 15         # >= this many RANSAC inliers = match
+
+    # Two guards against a homography fitted to coincidental
+    # correspondences.
+    #
+    # SIFT measured separation (n=20 true 40%-crops, 190 different pairs):
+    #     min features   true: min 204   |  false: all > 500
+    #     inlier ratio   true: min 0.828 |  false: max 0.574
+    #
+    # ORB_MIN_FEATURES_FOR_MATCH lowered from 750 to 100: SIFT extracts
+    # fewer features on some low-texture images (e.g. electricity_02 at
+    # 204) but each descriptor is far more discriminative, so even 50
+    # SIFT features yield reliable matches (56 inliers at 204 features).
+    # The old 750 threshold was calibrated for ORB's weaker descriptors.
+    #
+    # ORB_MIN_INLIER_RATIO lowered from 0.65 to 0.60: SIFT true-positive
+    # minimum ratio is 0.828, and the false-positive maximum is 0.574,
+    # so 0.60 sits inside the gap with margin on both sides.
+    #
+    # Abstaining on a low-texture image (a plain wall, heavy fog) is the
+    # intended behaviour: with too few keypoints this layer cannot
+    # verify anything, and the other layers still run.
+    ORB_MIN_FEATURES_FOR_MATCH: int = 100
+    ORB_MIN_INLIER_RATIO: float = 0.60
+
+    # Minimum candidates verified per signature. Actual top-K scales
+    # adaptively with corpus size: K = max(this, ceil(sqrt(n))), capped
+    # at ORB_RETRIEVAL_MAX_K. At n=29 (current real corpus) this floor
+    # of 20 covers ~69% of the corpus. At n=10,000, sqrt scaling raises
+    # K to 100 (~230ms of verification). See _effective_top_k() in
+    # duplicate_search.py for the full table.
+    ORB_RETRIEVAL_TOP_K: int = 20
+
+    # Hard ceiling on adaptive top-K. Each extra candidate costs ~2.3ms
+    # of SIFT verification; 500 candidates -> ~1.15s worst case, which
+    # is acceptable for an assessment pipeline running SIFT, CLIP, OCR,
+    # and ELA. Raise this only if Recall@K is measured to drop at scale
+    # and the latency budget allows it.
+    ORB_RETRIEVAL_MAX_K: int = 500
+
+
+    # Storage note (measured 2026-08-29, n=20 real photos): SIFT features
+    # serialize to ~762 KB/record at 1500 features, ~13x the ORB encoding
+    # (~59 KB) and ~380x a CLIP embedding. This is the cost of SIFT's
+    # 128-float descriptors vs ORB's 32-byte binary descriptors.
+    # Detection coverage at heavy crops is the product — the storage
+    # trade-off is measured and deliberate.
+
+
+    # ── Colour signature (Layer 6 retrieval index) ───────────────────
+    # 8x4x4 = 128 bins -> 512 bytes per record as float32.
+    COLOR_SIGNATURE_H_BINS: int = 8
+    COLOR_SIGNATURE_S_BINS: int = 4
+    COLOR_SIGNATURE_V_BINS: int = 4
+    COLOR_SIGNATURE_MAX_DIMENSION: int = 512
 
     # ── Semantic content match ───────────────────────────────────────
 
@@ -181,6 +313,23 @@ class Settings(BaseSettings):
 
     # Master switch for ELA tamper detection.
     ENABLE_ELA: bool = True
+
+    # SCREENSHOT_DETECTED is measurably broken and stays OFF.
+    # Measured 2026-08-29 on data/real_images/: the ELA-uniformity
+    # heuristic (std_error < 5, mean_error < 3) fired on 29/29 GENUINE
+    # camera photographs — a 100% false-positive rate adding 25 points
+    # to every legitimate upload. Root cause, from the distributions:
+    #   real camera JPEGs:      mean 0.14-2.91, std 0.48-2.44
+    #   actual screenshots:     mean 0.19-0.70, std 0.83-1.14
+    # Complete overlap — a modern phone JPEG (saved at quality ~90-96)
+    # re-saves almost losslessly, exactly like a rendered image, so ELA
+    # uniformity carries NO signal for "screenshot vs camera photo".
+    # No threshold fixes this; the check only ever "passed" against the
+    # synthetic gradient corpus. compute_ela() still reports
+    # is_screenshot for diagnostics, but risk_engine only scores it when
+    # this flag is explicitly enabled. IMAGE_TAMPERED and PHOTO_OF_PHOTO
+    # are unaffected (0/29 false positives each on the same corpus).
+    ENABLE_SCREENSHOT_DETECTION: bool = False
 
     # Photo-of-photo (moiré) detection thresholds.  A photo of a printed
     # image or screen produces regular repeating patterns that show up as
@@ -332,7 +481,15 @@ class Settings(BaseSettings):
 
     # Image appears to be a screenshot (uniform error levels, not a
     # camera photo) — strong evidence the "photo" is fabricated.
+    # Scored only when ENABLE_SCREENSHOT_DETECTION is True — which it is
+    # not, by measurement; see that flag's comment.
     WEIGHT_SCREENSHOT_DETECTED: int = 25
+
+    # ORB geometric verification (Layer 6) — homography-verified match
+    # to another work's evidence. Same weight as a perceptual duplicate:
+    # measured 0/190 false positives with a ~2x margin, so when it fires
+    # it is near-certain evidence, not a review hint.
+    WEIGHT_GEOMETRIC_DUPLICATE_CROSS_WORK: int = 50
 
     # Image appears to be a photo taken of another photo or screen
     # (moiré patterns detected in frequency domain).
