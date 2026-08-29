@@ -9,6 +9,7 @@ import Spinner from '../components/Spinner'
 import EmptyState from '../components/EmptyState'
 import Icon from '../components/Icon'
 import { isRemoteUrl, formatDate } from '../lib/format'
+import { sanitizeFlagsForSubmitter } from '../lib/sanitizedFlags'
 
 export default function SubmissionDetailPage() {
   const { id } = useParams()
@@ -17,8 +18,11 @@ export default function SubmissionDetailPage() {
   const submission = submissions?.find((s) => s.id === id)
 
   return (
-    <div>
-      <Link to="/app/submissions" className="cluster" style={{ gap: 6, marginBottom: 16, color: 'var(--color-muted)', fontSize: 14, textDecoration: 'none' }}>
+    <div className="min-h-screen bg-[#f8fafc] p-5">
+      <Link
+        to="/app/submissions"
+        className="mb-5 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 no-underline shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900"
+      >
         <Icon name="chevron-left" size={16} />
         Back to my submissions
       </Link>
@@ -36,15 +40,15 @@ export default function SubmissionDetailPage() {
 
       {submission && (
         <div>
-          <div className="page-header">
+          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h1>{submission.work_id}</h1>
-              <p>
+              <h1 className="text-xl font-bold !text-slate-900">{submission.work_id}</h1>
+              <p className="mt-0.5 text-xs text-slate-500">
                 {submission.work_type || 'Uncategorised'} · {submission.district}
                 {submission.state ? `, ${submission.state}` : ''}
               </p>
             </div>
-            <div className="cluster" style={{ gap: 10 }}>
+            <div className="flex flex-wrap items-center gap-2">
               <RiskBadge level={submission.risk_level} score={submission.risk_score} />
               <StatusBadge status={submission.status} />
             </div>
@@ -52,7 +56,7 @@ export default function SubmissionDetailPage() {
 
           <div className="form-grid" style={{ alignItems: 'start', gridTemplateColumns: '1fr 1.4fr' }}>
             <div className="stack" style={{ gap: 20 }}>
-              <div className="card card-padded">
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                 {isRemoteUrl(submission.file_path) ? (
                   <img
                     src={submission.file_path}
@@ -75,8 +79,8 @@ export default function SubmissionDetailPage() {
                 )}
               </div>
 
-              <div className="card card-padded stack" style={{ gap: 10 }}>
-                <h3>Details</h3>
+              <div className="stack rounded-xl border border-slate-200 bg-white p-5 shadow-sm" style={{ gap: 10 }}>
+                <h3 className="text-sm font-bold uppercase tracking-wide !text-slate-900">Details</h3>
                 <DetailRow label="Submitted" value={formatDate(submission.uploaded_at)} />
                 <DetailRow label="MP" value={submission.mp_name || '—'} />
                 <DetailRow label="Sanction date" value={formatDate(submission.sanction_date, { dateStyle: 'medium' })} />
@@ -85,14 +89,14 @@ export default function SubmissionDetailPage() {
             </div>
 
             <div className="stack" style={{ gap: 20 }}>
-              <div className="card card-padded">
-                <h3 style={{ marginBottom: 16 }}>Review progress</h3>
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h3 className="mb-4 text-sm font-bold uppercase tracking-wide !text-slate-900">Review progress</h3>
                 <ProgressTimeline status={submission.status} uploadedAt={submission.uploaded_at} />
               </div>
 
-              <div className="card card-padded">
-                <h3 style={{ marginBottom: 16 }}>Automated findings</h3>
-                <FlagList flags={submission.flags} />
+              <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h3 className="mb-4 text-sm font-bold uppercase tracking-wide !text-slate-900">Automated findings</h3>
+                <FlagList flags={sanitizeFlagsForSubmitter(submission.flags)} />
               </div>
             </div>
           </div>
@@ -104,9 +108,9 @@ export default function SubmissionDetailPage() {
 
 function DetailRow({ label, value }) {
   return (
-    <div className="spread" style={{ fontSize: 14 }}>
-      <span style={{ color: 'var(--color-muted)' }}>{label}</span>
-      <span style={{ color: 'var(--color-ink)', fontWeight: 600, textAlign: 'right' }}>{value}</span>
+    <div className="flex items-center justify-between gap-4 text-sm">
+      <span className="text-slate-500">{label}</span>
+      <span className="text-right font-semibold text-slate-900">{value}</span>
     </div>
   )
 }
