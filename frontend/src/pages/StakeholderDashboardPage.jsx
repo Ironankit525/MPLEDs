@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 import { useOverview } from '../hooks/useOverview'
+import { getAiSummary } from '../api/stakeholder'
+import AiSummaryCard from '../components/AiSummaryCard'
 import DailyVolumeChart from '../components/charts/DailyVolumeChart'
 import StatusBreakdownChart from '../components/charts/StatusBreakdownChart'
 import RiskBreakdownChart from '../components/charts/RiskBreakdownChart'
@@ -59,6 +61,8 @@ export default function StakeholderDashboardPage() {
               sub="submissions scored HIGH"
             />
           </div>
+
+          <AiSummaryCard fetcher={getAiSummary} reloadKey={overview} style={{ marginBottom: 20 }} />
 
           <div className="chart-grid">
             <div className="chart-card">

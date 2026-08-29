@@ -72,3 +72,6 @@ dist/
 # Agents
 .agents/
 
+
+# Report exports — generated from the live DB by scripts/export_submissions_csv.py
+data/exports/

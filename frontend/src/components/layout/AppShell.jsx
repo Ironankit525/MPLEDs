@@ -17,6 +17,7 @@ const NAV_BY_ROLE = {
   ],
   stakeholder: [
     { to: '/app/dashboard', label: 'Dashboard', icon: 'shield', end: true },
+    { to: '/app/ai-report', label: 'AI Report', icon: 'spark' },
     { to: '/app/reports', label: 'Reports', icon: 'history' },
     { to: '/app/settings', label: 'Settings', icon: 'settings' },
   ],

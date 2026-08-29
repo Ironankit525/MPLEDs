@@ -30,7 +30,13 @@ try:
         import mongomock
         client = mongomock.MongoClient(MONGO_URL)
     else:
-        client = MongoClient(MONGO_URL)
+        # Atlas requires TLS; python.org macOS builds (and some Linux
+        # minimal images) ship without a system CA path Python can find,
+        # which fails the handshake with CERTIFICATE_VERIFY_FAILED.
+        # certifi's bundle is the portable fix; certifi is already an
+        # indirect dependency (httpx), so this adds no new install.
+        import certifi
+        client = MongoClient(MONGO_URL, tlsCAFile=certifi.where())
     
     # Get database instance
     # Parse DB name from URI or default to MPLADS

@@ -1,0 +1,5319 @@
+dataset_id,row,column,value
+30,1,Sr. No.,1
+30,1,State/ UT Name,Andhra Pradesh (Old)
+30,1,"Railways, Roads, Pathways & Bridges",34.94
+30,1,Education,7.2
+30,1,Drinking Water Facility,12.11
+30,1,Sanitation & Public Health,2.82
+30,1,Other Public Facilities,31.98
+30,1,Others,10.94
+30,2,Sr. No.,2
+30,2,State/ UT Name,Arunachal Pradesh
+30,2,"Railways, Roads, Pathways & Bridges",14.49
+30,2,Education,12.44
+30,2,Drinking Water Facility,2.2
+30,2,Sanitation & Public Health,2.71
+30,2,Other Public Facilities,37.43
+30,2,Others,30.73
+30,3,Sr. No.,3
+30,3,State/ UT Name,Assam
+30,3,"Railways, Roads, Pathways & Bridges",25.2
+30,3,Education,20.03
+30,3,Drinking Water Facility,4.9
+30,3,Sanitation & Public Health,1.1
+30,3,Other Public Facilities,41.42
+30,3,Others,7.35
+30,4,Sr. No.,4
+30,4,State/ UT Name,Bihar
+30,4,"Railways, Roads, Pathways & Bridges",67.29
+30,4,Education,8.62
+30,4,Drinking Water Facility,2.3
+30,4,Sanitation & Public Health,1.48
+30,4,Other Public Facilities,13.97
+30,4,Others,6.34
+30,5,Sr. No.,5
+30,5,State/ UT Name,Chhattisgarh
+30,5,"Railways, Roads, Pathways & Bridges",31.05
+30,5,Education,11.69
+30,5,Drinking Water Facility,8.47
+30,5,Sanitation & Public Health,0.78
+30,5,Other Public Facilities,40.44
+30,5,Others,7.58
+30,6,Sr. No.,6
+30,6,State/ UT Name,Goa
+30,6,"Railways, Roads, Pathways & Bridges",10.78
+30,6,Education,24.42
+30,6,Drinking Water Facility,0.47
+30,6,Sanitation & Public Health,7.75
+30,6,Other Public Facilities,37.78
+30,6,Others,18.8
+30,7,Sr. No.,7
+30,7,State/ UT Name,Gujarat
+30,7,"Railways, Roads, Pathways & Bridges",44.47
+30,7,Education,13.16
+30,7,Drinking Water Facility,10.64
+30,7,Sanitation & Public Health,3.88
+30,7,Other Public Facilities,18.51
+30,7,Others,9.34
+30,8,Sr. No.,8
+30,8,State/ UT Name,Haryana
+30,8,"Railways, Roads, Pathways & Bridges",28.4
+30,8,Education,10.45
+30,8,Drinking Water Facility,5.25
+30,8,Sanitation & Public Health,2.73
+30,8,Other Public Facilities,43.35
+30,8,Others,9.82
+30,9,Sr. No.,9
+30,9,State/ UT Name,Himachal Pradesh
+30,9,"Railways, Roads, Pathways & Bridges",34.62
+30,9,Education,11.36
+30,9,Drinking Water Facility,2.64
+30,9,Sanitation & Public Health,1.35
+30,9,Other Public Facilities,43.27
+30,9,Others,6.75
+30,10,Sr. No.,10
+30,10,State/ UT Name,Jammu & Kashmir
+30,10,"Railways, Roads, Pathways & Bridges",27.06
+30,10,Education,4.74
+30,10,Drinking Water Facility,2.32
+30,10,Sanitation & Public Health,13.21
+30,10,Other Public Facilities,37.9
+30,10,Others,14.76
+30,11,Sr. No.,11
+30,11,State/ UT Name,Jharkhand
+30,11,"Railways, Roads, Pathways & Bridges",52.02
+30,11,Education,8.83
+30,11,Drinking Water Facility,4.96
+30,11,Sanitation & Public Health,3.28
+30,11,Other Public Facilities,22.59
+30,11,Others,8.33
+30,12,Sr. No.,12
+30,12,State/ UT Name,Karnataka
+30,12,"Railways, Roads, Pathways & Bridges",28.35
+30,12,Education,12.55
+30,12,Drinking Water Facility,3.57
+30,12,Sanitation & Public Health,2.38
+30,12,Other Public Facilities,47.46
+30,12,Others,5.69
+30,13,Sr. No.,13
+30,13,State/ UT Name,Kerala
+30,13,"Railways, Roads, Pathways & Bridges",46.78
+30,13,Education,21.81
+30,13,Drinking Water Facility,6.23
+30,13,Sanitation & Public Health,1.19
+30,13,Other Public Facilities,9.97
+30,13,Others,14.02
+30,14,Sr. No.,14
+30,14,State/ UT Name,Madhya Pradesh
+30,14,"Railways, Roads, Pathways & Bridges",50.61
+30,14,Education,7.21
+30,14,Drinking Water Facility,12.15
+30,14,Sanitation & Public Health,1.32
+30,14,Other Public Facilities,19.12
+30,14,Others,9.58
+30,15,Sr. No.,15
+30,15,State/ UT Name,Maharashtra
+30,15,"Railways, Roads, Pathways & Bridges",44.67
+30,15,Education,7.11
+30,15,Drinking Water Facility,4.73
+30,15,Sanitation & Public Health,9.73
+30,15,Other Public Facilities,26.5
+30,15,Others,7.27
+30,16,Sr. No.,16
+30,16,State/ UT Name,Manipur
+30,16,"Railways, Roads, Pathways & Bridges",8.31
+30,16,Education,8.4
+30,16,Drinking Water Facility,1.83
+30,16,Sanitation & Public Health,0.82
+30,16,Other Public Facilities,66.24
+30,16,Others,14.39
+30,17,Sr. No.,17
+30,17,State/ UT Name,Meghalaya
+30,17,"Railways, Roads, Pathways & Bridges",21.34
+30,17,Education,33.99
+30,17,Drinking Water Facility,1.32
+30,17,Sanitation & Public Health,1.18
+30,17,Other Public Facilities,23.34
+30,17,Others,18.83
+30,18,Sr. No.,18
+30,18,State/ UT Name,Mizoram
+30,18,"Railways, Roads, Pathways & Bridges",27.63
+30,18,Education,7.69
+30,18,Drinking Water Facility,0.9
+30,18,Sanitation & Public Health,6.43
+30,18,Other Public Facilities,47.4
+30,18,Others,9.94
+30,19,Sr. No.,19
+30,19,State/ UT Name,Nagaland
+30,19,"Railways, Roads, Pathways & Bridges",NA
+30,19,Education,NA
+30,19,Drinking Water Facility,NA
+30,19,Sanitation & Public Health,NA
+30,19,Other Public Facilities,NA
+30,19,Others,NA
+30,20,Sr. No.,20
+30,20,State/ UT Name,Odisha
+30,20,"Railways, Roads, Pathways & Bridges",23.4
+30,20,Education,23.56
+30,20,Drinking Water Facility,4.19
+30,20,Sanitation & Public Health,1.59
+30,20,Other Public Facilities,36.23
+30,20,Others,11.03
+30,21,Sr. No.,21
+30,21,State/ UT Name,Punjab
+30,21,"Railways, Roads, Pathways & Bridges",15.77
+30,21,Education,13.43
+30,21,Drinking Water Facility,4.86
+30,21,Sanitation & Public Health,14.7
+30,21,Other Public Facilities,41.04
+30,21,Others,10.19
+30,22,Sr. No.,22
+30,22,State/ UT Name,Rajasthan
+30,22,"Railways, Roads, Pathways & Bridges",29.53
+30,22,Education,18.54
+30,22,Drinking Water Facility,16.55
+30,22,Sanitation & Public Health,0.99
+30,22,Other Public Facilities,27.07
+30,22,Others,7.32
+30,23,Sr. No.,23
+30,23,State/ UT Name,Sikkim
+30,23,"Railways, Roads, Pathways & Bridges",10.08
+30,23,Education,36.35
+30,23,Drinking Water Facility,0.8
+30,23,Sanitation & Public Health,7.44
+30,23,Other Public Facilities,29.56
+30,23,Others,15.76
+30,24,Sr. No.,24
+30,24,State/ UT Name,Tamil Nadu
+30,24,"Railways, Roads, Pathways & Bridges",29.35
+30,24,Education,19.46
+30,24,Drinking Water Facility,8.85
+30,24,Sanitation & Public Health,3.54
+30,24,Other Public Facilities,25.57
+30,24,Others,13.23
+30,25,Sr. No.,25
+30,25,State/ UT Name,Telangana
+30,25,"Railways, Roads, Pathways & Bridges",NA
+30,25,Education,NA
+30,25,Drinking Water Facility,NA
+30,25,Sanitation & Public Health,NA
+30,25,Other Public Facilities,NA
+30,25,Others,NA
+30,26,Sr. No.,26
+30,26,State/ UT Name,Tripura
+30,26,"Railways, Roads, Pathways & Bridges",7.96
+30,26,Education,30.75
+30,26,Drinking Water Facility,1.94
+30,26,Sanitation & Public Health,1.73
+30,26,Other Public Facilities,42.9
+30,26,Others,14.71
+30,27,Sr. No.,27
+30,27,State/ UT Name,Uttar Pradesh
+30,27,"Railways, Roads, Pathways & Bridges",61.61
+30,27,Education,14.25
+30,27,Drinking Water Facility,6.62
+30,27,Sanitation & Public Health,1.32
+30,27,Other Public Facilities,9.75
+30,27,Others,6.46
+30,28,Sr. No.,28
+30,28,State/ UT Name,Uttarakhand
+30,28,"Railways, Roads, Pathways & Bridges",42.88
+30,28,Education,21.36
+30,28,Drinking Water Facility,5.29
+30,28,Sanitation & Public Health,1.14
+30,28,Other Public Facilities,23.24
+30,28,Others,6.1
+30,29,Sr. No.,29
+30,29,State/ UT Name,West Bengal
+30,29,"Railways, Roads, Pathways & Bridges",24.34
+30,29,Education,26.51
+30,29,Drinking Water Facility,6.35
+30,29,Sanitation & Public Health,2.65
+30,29,Other Public Facilities,21.65
+30,29,Others,18.49
+30,30,Sr. No.,30
+30,30,State/ UT Name,Andaman & Nicobar Islands
+30,30,"Railways, Roads, Pathways & Bridges",31.75
+30,30,Education,5.09
+30,30,Drinking Water Facility,2.83
+30,30,Sanitation & Public Health,7.37
+30,30,Other Public Facilities,37.64
+30,30,Others,15.33
+30,31,Sr. No.,31
+30,31,State/ UT Name,Chandigarh
+30,31,"Railways, Roads, Pathways & Bridges",14.26
+30,31,Education,13.01
+30,31,Drinking Water Facility,2.59
+30,31,Sanitation & Public Health,1.73
+30,31,Other Public Facilities,56.1
+30,31,Others,12.31
+30,32,Sr. No.,32
+30,32,State/ UT Name,Dadra & Nagar Haveli
+30,32,"Railways, Roads, Pathways & Bridges",40.84
+30,32,Education,2.29
+30,32,Drinking Water Facility,43.18
+30,32,Sanitation & Public Health,4.71
+30,32,Other Public Facilities,1.5
+30,32,Others,7.48
+30,33,Sr. No.,33
+30,33,State/ UT Name,Daman & Diu
+30,33,"Railways, Roads, Pathways & Bridges",7.05
+30,33,Education,5.84
+30,33,Drinking Water Facility,5.95
+30,33,Sanitation & Public Health,2.81
+30,33,Other Public Facilities,43.66
+30,33,Others,34.69
+30,34,Sr. No.,34
+30,34,State/ UT Name,Delhi
+30,34,"Railways, Roads, Pathways & Bridges",41.33
+30,34,Education,3.23
+30,34,Drinking Water Facility,1.3
+30,34,Sanitation & Public Health,2.43
+30,34,Other Public Facilities,28.73
+30,34,Others,22.99
+30,35,Sr. No.,35
+30,35,State/ UT Name,Lakshadweep
+30,35,"Railways, Roads, Pathways & Bridges",0
+30,35,Education,99.95
+30,35,Drinking Water Facility,0
+30,35,Sanitation & Public Health,0
+30,35,Other Public Facilities,0
+30,35,Others,0.05
+30,36,Sr. No.,36
+30,36,State/ UT Name,Puducherry
+30,36,"Railways, Roads, Pathways & Bridges",45.63
+30,36,Education,4.5
+30,36,Drinking Water Facility,1.23
+30,36,Sanitation & Public Health,12.55
+30,36,Other Public Facilities,26.95
+30,36,Others,9.13
+31,1,Sl. No.,1
+31,1,State/UT,Andhra Pradesh
+31,1,MP Name,V.vijayasai Reddy
+31,1,District,Visakhapatnam
+31,1,Fund Received Goi (Rs. Crore),22
+31,1,Works Recommended Cost (Rs. Crore),27.8
+31,1,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.89
+31,2,Sl. No.,2
+31,2,State/UT,Andhra Pradesh
+31,2,MP Name,C.M Ramesh
+31,2,District,Cuddapah
+31,2,Fund Received Goi (Rs. Crore),10
+31,2,Works Recommended Cost (Rs. Crore),21.06
+31,2,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.35
+31,3,Sl. No.,3
+31,3,State/UT,Andhra Pradesh
+31,3,MP Name,Kanakamedala Ravindra Kumar
+31,3,District,Ntr
+31,3,Fund Received Goi (Rs. Crore),12
+31,3,Works Recommended Cost (Rs. Crore),27.01
+31,3,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.6
+31,4,Sl. No.,4
+31,4,State/UT,Andhra Pradesh
+31,4,MP Name,Shri Ryaga Krishnaiah
+31,4,District,Kurnool
+31,4,Fund Received Goi (Rs. Crore),2.5
+31,4,Works Recommended Cost (Rs. Crore),0
+31,4,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,5,Sl. No.,5
+31,5,State/UT,Andhra Pradesh
+31,5,MP Name,Y.S. Chowdary
+31,5,District,Krishna
+31,5,Fund Received Goi (Rs. Crore),15
+31,5,Works Recommended Cost (Rs. Crore),35.84
+31,5,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.19
+31,6,Sl. No.,6
+31,6,State/UT,Andhra Pradesh
+31,6,MP Name,Shri. Venkataramana Rao Mopidevi
+31,6,District,Bapatla
+31,6,Fund Received Goi (Rs. Crore),2
+31,6,Works Recommended Cost (Rs. Crore),3.34
+31,6,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.32
+31,7,Sl. No.,7
+31,7,State/UT,Andhra Pradesh
+31,7,MP Name,Shri Niranjan Reddy Sirgapoor
+31,7,District,Visakhapatnam
+31,7,Fund Received Goi (Rs. Crore),2.5
+31,7,Works Recommended Cost (Rs. Crore),0
+31,7,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,8,Sl. No.,8
+31,8,State/UT,Andhra Pradesh
+31,8,MP Name,Prabhakar Reddy Vemireddy
+31,8,District,Nellore
+31,8,Fund Received Goi (Rs. Crore),10
+31,8,Works Recommended Cost (Rs. Crore),16.79
+31,8,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.62
+31,9,Sl. No.,9
+31,9,State/UT,Andhra Pradesh
+31,9,MP Name,Shri. Parimal Nathwani
+31,9,District,Kadapa
+31,9,Fund Received Goi (Rs. Crore),2
+31,9,Works Recommended Cost (Rs. Crore),0
+31,9,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,10,Sl. No.,10
+31,10,State/UT,Andhra Pradesh
+31,10,MP Name,Shri. Ayodhya Rami Reddy Alla
+31,10,District,Guntur
+31,10,Fund Received Goi (Rs. Crore),4.5
+31,10,Works Recommended Cost (Rs. Crore),7.32
+31,10,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.52
+31,11,Sl. No.,11
+31,11,State/UT,Andhra Pradesh
+31,11,MP Name,Shri. T.G Venkatesh
+31,11,District,Kurnool
+31,11,Fund Received Goi (Rs. Crore),17.5
+31,11,Works Recommended Cost (Rs. Crore),23.64
+31,11,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),15.88
+31,12,Sl. No.,12
+31,12,State/UT,Andhra Pradesh
+31,12,MP Name,Shri Masthan Rao Beeda
+31,12,District,Nellore
+31,12,Fund Received Goi (Rs. Crore),2.5
+31,12,Works Recommended Cost (Rs. Crore),1.86
+31,12,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.46
+31,13,Sl. No.,13
+31,13,State/UT,Andhra Pradesh
+31,13,MP Name,Suresh Prabhu
+31,13,District,Krishna
+31,13,Fund Received Goi (Rs. Crore),12.5
+31,13,Works Recommended Cost (Rs. Crore),28.19
+31,13,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.25
+31,14,Sl. No.,14
+31,14,State/UT,Andhra Pradesh
+31,14,MP Name,Shri. Pilli Subhaschandra Bose
+31,14,District,Dr. B.r. Ambedkar Konaseema
+31,14,Fund Received Goi (Rs. Crore),2
+31,14,Works Recommended Cost (Rs. Crore),3.31
+31,14,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.2
+31,15,Sl. No.,15
+31,15,State/UT,Andhra Pradesh
+31,15,MP Name,Shri V Vijayasai Reddy
+31,15,District,Visakhapatnam
+31,15,Fund Received Goi (Rs. Crore),2.5
+31,15,Works Recommended Cost (Rs. Crore),0
+31,15,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,16,Sl. No.,16
+31,16,State/UT,Arunachal Pradesh
+31,16,MP Name,Shri. Nabam Rebia
+31,16,District,Papum Pare
+31,16,Fund Received Goi (Rs. Crore),7
+31,16,Works Recommended Cost (Rs. Crore),6.29
+31,16,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.38
+31,17,Sl. No.,17
+31,17,State/UT,Assam
+31,17,MP Name,Shri Pabitra Margherita
+31,17,District,Kamrup Metropolitan
+31,17,Fund Received Goi (Rs. Crore),2.5
+31,17,Works Recommended Cost (Rs. Crore),0
+31,17,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,18,Sl. No.,18
+31,18,State/UT,Assam
+31,18,MP Name,Shri Rwngwra Narzary
+31,18,District,Chirang
+31,18,Fund Received Goi (Rs. Crore),2.5
+31,18,Works Recommended Cost (Rs. Crore),0
+31,18,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,19,Sl. No.,19
+31,19,State/UT,Assam
+31,19,MP Name,Shri Biswajit Daimary
+31,19,District,Kamrup Metropolitan
+31,19,Fund Received Goi (Rs. Crore),51
+31,19,Works Recommended Cost (Rs. Crore),51.96
+31,19,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),49.5
+31,20,Sl. No.,20
+31,20,State/UT,Assam
+31,20,MP Name,Smt Ranee Narah
+31,20,District,Lakhimpur
+31,20,Fund Received Goi (Rs. Crore),22
+31,20,Works Recommended Cost (Rs. Crore),20.17
+31,20,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.99
+31,21,Sl. No.,21
+31,21,State/UT,Assam
+31,21,MP Name,Shri. Ajit Kumar Bhuyan
+31,21,District,Kamrup Metropolitan
+31,21,Fund Received Goi (Rs. Crore),7
+31,21,Works Recommended Cost (Rs. Crore),7
+31,21,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.5
+31,22,Sl. No.,22
+31,22,State/UT,Assam
+31,22,MP Name,Sh. Ripun Bora
+31,22,District,Sonitpur
+31,22,Fund Received Goi (Rs. Crore),22
+31,22,Works Recommended Cost (Rs. Crore),20.08
+31,22,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.04
+31,23,Sl. No.,23
+31,23,State/UT,Assam
+31,23,MP Name,Shri. Birendra Prasad Baishya
+31,23,District,Kamrup Metropolitan
+31,23,Fund Received Goi (Rs. Crore),9.5
+31,23,Works Recommended Cost (Rs. Crore),6.86
+31,23,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.63
+31,24,Sl. No.,24
+31,24,State/UT,Assam
+31,24,MP Name,Shri. Biswajit Daimary
+31,24,District,NA
+31,24,Fund Received Goi (Rs. Crore),0
+31,24,Works Recommended Cost (Rs. Crore),0
+31,24,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,25,Sl. No.,25
+31,25,State/UT,Assam
+31,25,MP Name,Shri. Sarbananda Sonowal
+31,25,District,Dibrugarh
+31,25,Fund Received Goi (Rs. Crore),4.5
+31,25,Works Recommended Cost (Rs. Crore),1.96
+31,25,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.72
+31,26,Sl. No.,26
+31,26,State/UT,Assam
+31,26,MP Name,Shri. Bhubaneswar Kalita
+31,26,District,Kamrup
+31,26,Fund Received Goi (Rs. Crore),7
+31,26,Works Recommended Cost (Rs. Crore),4.5
+31,26,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.82
+31,27,Sl. No.,27
+31,27,State/UT,Assam
+31,27,MP Name,Shri Bhubaneswar Kalita
+31,27,District,Kamrup
+31,27,Fund Received Goi (Rs. Crore),51
+31,27,Works Recommended Cost (Rs. Crore),52.19
+31,27,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),49
+31,28,Sl. No.,28
+31,28,State/UT,Assam
+31,28,MP Name,Shri. Kamakhya Prasad Tasa
+31,28,District,Jorhat
+31,28,Fund Received Goi (Rs. Crore),7
+31,28,Works Recommended Cost (Rs. Crore),4.88
+31,28,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.59
+31,29,Sl. No.,29
+31,29,State/UT,Bihar
+31,29,MP Name,Manoj Kumar Jha
+31,29,District,Saharsa
+31,29,Fund Received Goi (Rs. Crore),12
+31,29,Works Recommended Cost (Rs. Crore),14.1
+31,29,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.95
+31,30,Sl. No.,30
+31,30,State/UT,Bihar
+31,30,MP Name,Shri Satish Chandra Dubey
+31,30,District,Bettiah (W.Champaran)
+31,30,Fund Received Goi (Rs. Crore),2.5
+31,30,Works Recommended Cost (Rs. Crore),0
+31,30,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,31,Sl. No.,31
+31,31,State/UT,Bihar
+31,31,MP Name,Shri. Sushil Kumar Modi
+31,31,District,Patna
+31,31,Fund Received Goi (Rs. Crore),4.5
+31,31,Works Recommended Cost (Rs. Crore),2.99
+31,31,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.84
+31,32,Sl. No.,32
+31,32,State/UT,Bihar
+31,32,MP Name,Dr Faiyaz Ahmad
+31,32,District,Madhubani
+31,32,Fund Received Goi (Rs. Crore),2.5
+31,32,Works Recommended Cost (Rs. Crore),0
+31,32,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,33,Sl. No.,33
+31,33,State/UT,Bihar
+31,33,MP Name,Shri Khiru Mahto
+31,33,District,Patna
+31,33,Fund Received Goi (Rs. Crore),2.5
+31,33,Works Recommended Cost (Rs. Crore),2.21
+31,33,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.75
+31,34,Sl. No.,34
+31,34,State/UT,Bihar
+31,34,MP Name,Shri Shambhu Sharan Patel
+31,34,District,Shekhpura
+31,34,Fund Received Goi (Rs. Crore),2.5
+31,34,Works Recommended Cost (Rs. Crore),0
+31,34,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,35,Sl. No.,35
+31,35,State/UT,Bihar
+31,35,MP Name,Bashistha Narain Singh
+31,35,District,Buxar
+31,35,Fund Received Goi (Rs. Crore),14.5
+31,35,Works Recommended Cost (Rs. Crore),16.02
+31,35,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.28
+31,36,Sl. No.,36
+31,36,State/UT,Bihar
+31,36,MP Name,Akhilesh Prasad Singh
+31,36,District,Mothihari (E.Champaran)
+31,36,Fund Received Goi (Rs. Crore),10
+31,36,Works Recommended Cost (Rs. Crore),7.29
+31,36,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.06
+31,37,Sl. No.,37
+31,37,State/UT,Bihar
+31,37,MP Name,Shri. Amrendra Dhari Singh
+31,37,District,Patna
+31,37,Fund Received Goi (Rs. Crore),2
+31,37,Works Recommended Cost (Rs. Crore),0.75
+31,37,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.75
+31,38,Sl. No.,38
+31,38,State/UT,Bihar
+31,38,MP Name,Shri. Ram Nath Thakur
+31,38,District,Samastipur
+31,38,Fund Received Goi (Rs. Crore),7
+31,38,Works Recommended Cost (Rs. Crore),5.9
+31,38,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.51
+31,39,Sl. No.,39
+31,39,State/UT,Bihar
+31,39,MP Name,Shri. Harivansh
+31,39,District,Patna
+31,39,Fund Received Goi (Rs. Crore),2
+31,39,Works Recommended Cost (Rs. Crore),0
+31,39,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,40,Sl. No.,40
+31,40,State/UT,Bihar
+31,40,MP Name,Shri. Ram Chandra Prasad Singh
+31,40,District,NA
+31,40,Fund Received Goi (Rs. Crore),0
+31,40,Works Recommended Cost (Rs. Crore),0
+31,40,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,41,Sl. No.,41
+31,41,State/UT,Bihar
+31,41,MP Name,Shri. Ram Vilas Paswan
+31,41,District,Patna
+31,41,Fund Received Goi (Rs. Crore),2.5
+31,41,Works Recommended Cost (Rs. Crore),2.12
+31,41,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.12
+31,42,Sl. No.,42
+31,42,State/UT,Bihar
+31,42,MP Name,Smt Misha Bharti
+31,42,District,Patna
+31,42,Fund Received Goi (Rs. Crore),19.5
+31,42,Works Recommended Cost (Rs. Crore),23.7
+31,42,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.12
+31,43,Sl. No.,43
+31,43,State/UT,Bihar
+31,43,MP Name,Shri. Satish Chandra Dubey
+31,43,District,Pashchim Champaran
+31,43,Fund Received Goi (Rs. Crore),7
+31,43,Works Recommended Cost (Rs. Crore),7.5
+31,43,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.78
+31,44,Sl. No.,44
+31,44,State/UT,Bihar
+31,44,MP Name,Dr Mahendra Prasad
+31,44,District,Jehanabad
+31,44,Fund Received Goi (Rs. Crore),12
+31,44,Works Recommended Cost (Rs. Crore),17.61
+31,44,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.67
+31,45,Sl. No.,45
+31,45,State/UT,Bihar
+31,45,MP Name,Shri. Vivek Thakur
+31,45,District,Patna
+31,45,Fund Received Goi (Rs. Crore),4.5
+31,45,Works Recommended Cost (Rs. Crore),3.32
+31,45,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.67
+31,46,Sl. No.,46
+31,46,State/UT,Bihar
+31,46,MP Name,Shri. Prem Chand Gupta
+31,46,District,Patna
+31,46,Fund Received Goi (Rs. Crore),2
+31,46,Works Recommended Cost (Rs. Crore),0
+31,46,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,47,Sl. No.,47
+31,47,State/UT,Bihar
+31,47,MP Name,Sh. Gopal Narayan Singh
+31,47,District,Rohtas
+31,47,Fund Received Goi (Rs. Crore),19.5
+31,47,Works Recommended Cost (Rs. Crore),22.15
+31,47,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.67
+31,48,Sl. No.,48
+31,48,State/UT,Bihar
+31,48,MP Name,Ahmad Ashfaque Karim
+31,48,District,Katihar
+31,48,Fund Received Goi (Rs. Crore),10
+31,48,Works Recommended Cost (Rs. Crore),7.48
+31,48,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.74
+31,49,Sl. No.,49
+31,49,State/UT,Bihar
+31,49,MP Name,Shri Aneel Prasad Hegde
+31,49,District,Patna
+31,49,Fund Received Goi (Rs. Crore),2.5
+31,49,Works Recommended Cost (Rs. Crore),0
+31,49,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,50,Sl. No.,50
+31,50,State/UT,Bihar
+31,50,MP Name,Smt. Misha Bharti
+31,50,District,NA
+31,50,Fund Received Goi (Rs. Crore),0
+31,50,Works Recommended Cost (Rs. Crore),0
+31,50,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,51,Sl. No.,51
+31,51,State/UT,Chhattisgarh
+31,51,MP Name,Saroj Pandey
+31,51,District,Durg
+31,51,Fund Received Goi (Rs. Crore),7.5
+31,51,Works Recommended Cost (Rs. Crore),5.59
+31,51,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.14
+31,52,Sl. No.,52
+31,52,State/UT,Chhattisgarh
+31,52,MP Name,Sh. Ram Vichar Netam
+31,52,District,Balrampur
+31,52,Fund Received Goi (Rs. Crore),20
+31,52,Works Recommended Cost (Rs. Crore),28.98
+31,52,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.69
+31,53,Sl. No.,53
+31,53,State/UT,Chhattisgarh
+31,53,MP Name,Smt Chhaya Verma
+31,53,District,Raipur
+31,53,Fund Received Goi (Rs. Crore),22
+31,53,Works Recommended Cost (Rs. Crore),27.76
+31,53,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.99
+31,54,Sl. No.,54
+31,54,State/UT,Chhattisgarh
+31,54,MP Name,Shri. K.t.s Tulsi
+31,54,District,Bilaspur
+31,54,Fund Received Goi (Rs. Crore),7
+31,54,Works Recommended Cost (Rs. Crore),7.41
+31,54,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.24
+31,55,Sl. No.,55
+31,55,State/UT,Chhattisgarh
+31,55,MP Name,Shri Rajeev Shukla
+31,55,District,Raipur
+31,55,Fund Received Goi (Rs. Crore),2.5
+31,55,Works Recommended Cost (Rs. Crore),0
+31,55,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,56,Sl. No.,56
+31,56,State/UT,Chhattisgarh
+31,56,MP Name,Smt Ranjeet Ranjan
+31,56,District,Dhamtari
+31,56,Fund Received Goi (Rs. Crore),2.5
+31,56,Works Recommended Cost (Rs. Crore),3.11
+31,56,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.62
+31,57,Sl. No.,57
+31,57,State/UT,Chhattisgarh
+31,57,MP Name,Smt Phulo Devi Netam
+31,57,District,Kondagaon
+31,57,Fund Received Goi (Rs. Crore),4.5
+31,57,Works Recommended Cost (Rs. Crore),6.11
+31,57,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.24
+31,58,Sl. No.,58
+31,58,State/UT,Delhi
+31,58,MP Name,Narain Das Gupta
+31,58,District,Commissioner South Delhi Municipal Corporation
+31,58,Fund Received Goi (Rs. Crore),12
+31,58,Works Recommended Cost (Rs. Crore),14.62
+31,58,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.93
+31,59,Sl. No.,59
+31,59,State/UT,Delhi
+31,59,MP Name,Dr Sushil Gupta
+31,59,District,Commissioner North Delhi Municipal Corporation
+31,59,Fund Received Goi (Rs. Crore),5
+31,59,Works Recommended Cost (Rs. Crore),8.7
+31,59,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.04
+31,60,Sl. No.,60
+31,60,State/UT,Delhi
+31,60,MP Name,Shri. Sanjay Singh
+31,60,District,Commissioner South Delhi Municipal Corporation
+31,60,Fund Received Goi (Rs. Crore),7.5
+31,60,Works Recommended Cost (Rs. Crore),19.04
+31,60,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.15
+31,61,Sl. No.,61
+31,61,State/UT,Goa
+31,61,MP Name,Vinay P. Tendulkar
+31,61,District,South Goa
+31,61,Fund Received Goi (Rs. Crore),12.5
+31,61,Works Recommended Cost (Rs. Crore),32.46
+31,61,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.44
+31,62,Sl. No.,62
+31,62,State/UT,Gujarat
+31,62,MP Name,Shri. Dineshchandra Jemalbhai Anavadiya
+31,62,District,Banaskantha
+31,62,Fund Received Goi (Rs. Crore),2
+31,62,Works Recommended Cost (Rs. Crore),2.19
+31,62,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.97
+31,63,Sl. No.,63
+31,63,State/UT,Gujarat
+31,63,MP Name,Shri. Jugalsinh Mathurji Lokhandwala
+31,63,District,Mahesana
+31,63,Fund Received Goi (Rs. Crore),4.5
+31,63,Works Recommended Cost (Rs. Crore),8.22
+31,63,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.12
+31,64,Sl. No.,64
+31,64,State/UT,Gujarat
+31,64,MP Name,Shri. Abhay Ganpatray Bhardwaj
+31,64,District,NA
+31,64,Fund Received Goi (Rs. Crore),0
+31,64,Works Recommended Cost (Rs. Crore),0
+31,64,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,65,Sl. No.,65
+31,65,State/UT,Gujarat
+31,65,MP Name,Shri. Rambhai Harjibhai Mokariya
+31,65,District,Rajkot
+31,65,Fund Received Goi (Rs. Crore),2
+31,65,Works Recommended Cost (Rs. Crore),0.35
+31,65,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,66,Sl. No.,66
+31,66,State/UT,Gujarat
+31,66,MP Name,Shri. Amin Narhari
+31,66,District,Ahmedabad
+31,66,Fund Received Goi (Rs. Crore),2
+31,66,Works Recommended Cost (Rs. Crore),2.69
+31,66,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.57
+31,67,Sl. No.,67
+31,67,State/UT,Gujarat
+31,67,MP Name,Rathwa Naranbhai Jemlabhai
+31,67,District,Chhota Udaipur
+31,67,Fund Received Goi (Rs. Crore),14.5
+31,67,Works Recommended Cost (Rs. Crore),22.32
+31,67,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.87
+31,68,Sl. No.,68
+31,68,State/UT,Gujarat
+31,68,MP Name,Sh. Ahmed Patel
+31,68,District,Bharuch
+31,68,Fund Received Goi (Rs. Crore),12.5
+31,68,Works Recommended Cost (Rs. Crore),18.6
+31,68,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.07
+31,69,Sl. No.,69
+31,69,State/UT,Gujarat
+31,69,MP Name,Smt Ramilaben Bara
+31,69,District,Sabarkantha
+31,69,Fund Received Goi (Rs. Crore),2
+31,69,Works Recommended Cost (Rs. Crore),3.45
+31,69,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.85
+31,70,Sl. No.,70
+31,70,State/UT,Gujarat
+31,70,MP Name,Shri. S. Jaishankar
+31,70,District,Narmada
+31,70,Fund Received Goi (Rs. Crore),4.5
+31,70,Works Recommended Cost (Rs. Crore),6.47
+31,70,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.38
+31,71,Sl. No.,71
+31,71,State/UT,Gujarat
+31,71,MP Name,Parshottam Rupala
+31,71,District,Amreli
+31,71,Fund Received Goi (Rs. Crore),12
+31,71,Works Recommended Cost (Rs. Crore),21.37
+31,71,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.16
+31,72,Sl. No.,72
+31,72,State/UT,Gujarat
+31,72,MP Name,Amee Yajnik Harshadray
+31,72,District,Ahmedabad
+31,72,Fund Received Goi (Rs. Crore),12
+31,72,Works Recommended Cost (Rs. Crore),12.15
+31,72,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.18
+31,73,Sl. No.,73
+31,73,State/UT,Gujarat
+31,73,MP Name,Shri. Shaktisinh Gohil
+31,73,District,Ahmedabad
+31,73,Fund Received Goi (Rs. Crore),2
+31,73,Works Recommended Cost (Rs. Crore),4.12
+31,73,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.32
+31,74,Sl. No.,74
+31,74,State/UT,Gujarat
+31,74,MP Name,Mansukh Madaviya
+31,74,District,Bhavnagar
+31,74,Fund Received Goi (Rs. Crore),10
+31,74,Works Recommended Cost (Rs. Crore),16.07
+31,74,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),10.97
+31,75,Sl. No.,75
+31,75,State/UT,Haryana
+31,75,MP Name,Shri. Ram Chander Jangra
+31,75,District,Rohtak
+31,75,Fund Received Goi (Rs. Crore),2
+31,75,Works Recommended Cost (Rs. Crore),8.26
+31,75,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.54
+31,76,Sl. No.,76
+31,76,State/UT,Haryana
+31,76,MP Name,Shri Krishan Lal Panwar
+31,76,District,Panipat
+31,76,Fund Received Goi (Rs. Crore),2.5
+31,76,Works Recommended Cost (Rs. Crore),0
+31,76,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,77,Sl. No.,77
+31,77,State/UT,Haryana
+31,77,MP Name,Shri Kartik Sharma
+31,77,District,Ambala
+31,77,Fund Received Goi (Rs. Crore),2.5
+31,77,Works Recommended Cost (Rs. Crore),0
+31,77,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,78,Sl. No.,78
+31,78,State/UT,Haryana
+31,78,MP Name,Shri. Deepender Singh
+31,78,District,Rohtak
+31,78,Fund Received Goi (Rs. Crore),2
+31,78,Works Recommended Cost (Rs. Crore),3.46
+31,78,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.53
+31,79,Sl. No.,79
+31,79,State/UT,Haryana
+31,79,MP Name,Shri. Dushyant Gautam
+31,79,District,Panipat
+31,79,Fund Received Goi (Rs. Crore),2
+31,79,Works Recommended Cost (Rs. Crore),0
+31,79,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,80,Sl. No.,80
+31,80,State/UT,Haryana
+31,80,MP Name,Dr Subhash Chandra
+31,80,District,Hissar
+31,80,Fund Received Goi (Rs. Crore),17.5
+31,80,Works Recommended Cost (Rs. Crore),19.7
+31,80,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.71
+31,81,Sl. No.,81
+31,81,State/UT,Haryana
+31,81,MP Name,Devender Paul Vats
+31,81,District,Hissar
+31,81,Fund Received Goi (Rs. Crore),12
+31,81,Works Recommended Cost (Rs. Crore),13.64
+31,81,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.42
+31,82,Sl. No.,82
+31,82,State/UT,Himachal Pradesh
+31,82,MP Name,Smt Indu Bala Goswami
+31,82,District,Kangra
+31,82,Fund Received Goi (Rs. Crore),4.5
+31,82,Works Recommended Cost (Rs. Crore),1.9
+31,82,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.61
+31,83,Sl. No.,83
+31,83,State/UT,Himachal Pradesh
+31,83,MP Name,Anand Sharma
+31,83,District,Shimla
+31,83,Fund Received Goi (Rs. Crore),17.5
+31,83,Works Recommended Cost (Rs. Crore),14.12
+31,83,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.27
+31,84,Sl. No.,84
+31,84,State/UT,Himachal Pradesh
+31,84,MP Name,Jagat Prakash Nadda
+31,84,District,Bilaspur
+31,84,Fund Received Goi (Rs. Crore),14.5
+31,84,Works Recommended Cost (Rs. Crore),14.24
+31,84,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.48
+31,85,Sl. No.,85
+31,85,State/UT,Himachal Pradesh
+31,85,MP Name,Dr Sikander Kumar
+31,85,District,Shimla
+31,85,Fund Received Goi (Rs. Crore),5
+31,85,Works Recommended Cost (Rs. Crore),2.88
+31,85,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,86,Sl. No.,86
+31,86,State/UT,Jammu and Kashmir
+31,86,MP Name,Mir Mohammad Fayaz
+31,86,District,Kupwara
+31,86,Fund Received Goi (Rs. Crore),22.5
+31,86,Works Recommended Cost (Rs. Crore),30.18
+31,86,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),23.51
+31,87,Sl. No.,87
+31,87,State/UT,Jammu and Kashmir
+31,87,MP Name,Ghulam Nabi Azad
+31,87,District,Doda
+31,87,Fund Received Goi (Rs. Crore),17.5
+31,87,Works Recommended Cost (Rs. Crore),20.44
+31,87,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.17
+31,88,Sl. No.,88
+31,88,State/UT,Jammu and Kashmir
+31,88,MP Name,Shri Nazir Ahmed Laway
+31,88,District,Kulgam
+31,88,Fund Received Goi (Rs. Crore),22.5
+31,88,Works Recommended Cost (Rs. Crore),23.69
+31,88,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),21.29
+31,89,Sl. No.,89
+31,89,State/UT,Jammu and Kashmir
+31,89,MP Name,Shamsher Singh Manhas
+31,89,District,Jammu
+31,89,Fund Received Goi (Rs. Crore),25
+31,89,Works Recommended Cost (Rs. Crore),25.61
+31,89,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),22.6
+31,90,Sl. No.,90
+31,90,State/UT,Jharkhand
+31,90,MP Name,Shri. Shibu Soren
+31,90,District,Dumka
+31,90,Fund Received Goi (Rs. Crore),2
+31,90,Works Recommended Cost (Rs. Crore),0.4
+31,90,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,91,Sl. No.,91
+31,91,State/UT,Jharkhand
+31,91,MP Name,Smt. Mahua Maji
+31,91,District,Ranchi
+31,91,Fund Received Goi (Rs. Crore),2.5
+31,91,Works Recommended Cost (Rs. Crore),2.64
+31,91,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.86
+31,92,Sl. No.,92
+31,92,State/UT,Jharkhand
+31,92,MP Name,Shri. Deepak Prakash
+31,92,District,Ranchi
+31,92,Fund Received Goi (Rs. Crore),2
+31,92,Works Recommended Cost (Rs. Crore),1.88
+31,92,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.49
+31,93,Sl. No.,93
+31,93,State/UT,Jharkhand
+31,93,MP Name,Mahesh Poddar
+31,93,District,Ranchi
+31,93,Fund Received Goi (Rs. Crore),19.5
+31,93,Works Recommended Cost (Rs. Crore),24.13
+31,93,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.57
+31,94,Sl. No.,94
+31,94,State/UT,Jharkhand
+31,94,MP Name,Dhiraj Prasad Sahu
+31,94,District,Lohardaga
+31,94,Fund Received Goi (Rs. Crore),10
+31,94,Works Recommended Cost (Rs. Crore),7.41
+31,94,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.84
+31,95,Sl. No.,95
+31,95,State/UT,Jharkhand
+31,95,MP Name,Mukhtar Abbas Naqvi
+31,95,District,Ranchi
+31,95,Fund Received Goi (Rs. Crore),17.5
+31,95,Works Recommended Cost (Rs. Crore),14.7
+31,95,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.4
+31,96,Sl. No.,96
+31,96,State/UT,Jharkhand
+31,96,MP Name,Samiroraon
+31,96,District,Gumla
+31,96,Fund Received Goi (Rs. Crore),12
+31,96,Works Recommended Cost (Rs. Crore),10.51
+31,96,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.18
+31,97,Sl. No.,97
+31,97,State/UT,Jharkhand
+31,97,MP Name,Shri Aditya Prasad
+31,97,District,Ranchi
+31,97,Fund Received Goi (Rs. Crore),2.5
+31,97,Works Recommended Cost (Rs. Crore),2.51
+31,97,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.21
+31,98,Sl. No.,98
+31,98,State/UT,Karnataka
+31,98,MP Name,Shri. Iranna Kadadi
+31,98,District,Belagavi
+31,98,Fund Received Goi (Rs. Crore),2
+31,98,Works Recommended Cost (Rs. Crore),3.5
+31,98,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.53
+31,99,Sl. No.,99
+31,99,State/UT,Karnataka
+31,99,MP Name,Shri Oscar Fernandes
+31,99,District,Udupi
+31,99,Fund Received Goi (Rs. Crore),68.5
+31,99,Works Recommended Cost (Rs. Crore),79.67
+31,99,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),69.78
+31,100,Sl. No.,100
+31,100,State/UT,Karnataka
+31,100,MP Name,Shri Jairam Ramesh
+31,100,District,Chikmagalur
+31,100,Fund Received Goi (Rs. Crore),0
+31,100,Works Recommended Cost (Rs. Crore),0
+31,100,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,101,Sl. No.,101
+31,101,State/UT,Karnataka
+31,101,MP Name,Shri Jaggesh
+31,101,District,Tumakuru
+31,101,Fund Received Goi (Rs. Crore),2.5
+31,101,Works Recommended Cost (Rs. Crore),2.3
+31,101,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,102,Sl. No.,102
+31,102,State/UT,Karnataka
+31,102,MP Name,Shri. Mallikarjun Kharge
+31,102,District,Gulbarga
+31,102,Fund Received Goi (Rs. Crore),2
+31,102,Works Recommended Cost (Rs. Crore),0
+31,102,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,103,Sl. No.,103
+31,103,State/UT,Karnataka
+31,103,MP Name,L. Hanumanthaiah
+31,103,District,Bengaluru Urban
+31,103,Fund Received Goi (Rs. Crore),12
+31,103,Works Recommended Cost (Rs. Crore),12.43
+31,103,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.35
+31,104,Sl. No.,104
+31,104,State/UT,Karnataka
+31,104,MP Name,G.c Chandrashekhar
+31,104,District,Bengaluru Urban
+31,104,Fund Received Goi (Rs. Crore),10
+31,104,Works Recommended Cost (Rs. Crore),12.14
+31,104,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.47
+31,105,Sl. No.,105
+31,105,State/UT,Karnataka
+31,105,MP Name,Shri Lahar Singh Siroya
+31,105,District,Bengaluru Urban
+31,105,Fund Received Goi (Rs. Crore),2.5
+31,105,Works Recommended Cost (Rs. Crore),0
+31,105,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,106,Sl. No.,106
+31,106,State/UT,Karnataka
+31,106,MP Name,Shri. H.D. Devegowda
+31,106,District,Hassan
+31,106,Fund Received Goi (Rs. Crore),4.5
+31,106,Works Recommended Cost (Rs. Crore),6.23
+31,106,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.48
+31,107,Sl. No.,107
+31,107,State/UT,Karnataka
+31,107,MP Name,Shri. Ashok Gasti
+31,107,District,Raichur
+31,107,Fund Received Goi (Rs. Crore),0
+31,107,Works Recommended Cost (Rs. Crore),0
+31,107,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,108,Sl. No.,108
+31,108,State/UT,Karnataka
+31,108,MP Name,Shri. Narayana Koragappa
+31,108,District,Bengaluru Urban
+31,108,Fund Received Goi (Rs. Crore),2
+31,108,Works Recommended Cost (Rs. Crore),0.69
+31,108,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.49
+31,109,Sl. No.,109
+31,109,State/UT,Karnataka
+31,109,MP Name,Shri. K.C Ramamurthy
+31,109,District,Bengaluru Urban
+31,109,Fund Received Goi (Rs. Crore),4.5
+31,109,Works Recommended Cost (Rs. Crore),6.55
+31,109,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.92
+31,110,Sl. No.,110
+31,110,State/UT,Karnataka
+31,110,MP Name,Sh. Jairam Ramesh
+31,110,District,Chikmagalur
+31,110,Fund Received Goi (Rs. Crore),10
+31,110,Works Recommended Cost (Rs. Crore),11.39
+31,110,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.66
+31,111,Sl. No.,111
+31,111,State/UT,Karnataka
+31,111,MP Name,Syed Nasir Hussain
+31,111,District,Ballari
+31,111,Fund Received Goi (Rs. Crore),7.5
+31,111,Works Recommended Cost (Rs. Crore),5.36
+31,111,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.74
+31,112,Sl. No.,112
+31,112,State/UT,Karnataka
+31,112,MP Name,Rajeev Chandrashekhar
+31,112,District,Bengaluru Urban
+31,112,Fund Received Goi (Rs. Crore),10
+31,112,Works Recommended Cost (Rs. Crore),9.85
+31,112,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.53
+31,113,Sl. No.,113
+31,113,State/UT,Karnataka
+31,113,MP Name,Smt Nirmala Sitharaman
+31,113,District,Bengaluru Urban
+31,113,Fund Received Goi (Rs. Crore),19.5
+31,113,Works Recommended Cost (Rs. Crore),22.19
+31,113,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),21.14
+31,114,Sl. No.,114
+31,114,State/UT,Karnataka
+31,114,MP Name,Smt. Nirmala Sitharaman
+31,114,District,Bengaluru Urban
+31,114,Fund Received Goi (Rs. Crore),2.5
+31,114,Works Recommended Cost (Rs. Crore),0
+31,114,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,115,Sl. No.,115
+31,115,State/UT,Kerala
+31,115,MP Name,Shri. Jose K. Mani
+31,115,District,Kottayam
+31,115,Fund Received Goi (Rs. Crore),2
+31,115,Works Recommended Cost (Rs. Crore),4.66
+31,115,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,116,Sl. No.,116
+31,116,State/UT,Kerala
+31,116,MP Name,Shri. Abdul Wahab
+31,116,District,Malappuram
+31,116,Fund Received Goi (Rs. Crore),22.5
+31,116,Works Recommended Cost (Rs. Crore),27.46
+31,116,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.03
+31,117,Sl. No.,117
+31,117,State/UT,Kerala
+31,117,MP Name,Shri. Binoy Viswam
+31,117,District,Thiruvananthapuram
+31,117,Fund Received Goi (Rs. Crore),7.5
+31,117,Works Recommended Cost (Rs. Crore),17.19
+31,117,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.15
+31,118,Sl. No.,118
+31,118,State/UT,Kerala
+31,118,MP Name,Shri Jose K Mani
+31,118,District,Kottayam
+31,118,Fund Received Goi (Rs. Crore),5
+31,118,Works Recommended Cost (Rs. Crore),10.41
+31,118,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.06
+31,119,Sl. No.,119
+31,119,State/UT,Kerala
+31,119,MP Name,Shri. K. Somaprasad
+31,119,District,Kollam
+31,119,Fund Received Goi (Rs. Crore),17.5
+31,119,Works Recommended Cost (Rs. Crore),31
+31,119,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),16.05
+31,120,Sl. No.,120
+31,120,State/UT,Kerala
+31,120,MP Name,Shri. Sandosh Kumar P
+31,120,District,Kannur
+31,120,Fund Received Goi (Rs. Crore),2.5
+31,120,Works Recommended Cost (Rs. Crore),2.91
+31,120,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,121,Sl. No.,121
+31,121,State/UT,Kerala
+31,121,MP Name,Smt Jebi Mather Hisham
+31,121,District,Alappuzha
+31,121,Fund Received Goi (Rs. Crore),2.5
+31,121,Works Recommended Cost (Rs. Crore),2.54
+31,121,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,122,Sl. No.,122
+31,122,State/UT,Kerala
+31,122,MP Name,Shri. John Brittas
+31,122,District,Thiruvananthapuram
+31,122,Fund Received Goi (Rs. Crore),2
+31,122,Works Recommended Cost (Rs. Crore),7.61
+31,122,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.55
+31,123,Sl. No.,123
+31,123,State/UT,Kerala
+31,123,MP Name,Sh. Elamaram Kareem
+31,123,District,Kozhikode
+31,123,Fund Received Goi (Rs. Crore),9.5
+31,123,Works Recommended Cost (Rs. Crore),12.42
+31,123,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.35
+31,124,Sl. No.,124
+31,124,State/UT,Kerala
+31,124,MP Name,Shri. Abdul Wahab
+31,124,District,Malappuram
+31,124,Fund Received Goi (Rs. Crore),2
+31,124,Works Recommended Cost (Rs. Crore),0.4
+31,124,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,125,Sl. No.,125
+31,125,State/UT,Kerala
+31,125,MP Name,Shri. K.K Ragesh
+31,125,District,Kannur
+31,125,Fund Received Goi (Rs. Crore),22.5
+31,125,Works Recommended Cost (Rs. Crore),40.29
+31,125,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.69
+31,126,Sl. No.,126
+31,126,State/UT,Kerala
+31,126,MP Name,M P Veerendra Kumar
+31,126,District,Wayanad
+31,126,Fund Received Goi (Rs. Crore),7.5
+31,126,Works Recommended Cost (Rs. Crore),8.08
+31,126,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.77
+31,127,Sl. No.,127
+31,127,State/UT,Kerala
+31,127,MP Name,Shri Vayalar Ravi
+31,127,District,Alappuzha
+31,127,Fund Received Goi (Rs. Crore),53.5
+31,127,Works Recommended Cost (Rs. Crore),68.44
+31,127,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),55.92
+31,128,Sl. No.,128
+31,128,State/UT,Kerala
+31,128,MP Name,Shri. A.A. Rahim
+31,128,District,Thiruvananthapuram
+31,128,Fund Received Goi (Rs. Crore),2.5
+31,128,Works Recommended Cost (Rs. Crore),2.31
+31,128,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,129,Sl. No.,129
+31,129,State/UT,Kerala
+31,129,MP Name,Shri A.K. Antony
+31,129,District,Alappuzha
+31,129,Fund Received Goi (Rs. Crore),54.5
+31,129,Works Recommended Cost (Rs. Crore),69.54
+31,129,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),54.79
+31,130,Sl. No.,130
+31,130,State/UT,Kerala
+31,130,MP Name,Shri. M.V.shreyams Kumar
+31,130,District,Wayanad
+31,130,Fund Received Goi (Rs. Crore),2
+31,130,Works Recommended Cost (Rs. Crore),2.15
+31,130,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.18
+31,131,Sl. No.,131
+31,131,State/UT,Kerala
+31,131,MP Name,Dr V. Sivadasan
+31,131,District,Kannur
+31,131,Fund Received Goi (Rs. Crore),2
+31,131,Works Recommended Cost (Rs. Crore),1.1
+31,131,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,132,Sl. No.,132
+31,132,State/UT,Madhya Pradesh
+31,132,MP Name,Dr Sumer Singh Solanki
+31,132,District,Badwani
+31,132,Fund Received Goi (Rs. Crore),2
+31,132,Works Recommended Cost (Rs. Crore),0
+31,132,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,133,Sl. No.,133
+31,133,State/UT,Madhya Pradesh
+31,133,MP Name,Shri. M.J. Akbar
+31,133,District,Bhopal
+31,133,Fund Received Goi (Rs. Crore),22
+31,133,Works Recommended Cost (Rs. Crore),23.59
+31,133,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.38
+31,134,Sl. No.,134
+31,134,State/UT,Madhya Pradesh
+31,134,MP Name,Shri Vivek K. Tankha
+31,134,District,Jabalpur
+31,134,Fund Received Goi (Rs. Crore),2.5
+31,134,Works Recommended Cost (Rs. Crore),2.35
+31,134,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.24
+31,135,Sl. No.,135
+31,135,State/UT,Madhya Pradesh
+31,135,MP Name,Smt Sampatiya Uikey
+31,135,District,Mandla
+31,135,Fund Received Goi (Rs. Crore),29.5
+31,135,Works Recommended Cost (Rs. Crore),45.87
+31,135,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),28.71
+31,136,Sl. No.,136
+31,136,State/UT,Madhya Pradesh
+31,136,MP Name,Shri. Jyotiraditya M. Scindia
+31,136,District,Ashok Nagar
+31,136,Fund Received Goi (Rs. Crore),2
+31,136,Works Recommended Cost (Rs. Crore),0
+31,136,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,137,Sl. No.,137
+31,137,State/UT,Madhya Pradesh
+31,137,MP Name,Ajay Pratap Singh
+31,137,District,Singrauli
+31,137,Fund Received Goi (Rs. Crore),12
+31,137,Works Recommended Cost (Rs. Crore),8.58
+31,137,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.64
+31,138,Sl. No.,138
+31,138,State/UT,Madhya Pradesh
+31,138,MP Name,Thawar Chand
+31,138,District,Ujjain
+31,138,Fund Received Goi (Rs. Crore),10
+31,138,Works Recommended Cost (Rs. Crore),14.72
+31,138,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),10.43
+31,139,Sl. No.,139
+31,139,State/UT,Madhya Pradesh
+31,139,MP Name,Shri. Vivek K. Tankha
+31,139,District,Jabalpur
+31,139,Fund Received Goi (Rs. Crore),22
+31,139,Works Recommended Cost (Rs. Crore),25.14
+31,139,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),22.38
+31,140,Sl. No.,140
+31,140,State/UT,Madhya Pradesh
+31,140,MP Name,Rajmani Patel
+31,140,District,Rewa
+31,140,Fund Received Goi (Rs. Crore),14.5
+31,140,Works Recommended Cost (Rs. Crore),15.34
+31,140,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.74
+31,141,Sl. No.,141
+31,141,State/UT,Madhya Pradesh
+31,141,MP Name,Smt. Sumitra Balmik
+31,141,District,Jabalpur
+31,141,Fund Received Goi (Rs. Crore),5
+31,141,Works Recommended Cost (Rs. Crore),2.36
+31,141,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.73
+31,142,Sl. No.,142
+31,142,State/UT,Madhya Pradesh
+31,142,MP Name,Shri. Digvijay Singh
+31,142,District,Bhopal
+31,142,Fund Received Goi (Rs. Crore),7
+31,142,Works Recommended Cost (Rs. Crore),5.19
+31,142,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.79
+31,143,Sl. No.,143
+31,143,State/UT,Madhya Pradesh
+31,143,MP Name,Kailash Soni
+31,143,District,Narsinghpur
+31,143,Fund Received Goi (Rs. Crore),14.5
+31,143,Works Recommended Cost (Rs. Crore),12.62
+31,143,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.46
+31,144,Sl. No.,144
+31,144,State/UT,Madhya Pradesh
+31,144,MP Name,Sh. L. Murugan
+31,144,District,Chhindwara
+31,144,Fund Received Goi (Rs. Crore),2
+31,144,Works Recommended Cost (Rs. Crore),0
+31,144,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,145,Sl. No.,145
+31,145,State/UT,Madhya Pradesh
+31,145,MP Name,Dharmendra Pradhan
+31,145,District,Sehore
+31,145,Fund Received Goi (Rs. Crore),7.5
+31,145,Works Recommended Cost (Rs. Crore),4.44
+31,145,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.59
+31,146,Sl. No.,146
+31,146,State/UT,Madhya Pradesh
+31,146,MP Name,Ms. Kavita Patidar
+31,146,District,Indore
+31,146,Fund Received Goi (Rs. Crore),5
+31,146,Works Recommended Cost (Rs. Crore),2.42
+31,146,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.43
+31,147,Sl. No.,147
+31,147,State/UT,Madhya Pradesh
+31,147,MP Name,Smt. Sulata Deo
+31,147,District,NA
+31,147,Fund Received Goi (Rs. Crore),0
+31,147,Works Recommended Cost (Rs. Crore),0
+31,147,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,148,Sl. No.,148
+31,148,State/UT,Maharashtra
+31,148,MP Name,Shri Praful Patel
+31,148,District,Gondia
+31,148,Fund Received Goi (Rs. Crore),2.5
+31,148,Works Recommended Cost (Rs. Crore),0
+31,148,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,149,Sl. No.,149
+31,149,State/UT,Maharashtra
+31,149,MP Name,Shri Imran Pratapgarhi
+31,149,District,Mumbai City
+31,149,Fund Received Goi (Rs. Crore),2.5
+31,149,Works Recommended Cost (Rs. Crore),0
+31,149,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,150,Sl. No.,150
+31,150,State/UT,Maharashtra
+31,150,MP Name,Prakash Javadekar
+31,150,District,Pune
+31,150,Fund Received Goi (Rs. Crore),5
+31,150,Works Recommended Cost (Rs. Crore),7.2
+31,150,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.4
+31,151,Sl. No.,151
+31,151,State/UT,Maharashtra
+31,151,MP Name,Sh. Praful Patel
+31,151,District,Gondia
+31,151,Fund Received Goi (Rs. Crore),15.13
+31,151,Works Recommended Cost (Rs. Crore),17.12
+31,151,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),10.34
+31,152,Sl. No.,152
+31,152,State/UT,Maharashtra
+31,152,MP Name,Narayan Rane
+31,152,District,Sindhudurg
+31,152,Fund Received Goi (Rs. Crore),7.5
+31,152,Works Recommended Cost (Rs. Crore),15.15
+31,152,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.59
+31,153,Sl. No.,153
+31,153,State/UT,Maharashtra
+31,153,MP Name,Shri Dhananjay Bhimrao Mahadik
+31,153,District,Kolhapur
+31,153,Fund Received Goi (Rs. Crore),2.5
+31,153,Works Recommended Cost (Rs. Crore),0.75
+31,153,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,154,Sl. No.,154
+31,154,State/UT,Maharashtra
+31,154,MP Name,Ketkar Keshav Chintaman
+31,154,District,Thane
+31,154,Fund Received Goi (Rs. Crore),12
+31,154,Works Recommended Cost (Rs. Crore),13.7
+31,154,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),10.91
+31,155,Sl. No.,155
+31,155,State/UT,Maharashtra
+31,155,MP Name,Shri. Sharad Pawar
+31,155,District,Pune
+31,155,Fund Received Goi (Rs. Crore),2
+31,155,Works Recommended Cost (Rs. Crore),0
+31,155,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,156,Sl. No.,156
+31,156,State/UT,Maharashtra
+31,156,MP Name,Shrimant Udayanraje Pratapsinghmaharaj Bhonsle
+31,156,District,Satara
+31,156,Fund Received Goi (Rs. Crore),2
+31,156,Works Recommended Cost (Rs. Crore),2.75
+31,156,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.87
+31,157,Sl. No.,157
+31,157,State/UT,Maharashtra
+31,157,MP Name,Dr Vikas Mahatme
+31,157,District,Nagpur
+31,157,Fund Received Goi (Rs. Crore),15.13
+31,157,Works Recommended Cost (Rs. Crore),21.18
+31,157,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),15.77
+31,158,Sl. No.,158
+31,158,State/UT,Maharashtra
+31,158,MP Name,Shri. Vinay P. Sahasrabuddhe
+31,158,District,Thane
+31,158,Fund Received Goi (Rs. Crore),15.13
+31,158,Works Recommended Cost (Rs. Crore),25.72
+31,158,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),16.28
+31,159,Sl. No.,159
+31,159,State/UT,Maharashtra
+31,159,MP Name,Shri Sanjay Raut
+31,159,District,Mumbai Suburban
+31,159,Fund Received Goi (Rs. Crore),2.5
+31,159,Works Recommended Cost (Rs. Crore),0
+31,159,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,160,Sl. No.,160
+31,160,State/UT,Maharashtra
+31,160,MP Name,Dr Bhgawat Kishanrao Karad
+31,160,District,Aurangabad
+31,160,Fund Received Goi (Rs. Crore),4.5
+31,160,Works Recommended Cost (Rs. Crore),5.46
+31,160,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.11
+31,161,Sl. No.,161
+31,161,State/UT,Maharashtra
+31,161,MP Name,Shri P. Chidambaram
+31,161,District,Mumbai City
+31,161,Fund Received Goi (Rs. Crore),12.63
+31,161,Works Recommended Cost (Rs. Crore),14.74
+31,161,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.18
+31,162,Sl. No.,162
+31,162,State/UT,Maharashtra
+31,162,MP Name,Smt Priyanka Vickram Chaturvedi
+31,162,District,Mumbai Suburban
+31,162,Fund Received Goi (Rs. Crore),2
+31,162,Works Recommended Cost (Rs. Crore),0.1
+31,162,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,163,Sl. No.,163
+31,163,State/UT,Maharashtra
+31,163,MP Name,Shri. Rajeev Satav
+31,163,District,Hingoli
+31,163,Fund Received Goi (Rs. Crore),0
+31,163,Works Recommended Cost (Rs. Crore),0
+31,163,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,164,Sl. No.,164
+31,164,State/UT,Maharashtra
+31,164,MP Name,Smt Rajani Ashokrao Patil
+31,164,District,Beed
+31,164,Fund Received Goi (Rs. Crore),2
+31,164,Works Recommended Cost (Rs. Crore),0
+31,164,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,165,Sl. No.,165
+31,165,State/UT,Maharashtra
+31,165,MP Name,Anil Desai
+31,165,District,Mumbai City
+31,165,Fund Received Goi (Rs. Crore),7.5
+31,165,Works Recommended Cost (Rs. Crore),15.45
+31,165,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.89
+31,166,Sl. No.,166
+31,166,State/UT,Maharashtra
+31,166,MP Name,Sh. Piyush Goyal
+31,166,District,Mumbai City
+31,166,Fund Received Goi (Rs. Crore),7.63
+31,166,Works Recommended Cost (Rs. Crore),21.32
+31,166,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.69
+31,167,Sl. No.,167
+31,167,State/UT,Maharashtra
+31,167,MP Name,Sh. Sanjay Raut
+31,167,District,Mumbai Suburban
+31,167,Fund Received Goi (Rs. Crore),10.13
+31,167,Works Recommended Cost (Rs. Crore),17.68
+31,167,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.54
+31,168,Sl. No.,168
+31,168,State/UT,Maharashtra
+31,168,MP Name,Vandana Chavan
+31,168,District,Pune
+31,168,Fund Received Goi (Rs. Crore),10
+31,168,Works Recommended Cost (Rs. Crore),9.36
+31,168,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.35
+31,169,Sl. No.,169
+31,169,State/UT,Maharashtra
+31,169,MP Name,Dr Anil Sukhdeorao Bonde
+31,169,District,Amravati
+31,169,Fund Received Goi (Rs. Crore),2.5
+31,169,Works Recommended Cost (Rs. Crore),0
+31,169,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,170,Sl. No.,170
+31,170,State/UT,Maharashtra
+31,170,MP Name,Shri Piyush Goyal
+31,170,District,Mumbai City
+31,170,Fund Received Goi (Rs. Crore),2.5
+31,170,Works Recommended Cost (Rs. Crore),0
+31,170,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,171,Sl. No.,171
+31,171,State/UT,Maharashtra
+31,171,MP Name,Dr Fauzia Tahseen Ahmed Khan
+31,171,District,Parbhani
+31,171,Fund Received Goi (Rs. Crore),4.5
+31,171,Works Recommended Cost (Rs. Crore),4.42
+31,171,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.72
+31,172,Sl. No.,172
+31,172,State/UT,Maharashtra
+31,172,MP Name,Shri. Ramdas Athawale
+31,172,District,Mumbai Suburban
+31,172,Fund Received Goi (Rs. Crore),2
+31,172,Works Recommended Cost (Rs. Crore),7.85
+31,172,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.5
+31,173,Sl. No.,173
+31,173,State/UT,Maharashtra
+31,173,MP Name,V. Muraleedharan
+31,173,District,Mumbai Suburban
+31,173,Fund Received Goi (Rs. Crore),7.5
+31,173,Works Recommended Cost (Rs. Crore),9.74
+31,173,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.18
+31,174,Sl. No.,174
+31,174,State/UT,Manipur
+31,174,MP Name,Shri. Maharaja Sanajaoba Leishemba
+31,174,District,Imphal East
+31,174,Fund Received Goi (Rs. Crore),4.5
+31,174,Works Recommended Cost (Rs. Crore),1.96
+31,174,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.7
+31,175,Sl. No.,175
+31,175,State/UT,Meghalaya
+31,175,MP Name,Shri. Wanweiroy Kharlukhi
+31,175,District,East Khasi Hills
+31,175,Fund Received Goi (Rs. Crore),4.5
+31,175,Works Recommended Cost (Rs. Crore),1.96
+31,175,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.8
+31,176,Sl. No.,176
+31,176,State/UT,Mizoram
+31,176,MP Name,Shri. K. Vanlalvena
+31,176,District,Aizawl
+31,176,Fund Received Goi (Rs. Crore),4.5
+31,176,Works Recommended Cost (Rs. Crore),4.41
+31,176,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.94
+31,177,Sl. No.,177
+31,177,State/UT,Mizoram
+31,177,MP Name,Ronald Sapa Tlau
+31,177,District,Aizawl
+31,177,Fund Received Goi (Rs. Crore),27.5
+31,177,Works Recommended Cost (Rs. Crore),27.5
+31,177,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),27.98
+31,178,Sl. No.,178
+31,178,State/UT,Nagaland
+31,178,MP Name,Sh. K.G Kenye
+31,178,District,Kohima
+31,178,Fund Received Goi (Rs. Crore),22
+31,178,Works Recommended Cost (Rs. Crore),20
+31,178,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20
+31,179,Sl. No.,179
+31,179,State/UT,Nagaland
+31,179,MP Name,Smt S.phangnon Konyak
+31,179,District,Mon
+31,179,Fund Received Goi (Rs. Crore),5
+31,179,Works Recommended Cost (Rs. Crore),4.9
+31,179,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.9
+31,180,Sl. No.,180
+31,180,State/UT,Odisha
+31,180,MP Name,Shri. Amar Patnaik
+31,180,District,Sambalpur
+31,180,Fund Received Goi (Rs. Crore),9.5
+31,180,Works Recommended Cost (Rs. Crore),10.17
+31,180,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.09
+31,181,Sl. No.,181
+31,181,State/UT,Odisha
+31,181,MP Name,Shri Niranjan Bishi
+31,181,District,Bolangir
+31,181,Fund Received Goi (Rs. Crore),2.5
+31,181,Works Recommended Cost (Rs. Crore),0
+31,181,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,182,Sl. No.,182
+31,182,State/UT,Odisha
+31,182,MP Name,Prashanta Nanda
+31,182,District,Sundargarh
+31,182,Fund Received Goi (Rs. Crore),14.5
+31,182,Works Recommended Cost (Rs. Crore),15.74
+31,182,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.54
+31,183,Sl. No.,183
+31,183,State/UT,Odisha
+31,183,MP Name,Shri. Prasanna Acharya
+31,183,District,Baragarh
+31,183,Fund Received Goi (Rs. Crore),22
+31,183,Works Recommended Cost (Rs. Crore),22.43
+31,183,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.91
+31,184,Sl. No.,184
+31,184,State/UT,Odisha
+31,184,MP Name,Shri. Bhaskar Rao Nekkanti
+31,184,District,Rayagada
+31,184,Fund Received Goi (Rs. Crore),22
+31,184,Works Recommended Cost (Rs. Crore),26.95
+31,184,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.73
+31,185,Sl. No.,185
+31,185,State/UT,Odisha
+31,185,MP Name,Shri Manas Ranjan Mangaraj
+31,185,District,Ganjam
+31,185,Fund Received Goi (Rs. Crore),2.5
+31,185,Works Recommended Cost (Rs. Crore),0
+31,185,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,186,Sl. No.,186
+31,186,State/UT,Odisha
+31,186,MP Name,Shri. Subhash Chandra Singh
+31,186,District,Bolangir
+31,186,Fund Received Goi (Rs. Crore),2
+31,186,Works Recommended Cost (Rs. Crore),0
+31,186,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,187,Sl. No.,187
+31,187,State/UT,Odisha
+31,187,MP Name,Dr Sasmit Patra
+31,187,District,Sundargarh
+31,187,Fund Received Goi (Rs. Crore),2.5
+31,187,Works Recommended Cost (Rs. Crore),0
+31,187,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,188,Sl. No.,188
+31,188,State/UT,Odisha
+31,188,MP Name,Shri. Muzibulla Khan
+31,188,District,Khordha
+31,188,Fund Received Goi (Rs. Crore),4.5
+31,188,Works Recommended Cost (Rs. Crore),12.09
+31,188,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.71
+31,189,Sl. No.,189
+31,189,State/UT,Odisha
+31,189,MP Name,Smt. Sulata Deo
+31,189,District,Khordha
+31,189,Fund Received Goi (Rs. Crore),2.5
+31,189,Works Recommended Cost (Rs. Crore),0
+31,189,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,190,Sl. No.,190
+31,190,State/UT,Odisha
+31,190,MP Name,Smt Mamata Mohanta
+31,190,District,Mayurbhanj
+31,190,Fund Received Goi (Rs. Crore),4.5
+31,190,Works Recommended Cost (Rs. Crore),2.81
+31,190,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1
+31,191,Sl. No.,191
+31,191,State/UT,Odisha
+31,191,MP Name,Shri. Sujeet Kumar
+31,191,District,Kalahandi
+31,191,Fund Received Goi (Rs. Crore),4.5
+31,191,Works Recommended Cost (Rs. Crore),7.22
+31,191,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.15
+31,192,Sl. No.,192
+31,192,State/UT,Odisha
+31,192,MP Name,Shri. Ashwini Vaishnaw
+31,192,District,Cuttack
+31,192,Fund Received Goi (Rs. Crore),2.5
+31,192,Works Recommended Cost (Rs. Crore),0.73
+31,192,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.63
+31,193,Sl. No.,193
+31,193,State/UT,Odisha
+31,193,MP Name,Shri. Sasmit Patra
+31,193,District,Mayurbhanj
+31,193,Fund Received Goi (Rs. Crore),9.5
+31,193,Works Recommended Cost (Rs. Crore),8.41
+31,193,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.8
+31,194,Sl. No.,194
+31,194,State/UT,Puducherry
+31,194,MP Name,Shri. S. Selvaganabathy
+31,194,District,Pondicherry
+31,194,Fund Received Goi (Rs. Crore),2
+31,194,Works Recommended Cost (Rs. Crore),4.45
+31,194,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.51
+31,195,Sl. No.,195
+31,195,State/UT,Puducherry
+31,195,MP Name,N Gokulakrishnan
+31,195,District,Pondicherry
+31,195,Fund Received Goi (Rs. Crore),22.5
+31,195,Works Recommended Cost (Rs. Crore),31.3
+31,195,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),22.98
+31,196,Sl. No.,196
+31,196,State/UT,Punjab
+31,196,MP Name,Smt Ambika Soni
+31,196,District,Rupnagar
+31,196,Fund Received Goi (Rs. Crore),10
+31,196,Works Recommended Cost (Rs. Crore),11.86
+31,196,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.38
+31,197,Sl. No.,197
+31,197,State/UT,Punjab
+31,197,MP Name,Shri. Ashok
+31,197,District,Kapurthala
+31,197,Fund Received Goi (Rs. Crore),2.5
+31,197,Works Recommended Cost (Rs. Crore),0
+31,197,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,198,Sl. No.,198
+31,198,State/UT,Punjab
+31,198,MP Name,Shri. Raghav Chadha
+31,198,District,Sahibzada Ajit Singh Nagar
+31,198,Fund Received Goi (Rs. Crore),2.5
+31,198,Works Recommended Cost (Rs. Crore),0
+31,198,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,199,Sl. No.,199
+31,199,State/UT,Punjab
+31,199,MP Name,Shri. Shamsher Singh Dullo
+31,199,District,Fatehgarh Sahib
+31,199,Fund Received Goi (Rs. Crore),22
+31,199,Works Recommended Cost (Rs. Crore),31.7
+31,199,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.64
+31,200,Sl. No.,200
+31,200,State/UT,Punjab
+31,200,MP Name,Shri. Sandeep Kumar Pathak
+31,200,District,Firozepur
+31,200,Fund Received Goi (Rs. Crore),2.5
+31,200,Works Recommended Cost (Rs. Crore),0
+31,200,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,201,Sl. No.,201
+31,201,State/UT,Punjab
+31,201,MP Name,Shri Sukhdev Singh Dhindsa
+31,201,District,Sangrur
+31,201,Fund Received Goi (Rs. Crore),49
+31,201,Works Recommended Cost (Rs. Crore),54.26
+31,201,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),45.84
+31,202,Sl. No.,202
+31,202,State/UT,Punjab
+31,202,MP Name,Shri. Shwait Malik
+31,202,District,Amritsar
+31,202,Fund Received Goi (Rs. Crore),15
+31,202,Works Recommended Cost (Rs. Crore),16.65
+31,202,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.82
+31,203,Sl. No.,203
+31,203,State/UT,Punjab
+31,203,MP Name,Sardar Balwinder Singh Bhunder
+31,203,District,Mansa
+31,203,Fund Received Goi (Rs. Crore),22
+31,203,Works Recommended Cost (Rs. Crore),26.17
+31,203,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),21.28
+31,204,Sl. No.,204
+31,204,State/UT,Punjab
+31,204,MP Name,Shri Vikramjit Singh Sahney
+31,204,District,Sahibzada Ajit Singh Nagar
+31,204,Fund Received Goi (Rs. Crore),2.5
+31,204,Works Recommended Cost (Rs. Crore),2.24
+31,204,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,205,Sl. No.,205
+31,205,State/UT,Punjab
+31,205,MP Name,Shri. Sanjeev Arora
+31,205,District,Ludhiana
+31,205,Fund Received Goi (Rs. Crore),2.5
+31,205,Works Recommended Cost (Rs. Crore),0
+31,205,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,206,Sl. No.,206
+31,206,State/UT,Punjab
+31,206,MP Name,Shri Sant Balbir Singh
+31,206,District,Jalandhar
+31,206,Fund Received Goi (Rs. Crore),2.5
+31,206,Works Recommended Cost (Rs. Crore),3.79
+31,206,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.34
+31,207,Sl. No.,207
+31,207,State/UT,Punjab
+31,207,MP Name,Sh. Naresh Gujral
+31,207,District,Jalandhar
+31,207,Fund Received Goi (Rs. Crore),15
+31,207,Works Recommended Cost (Rs. Crore),24.19
+31,207,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.05
+31,208,Sl. No.,208
+31,208,State/UT,Punjab
+31,208,MP Name,Shri. Harbhajan Singh
+31,208,District,Jalandhar
+31,208,Fund Received Goi (Rs. Crore),2.5
+31,208,Works Recommended Cost (Rs. Crore),1.91
+31,208,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.23
+31,209,Sl. No.,209
+31,209,State/UT,Punjab
+31,209,MP Name,Pratap Singh Bajwa
+31,209,District,Gurdaspur
+31,209,Fund Received Goi (Rs. Crore),17.5
+31,209,Works Recommended Cost (Rs. Crore),21.43
+31,209,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.3
+31,210,Sl. No.,210
+31,210,State/UT,Rajasthan
+31,210,MP Name,Shri Mukul Balkrishna Wasnik
+31,210,District,Jaipur
+31,210,Fund Received Goi (Rs. Crore),2.5
+31,210,Works Recommended Cost (Rs. Crore),0
+31,210,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,211,Sl. No.,211
+31,211,State/UT,Rajasthan
+31,211,MP Name,Shri. Neeraj Dangi
+31,211,District,Sirohi
+31,211,Fund Received Goi (Rs. Crore),4.5
+31,211,Works Recommended Cost (Rs. Crore),3.28
+31,211,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.8
+31,212,Sl. No.,212
+31,212,State/UT,Rajasthan
+31,212,MP Name,Shri. Harshvardhan Singh Dungarpur
+31,212,District,Dungarpur
+31,212,Fund Received Goi (Rs. Crore),17.5
+31,212,Works Recommended Cost (Rs. Crore),26.65
+31,212,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),15
+31,213,Sl. No.,213
+31,213,State/UT,Rajasthan
+31,213,MP Name,Shri. Ram Kumar Verma
+31,213,District,Dausa
+31,213,Fund Received Goi (Rs. Crore),22
+31,213,Works Recommended Cost (Rs. Crore),19.12
+31,213,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.51
+31,214,Sl. No.,214
+31,214,State/UT,Rajasthan
+31,214,MP Name,Shri. K.J. Alphons
+31,214,District,Jaipur
+31,214,Fund Received Goi (Rs. Crore),14.5
+31,214,Works Recommended Cost (Rs. Crore),17.62
+31,214,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.68
+31,215,Sl. No.,215
+31,215,State/UT,Rajasthan
+31,215,MP Name,Shri Randeep Singh Surjewala
+31,215,District,Jaipur
+31,215,Fund Received Goi (Rs. Crore),2.5
+31,215,Works Recommended Cost (Rs. Crore),0
+31,215,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,216,Sl. No.,216
+31,216,State/UT,Rajasthan
+31,216,MP Name,Shri Pramod Tiwari
+31,216,District,Jaipur
+31,216,Fund Received Goi (Rs. Crore),0
+31,216,Works Recommended Cost (Rs. Crore),0
+31,216,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,217,Sl. No.,217
+31,217,State/UT,Rajasthan
+31,217,MP Name,Shri. Om Prakash Mathur
+31,217,District,Jaipur
+31,217,Fund Received Goi (Rs. Crore),19.5
+31,217,Works Recommended Cost (Rs. Crore),25.99
+31,217,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18
+31,218,Sl. No.,218
+31,218,State/UT,Rajasthan
+31,218,MP Name,Shri. Rajendra Gehlot
+31,218,District,Jodhpur
+31,218,Fund Received Goi (Rs. Crore),4.5
+31,218,Works Recommended Cost (Rs. Crore),8.36
+31,218,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.94
+31,219,Sl. No.,219
+31,219,State/UT,Rajasthan
+31,219,MP Name,Dr Manmohan Singh
+31,219,District,Jaipur
+31,219,Fund Received Goi (Rs. Crore),7
+31,219,Works Recommended Cost (Rs. Crore),8.68
+31,219,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.77
+31,220,Sl. No.,220
+31,220,State/UT,Rajasthan
+31,220,MP Name,Shri Ghanshyam Tiwari
+31,220,District,Jaipur
+31,220,Fund Received Goi (Rs. Crore),2.5
+31,220,Works Recommended Cost (Rs. Crore),0
+31,220,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,221,Sl. No.,221
+31,221,State/UT,Rajasthan
+31,221,MP Name,Kirodi Lal
+31,221,District,Dausa
+31,221,Fund Received Goi (Rs. Crore),14.5
+31,221,Works Recommended Cost (Rs. Crore),15.81
+31,221,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.33
+31,222,Sl. No.,222
+31,222,State/UT,Rajasthan
+31,222,MP Name,Bhupender Yadav
+31,222,District,Ajmer
+31,222,Fund Received Goi (Rs. Crore),7.5
+31,222,Works Recommended Cost (Rs. Crore),7.11
+31,222,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.63
+31,223,Sl. No.,223
+31,223,State/UT,Rajasthan
+31,223,MP Name,Shri. K.C Venugopal
+31,223,District,Jaipur
+31,223,Fund Received Goi (Rs. Crore),2
+31,223,Works Recommended Cost (Rs. Crore),1.13
+31,223,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,224,Sl. No.,224
+31,224,State/UT,Sikkim
+31,224,MP Name,Hishey Lachungpa
+31,224,District,East District
+31,224,Fund Received Goi (Rs. Crore),12
+31,224,Works Recommended Cost (Rs. Crore),17.82
+31,224,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.28
+31,225,Sl. No.,225
+31,225,State/UT,Tamil Nadu
+31,225,MP Name,Shri. R. Vaithilingam
+31,225,District,Thanjavur
+31,225,Fund Received Goi (Rs. Crore),15
+31,225,Works Recommended Cost (Rs. Crore),22.48
+31,225,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.54
+31,226,Sl. No.,226
+31,226,State/UT,Tamil Nadu
+31,226,MP Name,Shri. T.K.S Elangovan
+31,226,District,Chennai
+31,226,Fund Received Goi (Rs. Crore),22
+31,226,Works Recommended Cost (Rs. Crore),22.17
+31,226,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.57
+31,227,Sl. No.,227
+31,227,State/UT,Tamil Nadu
+31,227,MP Name,Shri N. Chandrasegharan
+31,227,District,Salem
+31,227,Fund Received Goi (Rs. Crore),0
+31,227,Works Recommended Cost (Rs. Crore),0
+31,227,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,228,Sl. No.,228
+31,228,State/UT,Tamil Nadu
+31,228,MP Name,Shri. P. Wilson
+31,228,District,Chennai
+31,228,Fund Received Goi (Rs. Crore),4.5
+31,228,Works Recommended Cost (Rs. Crore),2.49
+31,228,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.45
+31,229,Sl. No.,229
+31,229,State/UT,Tamil Nadu
+31,229,MP Name,Shri. P. Selvarasu
+31,229,District,Erode
+31,229,Fund Received Goi (Rs. Crore),2
+31,229,Works Recommended Cost (Rs. Crore),0
+31,229,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,230,Sl. No.,230
+31,230,State/UT,Tamil Nadu
+31,230,MP Name,Shri. S.R Balasubramonian
+31,230,District,Coimbatore
+31,230,Fund Received Goi (Rs. Crore),22
+31,230,Works Recommended Cost (Rs. Crore),20.63
+31,230,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.25
+31,231,Sl. No.,231
+31,231,State/UT,Tamil Nadu
+31,231,MP Name,Shri K.R.N Rajeshkumar
+31,231,District,Namakkal
+31,231,Fund Received Goi (Rs. Crore),2.5
+31,231,Works Recommended Cost (Rs. Crore),0
+31,231,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,232,Sl. No.,232
+31,232,State/UT,Tamil Nadu
+31,232,MP Name,A. Navneethakrishnan
+31,232,District,Chennai
+31,232,Fund Received Goi (Rs. Crore),27.5
+31,232,Works Recommended Cost (Rs. Crore),42.78
+31,232,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),33.23
+31,233,Sl. No.,233
+31,233,State/UT,Tamil Nadu
+31,233,MP Name,Dr Kanimozhi NVN Somu
+31,233,District,Chennai
+31,233,Fund Received Goi (Rs. Crore),4.5
+31,233,Works Recommended Cost (Rs. Crore),6.89
+31,233,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.95
+31,234,Sl. No.,234
+31,234,State/UT,Tamil Nadu
+31,234,MP Name,Dr Anbumani Ramadoss
+31,234,District,Dharmapuri
+31,234,Fund Received Goi (Rs. Crore),4.5
+31,234,Works Recommended Cost (Rs. Crore),5.92
+31,234,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.77
+31,235,Sl. No.,235
+31,235,State/UT,Tamil Nadu
+31,235,MP Name,Shri C.VE Shanmugam
+31,235,District,Villupuram
+31,235,Fund Received Goi (Rs. Crore),2.5
+31,235,Works Recommended Cost (Rs. Crore),0
+31,235,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,236,Sl. No.,236
+31,236,State/UT,Tamil Nadu
+31,236,MP Name,Shri P. Chidambaram
+31,236,District,Sivaganga
+31,236,Fund Received Goi (Rs. Crore),2.5
+31,236,Works Recommended Cost (Rs. Crore),0
+31,236,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,237,Sl. No.,237
+31,237,State/UT,Tamil Nadu
+31,237,MP Name,Shri. M.mohamed Abdulla
+31,237,District,Pudukkottai
+31,237,Fund Received Goi (Rs. Crore),2
+31,237,Works Recommended Cost (Rs. Crore),2.94
+31,237,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.69
+31,238,Sl. No.,238
+31,238,State/UT,Tamil Nadu
+31,238,MP Name,Shri. M Shanmugam
+31,238,District,Thanjavur
+31,238,Fund Received Goi (Rs. Crore),7
+31,238,Works Recommended Cost (Rs. Crore),9.16
+31,238,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.52
+31,239,Sl. No.,239
+31,239,State/UT,Tamil Nadu
+31,239,MP Name,Shri. Tiruchi Siva
+31,239,District,Tiruchirappalli
+31,239,Fund Received Goi (Rs. Crore),4.5
+31,239,Works Recommended Cost (Rs. Crore),6.35
+31,239,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.52
+31,240,Sl. No.,240
+31,240,State/UT,Tamil Nadu
+31,240,MP Name,Shri. N Chandrasegharan
+31,240,District,Salem
+31,240,Fund Received Goi (Rs. Crore),4.5
+31,240,Works Recommended Cost (Rs. Crore),3.28
+31,240,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.39
+31,241,Sl. No.,241
+31,241,State/UT,Tamil Nadu
+31,241,MP Name,Shri. M. Thambidurai
+31,241,District,Krishnagiri
+31,241,Fund Received Goi (Rs. Crore),2
+31,241,Works Recommended Cost (Rs. Crore),0
+31,241,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,242,Sl. No.,242
+31,242,State/UT,Tamil Nadu
+31,242,MP Name,Shri. K. P. Munusamy
+31,242,District,NA
+31,242,Fund Received Goi (Rs. Crore),0
+31,242,Works Recommended Cost (Rs. Crore),0
+31,242,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,243,Sl. No.,243
+31,243,State/UT,Tamil Nadu
+31,243,MP Name,R. S. Bharthi
+31,243,District,Chennai
+31,243,Fund Received Goi (Rs. Crore),22
+31,243,Works Recommended Cost (Rs. Crore),22.04
+31,243,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.93
+31,244,Sl. No.,244
+31,244,State/UT,Tamil Nadu
+31,244,MP Name,M. Shanmugam
+31,244,District,Thanjavur
+31,244,Fund Received Goi (Rs. Crore),0
+31,244,Works Recommended Cost (Rs. Crore),0
+31,244,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,245,Sl. No.,245
+31,245,State/UT,Tamil Nadu
+31,245,MP Name,Mr. A. Mohannedjan
+31,245,District,Vellore
+31,245,Fund Received Goi (Rs. Crore),2.5
+31,245,Works Recommended Cost (Rs. Crore),0
+31,245,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,246,Sl. No.,246
+31,246,State/UT,Tamil Nadu
+31,246,MP Name,Shri. N.R. Elango
+31,246,District,Chennai
+31,246,Fund Received Goi (Rs. Crore),2
+31,246,Works Recommended Cost (Rs. Crore),0
+31,246,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,247,Sl. No.,247
+31,247,State/UT,Tamil Nadu
+31,247,MP Name,Shri R. Girirajan
+31,247,District,Tiruvallur
+31,247,Fund Received Goi (Rs. Crore),2.5
+31,247,Works Recommended Cost (Rs. Crore),0
+31,247,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,248,Sl. No.,248
+31,248,State/UT,Tamil Nadu
+31,248,MP Name,Shri S Kalyanasundaram
+31,248,District,Thanjavur
+31,248,Fund Received Goi (Rs. Crore),2.5
+31,248,Works Recommended Cost (Rs. Crore),0
+31,248,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,249,Sl. No.,249
+31,249,State/UT,Tamil Nadu
+31,249,MP Name,Sh. A Vijaykumar
+31,249,District,Kanniyakumari
+31,249,Fund Received Goi (Rs. Crore),20
+31,249,Works Recommended Cost (Rs. Crore),22.33
+31,249,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.46
+31,250,Sl. No.,250
+31,250,State/UT,Tamil Nadu
+31,250,MP Name,Shri. K. R. N. Rajeshkumar
+31,250,District,Namakkal
+31,250,Fund Received Goi (Rs. Crore),2
+31,250,Works Recommended Cost (Rs. Crore),0
+31,250,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,251,Sl. No.,251
+31,251,State/UT,Tamil Nadu
+31,251,MP Name,Shri R. Dharmar
+31,251,District,Ramanathapuram
+31,251,Fund Received Goi (Rs. Crore),0
+31,251,Works Recommended Cost (Rs. Crore),0
+31,251,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,252,Sl. No.,252
+31,252,State/UT,Tamil Nadu
+31,252,MP Name,Shri. G. K. Vasan
+31,252,District,Thanjavur
+31,252,Fund Received Goi (Rs. Crore),2
+31,252,Works Recommended Cost (Rs. Crore),5.91
+31,252,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,253,Sl. No.,253
+31,253,State/UT,Tamil Nadu
+31,253,MP Name,Shri. Vaiko
+31,253,District,Tenkasi
+31,253,Fund Received Goi (Rs. Crore),2.5
+31,253,Works Recommended Cost (Rs. Crore),4.32
+31,253,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.36
+31,254,Sl. No.,254
+31,254,State/UT,Telangana
+31,254,MP Name,Santhosh Kumar Joganipally
+31,254,District,Karimnagar
+31,254,Fund Received Goi (Rs. Crore),7.5
+31,254,Works Recommended Cost (Rs. Crore),8.62
+31,254,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.83
+31,255,Sl. No.,255
+31,255,State/UT,Telangana
+31,255,MP Name,Shri. Lakshmikanta Rao Voditela
+31,255,District,Karimnagar
+31,255,Fund Received Goi (Rs. Crore),15
+31,255,Works Recommended Cost (Rs. Crore),20.19
+31,255,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.33
+31,256,Sl. No.,256
+31,256,State/UT,Telangana
+31,256,MP Name,Dr K. keshava Rao
+31,256,District,Hyderabad
+31,256,Fund Received Goi (Rs. Crore),4.5
+31,256,Works Recommended Cost (Rs. Crore),5.57
+31,256,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.7
+31,257,Sl. No.,257
+31,257,State/UT,Telangana
+31,257,MP Name,Shri. Ravichandra Vaddiraju
+31,257,District,Khamman
+31,257,Fund Received Goi (Rs. Crore),2.5
+31,257,Works Recommended Cost (Rs. Crore),0
+31,257,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,258,Sl. No.,258
+31,258,State/UT,Telangana
+31,258,MP Name,Shri Damodar Rao Divakonda
+31,258,District,Jagtial
+31,258,Fund Received Goi (Rs. Crore),2.5
+31,258,Works Recommended Cost (Rs. Crore),0
+31,258,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,259,Sl. No.,259
+31,259,State/UT,Telangana
+31,259,MP Name,Badugula Lingaiah Yadav
+31,259,District,Suryapet
+31,259,Fund Received Goi (Rs. Crore),12
+31,259,Works Recommended Cost (Rs. Crore),13.57
+31,259,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.57
+31,260,Sl. No.,260
+31,260,State/UT,Telangana
+31,260,MP Name,Shri. K. R. Suresh Reddy
+31,260,District,Nizamabad
+31,260,Fund Received Goi (Rs. Crore),2
+31,260,Works Recommended Cost (Rs. Crore),0
+31,260,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,261,Sl. No.,261
+31,261,State/UT,Telangana
+31,261,MP Name,Prakash Banda
+31,261,District,Hanumakonda
+31,261,Fund Received Goi (Rs. Crore),2.5
+31,261,Works Recommended Cost (Rs. Crore),6.46
+31,261,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.58
+31,262,Sl. No.,262
+31,262,State/UT,Telangana
+31,262,MP Name,Shri B. Parthasaradhi Reddy
+31,262,District,Khamman
+31,262,Fund Received Goi (Rs. Crore),2.5
+31,262,Works Recommended Cost (Rs. Crore),0
+31,262,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,263,Sl. No.,263
+31,263,State/UT,Telangana
+31,263,MP Name,Shri. Dharmapuri Srinivas
+31,263,District,Nizamabad
+31,263,Fund Received Goi (Rs. Crore),20
+31,263,Works Recommended Cost (Rs. Crore),28
+31,263,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.32
+31,264,Sl. No.,264
+31,264,State/UT,Tripura
+31,264,MP Name,Shri. Manik Saha
+31,264,District,West Tripura
+31,264,Fund Received Goi (Rs. Crore),0
+31,264,Works Recommended Cost (Rs. Crore),0
+31,264,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,265,Sl. No.,265
+31,265,State/UT,Tripura
+31,265,MP Name,Shri Biplab Kumar Deb
+31,265,District,West Tripura
+31,265,Fund Received Goi (Rs. Crore),2.5
+31,265,Works Recommended Cost (Rs. Crore),0
+31,265,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,266,Sl. No.,266
+31,266,State/UT,Tripura
+31,266,MP Name,Smt. Jharna Das Baidya
+31,266,District,West Tripura
+31,266,Fund Received Goi (Rs. Crore),49
+31,266,Works Recommended Cost (Rs. Crore),45.65
+31,266,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),45.65
+31,267,Sl. No.,267
+31,267,State/UT,Uttar Pradesh
+31,267,MP Name,Prof. Ram Gopal Yadav
+31,267,District,Etawah
+31,267,Fund Received Goi (Rs. Crore),2
+31,267,Works Recommended Cost (Rs. Crore),0
+31,267,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,268,Sl. No.,268
+31,268,State/UT,Uttar Pradesh
+31,268,MP Name,Dr Tazeen Fatma
+31,268,District,Rampur
+31,268,Fund Received Goi (Rs. Crore),25
+31,268,Works Recommended Cost (Rs. Crore),25.33
+31,268,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),25.78
+31,269,Sl. No.,269
+31,269,State/UT,Uttar Pradesh
+31,269,MP Name,Jaya Bachchan
+31,269,District,Bhadohi
+31,269,Fund Received Goi (Rs. Crore),7.5
+31,269,Works Recommended Cost (Rs. Crore),6.16
+31,269,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.25
+31,270,Sl. No.,270
+31,270,State/UT,Uttar Pradesh
+31,270,MP Name,G. V. L Narasimha Rao
+31,270,District,Varanasi
+31,270,Fund Received Goi (Rs. Crore),7.5
+31,270,Works Recommended Cost (Rs. Crore),5.57
+31,270,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.61
+31,271,Sl. No.,271
+31,271,State/UT,Uttar Pradesh
+31,271,MP Name,Shri Sakaldeep
+31,271,District,Ballia
+31,271,Fund Received Goi (Rs. Crore),10
+31,271,Works Recommended Cost (Rs. Crore),7.48
+31,271,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.76
+31,272,Sl. No.,272
+31,272,State/UT,Uttar Pradesh
+31,272,MP Name,Sh. Kabil Sibal
+31,272,District,Rae Bareli
+31,272,Fund Received Goi (Rs. Crore),17.5
+31,272,Works Recommended Cost (Rs. Crore),21.34
+31,272,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),15
+31,273,Sl. No.,273
+31,273,State/UT,Uttar Pradesh
+31,273,MP Name,Beni Prasad Verma
+31,273,District,Barabanki
+31,273,Fund Received Goi (Rs. Crore),17.5
+31,273,Works Recommended Cost (Rs. Crore),17.3
+31,273,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.47
+31,274,Sl. No.,274
+31,274,State/UT,Uttar Pradesh
+31,274,MP Name,Smt Seema Dwivedi
+31,274,District,Jaunpur
+31,274,Fund Received Goi (Rs. Crore),4.5
+31,274,Works Recommended Cost (Rs. Crore),3.99
+31,274,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.39
+31,275,Sl. No.,275
+31,275,State/UT,Uttar Pradesh
+31,275,MP Name,Ravi Prakash Verma
+31,275,District,Kheri
+31,275,Fund Received Goi (Rs. Crore),27.5
+31,275,Works Recommended Cost (Rs. Crore),30.44
+31,275,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),28.15
+31,276,Sl. No.,276
+31,276,State/UT,Uttar Pradesh
+31,276,MP Name,Sanjay Seth
+31,276,District,Lucknow
+31,276,Fund Received Goi (Rs. Crore),5
+31,276,Works Recommended Cost (Rs. Crore),2.04
+31,276,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.6
+31,277,Sl. No.,277
+31,277,State/UT,Uttar Pradesh
+31,277,MP Name,Shri Arun Singh
+31,277,District,Mirzapur
+31,277,Fund Received Goi (Rs. Crore),2
+31,277,Works Recommended Cost (Rs. Crore),1.26
+31,277,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.16
+31,278,Sl. No.,278
+31,278,State/UT,Uttar Pradesh
+31,278,MP Name,Sh. P.l Punia
+31,278,District,Barabanki
+31,278,Fund Received Goi (Rs. Crore),25
+31,278,Works Recommended Cost (Rs. Crore),24.97
+31,278,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),25.08
+31,279,Sl. No.,279
+31,279,State/UT,Uttar Pradesh
+31,279,MP Name,Shri Javed Ali Khan
+31,279,District,Bhimnagar(sambhal)
+31,279,Fund Received Goi (Rs. Crore),2.5
+31,279,Works Recommended Cost (Rs. Crore),0
+31,279,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,280,Sl. No.,280
+31,280,State/UT,Uttar Pradesh
+31,280,MP Name,Shri. Syed Zafar Islam
+31,280,District,Moradabad
+31,280,Fund Received Goi (Rs. Crore),14.5
+31,280,Works Recommended Cost (Rs. Crore),0
+31,280,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,281,Sl. No.,281
+31,281,State/UT,Uttar Pradesh
+31,281,MP Name,Shri. Hardeep Singh Puri
+31,281,District,Sonbhadra
+31,281,Fund Received Goi (Rs. Crore),2
+31,281,Works Recommended Cost (Rs. Crore),1.99
+31,281,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.49
+31,282,Sl. No.,282
+31,282,State/UT,Uttar Pradesh
+31,282,MP Name,Shri. Sudhanshu Trivedi
+31,282,District,Lucknow
+31,282,Fund Received Goi (Rs. Crore),4.5
+31,282,Works Recommended Cost (Rs. Crore),4.86
+31,282,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.35
+31,283,Sl. No.,283
+31,283,State/UT,Uttar Pradesh
+31,283,MP Name,Neeraj Shekhar
+31,283,District,Ballia
+31,283,Fund Received Goi (Rs. Crore),22.5
+31,283,Works Recommended Cost (Rs. Crore),28.99
+31,283,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.61
+31,284,Sl. No.,284
+31,284,State/UT,Uttar Pradesh
+31,284,MP Name,Shri Baburam Nishad
+31,284,District,Hamirpur
+31,284,Fund Received Goi (Rs. Crore),2.5
+31,284,Works Recommended Cost (Rs. Crore),0
+31,284,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,285,Sl. No.,285
+31,285,State/UT,Uttar Pradesh
+31,285,MP Name,Shri Veer Singh
+31,285,District,Moradabad
+31,285,Fund Received Goi (Rs. Crore),62.03
+31,285,Works Recommended Cost (Rs. Crore),70.26
+31,285,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),61.06
+31,286,Sl. No.,286
+31,286,State/UT,Uttar Pradesh
+31,286,MP Name,Shri. Sukhram Singh Yadav
+31,286,District,Kanpur Nagar
+31,286,Fund Received Goi (Rs. Crore),15
+31,286,Works Recommended Cost (Rs. Crore),12.9
+31,286,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.25
+31,287,Sl. No.,287
+31,287,State/UT,Uttar Pradesh
+31,287,MP Name,Vijay Pal Singh Tomar
+31,287,District,Meerut
+31,287,Fund Received Goi (Rs. Crore),12
+31,287,Works Recommended Cost (Rs. Crore),12.01
+31,287,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.16
+31,288,Sl. No.,288
+31,288,State/UT,Uttar Pradesh
+31,288,MP Name,Shri Raja Ram
+31,288,District,Azamgarh
+31,288,Fund Received Goi (Rs. Crore),50.03
+31,288,Works Recommended Cost (Rs. Crore),49.12
+31,288,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),46.67
+31,289,Sl. No.,289
+31,289,State/UT,Uttar Pradesh
+31,289,MP Name,Javed Ali Khan
+31,289,District,Moradabad
+31,289,Fund Received Goi (Rs. Crore),27.5
+31,289,Works Recommended Cost (Rs. Crore),25.78
+31,289,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),25.25
+31,290,Sl. No.,290
+31,290,State/UT,Uttar Pradesh
+31,290,MP Name,Shri. Sanjay Seth
+31,290,District,Lucknow
+31,290,Fund Received Goi (Rs. Crore),7
+31,290,Works Recommended Cost (Rs. Crore),6.63
+31,290,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.4
+31,291,Sl. No.,291
+31,291,State/UT,Uttar Pradesh
+31,291,MP Name,Sh. Amar Singh
+31,291,District,Varanasi
+31,291,Fund Received Goi (Rs. Crore),5
+31,291,Works Recommended Cost (Rs. Crore),4.57
+31,291,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.38
+31,292,Sl. No.,292
+31,292,State/UT,Uttar Pradesh
+31,292,MP Name,Shri Kapil Sibal
+31,292,District,Muzaffarnagar
+31,292,Fund Received Goi (Rs. Crore),2.5
+31,292,Works Recommended Cost (Rs. Crore),0
+31,292,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,293,Sl. No.,293
+31,293,State/UT,Uttar Pradesh
+31,293,MP Name,Dr Laxmikant Bajpayee
+31,293,District,Meerut
+31,293,Fund Received Goi (Rs. Crore),2.5
+31,293,Works Recommended Cost (Rs. Crore),0
+31,293,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,294,Sl. No.,294
+31,294,State/UT,Uttar Pradesh
+31,294,MP Name,Arun Jaitley
+31,294,District,Rae Bareli
+31,294,Fund Received Goi (Rs. Crore),2.5
+31,294,Works Recommended Cost (Rs. Crore),0
+31,294,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.8
+31,295,Sl. No.,295
+31,295,State/UT,Uttar Pradesh
+31,295,MP Name,Ashok Bajpai
+31,295,District,Lucknow
+31,295,Fund Received Goi (Rs. Crore),12
+31,295,Works Recommended Cost (Rs. Crore),10.43
+31,295,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),9.17
+31,296,Sl. No.,296
+31,296,State/UT,Uttar Pradesh
+31,296,MP Name,Shri. B. l. Verma
+31,296,District,Budaun
+31,296,Fund Received Goi (Rs. Crore),2
+31,296,Works Recommended Cost (Rs. Crore),2
+31,296,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.68
+31,297,Sl. No.,297
+31,297,State/UT,Uttar Pradesh
+31,297,MP Name,Shri Hardeep Singh Puri
+31,297,District,Sonbhadra
+31,297,Fund Received Goi (Rs. Crore),15
+31,297,Works Recommended Cost (Rs. Crore),15.33
+31,297,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.35
+31,298,Sl. No.,298
+31,298,State/UT,Uttar Pradesh
+31,298,MP Name,Shri. Neeraj Shekhar
+31,298,District,Ballia
+31,298,Fund Received Goi (Rs. Crore),2
+31,298,Works Recommended Cost (Rs. Crore),0
+31,298,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,299,Sl. No.,299
+31,299,State/UT,Uttar Pradesh
+31,299,MP Name,Harnath Singh Yadav
+31,299,District,Etah
+31,299,Fund Received Goi (Rs. Crore),14.5
+31,299,Works Recommended Cost (Rs. Crore),12.31
+31,299,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.09
+31,300,Sl. No.,300
+31,300,State/UT,Uttar Pradesh
+31,300,MP Name,Vishambhar Prasad Nishad
+31,300,District,Banda
+31,300,Fund Received Goi (Rs. Crore),30
+31,300,Works Recommended Cost (Rs. Crore),30.91
+31,300,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),28.48
+31,301,Sl. No.,301
+31,301,State/UT,Uttar Pradesh
+31,301,MP Name,Shri Jayant Chaudhary
+31,301,District,Baghpat
+31,301,Fund Received Goi (Rs. Crore),2.5
+31,301,Works Recommended Cost (Rs. Crore),0
+31,301,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,302,Sl. No.,302
+31,302,State/UT,Uttar Pradesh
+31,302,MP Name,Smt. Darshana Singh
+31,302,District,Chandauli
+31,302,Fund Received Goi (Rs. Crore),2.5
+31,302,Works Recommended Cost (Rs. Crore),1.49
+31,302,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.54
+31,303,Sl. No.,303
+31,303,State/UT,Uttar Pradesh
+31,303,MP Name,Shri Mithilesh Kumar
+31,303,District,Shahjahanpur
+31,303,Fund Received Goi (Rs. Crore),2.5
+31,303,Works Recommended Cost (Rs. Crore),0
+31,303,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,304,Sl. No.,304
+31,304,State/UT,Uttar Pradesh
+31,304,MP Name,Dr K. Laxman
+31,304,District,Ghaziabad
+31,304,Fund Received Goi (Rs. Crore),2.5
+31,304,Works Recommended Cost (Rs. Crore),1.8
+31,304,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.05
+31,305,Sl. No.,305
+31,305,State/UT,Uttar Pradesh
+31,305,MP Name,Sh. Ashok Siddharth
+31,305,District,Farrukhabad
+31,305,Fund Received Goi (Rs. Crore),22
+31,305,Works Recommended Cost (Rs. Crore),20.61
+31,305,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),20.11
+31,306,Sl. No.,306
+31,306,State/UT,Uttar Pradesh
+31,306,MP Name,Shri. Brijlal
+31,306,District,Siddharth Nagar
+31,306,Fund Received Goi (Rs. Crore),4.5
+31,306,Works Recommended Cost (Rs. Crore),2.59
+31,306,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.8
+31,307,Sl. No.,307
+31,307,State/UT,Uttar Pradesh
+31,307,MP Name,Smt Geeta Alias Chandraprabha
+31,307,District,Auraiya
+31,307,Fund Received Goi (Rs. Crore),4.5
+31,307,Works Recommended Cost (Rs. Crore),2.09
+31,307,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.87
+31,308,Sl. No.,308
+31,308,State/UT,Uttar Pradesh
+31,308,MP Name,Shri. Ramji
+31,308,District,Kheri
+31,308,Fund Received Goi (Rs. Crore),7
+31,308,Works Recommended Cost (Rs. Crore),4.58
+31,308,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.78
+31,309,Sl. No.,309
+31,309,State/UT,Uttar Pradesh
+31,309,MP Name,Dr Radha Mohan Das Agarwal
+31,309,District,Gorakhpur
+31,309,Fund Received Goi (Rs. Crore),2.5
+31,309,Works Recommended Cost (Rs. Crore),2.54
+31,309,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,310,Sl. No.,310
+31,310,State/UT,Uttar Pradesh
+31,310,MP Name,Shri Satish Chandra Misra
+31,310,District,Lucknow
+31,310,Fund Received Goi (Rs. Crore),5
+31,310,Works Recommended Cost (Rs. Crore),51.86
+31,310,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.5
+31,311,Sl. No.,311
+31,311,State/UT,Uttar Pradesh
+31,311,MP Name,Kanta Kardam
+31,311,District,Hapur
+31,311,Fund Received Goi (Rs. Crore),14.5
+31,311,Works Recommended Cost (Rs. Crore),12.41
+31,311,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),11.56
+31,312,Sl. No.,312
+31,312,State/UT,Uttar Pradesh
+31,312,MP Name,Shri. Surendra Singh Nagar
+31,312,District,Bulandshahr
+31,312,Fund Received Goi (Rs. Crore),15
+31,312,Works Recommended Cost (Rs. Crore),15.7
+31,312,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.97
+31,313,Sl. No.,313
+31,313,State/UT,Uttar Pradesh
+31,313,MP Name,Hardwar Dubey
+31,313,District,Agra
+31,313,Fund Received Goi (Rs. Crore),4.5
+31,313,Works Recommended Cost (Rs. Crore),4.24
+31,313,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.09
+31,314,Sl. No.,314
+31,314,State/UT,Uttar Pradesh
+31,314,MP Name,Shri. Jai Prakash Nishad
+31,314,District,Gorakhpur
+31,314,Fund Received Goi (Rs. Crore),4.5
+31,314,Works Recommended Cost (Rs. Crore),7.07
+31,314,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.64
+31,315,Sl. No.,315
+31,315,State/UT,Uttar Pradesh
+31,315,MP Name,Dr Chandra Pal Singh Yadav
+31,315,District,Jhansi
+31,315,Fund Received Goi (Rs. Crore),20
+31,315,Works Recommended Cost (Rs. Crore),18.04
+31,315,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),16.92
+31,316,Sl. No.,316
+31,316,State/UT,Uttar Pradesh
+31,316,MP Name,Shri. Surendra Singh Nagar
+31,316,District,Gautam Budh Nagar
+31,316,Fund Received Goi (Rs. Crore),4.5
+31,316,Works Recommended Cost (Rs. Crore),2.51
+31,316,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.55
+31,317,Sl. No.,317
+31,317,State/UT,Uttar Pradesh
+31,317,MP Name,Shri Surendra Singh Nagar
+31,317,District,Gautam Budh Nagar
+31,317,Fund Received Goi (Rs. Crore),2.5
+31,317,Works Recommended Cost (Rs. Crore),0
+31,317,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,318,Sl. No.,318
+31,318,State/UT,Uttar Pradesh
+31,318,MP Name,Shri Satish Chandra Misra
+31,318,District,Lucknow
+31,318,Fund Received Goi (Rs. Crore),6.03
+31,318,Works Recommended Cost (Rs. Crore),7.61
+31,318,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.14
+31,319,Sl. No.,319
+31,319,State/UT,Uttar Pradesh
+31,319,MP Name,Smt Sangeeta Yadav
+31,319,District,Deoria
+31,319,Fund Received Goi (Rs. Crore),2.5
+31,319,Works Recommended Cost (Rs. Crore),0
+31,319,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,320,Sl. No.,320
+31,320,State/UT,Uttar Pradesh
+31,320,MP Name,Shri. Neeraj Shekhar
+31,320,District,Ballia
+31,320,Fund Received Goi (Rs. Crore),2.5
+31,320,Works Recommended Cost (Rs. Crore),0
+31,320,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,321,Sl. No.,321
+31,321,State/UT,Uttar Pradesh
+31,321,MP Name,Shri Ram Gopal Yadav
+31,321,District,Etawah
+31,321,Fund Received Goi (Rs. Crore),50.03
+31,321,Works Recommended Cost (Rs. Crore),48.24
+31,321,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),47.78
+31,322,Sl. No.,322
+31,322,State/UT,Uttar Pradesh
+31,322,MP Name,Anil Kumar Jain
+31,322,District,Firozabad
+31,322,Fund Received Goi (Rs. Crore),10
+31,322,Works Recommended Cost (Rs. Crore),7.41
+31,322,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.73
+31,323,Sl. No.,323
+31,323,State/UT,Uttar Pradesh
+31,323,MP Name,Shri. Arun Singh
+31,323,District,Mirzapur
+31,323,Fund Received Goi (Rs. Crore),2.5
+31,323,Works Recommended Cost (Rs. Crore),2.42
+31,323,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2.38
+31,324,Sl. No.,324
+31,324,State/UT,Uttar Pradesh
+31,324,MP Name,Anil Agarwal
+31,324,District,Ghaziabad
+31,324,Fund Received Goi (Rs. Crore),10
+31,324,Works Recommended Cost (Rs. Crore),8.39
+31,324,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.29
+31,325,Sl. No.,325
+31,325,State/UT,Uttar Pradesh
+31,325,MP Name,Shri Rewati Raman Singh
+31,325,District,Allahabad
+31,325,Fund Received Goi (Rs. Crore),22
+31,325,Works Recommended Cost (Rs. Crore),28.38
+31,325,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),17.73
+31,326,Sl. No.,326
+31,326,State/UT,Uttar Pradesh
+31,326,MP Name,Shri. Shiv Pratap Shukla
+31,326,District,Gorakhpur
+31,326,Fund Received Goi (Rs. Crore),19.5
+31,326,Works Recommended Cost (Rs. Crore),22.91
+31,326,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),15.77
+31,327,Sl. No.,327
+31,327,State/UT,Uttarakhand
+31,327,MP Name,Shri. Pradeep Tamta
+31,327,District,Bageshwar
+31,327,Fund Received Goi (Rs. Crore),22
+31,327,Works Recommended Cost (Rs. Crore),19.42
+31,327,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),18.21
+31,328,Sl. No.,328
+31,328,State/UT,Uttarakhand
+31,328,MP Name,Shri. Naresh Bansal
+31,328,District,Dehradun
+31,328,Fund Received Goi (Rs. Crore),2
+31,328,Works Recommended Cost (Rs. Crore),0
+31,328,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,329,Sl. No.,329
+31,329,State/UT,Uttarakhand
+31,329,MP Name,Dr Kalpana Saini
+31,329,District,Haridwar
+31,329,Fund Received Goi (Rs. Crore),2.5
+31,329,Works Recommended Cost (Rs. Crore),0
+31,329,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,330,Sl. No.,330
+31,330,State/UT,Uttarakhand
+31,330,MP Name,Anil Baluni
+31,330,District,Pauri Garhwal
+31,330,Fund Received Goi (Rs. Crore),5
+31,330,Works Recommended Cost (Rs. Crore),2.09
+31,330,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.6
+31,331,Sl. No.,331
+31,331,State/UT,Uttarakhand
+31,331,MP Name,Raj Babbar
+31,331,District,Dehradun
+31,331,Fund Received Goi (Rs. Crore),25
+31,331,Works Recommended Cost (Rs. Crore),25.07
+31,331,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),23.5
+31,332,Sl. No.,332
+31,332,State/UT,West Bengal
+31,332,MP Name,Ms Sushmita Dev
+31,332,District,Kolkata
+31,332,Fund Received Goi (Rs. Crore),2
+31,332,Works Recommended Cost (Rs. Crore),2.03
+31,332,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.94
+31,333,Sl. No.,333
+31,333,State/UT,West Bengal
+31,333,MP Name,Shri. Luizinho Joaquim Faleiro
+31,333,District,Kolkata
+31,333,Fund Received Goi (Rs. Crore),4.5
+31,333,Works Recommended Cost (Rs. Crore),4.41
+31,333,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.5
+31,334,Sl. No.,334
+31,334,State/UT,West Bengal
+31,334,MP Name,Abir Ranjan Biswas
+31,334,District,Kolkata
+31,334,Fund Received Goi (Rs. Crore),10
+31,334,Works Recommended Cost (Rs. Crore),7.54
+31,334,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.92
+31,335,Sl. No.,335
+31,335,State/UT,West Bengal
+31,335,MP Name,Shri. P. Bhattacharya
+31,335,District,Birbhum
+31,335,Fund Received Goi (Rs. Crore),14.5
+31,335,Works Recommended Cost (Rs. Crore),14.13
+31,335,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.36
+31,336,Sl. No.,336
+31,336,State/UT,West Bengal
+31,336,MP Name,Sh. Derek O Brien
+31,336,District,Kolkata
+31,336,Fund Received Goi (Rs. Crore),5
+31,336,Works Recommended Cost (Rs. Crore),6.58
+31,336,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.37
+31,337,Sl. No.,337
+31,337,State/UT,West Bengal
+31,337,MP Name,Manas Rajan Bhunia
+31,337,District,Kolkata
+31,337,Fund Received Goi (Rs. Crore),5
+31,337,Works Recommended Cost (Rs. Crore),4.64
+31,337,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),4.62
+31,338,Sl. No.,338
+31,338,State/UT,West Bengal
+31,338,MP Name,Shri. Bikash Ranjan Bhattacharya
+31,338,District,Kolkata
+31,338,Fund Received Goi (Rs. Crore),4.5
+31,338,Works Recommended Cost (Rs. Crore),6.08
+31,338,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2
+31,339,Sl. No.,339
+31,339,State/UT,West Bengal
+31,339,MP Name,Shri. Dinesh Trivedi
+31,339,District,NA
+31,339,Fund Received Goi (Rs. Crore),0
+31,339,Works Recommended Cost (Rs. Crore),0
+31,339,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,340,Sl. No.,340
+31,340,State/UT,West Bengal
+31,340,MP Name,Santanu Sen
+31,340,District,Kolkata
+31,340,Fund Received Goi (Rs. Crore),12
+31,340,Works Recommended Cost (Rs. Crore),9.98
+31,340,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.2
+31,341,Sl. No.,341
+31,341,State/UT,West Bengal
+31,341,MP Name,Miss. Dola Sen
+31,341,District,Kolkata
+31,341,Fund Received Goi (Rs. Crore),17
+31,341,Works Recommended Cost (Rs. Crore),15.85
+31,341,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.94
+31,342,Sl. No.,342
+31,342,State/UT,West Bengal
+31,342,MP Name,Shri. Jawahar Sircar
+31,342,District,Kolkata
+31,342,Fund Received Goi (Rs. Crore),2
+31,342,Works Recommended Cost (Rs. Crore),1.96
+31,342,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2
+31,343,Sl. No.,343
+31,343,State/UT,West Bengal
+31,343,MP Name,Md. Nadimul Haque
+31,343,District,Kolkata
+31,343,Fund Received Goi (Rs. Crore),10
+31,343,Works Recommended Cost (Rs. Crore),13.31
+31,343,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),12.31
+31,344,Sl. No.,344
+31,344,State/UT,West Bengal
+31,344,MP Name,Subhasish Chakrobarty
+31,344,District,Kolkata
+31,344,Fund Received Goi (Rs. Crore),10
+31,344,Works Recommended Cost (Rs. Crore),9.76
+31,344,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.49
+31,345,Sl. No.,345
+31,345,State/UT,West Bengal
+31,345,MP Name,Shanta Chhetri
+31,345,District,Kolkata
+31,345,Fund Received Goi (Rs. Crore),17
+31,345,Works Recommended Cost (Rs. Crore),14.95
+31,345,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),13.98
+31,346,Sl. No.,346
+31,346,State/UT,West Bengal
+31,346,MP Name,Shri. Subrata Bakshi
+31,346,District,Kolkata
+31,346,Fund Received Goi (Rs. Crore),2
+31,346,Works Recommended Cost (Rs. Crore),1.77
+31,346,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.04
+31,347,Sl. No.,347
+31,347,State/UT,West Bengal
+31,347,MP Name,Smt Mausam Noor
+31,347,District,Kolkata
+31,347,Fund Received Goi (Rs. Crore),0
+31,347,Works Recommended Cost (Rs. Crore),0
+31,347,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,348,Sl. No.,348
+31,348,State/UT,West Bengal
+31,348,MP Name,Sukhendu Sekhar Ray
+31,348,District,Kolkata
+31,348,Fund Received Goi (Rs. Crore),12.5
+31,348,Works Recommended Cost (Rs. Crore),12.49
+31,348,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),10.66
+31,349,Sl. No.,349
+31,349,State/UT,West Bengal
+31,349,MP Name,Abhishek Manu Singhvi
+31,349,District,Howrah
+31,349,Fund Received Goi (Rs. Crore),7.5
+31,349,Works Recommended Cost (Rs. Crore),9.7
+31,349,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),3.02
+31,350,Sl. No.,350
+31,350,State/UT,West Bengal
+31,350,MP Name,Smt Arpita Ghosh
+31,350,District,NA
+31,350,Fund Received Goi (Rs. Crore),0
+31,350,Works Recommended Cost (Rs. Crore),0
+31,350,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,351,Sl. No.,Total
+31,351,State/UT,Total
+31,351,MP Name,Total
+31,351,District,Total
+31,351,Fund Received Goi (Rs. Crore),3276.92
+31,351,Works Recommended Cost (Rs. Crore),3637.53
+31,351,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2625.42
+31,352,Sl. No.,1
+31,352,State/UT,Nominated
+31,352,MP Name,SHRI. Ranjan Gogoi
+31,352,District,Kamrup Metropolitan
+31,352,Fund Received Goi (Rs. Crore),2
+31,352,Works Recommended Cost (Rs. Crore),0
+31,352,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,353,Sl. No.,2
+31,353,State/UT,Nominated
+31,353,MP Name,Raghunath Mohapatra
+31,353,District,Khordha
+31,353,Fund Received Goi (Rs. Crore),5
+31,353,Works Recommended Cost (Rs. Crore),4.59
+31,353,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),1.21
+31,354,Sl. No.,3
+31,354,State/UT,Nominated
+31,354,MP Name,Shri Gulam Ali
+31,354,District,Jammu
+31,354,Fund Received Goi (Rs. Crore),2.5
+31,354,Works Recommended Cost (Rs. Crore),0
+31,354,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,355,Sl. No.,4
+31,355,State/UT,Nominated
+31,355,MP Name,Dr Sonal Mansingh
+31,355,District,Dang
+31,355,Fund Received Goi (Rs. Crore),9.5
+31,355,Works Recommended Cost (Rs. Crore),8.15
+31,355,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),6.2
+31,356,Sl. No.,5
+31,356,State/UT,Nominated
+31,356,MP Name,SHRI. Mahesh Jethmalani
+31,356,District,Commissioner North Delhi Municipal Corporation
+31,356,Fund Received Goi (Rs. Crore),2
+31,356,Works Recommended Cost (Rs. Crore),2.45
+31,356,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0.04
+31,357,Sl. No.,6
+31,357,State/UT,Nominated
+31,357,MP Name,Smt Roopa Ganguly
+31,357,District,Commissioner South Delhi Municipal Corporation
+31,357,Fund Received Goi (Rs. Crore),5
+31,357,Works Recommended Cost (Rs. Crore),14.99
+31,357,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),5.43
+31,358,Sl. No.,7
+31,358,State/UT,Nominated
+31,358,MP Name,SHRI. Shambhaji Shahu Chhatrapati
+31,358,District,Kolhapur
+31,358,Fund Received Goi (Rs. Crore),15
+31,358,Works Recommended Cost (Rs. Crore),17.38
+31,358,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),16.86
+31,359,Sl. No.,8
+31,359,State/UT,Nominated
+31,359,MP Name,Ram Shakal
+31,359,District,Mirzapur
+31,359,Fund Received Goi (Rs. Crore),12
+31,359,Works Recommended Cost (Rs. Crore),10.47
+31,359,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),7.61
+31,360,Sl. No.,9
+31,360,State/UT,Nominated
+31,360,MP Name,Shri V. Vijayendra Prasad
+31,360,District,East Godavari
+31,360,Fund Received Goi (Rs. Crore),2.5
+31,360,Works Recommended Cost (Rs. Crore),0
+31,360,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,361,Sl. No.,10
+31,361,State/UT,Nominated
+31,361,MP Name,Shri Ilaiyaraaja
+31,361,District,NA
+31,361,Fund Received Goi (Rs. Crore),0
+31,361,Works Recommended Cost (Rs. Crore),0
+31,361,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,362,Sl. No.,11
+31,362,State/UT,Nominated
+31,362,MP Name,Smt M.C Mary Kom
+31,362,District,Churachandpur
+31,362,Fund Received Goi (Rs. Crore),17.5
+31,362,Works Recommended Cost (Rs. Crore),26.08
+31,362,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),19.39
+31,363,Sl. No.,12
+31,363,State/UT,Nominated
+31,363,MP Name,Shri Dharmasthala Veerendra Heggade
+31,363,District,Dakshin Kannad
+31,363,Fund Received Goi (Rs. Crore),2.5
+31,363,Works Recommended Cost (Rs. Crore),0
+31,363,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,364,Sl. No.,13
+31,364,State/UT,Nominated
+31,364,MP Name,Smt. P.T. Usha
+31,364,District,Kozhikode
+31,364,Fund Received Goi (Rs. Crore),2.5
+31,364,Works Recommended Cost (Rs. Crore),0
+31,364,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,365,Sl. No.,14
+31,365,State/UT,Nominated
+31,365,MP Name,Dr Subramonian Swamy
+31,365,District,Mumbai Suburban
+31,365,Fund Received Goi (Rs. Crore),17.5
+31,365,Works Recommended Cost (Rs. Crore),26.83
+31,365,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.13
+31,366,Sl. No.,15
+31,366,State/UT,Nominated
+31,366,MP Name,Sh. Rakesh Sinha
+31,366,District,Begusarai
+31,366,Fund Received Goi (Rs. Crore),9.5
+31,366,Works Recommended Cost (Rs. Crore),9.4
+31,366,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),8.66
+31,367,Sl. No.,16
+31,367,State/UT,Nominated
+31,367,MP Name,SHRI. Swapan Dasgupta
+31,367,District,Kolkata
+31,367,Fund Received Goi (Rs. Crore),20
+31,367,Works Recommended Cost (Rs. Crore),23.11
+31,367,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),21.21
+31,368,Sl. No.,17
+31,368,State/UT,Nominated
+31,368,MP Name,SHRI. Suresh Gopi
+31,368,District,Thiruvananthapuram
+31,368,Fund Received Goi (Rs. Crore),17.5
+31,368,Works Recommended Cost (Rs. Crore),23.31
+31,368,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),14.23
+31,369,Sl. No.,18
+31,369,State/UT,Nominated
+31,369,MP Name,Shri Narendra Jadav
+31,369,District,Nashik
+31,369,Fund Received Goi (Rs. Crore),15
+31,369,Works Recommended Cost (Rs. Crore),22.88
+31,369,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),16.66
+31,370,Sl. No.,19
+31,370,State/UT,Nominated
+31,370,MP Name,SHRI. Swapan Das Gupta
+31,370,District,Kolkata
+31,370,Fund Received Goi (Rs. Crore),2
+31,370,Works Recommended Cost (Rs. Crore),0
+31,370,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),0
+31,371,Sl. No.,Total
+31,371,State/UT,Total
+31,371,MP Name,Total
+31,371,District,Total
+31,371,Fund Received Goi (Rs. Crore),159.5
+31,371,Works Recommended Cost (Rs. Crore),189.63
+31,371,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),131.63
+31,372,Sl. No.,Grand Total
+31,372,State/UT,Grand Total
+31,372,MP Name,Grand Total
+31,372,District,Grand Total
+31,372,Fund Received Goi (Rs. Crore),3436.42
+31,372,Works Recommended Cost (Rs. Crore),3827.16
+31,372,Actual Expenditure Incurred with Exp_Admin (Rs. Crore),2757.05
+32,1,S.No,1
+32,1,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ayodhya Rami Reddy Alla
+32,1,State,Andhra Pradesh
+32,1,Nodal District,Guntur
+32,1,Tenure of MP,22.06.2020 to 21.06.2026
+32,1,Entitlement till his tenure,22
+32,1,GOI Release (in Cr),2
+32,1,Unreleased Amount (in Cr),20
+32,2,S.No,2
+32,2,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),C.M Ramesh
+32,2,State,Andhra Pradesh
+32,2,Nodal District,Cuddapah
+32,2,Tenure of MP,03.04.2018 to 02.04.2024
+32,2,Entitlement till his tenure,22
+32,2,GOI Release (in Cr),7.5
+32,2,Unreleased Amount (in Cr),14.5
+32,3,S.No,3
+32,3,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kanakamedala Ravindra Kumar
+32,3,State,Andhra Pradesh
+32,3,Nodal District,Krishna
+32,3,Tenure of MP,03.04.2018 to 02.04.2024
+32,3,Entitlement till his tenure,22
+32,3,GOI Release (in Cr),10
+32,3,Unreleased Amount (in Cr),12
+32,4,S.No,4
+32,4,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Parimal Nathwani
+32,4,State,Andhra Pradesh
+32,4,Nodal District,Kadapa
+32,4,Tenure of MP,22.06.2020 to 21.06.2026
+32,4,Entitlement till his tenure,22
+32,4,GOI Release (in Cr),2
+32,4,Unreleased Amount (in Cr),20
+32,5,S.No,5
+32,5,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Pilli Subhaschandra Bose
+32,5,State,Andhra Pradesh
+32,5,Nodal District,East Godavari
+32,5,Tenure of MP,22.06.2020 to 21.06.2026
+32,5,Entitlement till his tenure,22
+32,5,GOI Release (in Cr),2
+32,5,Unreleased Amount (in Cr),20
+32,6,S.No,6
+32,6,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Prabhakar Reddy Vemireddy
+32,6,State,Andhra Pradesh
+32,6,Nodal District,Nellore
+32,6,Tenure of MP,03.04.2018 to 02.04.2024
+32,6,Entitlement till his tenure,22
+32,6,GOI Release (in Cr),10
+32,6,Unreleased Amount (in Cr),12
+32,7,S.No,7
+32,7,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Suresh Prabhu
+32,7,State,Andhra Pradesh
+32,7,Nodal District,Krishna
+32,7,Tenure of MP,22.06.2016 to 21.06.2022
+32,7,Entitlement till his tenure,22
+32,7,GOI Release (in Cr),7.5
+32,7,Unreleased Amount (in Cr),14.5
+32,8,S.No,8
+32,8,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),T.G Venkatesh
+32,8,State,Andhra Pradesh
+32,8,Nodal District,Kurnool
+32,8,Tenure of MP,22.06.2016 to 21.06.2022
+32,8,Entitlement till his tenure,22
+32,8,GOI Release (in Cr),12.5
+32,8,Unreleased Amount (in Cr),9.5
+32,9,S.No,9
+32,9,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),V.VIJAYASAI REDDY
+32,9,State,Andhra Pradesh
+32,9,Nodal District,Visakhapatnam
+32,9,Tenure of MP,22.06.2016 to 21.06.2022
+32,9,Entitlement till his tenure,22
+32,9,GOI Release (in Cr),20
+32,9,Unreleased Amount (in Cr),2
+32,10,S.No,10
+32,10,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Venkataramana Rao Mopidevi
+32,10,State,Andhra Pradesh
+32,10,Nodal District,Guntur
+32,10,Tenure of MP,22.06.2020 to 21.06.2026
+32,10,Entitlement till his tenure,22
+32,10,GOI Release (in Cr),2
+32,10,Unreleased Amount (in Cr),20
+32,11,S.No,11
+32,11,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Y.S. Chowdary
+32,11,State,Andhra Pradesh
+32,11,Nodal District,Krishna
+32,11,Tenure of MP,22.06.2016 to 21.06.2022
+32,11,Entitlement till his tenure,22
+32,11,GOI Release (in Cr),7.5
+32,11,Unreleased Amount (in Cr),14.5
+32,12,S.No,12
+32,12,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Nabam Rebia
+32,12,State,Arunachal Pradesh
+32,12,Nodal District,Papum Pare
+32,12,Tenure of MP,24.06.2020 to 23.06.2026
+32,12,Entitlement till his tenure,22
+32,12,GOI Release (in Cr),2
+32,12,Unreleased Amount (in Cr),20
+32,13,S.No,13
+32,13,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ripun Bora
+32,13,State,Assam
+32,13,Nodal District,Sonitpur
+32,13,Tenure of MP,03.04.2016 to 02.04.2022
+32,13,Entitlement till his tenure,22
+32,13,GOI Release (in Cr),22
+32,13,Unreleased Amount (in Cr),0
+32,14,S.No,14
+32,14,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ajit Kumar Bhuyan
+32,14,State,Assam
+32,14,Nodal District,Kamrup Metropolitan
+32,14,Tenure of MP,10.04.2020 to 09.04.2026
+32,14,Entitlement till his tenure,22
+32,14,GOI Release (in Cr),2
+32,14,Unreleased Amount (in Cr),20
+32,15,S.No,15
+32,15,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bhubaneswar Kalita
+32,15,State,Assam
+32,15,Nodal District,Kamrup
+32,15,Tenure of MP,10.04.2020 to 09.04.2026
+32,15,Entitlement till his tenure,22
+32,15,GOI Release (in Cr),2
+32,15,Unreleased Amount (in Cr),20
+32,16,S.No,16
+32,16,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Birendra Prasad Baishya
+32,16,State,Assam
+32,16,Nodal District,Kamrup Metropolitan
+32,16,Tenure of MP,15.06.2019 to 14.06.2025
+32,16,Entitlement till his tenure,22
+32,16,GOI Release (in Cr),5
+32,16,Unreleased Amount (in Cr),17
+32,17,S.No,17
+32,17,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kamakhya Prasad Tasa
+32,17,State,Assam
+32,17,Nodal District,Jorhat
+32,17,Tenure of MP,15.06.2019 to 14.06.2025
+32,17,Entitlement till his tenure,22
+32,17,GOI Release (in Cr),5
+32,17,Unreleased Amount (in Cr),17
+32,18,S.No,18
+32,18,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sarbananda Sonowal
+32,18,State,Assam
+32,18,Nodal District,Dibrugarh
+32,18,Tenure of MP,27.09.2021 to 26.09.2027
+32,18,Entitlement till his tenure,29.5
+32,18,GOI Release (in Cr),2
+32,18,Unreleased Amount (in Cr),27.5
+32,19,S.No,19
+32,19,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ranee Narah
+32,19,State,Assam
+32,19,Nodal District,Lakhimpur
+32,19,Tenure of MP,03.04.2016 to 02.04.2022
+32,19,Entitlement till his tenure,22
+32,19,GOI Release (in Cr),22
+32,19,Unreleased Amount (in Cr),0
+32,20,S.No,20
+32,20,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Prem Chand Gupta
+32,20,State,Bihar
+32,20,Nodal District,Patna
+32,20,Tenure of MP,10.04.2020 to 09.04.2026
+32,20,Entitlement till his tenure,22
+32,20,GOI Release (in Cr),2
+32,20,Unreleased Amount (in Cr),20
+32,21,S.No,21
+32,21,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Harivansh
+32,21,State,Bihar
+32,21,Nodal District,Nodal District Awaited
+32,21,Tenure of MP,10.04.2020 to 09.04.2026
+32,21,Entitlement till his tenure,22
+32,21,GOI Release (in Cr),0
+32,21,Unreleased Amount (in Cr),22
+32,22,S.No,22
+32,22,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),A. D. Singh
+32,22,State,Bihar
+32,22,Nodal District,Patna
+32,22,Tenure of MP,10.04.2020 to 09.04.2026
+32,22,Entitlement till his tenure,22
+32,22,GOI Release (in Cr),2
+32,22,Unreleased Amount (in Cr),20
+32,23,S.No,23
+32,23,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Nath Thakur
+32,23,State,Bihar
+32,23,Nodal District,Samastipur
+32,23,Tenure of MP,10.04.2020 to 09.04.2026
+32,23,Entitlement till his tenure,22
+32,23,GOI Release (in Cr),2
+32,23,Unreleased Amount (in Cr),20
+32,24,S.No,24
+32,24,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vivek Thakur
+32,24,State,Bihar
+32,24,Nodal District,Patna
+32,24,Tenure of MP,10.04.2020 to 09.04.2026
+32,24,Entitlement till his tenure,22
+32,24,GOI Release (in Cr),2
+32,24,Unreleased Amount (in Cr),20
+32,25,S.No,25
+32,25,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Misha Bharti
+32,25,State,Bihar
+32,25,Nodal District,Patna
+32,25,Tenure of MP,08.07.2016 to 07.07.2022
+32,25,Entitlement till his tenure,22
+32,25,GOI Release (in Cr),10
+32,25,Unreleased Amount (in Cr),12
+32,26,S.No,26
+32,26,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Satish Chandra Dubey
+32,26,State,Bihar
+32,26,Nodal District,Paschim Champaran
+32,26,Tenure of MP,09.10.2019 to 07.07.2022
+32,26,Entitlement till his tenure,7
+32,26,GOI Release (in Cr),4.5
+32,26,Unreleased Amount (in Cr),2.5
+32,27,S.No,27
+32,27,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Gopal Narayan Singh
+32,27,State,Bihar
+32,27,Nodal District,Rohtas
+32,27,Tenure of MP,08.07.2016 to 07.07.2022
+32,27,Entitlement till his tenure,22
+32,27,GOI Release (in Cr),19.5
+32,27,Unreleased Amount (in Cr),2.5
+32,28,S.No,28
+32,28,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Chandra Prasad Singh
+32,28,State,Bihar
+32,28,Nodal District,Nodal District Awaited
+32,28,Tenure of MP,08.07.2016 to 07.07.2022
+32,28,Entitlement till his tenure,22
+32,28,GOI Release (in Cr),0
+32,28,Unreleased Amount (in Cr),22
+32,29,S.No,29
+32,29,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Manoj Kumar Jha
+32,29,State,Bihar
+32,29,Nodal District,Saharsa
+32,29,Tenure of MP,03.04.2018 to 02.04.2024
+32,29,Entitlement till his tenure,22
+32,29,GOI Release (in Cr),12
+32,29,Unreleased Amount (in Cr),10
+32,30,S.No,30
+32,30,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ahmad Ashfaque Karim
+32,30,State,Bihar
+32,30,Nodal District,Katihar
+32,30,Tenure of MP,03.04.2018 to 02.04.2024
+32,30,Entitlement till his tenure,22
+32,30,GOI Release (in Cr),7.5
+32,30,Unreleased Amount (in Cr),14.5
+32,31,S.No,31
+32,31,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sushil Kumar Modi
+32,31,State,Bihar
+32,31,Nodal District,Patna
+32,31,Tenure of MP,08.12.2020 to 02.04.2024
+32,31,Entitlement till his tenure,12
+32,31,GOI Release (in Cr),2
+32,31,Unreleased Amount (in Cr),10
+32,32,S.No,32
+32,32,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Akhilesh Prasad Singh
+32,32,State,Bihar
+32,32,Nodal District,East Champaran (Motihari)
+32,32,Tenure of MP,03.04.2018 to 02.04.2024
+32,32,Entitlement till his tenure,22
+32,32,GOI Release (in Cr),7.5
+32,32,Unreleased Amount (in Cr),14.5
+32,33,S.No,33
+32,33,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bashistha Narain Singh
+32,33,State,Bihar
+32,33,Nodal District,Buxar
+32,33,Tenure of MP,03.04.2018 to 02.04.2024
+32,33,Entitlement till his tenure,22
+32,33,GOI Release (in Cr),12
+32,33,Unreleased Amount (in Cr),10
+32,34,S.No,34
+32,34,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Saroj Pandey
+32,34,State,Chhattisgarh
+32,34,Nodal District,Durg
+32,34,Tenure of MP,03.04.2018 to 02.04.2024
+32,34,Entitlement till his tenure,22
+32,34,GOI Release (in Cr),5
+32,34,Unreleased Amount (in Cr),17
+32,35,S.No,35
+32,35,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Vichar Netam
+32,35,State,Chhattisgarh
+32,35,Nodal District,Balrampur
+32,35,Tenure of MP,30.06.2016 to 29.06.2022
+32,35,Entitlement till his tenure,22
+32,35,GOI Release (in Cr),17.5
+32,35,Unreleased Amount (in Cr),4.5
+32,36,S.No,36
+32,36,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.T.S Tulsi
+32,36,State,Chhattisgarh
+32,36,Nodal District,Bilaspur
+32,36,Tenure of MP,10.04.2020 to 09.04.2026
+32,36,Entitlement till his tenure,22
+32,36,GOI Release (in Cr),2
+32,36,Unreleased Amount (in Cr),20
+32,37,S.No,37
+32,37,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Chhaya Verma
+32,37,State,Chhattisgarh
+32,37,Nodal District,Raipur
+32,37,Tenure of MP,30.06.2016 to 29.06.2022
+32,37,Entitlement till his tenure,22
+32,37,GOI Release (in Cr),22
+32,37,Unreleased Amount (in Cr),0
+32,38,S.No,38
+32,38,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Phulo Devi Netam
+32,38,State,Chhattisgarh
+32,38,Nodal District,Kondagaon
+32,38,Tenure of MP,10.04.2020 to 09.04.2026
+32,38,Entitlement till his tenure,22
+32,38,GOI Release (in Cr),2
+32,38,Unreleased Amount (in Cr),20
+32,39,S.No,39
+32,39,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sushil Gupta
+32,39,State,Delhi
+32,39,Nodal District,Commissioner North DMC
+32,39,Tenure of MP,28.01.2018 to 27.01.2024
+32,39,Entitlement till his tenure,22
+32,39,GOI Release (in Cr),5
+32,39,Unreleased Amount (in Cr),17
+32,40,S.No,40
+32,40,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Narain das Gupta
+32,40,State,Delhi
+32,40,Nodal District,Commissioner South DMC
+32,40,Tenure of MP,28.01.2018 to 27.01.2024
+32,40,Entitlement till his tenure,22
+32,40,GOI Release (in Cr),12
+32,40,Unreleased Amount (in Cr),10
+32,41,S.No,41
+32,41,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sanjay Singh
+32,41,State,Delhi
+32,41,Nodal District,Commissioner South DMC
+32,41,Tenure of MP,28.01.2018 to 27.01.2024
+32,41,Entitlement till his tenure,22
+32,41,GOI Release (in Cr),7.5
+32,41,Unreleased Amount (in Cr),14.5
+32,42,S.No,42
+32,42,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vinay D Tendulkar
+32,42,State,Goa
+32,42,Nodal District,South Goa
+32,42,Tenure of MP,29.07.2017 to 28.07.2023
+32,42,Entitlement till his tenure,22
+32,42,GOI Release (in Cr),7.5
+32,42,Unreleased Amount (in Cr),14.5
+32,43,S.No,43
+32,43,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Amee Yajnik Harshadray
+32,43,State,Gujarat
+32,43,Nodal District,Ahmedabad
+32,43,Tenure of MP,03.04.2018 to 02.04.2024
+32,43,Entitlement till his tenure,22
+32,43,GOI Release (in Cr),10
+32,43,Unreleased Amount (in Cr),12
+32,44,S.No,44
+32,44,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Amin Narhari
+32,44,State,Gujarat
+32,44,Nodal District,Ahmedabad
+32,44,Tenure of MP,22.06.2020 to 21.06.2026
+32,44,Entitlement till his tenure,17
+32,44,GOI Release (in Cr),2
+32,44,Unreleased Amount (in Cr),15
+32,45,S.No,45
+32,45,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dineshchandra Jemalbhai Anavadiya
+32,45,State,Gujarat
+32,45,Nodal District,Banaskantha
+32,45,Tenure of MP,23.02.2021 to 18.08.2023
+32,45,Entitlement till his tenure,9.5
+32,45,GOI Release (in Cr),2
+32,45,Unreleased Amount (in Cr),7.5
+32,46,S.No,46
+32,46,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jugalsinh Mathurji Lokhandwala
+32,46,State,Gujarat
+32,46,Nodal District,Mahesana
+32,46,Tenure of MP,06.07.2019 to 18.08.2023
+32,46,Entitlement till his tenure,12
+32,46,GOI Release (in Cr),4.5
+32,46,Unreleased Amount (in Cr),7.5
+32,47,S.No,47
+32,47,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mansukh Madaviya
+32,47,State,Gujarat
+32,47,Nodal District,Bhavnagar
+32,47,Tenure of MP,03..4.2018 to 02.04.2024
+32,47,Entitlement till his tenure,22
+32,47,GOI Release (in Cr),7.5
+32,47,Unreleased Amount (in Cr),14.5
+32,48,S.No,48
+32,48,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Naranbhai J. Rathwa
+32,48,State,Gujarat
+32,48,Nodal District,Chhota Udaipur
+32,48,Tenure of MP,03..4.2018 to 02.04.2024
+32,48,Entitlement till his tenure,22
+32,48,GOI Release (in Cr),12
+32,48,Unreleased Amount (in Cr),10
+32,49,S.No,49
+32,49,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Parshottam Rupala
+32,49,State,Gujarat
+32,49,Nodal District,Amreli
+32,49,Tenure of MP,03..4.2018 to 02.04.2024
+32,49,Entitlement till his tenure,22
+32,49,GOI Release (in Cr),10
+32,49,Unreleased Amount (in Cr),12
+32,50,S.No,50
+32,50,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rambhai Harjibhai Mokariya
+32,50,State,Gujarat
+32,50,Nodal District,Rajkot
+32,50,Tenure of MP,23.02.2021 to 21.06.2026
+32,50,Entitlement till his tenure,22
+32,50,GOI Release (in Cr),2
+32,50,Unreleased Amount (in Cr),20
+32,51,S.No,51
+32,51,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),S. Jaishankar
+32,51,State,Gujarat
+32,51,Nodal District,Narmada
+32,51,Tenure of MP,06.07.2019 to 18.08.2023
+32,51,Entitlement till his tenure,12
+32,51,GOI Release (in Cr),4.5
+32,51,Unreleased Amount (in Cr),7.5
+32,52,S.No,52
+32,52,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shaktisinh Gohil
+32,52,State,Gujarat
+32,52,Nodal District,Ahmedabad
+32,52,Tenure of MP,22.06.2020 to 21.06.2026
+32,52,Entitlement till his tenure,17
+32,52,GOI Release (in Cr),2
+32,52,Unreleased Amount (in Cr),15
+32,53,S.No,53
+32,53,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ramilaben Bara
+32,53,State,Gujarat
+32,53,Nodal District,Sabarkantha
+32,53,Tenure of MP,22.06.2020 to 21.06.2026
+32,53,Entitlement till his tenure,17
+32,53,GOI Release (in Cr),2
+32,53,Unreleased Amount (in Cr),15
+32,54,S.No,54
+32,54,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Devendra Paul Vats
+32,54,State,Haryana
+32,54,Nodal District,Hisar
+32,54,Tenure of MP,03.04.2018 to 02.04.2024
+32,54,Entitlement till his tenure,22
+32,54,GOI Release (in Cr),10
+32,54,Unreleased Amount (in Cr),12
+32,55,S.No,55
+32,55,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Deepender Singh
+32,55,State,Haryana
+32,55,Nodal District,Rohtak
+32,55,Tenure of MP,10.04.2020 to 09.04.2026
+32,55,Entitlement till his tenure,22
+32,55,GOI Release (in Cr),2
+32,55,Unreleased Amount (in Cr),20
+32,56,S.No,56
+32,56,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dushyant Gautam
+32,56,State,Haryana
+32,56,Nodal District,Panipat
+32,56,Tenure of MP,19.03.2020 to 01.08.2022
+32,56,Entitlement till his tenure,4.5
+32,56,GOI Release (in Cr),2
+32,56,Unreleased Amount (in Cr),2.5
+32,57,S.No,57
+32,57,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Chander Jangra
+32,57,State,Haryana
+32,57,Nodal District,Rohtak
+32,57,Tenure of MP,10.04.2020 to 09.04.2026
+32,57,Entitlement till his tenure,22
+32,57,GOI Release (in Cr),2
+32,57,Unreleased Amount (in Cr),20
+32,58,S.No,58
+32,58,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shri Subhash Chandra
+32,58,State,Haryana
+32,58,Nodal District,Hisar
+32,58,Tenure of MP,02.08.2016 to 01.08.2022
+32,58,Entitlement till his tenure,22
+32,58,GOI Release (in Cr),15
+32,58,Unreleased Amount (in Cr),7
+32,59,S.No,59
+32,59,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shri Anand Sharma
+32,59,State,Himachal Pradesh
+32,59,Nodal District,Shimla
+32,59,Tenure of MP,03.04.2016 to 02.04.2022
+32,59,Entitlement till his tenure,22
+32,59,GOI Release (in Cr),12.5
+32,59,Unreleased Amount (in Cr),9.5
+32,60,S.No,60
+32,60,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shri Jagat Prakash Nadda
+32,60,State,Himachal Pradesh
+32,60,Nodal District,Bilaspur
+32,60,Tenure of MP,03.04.2018 to 02.04.2024
+32,60,Entitlement till his tenure,22
+32,60,GOI Release (in Cr),10
+32,60,Unreleased Amount (in Cr),12
+32,61,S.No,61
+32,61,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Indubala Goswami
+32,61,State,Himachal Pradesh
+32,61,Nodal District,Kangra
+32,61,Tenure of MP,10.04.2020 to 09.04.2026
+32,61,Entitlement till his tenure,22
+32,61,GOI Release (in Cr),2
+32,61,Unreleased Amount (in Cr),20
+32,62,S.No,62
+32,62,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dhiraj Prasad Sahu
+32,62,State,Jharkhand
+32,62,Nodal District,Lohardaga
+32,62,Tenure of MP,04.05.2018 to 03.05.2024
+32,62,Entitlement till his tenure,22
+32,62,GOI Release (in Cr),10
+32,62,Unreleased Amount (in Cr),12
+32,63,S.No,63
+32,63,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mahesh Poddar
+32,63,State,Jharkhand
+32,63,Nodal District,Ranchi
+32,63,Tenure of MP,08.07.2016 to 07.07.2022
+32,63,Entitlement till his tenure,22
+32,63,GOI Release (in Cr),17.5
+32,63,Unreleased Amount (in Cr),4.5
+32,64,S.No,64
+32,64,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mukhtar Abbas Naqvi
+32,64,State,Jharkhand
+32,64,Nodal District,Ranchi
+32,64,Tenure of MP,08.07.2016 to 07.07.2022
+32,64,Entitlement till his tenure,22
+32,64,GOI Release (in Cr),15
+32,64,Unreleased Amount (in Cr),7
+32,65,S.No,65
+32,65,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Deepak Prakash
+32,65,State,Jharkhand
+32,65,Nodal District,Ranchi
+32,65,Tenure of MP,22.06.2020 to 21.06.2026
+32,65,Entitlement till his tenure,22
+32,65,GOI Release (in Cr),2
+32,65,Unreleased Amount (in Cr),20
+32,66,S.No,66
+32,66,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Samir Oraon
+32,66,State,Jharkhand
+32,66,Nodal District,Gumla
+32,66,Tenure of MP,04.05.2018 to 03.05.2024
+32,66,Entitlement till his tenure,22
+32,66,GOI Release (in Cr),7.5
+32,66,Unreleased Amount (in Cr),14.5
+32,67,S.No,67
+32,67,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shbu Soren
+32,67,State,Jharkhand
+32,67,Nodal District,Gumla
+32,67,Tenure of MP,22.06.2020 to 21.06.2026
+32,67,Entitlement till his tenure,22
+32,67,GOI Release (in Cr),2
+32,67,Unreleased Amount (in Cr),20
+32,68,S.No,68
+32,68,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jairam Ramesh
+32,68,State,Karnataka
+32,68,Nodal District,Chikmagalur
+32,68,Tenure of MP,01.07.2016 to 30.06.2022
+32,68,Entitlement till his tenure,19.5
+32,68,GOI Release (in Cr),10
+32,68,Unreleased Amount (in Cr),9.5
+32,69,S.No,69
+32,69,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),G.C Chandrashekhar
+32,69,State,Karnataka
+32,69,Nodal District,Bengaluru Urban
+32,69,Tenure of MP,03.04.2018 to 02.04.2024
+32,69,Entitlement till his tenure,22
+32,69,GOI Release (in Cr),10
+32,69,Unreleased Amount (in Cr),12
+32,70,S.No,70
+32,70,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),H.D. Devegowda
+32,70,State,Karnataka
+32,70,Nodal District,Hassan
+32,70,Tenure of MP,26.06.2020 to 25.06.2026
+32,70,Entitlement till his tenure,22
+32,70,GOI Release (in Cr),2
+32,70,Unreleased Amount (in Cr),20
+32,71,S.No,71
+32,71,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Iranna Kadadi
+32,71,State,Karnataka
+32,71,Nodal District,Belagavi
+32,71,Tenure of MP,26.06.2020 to 25.06.2026
+32,71,Entitlement till his tenure,22
+32,71,GOI Release (in Cr),2
+32,71,Unreleased Amount (in Cr),20
+32,72,S.No,72
+32,72,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.C Ramamurthy
+32,72,State,Karnataka
+32,72,Nodal District,Bengaluru Urban
+32,72,Tenure of MP,05.12.2019 to 30.06.2022
+32,72,Entitlement till his tenure,7
+32,72,GOI Release (in Cr),2.5
+32,72,Unreleased Amount (in Cr),4.5
+32,73,S.No,73
+32,73,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),L. HANUMANTHAIAH
+32,73,State,Karnataka
+32,73,Nodal District,Bengaluru Urban
+32,73,Tenure of MP,03.04.2018 to 02.04.2024
+32,73,Entitlement till his tenure,22
+32,73,GOI Release (in Cr),7.5
+32,73,Unreleased Amount (in Cr),14.5
+32,74,S.No,74
+32,74,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Narayana Koragappa
+32,74,State,Karnataka
+32,74,Nodal District,Bengaluru Urban
+32,74,Tenure of MP,26.11.2020 to 25.11.2026
+32,74,Entitlement till his tenure,22
+32,74,GOI Release (in Cr),2
+32,74,Unreleased Amount (in Cr),20
+32,75,S.No,75
+32,75,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rajeev Chandrashekhar
+32,75,State,Karnataka
+32,75,Nodal District,Bengaluru Urban
+32,75,Tenure of MP,03.04.2018 to 02.04.2024
+32,75,Entitlement till his tenure,22
+32,75,GOI Release (in Cr),7.5
+32,75,Unreleased Amount (in Cr),14.5
+32,76,S.No,76
+32,76,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Syed Nasir Hussain
+32,76,State,Karnataka
+32,76,Nodal District,Ballari
+32,76,Tenure of MP,03.04.2018 to 02.04.2024
+32,76,Entitlement till his tenure,22
+32,76,GOI Release (in Cr),5
+32,76,Unreleased Amount (in Cr),17
+32,77,S.No,77
+32,77,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Nirmala Sitharaman
+32,77,State,Karnataka
+32,77,Nodal District,Bengaluru Urban
+32,77,Tenure of MP,01.07.2016 to 30.06.2022
+32,77,Entitlement till his tenure,19.5
+32,77,GOI Release (in Cr),17.5
+32,77,Unreleased Amount (in Cr),2
+32,78,S.No,78
+32,78,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mallikarjun Kharge
+32,78,State,Karnataka
+32,78,Nodal District,Gulbarga
+32,78,Tenure of MP,26.06.2020 to 25.06.2026
+32,78,Entitlement till his tenure,22
+32,78,GOI Release (in Cr),0
+32,78,Unreleased Amount (in Cr),22
+32,79,S.No,79
+32,79,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),V. Sivadasan
+32,79,State,Kerala
+32,79,Nodal District,Kannur
+32,79,Tenure of MP,24.04.2021 to 23.04.2027
+32,79,Entitlement till his tenure,27
+32,79,GOI Release (in Cr),2
+32,79,Unreleased Amount (in Cr),25
+32,80,S.No,80
+32,80,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),A.K. Antony
+32,80,State,Kerala
+32,80,Nodal District,Alappuzha
+32,80,Tenure of MP,03.04.2016 to 02.04.2022
+32,80,Entitlement till his tenure,22
+32,80,GOI Release (in Cr),17.5
+32,80,Unreleased Amount (in Cr),4.5
+32,81,S.No,81
+32,81,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Abdul Wahab
+32,81,State,Kerala
+32,81,Nodal District,Malappuram
+32,81,Tenure of MP,24.04.2021 to 23.04.2027
+32,81,Entitlement till his tenure,27
+32,81,GOI Release (in Cr),2
+32,81,Unreleased Amount (in Cr),25
+32,82,S.No,82
+32,82,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Binoy Viswam
+32,82,State,Kerala
+32,82,Nodal District,Thiruvananthapuram
+32,82,Tenure of MP,02.07.2018 to 01.07.2024
+32,82,Entitlement till his tenure,22
+32,82,GOI Release (in Cr),20
+32,82,Unreleased Amount (in Cr),2
+32,83,S.No,83
+32,83,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),John Brittas
+32,83,State,Kerala
+32,83,Nodal District,Thiruvananthapuram
+32,83,Tenure of MP,24.04.2021 to 23.04.2027
+32,83,Entitlement till his tenure,27
+32,83,GOI Release (in Cr),2
+32,83,Unreleased Amount (in Cr),25
+32,84,S.No,84
+32,84,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jose K. Mani
+32,84,State,Kerala
+32,84,Nodal District,Kottayam
+32,84,Tenure of MP,30.11.2021 to 01.07.2024
+32,84,Entitlement till his tenure,27
+32,84,GOI Release (in Cr),2
+32,84,Unreleased Amount (in Cr),25
+32,85,S.No,85
+32,85,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K. Somaprasad
+32,85,State,Kerala
+32,85,Nodal District,Kollam
+32,85,Tenure of MP,03.04.2016 to 02.04.2022
+32,85,Entitlement till his tenure,22
+32,85,GOI Release (in Cr),15
+32,85,Unreleased Amount (in Cr),7
+32,86,S.No,86
+32,86,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M.V.Shreyams Kumar
+32,86,State,Kerala
+32,86,Nodal District,Wayanad
+32,86,Tenure of MP,25.08.2020 to 02.04.2022
+32,86,Entitlement till his tenure,2
+32,86,GOI Release (in Cr),2
+32,86,Unreleased Amount (in Cr),0
+32,87,S.No,87
+32,87,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Elamaram Kareem
+32,87,State,Kerala
+32,87,Nodal District,Kozhikode
+32,87,Tenure of MP,02.07.2018 to 01.07.2024
+32,87,Entitlement till his tenure,22
+32,87,GOI Release (in Cr),20
+32,87,Unreleased Amount (in Cr),2
+32,88,S.No,88
+32,88,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sumer Singh Solanki
+32,88,State,Madhya Pradesh
+32,88,Nodal District,Badwani
+32,88,Tenure of MP,22.06.2020 to 21.06.2026
+32,88,Entitlement till his tenure,22
+32,88,GOI Release (in Cr),2
+32,88,Unreleased Amount (in Cr),20
+32,89,S.No,89
+32,89,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rajmani Patel
+32,89,State,Madhya Pradesh
+32,89,Nodal District,Rewa
+32,89,Tenure of MP,03.04.2018 to 02.04.2024
+32,89,Entitlement till his tenure,22
+32,89,GOI Release (in Cr),10
+32,89,Unreleased Amount (in Cr),12
+32,90,S.No,90
+32,90,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vivek K. Tankha
+32,90,State,Madhya Pradesh
+32,90,Nodal District,Jabalpur
+32,90,Tenure of MP,30.06.2016 to 29.06.2022
+32,90,Entitlement till his tenure,22
+32,90,GOI Release (in Cr),17.5
+32,90,Unreleased Amount (in Cr),4.5
+32,91,S.No,91
+32,91,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ajay Pratap Singh
+32,91,State,Madhya Pradesh
+32,91,Nodal District,Singrauli
+32,91,Tenure of MP,03.04.2018 to 02.04.2024
+32,91,Entitlement till his tenure,22
+32,91,GOI Release (in Cr),12
+32,91,Unreleased Amount (in Cr),10
+32,92,S.No,92
+32,92,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dharmendra Pradhan
+32,92,State,Madhya Pradesh
+32,92,Nodal District,Sehore
+32,92,Tenure of MP,03.04.2018 to 02.04.2024
+32,92,Entitlement till his tenure,22
+32,92,GOI Release (in Cr),5
+32,92,Unreleased Amount (in Cr),17
+32,93,S.No,93
+32,93,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jyotiraditya M. Scindia
+32,93,State,Madhya Pradesh
+32,93,Nodal District,Ashok Nagar
+32,93,Tenure of MP,22.06.2020 to 21.06.2026
+32,93,Entitlement till his tenure,22
+32,93,GOI Release (in Cr),2
+32,93,Unreleased Amount (in Cr),20
+32,94,S.No,94
+32,94,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kailash Soni
+32,94,State,Madhya Pradesh
+32,94,Nodal District,Narsinghpur
+32,94,Tenure of MP,03.04.2018 to 02.04.2024
+32,94,Entitlement till his tenure,22
+32,94,GOI Release (in Cr),10
+32,94,Unreleased Amount (in Cr),12
+32,95,S.No,95
+32,95,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M.J. Akbar
+32,95,State,Madhya Pradesh
+32,95,Nodal District,Bhopal
+32,95,Tenure of MP,30.06.2016 to 29.06.2022
+32,95,Entitlement till his tenure,22
+32,95,GOI Release (in Cr),17.5
+32,95,Unreleased Amount (in Cr),4.5
+32,96,S.No,96
+32,96,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sampatiya Uikey
+32,96,State,Madhya Pradesh
+32,96,Nodal District,Mandla
+32,96,Tenure of MP,01.08.2017 to 29.06.2022
+32,96,Entitlement till his tenure,29.5
+32,96,GOI Release (in Cr),29.5
+32,96,Unreleased Amount (in Cr),0
+32,97,S.No,97
+32,97,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Digvijay Singh
+32,97,State,Madhya Pradesh
+32,97,Nodal District,Bhopal
+32,97,Tenure of MP,22.06.2020 to 21.06.2026
+32,97,Entitlement till his tenure,22
+32,97,GOI Release (in Cr),2
+32,97,Unreleased Amount (in Cr),20
+32,98,S.No,98
+32,98,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),L. Murugan
+32,98,State,Madhya Pradesh
+32,98,Nodal District,Chhindwara
+32,98,Tenure of MP,27.09.2021 to 02.04.2024
+32,98,Entitlement till his tenure,12
+32,98,GOI Release (in Cr),2
+32,98,Unreleased Amount (in Cr),10
+32,99,S.No,99
+32,99,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bhgawat Kishanrao Karad
+32,99,State,Maharashtra
+32,99,Nodal District,Aurangabad
+32,99,Tenure of MP,03.04.2020 to 02.04.2026
+32,99,Entitlement till his tenure,17
+32,99,GOI Release (in Cr),2
+32,99,Unreleased Amount (in Cr),15
+32,100,S.No,100
+32,100,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Fauzia Tahseen Ahmed Khan
+32,100,State,Maharashtra
+32,100,Nodal District,Parbhani
+32,100,Tenure of MP,03.04.2020 to 02.04.2026
+32,100,Entitlement till his tenure,17
+32,100,GOI Release (in Cr),2
+32,100,Unreleased Amount (in Cr),15
+32,101,S.No,101
+32,101,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vikas Mahatme
+32,101,State,Maharashtra
+32,101,Nodal District,Nagpur
+32,101,Tenure of MP,05.07.2016 to 04.07.2022
+32,101,Entitlement till his tenure,22.13
+32,101,GOI Release (in Cr),12.63
+32,101,Unreleased Amount (in Cr),9.5
+32,102,S.No,102
+32,102,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Narayan Rane
+32,102,State,Maharashtra
+32,102,Nodal District,Sindhudurg
+32,102,Tenure of MP,03.04.2018 to 02.04.2024
+32,102,Entitlement till his tenure,22
+32,102,GOI Release (in Cr),7.5
+32,102,Unreleased Amount (in Cr),14.5
+32,103,S.No,103
+32,103,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Piyush Goyal
+32,103,State,Maharashtra
+32,103,Nodal District,Mumbai City
+32,103,Tenure of MP,05.07.2016 to 04.07.2022
+32,103,Entitlement till his tenure,22.13
+32,103,GOI Release (in Cr),5.13
+32,103,Unreleased Amount (in Cr),17
+32,104,S.No,104
+32,104,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Praful Patel
+32,104,State,Maharashtra
+32,104,Nodal District,Gondia
+32,104,Tenure of MP,05.07.2016 to 04.07.2022
+32,104,Entitlement till his tenure,22.13
+32,104,GOI Release (in Cr),15.13
+32,104,Unreleased Amount (in Cr),7
+32,105,S.No,105
+32,105,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sanjay Raut
+32,105,State,Maharashtra
+32,105,Nodal District,Mumbai Suburban
+32,105,Tenure of MP,05.07.2016 to 04.07.2022
+32,105,Entitlement till his tenure,22.13
+32,105,GOI Release (in Cr),10.13
+32,105,Unreleased Amount (in Cr),12
+32,106,S.No,106
+32,106,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),P. Chidambaram
+32,106,State,Maharashtra
+32,106,Nodal District,Mumbai City
+32,106,Tenure of MP,05.07.2016 to 04.07.2022
+32,106,Entitlement till his tenure,22.13
+32,106,GOI Release (in Cr),10.13
+32,106,Unreleased Amount (in Cr),12
+32,107,S.No,107
+32,107,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anil Desai
+32,107,State,Maharashtra
+32,107,Nodal District,Mumbai City
+32,107,Tenure of MP,03.04.2018 to 02.04.2024
+32,107,Entitlement till his tenure,22
+32,107,GOI Release (in Cr),5
+32,107,Unreleased Amount (in Cr),17
+32,108,S.No,108
+32,108,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),CHH. Udayanraje Bhonsle
+32,108,State,Maharashtra
+32,108,Nodal District,Satara
+32,108,Tenure of MP,03.04.2020 to 02.04.2026
+32,108,Entitlement till his tenure,17
+32,108,GOI Release (in Cr),2
+32,108,Unreleased Amount (in Cr),15
+32,109,S.No,109
+32,109,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ketkar Keshav Chintaman
+32,109,State,Maharashtra
+32,109,Nodal District,Thane
+32,109,Tenure of MP,03.04.2018 to 02.04.2024
+32,109,Entitlement till his tenure,22
+32,109,GOI Release (in Cr),10
+32,109,Unreleased Amount (in Cr),12
+32,110,S.No,110
+32,110,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Prakash Javadekar
+32,110,State,Maharashtra
+32,110,Nodal District,Pune
+32,110,Tenure of MP,03.04.2018 to 02.04.2024
+32,110,Entitlement till his tenure,22
+32,110,GOI Release (in Cr),5
+32,110,Unreleased Amount (in Cr),17
+32,111,S.No,111
+32,111,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ramdas Athawale
+32,111,State,Maharashtra
+32,111,Nodal District,Mumbai Suburban
+32,111,Tenure of MP,03.04.2020 to 02.04.2026
+32,111,Entitlement till his tenure,17
+32,111,GOI Release (in Cr),2
+32,111,Unreleased Amount (in Cr),15
+32,112,S.No,112
+32,112,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sharad Pawar
+32,112,State,Maharashtra
+32,112,Nodal District,Pune
+32,112,Tenure of MP,03.04.2020 to 02.04.2026
+32,112,Entitlement till his tenure,17
+32,112,GOI Release (in Cr),2
+32,112,Unreleased Amount (in Cr),15
+32,113,S.No,113
+32,113,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),V. Muraleedharan
+32,113,State,Maharashtra
+32,113,Nodal District,Mumbai Suburban
+32,113,Tenure of MP,03.04.2018 to 02.04.2024
+32,113,Entitlement till his tenure,22
+32,113,GOI Release (in Cr),7.5
+32,113,Unreleased Amount (in Cr),14.5
+32,114,S.No,114
+32,114,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vinay P. Sahasrabuddhe
+32,114,State,Maharashtra
+32,114,Nodal District,Thane
+32,114,Tenure of MP,05.07.2016 to 04.07.2022
+32,114,Entitlement till his tenure,22.13
+32,114,GOI Release (in Cr),7.63
+32,114,Unreleased Amount (in Cr),14.5
+32,115,S.No,115
+32,115,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Priyanka Vickram Chaturvedi
+32,115,State,Maharashtra
+32,115,Nodal District,Mumbai Suburban
+32,115,Tenure of MP,03.04.2020 to 02.04.2026
+32,115,Entitlement till his tenure,17
+32,115,GOI Release (in Cr),2
+32,115,Unreleased Amount (in Cr),15
+32,116,S.No,116
+32,116,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vandana Chavan
+32,116,State,Maharashtra
+32,116,Nodal District,Pune
+32,116,Tenure of MP,03.04.2018 to 02.04.2024
+32,116,Entitlement till his tenure,22
+32,116,GOI Release (in Cr),10
+32,116,Unreleased Amount (in Cr),12
+32,117,S.No,117
+32,117,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rajani Ashokrao Patil
+32,117,State,Maharashtra
+32,117,Nodal District,Beed
+32,117,Tenure of MP,27.09.2021 to 02.04.2026
+32,117,Entitlement till his tenure,17
+32,117,GOI Release (in Cr),0
+32,117,Unreleased Amount (in Cr),17
+32,118,S.No,118
+32,118,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Maharaja Sanajaoba Leishemba
+32,118,State,Manipur
+32,118,Nodal District,Imphal East
+32,118,Tenure of MP,22.06.2020 to 21.06.2026
+32,118,Entitlement till his tenure,22
+32,118,GOI Release (in Cr),2
+32,118,Unreleased Amount (in Cr),20
+32,119,S.No,119
+32,119,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Wanweiroy Kharlukhi
+32,119,State,Meghalaya
+32,119,Nodal District,East Khasi Hills
+32,119,Tenure of MP,22.06.2020 to 21.06.2027
+32,119,Entitlement till his tenure,22
+32,119,GOI Release (in Cr),0
+32,119,Unreleased Amount (in Cr),22
+32,120,S.No,120
+32,120,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K. Vanlalvena
+32,120,State,Mizoram
+32,120,Nodal District,Aizawal
+32,120,Tenure of MP,20.07.2020 to 19.07.2026
+32,120,Entitlement till his tenure,22
+32,120,GOI Release (in Cr),2
+32,120,Unreleased Amount (in Cr),20
+32,121,S.No,121
+32,121,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.G. Kenye
+32,121,State,Nagaland
+32,121,Nodal District,Kohima
+32,121,Tenure of MP,03.04.2016 to 02.04.2022
+32,121,Entitlement till his tenure,24
+32,121,GOI Release (in Cr),22
+32,121,Unreleased Amount (in Cr),2
+32,122,S.No,122
+32,122,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Amar Patnaik
+32,122,State,Odisha
+32,122,Nodal District,Sundargarh
+32,122,Tenure of MP,29.06.2019 to 03.04.2024
+32,122,Entitlement till his tenure,17
+32,122,GOI Release (in Cr),7
+32,122,Unreleased Amount (in Cr),10
+32,123,S.No,123
+32,123,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sasmit Patra
+32,123,State,Odisha
+32,123,Nodal District,Mayurbhanj
+32,123,Tenure of MP,29.06.2019 to 01.07.2022
+32,123,Entitlement till his tenure,9.5
+32,123,GOI Release (in Cr),5
+32,123,Unreleased Amount (in Cr),4.5
+32,124,S.No,124
+32,124,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ashwini Vaishnaw
+32,124,State,Odisha
+32,124,Nodal District,Cuttack
+32,124,Tenure of MP,29.06.2019 to 03.04.2024
+32,124,Entitlement till his tenure,17
+32,124,GOI Release (in Cr),2.5
+32,124,Unreleased Amount (in Cr),14.5
+32,125,S.No,125
+32,125,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bhaskar Rao Nekkanti
+32,125,State,Odisha
+32,125,Nodal District,Rayagada
+32,125,Tenure of MP,02.07.2016 to 01.07.2022
+32,125,Entitlement till his tenure,22
+32,125,GOI Release (in Cr),15
+32,125,Unreleased Amount (in Cr),7
+32,126,S.No,126
+32,126,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Prasanna Acharya
+32,126,State,Odisha
+32,126,Nodal District,Baragarh
+32,126,Tenure of MP,02.07.2016 to 01.07.2022
+32,126,Entitlement till his tenure,22
+32,126,GOI Release (in Cr),17.5
+32,126,Unreleased Amount (in Cr),4.5
+32,127,S.No,127
+32,127,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Prashanta Nanda
+32,127,State,Odisha
+32,127,Nodal District,Sundargarh
+32,127,Tenure of MP,04.04.2018 to 03.04.2024
+32,127,Entitlement till his tenure,22
+32,127,GOI Release (in Cr),10
+32,127,Unreleased Amount (in Cr),12
+32,128,S.No,128
+32,128,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Muzibulla Khan
+32,128,State,Odisha
+32,128,Nodal District,Khordha
+32,128,Tenure of MP,03.04.2020 to 02.04.2026
+32,128,Entitlement till his tenure,22
+32,128,GOI Release (in Cr),2
+32,128,Unreleased Amount (in Cr),20
+32,129,S.No,129
+32,129,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sujeet Kumar
+32,129,State,Odisha
+32,129,Nodal District,Kalahandi
+32,129,Tenure of MP,03.04.2020 to 02.04.2026
+32,129,Entitlement till his tenure,22
+32,129,GOI Release (in Cr),2
+32,129,Unreleased Amount (in Cr),20
+32,130,S.No,130
+32,130,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mamta Mohanta
+32,130,State,Odisha
+32,130,Nodal District,Mayurbhanj
+32,130,Tenure of MP,03.04.2020 to 02.04.2026
+32,130,Entitlement till his tenure,22
+32,130,GOI Release (in Cr),2
+32,130,Unreleased Amount (in Cr),20
+32,131,S.No,131
+32,131,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Subhash Chandra Singh
+32,131,State,Odisha
+32,131,Nodal District,Balangir
+32,131,Tenure of MP,03.04.2020 to 02.04.2026
+32,131,Entitlement till his tenure,22
+32,131,GOI Release (in Cr),2
+32,131,Unreleased Amount (in Cr),20
+32,132,S.No,132
+32,132,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),S Selvaganabathy
+32,132,State,Puducherry
+32,132,Nodal District,Puducherry
+32,132,Tenure of MP,07.10.2021 to 06.10.2027
+32,132,Entitlement till his tenure,29.5
+32,132,GOI Release (in Cr),2
+32,132,Unreleased Amount (in Cr),27.5
+32,133,S.No,133
+32,133,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ambika Soni
+32,133,State,Punjab
+32,133,Nodal District,Rupnagar
+32,133,Tenure of MP,05.07.2016 to 04.07.2022
+32,133,Entitlement till his tenure,22
+32,133,GOI Release (in Cr),7.5
+32,133,Unreleased Amount (in Cr),14.5
+32,134,S.No,134
+32,134,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Naresh Gujral
+32,134,State,Punjab
+32,134,Nodal District,Jalandhar
+32,134,Tenure of MP,10.04.2016 to 09.04.2022
+32,134,Entitlement till his tenure,22
+32,134,GOI Release (in Cr),15
+32,134,Unreleased Amount (in Cr),7
+32,135,S.No,135
+32,135,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Pratap Singh Bajwa
+32,135,State,Punjab
+32,135,Nodal District,Gurdaspur
+32,135,Tenure of MP,10.04.2016 to 09.04.2022
+32,135,Entitlement till his tenure,22
+32,135,GOI Release (in Cr),15
+32,135,Unreleased Amount (in Cr),7
+32,136,S.No,136
+32,136,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Balwinder Singh Bhunder
+32,136,State,Punjab
+32,136,Nodal District,Mansa
+32,136,Tenure of MP,05.07.2016 to 04.07.2022
+32,136,Entitlement till his tenure,22
+32,136,GOI Release (in Cr),17.5
+32,136,Unreleased Amount (in Cr),4.5
+32,137,S.No,137
+32,137,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shamsher Singh Dullo
+32,137,State,Punjab
+32,137,Nodal District,Fatehgarh Sahib
+32,137,Tenure of MP,10.04.2016 to 09.04.2022
+32,137,Entitlement till his tenure,22
+32,137,GOI Release (in Cr),20
+32,137,Unreleased Amount (in Cr),2
+32,138,S.No,138
+32,138,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shwait Malik
+32,138,State,Punjab
+32,138,Nodal District,Amritsar
+32,138,Tenure of MP,10.04.2016 to 09.04.2022
+32,138,Entitlement till his tenure,22
+32,138,GOI Release (in Cr),15
+32,138,Unreleased Amount (in Cr),7
+32,139,S.No,139
+32,139,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sukhdev Singh Dhindsa
+32,139,State,Punjab
+32,139,Nodal District,Sangrur
+32,139,Tenure of MP,10.04.2016 to 09.04.2022
+32,139,Entitlement till his tenure,49
+32,139,GOI Release (in Cr),47
+32,139,Unreleased Amount (in Cr),2
+32,140,S.No,140
+32,140,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Manmohan Singh
+32,140,State,Rajasthan
+32,140,Nodal District,Jaipur
+32,140,Tenure of MP,20.08.2019 to 03.04.2024
+32,140,Entitlement till his tenure,14.5
+32,140,GOI Release (in Cr),2.5
+32,140,Unreleased Amount (in Cr),12
+32,141,S.No,141
+32,141,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bhupender Yadav
+32,141,State,Rajasthan
+32,141,Nodal District,Ajmer
+32,141,Tenure of MP,04.04.2018 to 03.04.2024
+32,141,Entitlement till his tenure,22
+32,141,GOI Release (in Cr),7.5
+32,141,Unreleased Amount (in Cr),14.5
+32,142,S.No,142
+32,142,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Harshvardhan Singh Dungarpur
+32,142,State,Rajasthan
+32,142,Nodal District,Dungarpur
+32,142,Tenure of MP,05.07.2016 to 04.07.2022
+32,142,Entitlement till his tenure,22
+32,142,GOI Release (in Cr),12.5
+32,142,Unreleased Amount (in Cr),9.5
+32,143,S.No,143
+32,143,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.C Venugopal
+32,143,State,Rajasthan
+32,143,Nodal District,Jaipur
+32,143,Tenure of MP,22.06.2020 to 21.06.2026
+32,143,Entitlement till his tenure,22
+32,143,GOI Release (in Cr),2
+32,143,Unreleased Amount (in Cr),20
+32,144,S.No,144
+32,144,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.J. Alphons
+32,144,State,Rajasthan
+32,144,Nodal District,Jaipur
+32,144,Tenure of MP,10.11.2017 to 04.07.2022
+32,144,Entitlement till his tenure,17
+32,144,GOI Release (in Cr),10
+32,144,Unreleased Amount (in Cr),7
+32,145,S.No,145
+32,145,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kirodi Lal
+32,145,State,Rajasthan
+32,145,Nodal District,Dausa
+32,145,Tenure of MP,04.04.2018 to 03.04.2024
+32,145,Entitlement till his tenure,22
+32,145,GOI Release (in Cr),12
+32,145,Unreleased Amount (in Cr),10
+32,146,S.No,146
+32,146,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Neeraj Dangi
+32,146,State,Rajasthan
+32,146,Nodal District,Sirohi
+32,146,Tenure of MP,22.06.2020 to 21.06.2026
+32,146,Entitlement till his tenure,22
+32,146,GOI Release (in Cr),2
+32,146,Unreleased Amount (in Cr),20
+32,147,S.No,147
+32,147,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Om Prakash Mathur
+32,147,State,Rajasthan
+32,147,Nodal District,Jaipur
+32,147,Tenure of MP,05.07.2016 to 04.07.2022
+32,147,Entitlement till his tenure,22
+32,147,GOI Release (in Cr),12.5
+32,147,Unreleased Amount (in Cr),9.5
+32,148,S.No,148
+32,148,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Kumar Verma
+32,148,State,Rajasthan
+32,148,Nodal District,Dausa
+32,148,Tenure of MP,05.07.2016 to 04.07.2022
+32,148,Entitlement till his tenure,22
+32,148,GOI Release (in Cr),19.5
+32,148,Unreleased Amount (in Cr),2.5
+32,149,S.No,149
+32,149,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rajendra Singh Gahlot
+32,149,State,Rajasthan
+32,149,Nodal District,Jodhpur
+32,149,Tenure of MP,22.06.2020 to 21.06.2026
+32,149,Entitlement till his tenure,22
+32,149,GOI Release (in Cr),0
+32,149,Unreleased Amount (in Cr),22
+32,150,S.No,150
+32,150,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Hishey Lachungpa
+32,150,State,Sikkim
+32,150,Nodal District,East District
+32,150,Tenure of MP,24.02.2018 to 23.02.2024
+32,150,Entitlement till his tenure,22
+32,150,GOI Release (in Cr),10
+32,150,Unreleased Amount (in Cr),12
+32,151,S.No,151
+32,151,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kanimozhi NVN Somu
+32,151,State,Tamil Nadu
+32,151,Nodal District,Chennai
+32,151,Tenure of MP,29.07.2021 to 02.04.2026
+32,151,Entitlement till his tenure,22
+32,151,GOI Release (in Cr),2
+32,151,Unreleased Amount (in Cr),20
+32,152,S.No,152
+32,152,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),A Vijaykumar
+32,152,State,Tamil Nadu
+32,152,Nodal District,Kanniyakumari
+32,152,Tenure of MP,30.06.2016 to 29.06.2022
+32,152,Entitlement till his tenure,22
+32,152,GOI Release (in Cr),15
+32,152,Unreleased Amount (in Cr),7
+32,153,S.No,153
+32,153,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),A. Navneethakrishnan
+32,153,State,Tamil Nadu
+32,153,Nodal District,Chennai
+32,153,Tenure of MP,30.06.2016 to 29.06.2022
+32,153,Entitlement till his tenure,22
+32,153,GOI Release (in Cr),12.5
+32,153,Unreleased Amount (in Cr),9.5
+32,154,S.No,154
+32,154,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.R.N. Rajeshkumar
+32,154,State,Tamil Nadu
+32,154,Nodal District,Namakkal
+32,154,Tenure of MP,29.09.2021 to 29.06.2022
+32,154,Entitlement till his tenure,2
+32,154,GOI Release (in Cr),2
+32,154,Unreleased Amount (in Cr),0
+32,155,S.No,155
+32,155,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M Shanmugam
+32,155,State,Tamil Nadu
+32,155,Nodal District,Thanjavaur
+32,155,Tenure of MP,25.07.2019 to 24.07.2025
+32,155,Entitlement till his tenure,22
+32,155,GOI Release (in Cr),4.5
+32,155,Unreleased Amount (in Cr),17.5
+32,156,S.No,156
+32,156,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M.Mohamed Abdulla
+32,156,State,Tamil Nadu
+32,156,Nodal District,Pudukkottai
+32,156,Tenure of MP,06.09.2021 to 24.07.2025
+32,156,Entitlement till his tenure,19.5
+32,156,GOI Release (in Cr),2
+32,156,Unreleased Amount (in Cr),17.5
+32,157,S.No,157
+32,157,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),N Chandrasegharan
+32,157,State,Tamil Nadu
+32,157,Nodal District,Salem
+32,157,Tenure of MP,25.07.2019 to 24.07.2025
+32,157,Entitlement till his tenure,22
+32,157,GOI Release (in Cr),2.5
+32,157,Unreleased Amount (in Cr),19.5
+32,158,S.No,158
+32,158,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),P. Wilson
+32,158,State,Tamil Nadu
+32,158,Nodal District,Chennai
+32,158,Tenure of MP,25.07.2019 to 24.07.2025
+32,158,Entitlement till his tenure,22
+32,158,GOI Release (in Cr),2.5
+32,158,Unreleased Amount (in Cr),19.5
+32,159,S.No,159
+32,159,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),R.S. Bharthi
+32,159,State,Tamil Nadu
+32,159,Nodal District,Chennai
+32,159,Tenure of MP,30.06.2016 to 29.06.2022
+32,159,Entitlement till his tenure,22
+32,159,GOI Release (in Cr),20
+32,159,Unreleased Amount (in Cr),2
+32,160,S.No,160
+32,160,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),S.R Balasubramonian
+32,160,State,Tamil Nadu
+32,160,Nodal District,Coimbatore
+32,160,Tenure of MP,30.06.2016 to 29.06.2022
+32,160,Entitlement till his tenure,22
+32,160,GOI Release (in Cr),20
+32,160,Unreleased Amount (in Cr),2
+32,161,S.No,161
+32,161,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),T.K.S Elangovan
+32,161,State,Tamil Nadu
+32,161,Nodal District,Chennai
+32,161,Tenure of MP,30.06.2016 to 29.06.2022
+32,161,Entitlement till his tenure,22
+32,161,GOI Release (in Cr),20
+32,161,Unreleased Amount (in Cr),2
+32,162,S.No,162
+32,162,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Tiruchi Siva
+32,162,State,Tamil Nadu
+32,162,Nodal District,Tiruchirappali
+32,162,Tenure of MP,03.04.2020 to 02.04.2026
+32,162,Entitlement till his tenure,22
+32,162,GOI Release (in Cr),2
+32,162,Unreleased Amount (in Cr),20
+32,163,S.No,163
+32,163,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vaiko
+32,163,State,Tamil Nadu
+32,163,Nodal District,Tenkasi
+32,163,Tenure of MP,25.07.2019 to 24.07.2025
+32,163,Entitlement till his tenure,22
+32,163,GOI Release (in Cr),2.5
+32,163,Unreleased Amount (in Cr),19.5
+32,164,S.No,164
+32,164,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anbumani Ramadoss
+32,164,State,Tamil Nadu
+32,164,Nodal District,Dharmapuri
+32,164,Tenure of MP,25.07.2019 to 24.07.2025
+32,164,Entitlement till his tenure,22
+32,164,GOI Release (in Cr),4.5
+32,164,Unreleased Amount (in Cr),17.5
+32,165,S.No,165
+32,165,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),N.R. Elango
+32,165,State,Tamil Nadu
+32,165,Nodal District,Chennai
+32,165,Tenure of MP,03.04.2020 to 02.04.2026
+32,165,Entitlement till his tenure,22
+32,165,GOI Release (in Cr),0
+32,165,Unreleased Amount (in Cr),22
+32,166,S.No,166
+32,166,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anthiyur P. Selvarasu
+32,166,State,Tamil Nadu
+32,166,Nodal District,Erode
+32,166,Tenure of MP,03.04.2020 to 02.04.2026
+32,166,Entitlement till his tenure,22
+32,166,GOI Release (in Cr),0
+32,166,Unreleased Amount (in Cr),22
+32,167,S.No,167
+32,167,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M. Thambidurai
+32,167,State,Tamil Nadu
+32,167,Nodal District,Kirhsnagiri
+32,167,Tenure of MP,03.04.2020 to 02.04.2026
+32,167,Entitlement till his tenure,22
+32,167,GOI Release (in Cr),0
+32,167,Unreleased Amount (in Cr),22
+32,168,S.No,168
+32,168,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),G.K. Vasan
+32,168,State,Tamil Nadu
+32,168,Nodal District,Thajavaur
+32,168,Tenure of MP,03.04.2020 to 02.04.2026
+32,168,Entitlement till his tenure,22
+32,168,GOI Release (in Cr),0
+32,168,Unreleased Amount (in Cr),22
+32,169,S.No,169
+32,169,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.Keshava Rao
+32,169,State,Telangana
+32,169,Nodal District,Hyderabad
+32,169,Tenure of MP,10.04.2020 to 09.04.2026
+32,169,Entitlement till his tenure,22
+32,169,GOI Release (in Cr),2
+32,169,Unreleased Amount (in Cr),20
+32,170,S.No,170
+32,170,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Badugula lingaiah Yadav
+32,170,State,Telangana
+32,170,Nodal District,Suryapet
+32,170,Tenure of MP,03.04.2018 to 02.04.2024
+32,170,Entitlement till his tenure,22
+32,170,GOI Release (in Cr),10
+32,170,Unreleased Amount (in Cr),12
+32,171,S.No,171
+32,171,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dharmapuri Srinivas
+32,171,State,Telangana
+32,171,Nodal District,Nizamabad
+32,171,Tenure of MP,22.06.2016 to 21.06.2022
+32,171,Entitlement till his tenure,22
+32,171,GOI Release (in Cr),17.5
+32,171,Unreleased Amount (in Cr),4.5
+32,172,S.No,172
+32,172,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),K.R.Suresh Reddy
+32,172,State,Telangana
+32,172,Nodal District,Nizamabad
+32,172,Tenure of MP,10.04.2020 to 09.04.2026
+32,172,Entitlement till his tenure,22
+32,172,GOI Release (in Cr),2
+32,172,Unreleased Amount (in Cr),20
+32,173,S.No,173
+32,173,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Lakshmikanta Rao Voditela
+32,173,State,Telangana
+32,173,Nodal District,Karimnagar
+32,173,Tenure of MP,22.06.2016 to 21.06.2022
+32,173,Entitlement till his tenure,22
+32,173,GOI Release (in Cr),12.5
+32,173,Unreleased Amount (in Cr),9.5
+32,174,S.No,174
+32,174,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Santhosh Kumar Joganipally
+32,174,State,Telangana
+32,174,Nodal District,Karimnagar
+32,174,Tenure of MP,03.04.2018 to 02.04.2024
+32,174,Entitlement till his tenure,22
+32,174,GOI Release (in Cr),5
+32,174,Unreleased Amount (in Cr),17
+32,175,S.No,175
+32,175,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jharna Das Baidya
+32,175,State,Tripura
+32,175,Nodal District,West Tripura
+32,175,Tenure of MP,03.04.2016 to 02.04.2022
+32,175,Entitlement till his tenure,49
+32,175,GOI Release (in Cr),44.5
+32,175,Unreleased Amount (in Cr),4.5
+32,176,S.No,176
+32,176,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ashok Bajpai
+32,176,State,Uttar Pradesh
+32,176,Nodal District,Lucknow
+32,176,Tenure of MP,03.04.2018 to 02.04.2024
+32,176,Entitlement till his tenure,22
+32,176,GOI Release (in Cr),10
+32,176,Unreleased Amount (in Cr),12
+32,177,S.No,177
+32,177,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ashok Siddharth
+32,177,State,Uttar Pradesh
+32,177,Nodal District,Farrukhabad
+32,177,Tenure of MP,05.07.2016 to 04.07.2022
+32,177,Entitlement till his tenure,22
+32,177,GOI Release (in Cr),19.5
+32,177,Unreleased Amount (in Cr),2.5
+32,178,S.No,178
+32,178,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),G.V.L Narasimha Rao
+32,178,State,Uttar Pradesh
+32,178,Nodal District,Varanasi
+32,178,Tenure of MP,03.04.2018 to 02.04.2024
+32,178,Entitlement till his tenure,22
+32,178,GOI Release (in Cr),5
+32,178,Unreleased Amount (in Cr),17
+32,179,S.No,179
+32,179,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kapil Sibal
+32,179,State,Uttar Pradesh
+32,179,Nodal District,Rae Bareli
+32,179,Tenure of MP,05.07.2016 to 04.07.2022
+32,179,Entitlement till his tenure,22
+32,179,GOI Release (in Cr),15
+32,179,Unreleased Amount (in Cr),7
+32,180,S.No,180
+32,180,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vijay Pal Singh Tomar
+32,180,State,Uttar Pradesh
+32,180,Nodal District,Meerut
+32,180,Tenure of MP,03.04.2018 to 02.04.2024
+32,180,Entitlement till his tenure,22
+32,180,GOI Release (in Cr),7.5
+32,180,Unreleased Amount (in Cr),14.5
+32,181,S.No,181
+32,181,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Vishambhar Prasad Nishad
+32,181,State,Uttar Pradesh
+32,181,Nodal District,Banda/Chitrakoot
+32,181,Tenure of MP,05.07.2016 to 04.07.2022
+32,181,Entitlement till his tenure,22
+32,181,GOI Release (in Cr),15
+32,181,Unreleased Amount (in Cr),7
+32,182,S.No,182
+32,182,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rewati Raman Singh
+32,182,State,Uttar Pradesh
+32,182,Nodal District,Allahabad
+32,182,Tenure of MP,05.07.2016 to 04.07.2022
+32,182,Entitlement till his tenure,22
+32,182,GOI Release (in Cr),17.5
+32,182,Unreleased Amount (in Cr),4.5
+32,183,S.No,183
+32,183,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sakaldeep Rajbhar
+32,183,State,Uttar Pradesh
+32,183,Nodal District,Ballia
+32,183,Tenure of MP,03.04.2018 to 02.04.2024
+32,183,Entitlement till his tenure,22
+32,183,GOI Release (in Cr),10
+32,183,Unreleased Amount (in Cr),12
+32,184,S.No,184
+32,184,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Satish Chandra Misra
+32,184,State,Uttar Pradesh
+32,184,Nodal District,Lucknow
+32,184,Tenure of MP,05.07.2016 to 04.07.2022
+32,184,Entitlement till his tenure,22
+32,184,GOI Release (in Cr),0
+32,184,Unreleased Amount (in Cr),22
+32,185,S.No,185
+32,185,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anil Agarwal
+32,185,State,Uttar Pradesh
+32,185,Nodal District,Ghaziabad
+32,185,Tenure of MP,03.04.2018 to 02.04.2024
+32,185,Entitlement till his tenure,12
+32,185,GOI Release (in Cr),7.5
+32,185,Unreleased Amount (in Cr),4.5
+32,186,S.No,186
+32,186,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anil Kumar Jain
+32,186,State,Uttar Pradesh
+32,186,Nodal District,Firozabad
+32,186,Tenure of MP,03.04.2018 to 02.04.2024
+32,186,Entitlement till his tenure,12
+32,186,GOI Release (in Cr),7.5
+32,186,Unreleased Amount (in Cr),4.5
+32,187,S.No,187
+32,187,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Harnath Singh Yadav
+32,187,State,Uttar Pradesh
+32,187,Nodal District,Etah
+32,187,Tenure of MP,03.04.2018 to 02.04.2024
+32,187,Entitlement till his tenure,22
+32,187,GOI Release (in Cr),10
+32,187,Unreleased Amount (in Cr),12
+32,188,S.No,188
+32,188,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sanjay Seth
+32,188,State,Uttar Pradesh
+32,188,Nodal District,Lucknow
+32,188,Tenure of MP,16.09.2019 to 04.07.2022
+32,188,Entitlement till his tenure,4.5
+32,188,GOI Release (in Cr),2.5
+32,188,Unreleased Amount (in Cr),2
+32,189,S.No,189
+32,189,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shiv Pratap Shukla
+32,189,State,Uttar Pradesh
+32,189,Nodal District,Gorakhpur
+32,189,Tenure of MP,05.07.2016 to 04.07.2022
+32,189,Entitlement till his tenure,22
+32,189,GOI Release (in Cr),17.5
+32,189,Unreleased Amount (in Cr),4.5
+32,190,S.No,190
+32,190,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sudhanshu Trivedi
+32,190,State,Uttar Pradesh
+32,190,Nodal District,Lucknow
+32,190,Tenure of MP,09.10.2019 to 02.04.2024
+32,190,Entitlement till his tenure,12
+32,190,GOI Release (in Cr),2.5
+32,190,Unreleased Amount (in Cr),9.5
+32,191,S.No,191
+32,191,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sukhram Singh Yadav
+32,191,State,Uttar Pradesh
+32,191,Nodal District,Kanpur Nagar
+32,191,Tenure of MP,05.07.2016 to 04.07.2022
+32,191,Entitlement till his tenure,22
+32,191,GOI Release (in Cr),10
+32,191,Unreleased Amount (in Cr),12
+32,192,S.No,192
+32,192,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Surendra Singh Nagar
+32,192,State,Uttar Pradesh
+32,192,Nodal District,Gautambudh Nagar
+32,192,Tenure of MP,16.09.2019 to 04.07.2022
+32,192,Entitlement till his tenure,4.5
+32,192,GOI Release (in Cr),2.5
+32,192,Unreleased Amount (in Cr),2
+32,193,S.No,193
+32,193,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Syed Zafar Islam
+32,193,State,Uttar Pradesh
+32,193,Nodal District,Moradabad
+32,193,Tenure of MP,04.09.2020 to 04.07.2022
+32,193,Entitlement till his tenure,2
+32,193,GOI Release (in Cr),2
+32,193,Unreleased Amount (in Cr),0
+32,194,S.No,194
+32,194,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jaya Bachchan
+32,194,State,Uttar Pradesh
+32,194,Nodal District,Bhadohi
+32,194,Tenure of MP,03.04.2018 to 02.04.2024
+32,194,Entitlement till his tenure,22
+32,194,GOI Release (in Cr),7.5
+32,194,Unreleased Amount (in Cr),14.5
+32,195,S.No,195
+32,195,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Kanta Kardam
+32,195,State,Uttar Pradesh
+32,195,Nodal District,Hapur
+32,195,Tenure of MP,03.04.2018 to 02.04.2024
+32,195,Entitlement till his tenure,22
+32,195,GOI Release (in Cr),10
+32,195,Unreleased Amount (in Cr),12
+32,196,S.No,196
+32,196,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Arun Singh
+32,196,State,Uttar Pradesh
+32,196,Nodal District,Mirzapur
+32,196,Tenure of MP,26.11.2020 to 25.11.2026
+32,196,Entitlement till his tenure,22
+32,196,GOI Release (in Cr),2
+32,196,Unreleased Amount (in Cr),20
+32,197,S.No,197
+32,197,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),B L Verma
+32,197,State,Uttar Pradesh
+32,197,Nodal District,Nodal District Awaited
+32,197,Tenure of MP,26.11.2020 to 25.11.2026
+32,197,Entitlement till his tenure,22
+32,197,GOI Release (in Cr),0
+32,197,Unreleased Amount (in Cr),22
+32,198,S.No,198
+32,198,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Neeraj Shekhar
+32,198,State,Uttar Pradesh
+32,198,Nodal District,Ballia
+32,198,Tenure of MP,26.11.2020 to 25.11.2026
+32,198,Entitlement till his tenure,22
+32,198,GOI Release (in Cr),2
+32,198,Unreleased Amount (in Cr),20
+32,199,S.No,199
+32,199,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Gopal Yadav
+32,199,State,Uttar Pradesh
+32,199,Nodal District,Nodal District Awaited
+32,199,Tenure of MP,26.11.2020 to 25.11.2026
+32,199,Entitlement till his tenure,0
+32,199,GOI Release (in Cr),0
+32,199,Unreleased Amount (in Cr),0
+32,200,S.No,200
+32,200,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Seema Dwivedi
+32,200,State,Uttar Pradesh
+32,200,Nodal District,Jaunpur
+32,200,Tenure of MP,26.11.2020 to 25.11.2026
+32,200,Entitlement till his tenure,22
+32,200,GOI Release (in Cr),2
+32,200,Unreleased Amount (in Cr),20
+32,201,S.No,201
+32,201,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Ji
+32,201,State,Uttar Pradesh
+32,201,Nodal District,Lakhimpur Kheri
+32,201,Tenure of MP,26.11.2020 to 25.11.2026
+32,201,Entitlement till his tenure,22
+32,201,GOI Release (in Cr),2
+32,201,Unreleased Amount (in Cr),20
+32,202,S.No,202
+32,202,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Geeta Urf Chandraprabha
+32,202,State,Uttar Pradesh
+32,202,Nodal District,Orraiya
+32,202,Tenure of MP,26.11.2020 to 25.11.2026
+32,202,Entitlement till his tenure,22
+32,202,GOI Release (in Cr),2
+32,202,Unreleased Amount (in Cr),20
+32,203,S.No,203
+32,203,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Hardwar Dubey
+32,203,State,Uttar Pradesh
+32,203,Nodal District,Agra
+32,203,Tenure of MP,26.11.2020 to 25.11.2026
+32,203,Entitlement till his tenure,22
+32,203,GOI Release (in Cr),2
+32,203,Unreleased Amount (in Cr),20
+32,204,S.No,204
+32,204,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Brij Lal
+32,204,State,Uttar Pradesh
+32,204,Nodal District,Sidharth Nagar
+32,204,Tenure of MP,26.11.2020 to 25.11.2026
+32,204,Entitlement till his tenure,22
+32,204,GOI Release (in Cr),2
+32,204,Unreleased Amount (in Cr),20
+32,205,S.No,205
+32,205,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jai Prakash Nishad
+32,205,State,Uttar Pradesh
+32,205,Nodal District,Gorakhpur
+32,205,Tenure of MP,17.08.2020 to 04.07.2022
+32,205,Entitlement till his tenure,4.5
+32,205,GOI Release (in Cr),2
+32,205,Unreleased Amount (in Cr),2.5
+32,206,S.No,206
+32,206,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Hardeep singh Puri
+32,206,State,Uttar Pradesh
+32,206,Nodal District,Sonbhadra
+32,206,Tenure of MP,26.11.2020 to 25.11.2026
+32,206,Entitlement till his tenure,22
+32,206,GOI Release (in Cr),2
+32,206,Unreleased Amount (in Cr),20
+32,207,S.No,207
+32,207,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Anil Baluni
+32,207,State,Uttarakhand
+32,207,Nodal District,Paudi Garhwal
+32,207,Tenure of MP,03.04.2018 to 02.04.2024
+32,207,Entitlement till his tenure,22
+32,207,GOI Release (in Cr),5
+32,207,Unreleased Amount (in Cr),17
+32,208,S.No,208
+32,208,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Pradeep Bansal
+32,208,State,Uttarakhand
+32,208,Nodal District,Dehradun
+32,208,Tenure of MP,26.11.2020 to 25.11.2026
+32,208,Entitlement till his tenure,22
+32,208,GOI Release (in Cr),2
+32,208,Unreleased Amount (in Cr),20
+32,209,S.No,209
+32,209,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Pradeep Tamta
+32,209,State,Uttarakhand
+32,209,Nodal District,Bageshwar
+32,209,Tenure of MP,04.07.2016 to 03.07.2022
+32,209,Entitlement till his tenure,22
+32,209,GOI Release (in Cr),17.5
+32,209,Unreleased Amount (in Cr),4.5
+32,210,S.No,210
+32,210,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Nadimul Haque
+32,210,State,West Bengal
+32,210,Nodal District,Kolkata
+32,210,Tenure of MP,03.04.2018 to 02.04.2024
+32,210,Entitlement till his tenure,22
+32,210,GOI Release (in Cr),7.5
+32,210,Unreleased Amount (in Cr),14.5
+32,211,S.No,211
+32,211,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Dola Sen
+32,211,State,West Bengal
+32,211,Nodal District,Kolkata
+32,211,Tenure of MP,19.08.2017 to 18.08.2023
+32,211,Entitlement till his tenure,22
+32,211,GOI Release (in Cr),12.5
+32,211,Unreleased Amount (in Cr),9.5
+32,212,S.No,212
+32,212,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sushmita Dev
+32,212,State,West Bengal
+32,212,Nodal District,Kolkata
+32,212,Tenure of MP,27.09.2021 to 26.09.2027
+32,212,Entitlement till his tenure,29.5
+32,212,GOI Release (in Cr),2
+32,212,Unreleased Amount (in Cr),27.5
+32,213,S.No,213
+32,213,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Derek o Brien
+32,213,State,West Bengal
+32,213,Nodal District,Kolkata
+32,213,Tenure of MP,19.08.2017 to 18.08.2023
+32,213,Entitlement till his tenure,22
+32,213,GOI Release (in Cr),5
+32,213,Unreleased Amount (in Cr),17
+32,214,S.No,214
+32,214,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Abhishek Manu Singhvi
+32,214,State,West Bengal
+32,214,Nodal District,Howrah
+32,214,Tenure of MP,03.04.2018 to 02.04.2024
+32,214,Entitlement till his tenure,22
+32,214,GOI Release (in Cr),5
+32,214,Unreleased Amount (in Cr),17
+32,215,S.No,215
+32,215,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Abir Ranjan Biswas
+32,215,State,West Bengal
+32,215,Nodal District,Kolkata
+32,215,Tenure of MP,03.04.2018 to 02.04.2024
+32,215,Entitlement till his tenure,22
+32,215,GOI Release (in Cr),7.5
+32,215,Unreleased Amount (in Cr),14.5
+32,216,S.No,216
+32,216,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Bikash Ranjan Bhattacharya
+32,216,State,West Bengal
+32,216,Nodal District,Kolkata
+32,216,Tenure of MP,03.04.2020 to 02.04.2026
+32,216,Entitlement till his tenure,22
+32,216,GOI Release (in Cr),2
+32,216,Unreleased Amount (in Cr),20
+32,217,S.No,217
+32,217,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),P. Bhattacharya
+32,217,State,West Bengal
+32,217,Nodal District,Birbhum
+32,217,Tenure of MP,19.08.2017 to 18.08.2023
+32,217,Entitlement till his tenure,22
+32,217,GOI Release (in Cr),10
+32,217,Unreleased Amount (in Cr),12
+32,218,S.No,218
+32,218,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Santanu Sen
+32,218,State,West Bengal
+32,218,Nodal District,Kolkata
+32,218,Tenure of MP,03.04.2018 to 02.04.2024
+32,218,Entitlement till his tenure,22
+32,218,GOI Release (in Cr),7.5
+32,218,Unreleased Amount (in Cr),14.5
+32,219,S.No,219
+32,219,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Subhasish Chakrobarty
+32,219,State,West Bengal
+32,219,Nodal District,Kolkata
+32,219,Tenure of MP,03.04.2018 to 02.04.2024
+32,219,Entitlement till his tenure,22
+32,219,GOI Release (in Cr),7.5
+32,219,Unreleased Amount (in Cr),14.5
+32,220,S.No,220
+32,220,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Subrata Bakshi
+32,220,State,West Bengal
+32,220,Nodal District,Kolkata
+32,220,Tenure of MP,03.04.2020 to 02.04.2026
+32,220,Entitlement till his tenure,22
+32,220,GOI Release (in Cr),2
+32,220,Unreleased Amount (in Cr),20
+32,221,S.No,221
+32,221,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sukhendu Sekhar Ray
+32,221,State,West Bengal
+32,221,Nodal District,Kolkata
+32,221,Tenure of MP,19.08.2017 to 18.08.2023
+32,221,Entitlement till his tenure,22
+32,221,GOI Release (in Cr),7.5
+32,221,Unreleased Amount (in Cr),14.5
+32,222,S.No,222
+32,222,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shanta Chhetri
+32,222,State,West Bengal
+32,222,Nodal District,Kolkata
+32,222,Tenure of MP,19.08.2017 to 18.08.2023
+32,222,Entitlement till his tenure,22
+32,222,GOI Release (in Cr),12.5
+32,222,Unreleased Amount (in Cr),9.5
+32,223,S.No,223
+32,223,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Luiznho Joaquim Falerio
+32,223,State,West Bengal
+32,223,Nodal District,Nodal District Awaited
+32,223,Tenure of MP,24.11.2021 to 23.11.2027
+32,223,Entitlement till his tenure,29.5
+32,223,GOI Release (in Cr),0
+32,223,Unreleased Amount (in Cr),29.5
+32,224,S.No,224
+32,224,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mausam Noor
+32,224,State,West Bengal
+32,224,Nodal District,Nodal District Awaited
+32,224,Tenure of MP,03.04.2020 to 02.04.2026
+32,224,Entitlement till his tenure,22
+32,224,GOI Release (in Cr),0
+32,224,Unreleased Amount (in Cr),22
+32,225,S.No,225
+32,225,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Jawahar Sircar
+32,225,State,West Bengal
+32,225,Nodal District,Nodal District Awaited
+32,225,Tenure of MP,03.08.2021 to 02.08.2027
+32,225,Entitlement till his tenure,29.5
+32,225,GOI Release (in Cr),0
+32,225,Unreleased Amount (in Cr),29.5
+32,226,S.No,226
+32,226,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Roopa Ganguly
+32,226,State,Nominated
+32,226,Nodal District,SDMC
+32,226,Tenure of MP,04.10.2016 to 24.04.2022
+32,226,Entitlement till his tenure,19.5
+32,226,GOI Release (in Cr),5
+32,226,Unreleased Amount (in Cr),14.5
+32,227,S.No,227
+32,227,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Mahesh Jethmalani
+32,227,State,Nominated
+32,227,Nodal District,NDMC
+32,227,Tenure of MP,02.06.2021 to 13.07.2024
+32,227,Entitlement till his tenure,14.5
+32,227,GOI Release (in Cr),0
+32,227,Unreleased Amount (in Cr),14.5
+32,228,S.No,228
+32,228,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Narendra Jadhav
+32,228,State,Nominated
+32,228,Nodal District,Nashik
+32,228,Tenure of MP,25.04.2016 to 24.04.2022
+32,228,Entitlement till his tenure,22
+32,228,GOI Release (in Cr),10
+32,228,Unreleased Amount (in Cr),12
+32,229,S.No,229
+32,229,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Shabhaji Shahu Chhatrapati
+32,229,State,Nominated
+32,229,Nodal District,Kolhapur
+32,229,Tenure of MP,13.06.2016 to 03.05.2022
+32,229,Entitlement till his tenure,22
+32,229,GOI Release (in Cr),12.5
+32,229,Unreleased Amount (in Cr),9.5
+32,230,S.No,230
+32,230,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Sonal Mansingh
+32,230,State,Nominated
+32,230,Nodal District,Dang
+32,230,Tenure of MP,14.07.2018 to 13.07.2024
+32,230,Entitlement till his tenure,22
+32,230,GOI Release (in Cr),5
+32,230,Unreleased Amount (in Cr),17
+32,231,S.No,231
+32,231,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Subramnaym swamy
+32,231,State,Nominated
+32,231,Nodal District,Mumbai Suburban
+32,231,Tenure of MP,25.04.2016 to 24.04.2022
+32,231,Entitlement till his tenure,22
+32,231,GOI Release (in Cr),7.5
+32,231,Unreleased Amount (in Cr),14.5
+32,232,S.No,232
+32,232,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ranjan Gogoi(Nominated MP)
+32,232,State,Nominated
+32,232,Nodal District,Kamrup Metro
+32,232,Tenure of MP,17.03.2020 to 16.03.2026
+32,232,Entitlement till his tenure,22
+32,232,GOI Release (in Cr),2
+32,232,Unreleased Amount (in Cr),20
+32,233,S.No,233
+32,233,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Rakesh Kumar
+32,233,State,Nominated
+32,233,Nodal District,Begusarai
+32,233,Tenure of MP,14.07.2018 to 13.07.2024
+32,233,Entitlement till his tenure,9.5
+32,233,GOI Release (in Cr),5
+32,233,Unreleased Amount (in Cr),4.5
+32,234,S.No,234
+32,234,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),M C Mary Kom
+32,234,State,Nominated
+32,234,Nodal District,Outer Manipur
+32,234,Tenure of MP,25.04.2016 to 24.04.2022
+32,234,Entitlement till his tenure,22
+32,234,GOI Release (in Cr),17.5
+32,234,Unreleased Amount (in Cr),4.5
+32,235,S.No,235
+32,235,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Suresh Gopi
+32,235,State,Nominated
+32,235,Nodal District,Thiruvananthapuram
+32,235,Tenure of MP,25.04.2016 to24.04.2022
+32,235,Entitlement till his tenure,22
+32,235,GOI Release (in Cr),17.5
+32,235,Unreleased Amount (in Cr),4.5
+32,236,S.No,236
+32,236,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Ram Shakal
+32,236,State,Nominated
+32,236,Nodal District,Mirzapur
+32,236,Tenure of MP,14.07.2018 to 13.07.2024
+32,236,Entitlement till his tenure,22
+32,236,GOI Release (in Cr),9.5
+32,236,Unreleased Amount (in Cr),12.5
+32,237,S.No,237
+32,237,Name of MP (Shri/Smt/Dr./Ms/Prof./Adv.),Swapan Das Gupta
+32,237,State,Nominated
+32,237,Nodal District,Nodal District Awaited
+32,237,Tenure of MP,02.06.2021 to 24.04.2022
+32,237,Entitlement till his tenure,2
+32,237,GOI Release (in Cr),0
+32,237,Unreleased Amount (in Cr),2
+33,1,S.No,1
+33,1,State,A & N Islands
+33,1,2016-17 - Expenditure - Incurred With (Rs. Crore),4.77
+33,1,2016-17 - Completed - Works,19
+33,1,2016-17 - Expenditure - Incurred With (Rs. Crore),4.77
+33,1,2016-17 - Completed - Works,19
+33,1,2018-19 - Expenditure - Incurred With (Rs. Crore),13.56
+33,1,2018-19 - Completed - Works,27
+33,1,2019-20 - Expenditure - Incurred With (Rs. Crore),1.29
+33,1,2019-20 - Completed - Works,0
+33,2,S.No,2
+33,2,State,Andhra Pradesh
+33,2,2016-17 - Expenditure - Incurred With (Rs. Crore),184.04
+33,2,2016-17 - Completed - Works,4780
+33,2,2016-17 - Expenditure - Incurred With (Rs. Crore),184.04
+33,2,2016-17 - Completed - Works,4780
+33,2,2018-19 - Expenditure - Incurred With (Rs. Crore),202.26
+33,2,2018-19 - Completed - Works,3888
+33,2,2019-20 - Expenditure - Incurred With (Rs. Crore),116.04
+33,2,2019-20 - Completed - Works,3542
+33,3,S.No,3
+33,3,State,Arunachal Pradesh
+33,3,2016-17 - Expenditure - Incurred With (Rs. Crore),14.31
+33,3,2016-17 - Completed - Works,215
+33,3,2016-17 - Expenditure - Incurred With (Rs. Crore),14.31
+33,3,2016-17 - Completed - Works,215
+33,3,2018-19 - Expenditure - Incurred With (Rs. Crore),18.14
+33,3,2018-19 - Completed - Works,377
+33,3,2019-20 - Expenditure - Incurred With (Rs. Crore),3.33
+33,3,2019-20 - Completed - Works,63
+33,4,S.No,4
+33,4,State,Assam
+33,4,2016-17 - Expenditure - Incurred With (Rs. Crore),111.06
+33,4,2016-17 - Completed - Works,2784
+33,4,2016-17 - Expenditure - Incurred With (Rs. Crore),111.06
+33,4,2016-17 - Completed - Works,2784
+33,4,2018-19 - Expenditure - Incurred With (Rs. Crore),97.36
+33,4,2018-19 - Completed - Works,2121
+33,4,2019-20 - Expenditure - Incurred With (Rs. Crore),32.9
+33,4,2019-20 - Completed - Works,748
+33,5,S.No,5
+33,5,State,Bihar
+33,5,2016-17 - Expenditure - Incurred With (Rs. Crore),422.23
+33,5,2016-17 - Completed - Works,7670
+33,5,2016-17 - Expenditure - Incurred With (Rs. Crore),422.23
+33,5,2016-17 - Completed - Works,7670
+33,5,2018-19 - Expenditure - Incurred With (Rs. Crore),411.45
+33,5,2018-19 - Completed - Works,5142
+33,5,2019-20 - Expenditure - Incurred With (Rs. Crore),172.24
+33,5,2019-20 - Completed - Works,3955
+33,6,S.No,6
+33,6,State,Chandigarh
+33,6,2016-17 - Expenditure - Incurred With (Rs. Crore),8.59
+33,6,2016-17 - Completed - Works,37
+33,6,2016-17 - Expenditure - Incurred With (Rs. Crore),8.59
+33,6,2016-17 - Completed - Works,37
+33,6,2018-19 - Expenditure - Incurred With (Rs. Crore),10.71
+33,6,2018-19 - Completed - Works,97
+33,6,2019-20 - Expenditure - Incurred With (Rs. Crore),1.16
+33,6,2019-20 - Completed - Works,9
+33,7,S.No,7
+33,7,State,Chhattisgarh
+33,7,2016-17 - Expenditure - Incurred With (Rs. Crore),109.83
+33,7,2016-17 - Completed - Works,2091
+33,7,2016-17 - Expenditure - Incurred With (Rs. Crore),109.83
+33,7,2016-17 - Completed - Works,2091
+33,7,2018-19 - Expenditure - Incurred With (Rs. Crore),101.23
+33,7,2018-19 - Completed - Works,2123
+33,7,2019-20 - Expenditure - Incurred With (Rs. Crore),39.31
+33,7,2019-20 - Completed - Works,1168
+33,8,S.No,8
+33,8,State,D & N Haveli
+33,8,2016-17 - Expenditure - Incurred With (Rs. Crore),4.51
+33,8,2016-17 - Completed - Works,12
+33,8,2016-17 - Expenditure - Incurred With (Rs. Crore),4.51
+33,8,2016-17 - Completed - Works,12
+33,8,2018-19 - Expenditure - Incurred With (Rs. Crore),6.34
+33,8,2018-19 - Completed - Works,30
+33,8,2019-20 - Expenditure - Incurred With (Rs. Crore),1.94
+33,8,2019-20 - Completed - Works,5
+33,9,S.No,9
+33,9,State,Daman & Diu
+33,9,2016-17 - Expenditure - Incurred With (Rs. Crore),0
+33,9,2016-17 - Completed - Works,0
+33,9,2016-17 - Expenditure - Incurred With (Rs. Crore),0
+33,9,2016-17 - Completed - Works,0
+33,9,2018-19 - Expenditure - Incurred With (Rs. Crore),13.95
+33,9,2018-19 - Completed - Works,24
+33,9,2019-20 - Expenditure - Incurred With (Rs. Crore),1.51
+33,9,2019-20 - Completed - Works,0
+33,10,S.No,10
+33,10,State,Delhi
+33,10,2016-17 - Expenditure - Incurred With (Rs. Crore),56.69
+33,10,2016-17 - Completed - Works,171
+33,10,2016-17 - Expenditure - Incurred With (Rs. Crore),56.69
+33,10,2016-17 - Completed - Works,171
+33,10,2018-19 - Expenditure - Incurred With (Rs. Crore),94.64
+33,10,2018-19 - Completed - Works,417
+33,10,2019-20 - Expenditure - Incurred With (Rs. Crore),43.39
+33,10,2019-20 - Completed - Works,331
+33,11,S.No,11
+33,11,State,Goa
+33,11,2016-17 - Expenditure - Incurred With (Rs. Crore),10.81
+33,11,2016-17 - Completed - Works,62
+33,11,2016-17 - Expenditure - Incurred With (Rs. Crore),10.81
+33,11,2016-17 - Completed - Works,62
+33,11,2018-19 - Expenditure - Incurred With (Rs. Crore),21.59
+33,11,2018-19 - Completed - Works,90
+33,11,2019-20 - Expenditure - Incurred With (Rs. Crore),8.19
+33,11,2019-20 - Completed - Works,97
+33,12,S.No,12
+33,12,State,Gujarat
+33,12,2016-17 - Expenditure - Incurred With (Rs. Crore),169.87
+33,12,2016-17 - Completed - Works,6281
+33,12,2016-17 - Expenditure - Incurred With (Rs. Crore),169.87
+33,12,2016-17 - Completed - Works,6281
+33,12,2018-19 - Expenditure - Incurred With (Rs. Crore),282.79
+33,12,2018-19 - Completed - Works,11351
+33,12,2019-20 - Expenditure - Incurred With (Rs. Crore),135.47
+33,12,2019-20 - Completed - Works,4844
+33,13,S.No,13
+33,13,State,Haryana
+33,13,2016-17 - Expenditure - Incurred With (Rs. Crore),90.2
+33,13,2016-17 - Completed - Works,1709
+33,13,2016-17 - Expenditure - Incurred With (Rs. Crore),90.2
+33,13,2016-17 - Completed - Works,1709
+33,13,2018-19 - Expenditure - Incurred With (Rs. Crore),90.61
+33,13,2018-19 - Completed - Works,1833
+33,13,2019-20 - Expenditure - Incurred With (Rs. Crore),46.18
+33,13,2019-20 - Completed - Works,1198
+33,14,S.No,14
+33,14,State,Himachal Pradesh
+33,14,2016-17 - Expenditure - Incurred With (Rs. Crore),33.08
+33,14,2016-17 - Completed - Works,1135
+33,14,2016-17 - Expenditure - Incurred With (Rs. Crore),33.08
+33,14,2016-17 - Completed - Works,1135
+33,14,2018-19 - Expenditure - Incurred With (Rs. Crore),37.26
+33,14,2018-19 - Completed - Works,1767
+33,14,2019-20 - Expenditure - Incurred With (Rs. Crore),9.36
+33,14,2019-20 - Completed - Works,134
+33,15,S.No,15
+33,15,State,Jammu & Kashmir
+33,15,2016-17 - Expenditure - Incurred With (Rs. Crore),46.38
+33,15,2016-17 - Completed - Works,1526
+33,15,2016-17 - Expenditure - Incurred With (Rs. Crore),46.38
+33,15,2016-17 - Completed - Works,1526
+33,15,2018-19 - Expenditure - Incurred With (Rs. Crore),60.84
+33,15,2018-19 - Completed - Works,1324
+33,15,2019-20 - Expenditure - Incurred With (Rs. Crore),28.53
+33,15,2019-20 - Completed - Works,985
+33,16,S.No,16
+33,16,State,Jharkhand
+33,16,2016-17 - Expenditure - Incurred With (Rs. Crore),84.66
+33,16,2016-17 - Completed - Works,2262
+33,16,2016-17 - Expenditure - Incurred With (Rs. Crore),84.66
+33,16,2016-17 - Completed - Works,2262
+33,16,2018-19 - Expenditure - Incurred With (Rs. Crore),108.61
+33,16,2018-19 - Completed - Works,2766
+33,16,2019-20 - Expenditure - Incurred With (Rs. Crore),49.14
+33,16,2019-20 - Completed - Works,1179
+33,17,S.No,17
+33,17,State,Karnataka
+33,17,2016-17 - Expenditure - Incurred With (Rs. Crore),207.73
+33,17,2016-17 - Completed - Works,4002
+33,17,2016-17 - Expenditure - Incurred With (Rs. Crore),207.73
+33,17,2016-17 - Completed - Works,4002
+33,17,2018-19 - Expenditure - Incurred With (Rs. Crore),219.29
+33,17,2018-19 - Completed - Works,3307
+33,17,2019-20 - Expenditure - Incurred With (Rs. Crore),107.57
+33,17,2019-20 - Completed - Works,1719
+33,18,S.No,18
+33,18,State,Kerala
+33,18,2016-17 - Expenditure - Incurred With (Rs. Crore),137.71
+33,18,2016-17 - Completed - Works,2064
+33,18,2016-17 - Expenditure - Incurred With (Rs. Crore),137.71
+33,18,2016-17 - Completed - Works,2064
+33,18,2018-19 - Expenditure - Incurred With (Rs. Crore),205.07
+33,18,2018-19 - Completed - Works,2477
+33,18,2019-20 - Expenditure - Incurred With (Rs. Crore),110.79
+33,18,2019-20 - Completed - Works,1991
+33,19,S.No,19
+33,19,State,Lakshadweep
+33,19,2016-17 - Expenditure - Incurred With (Rs. Crore),7.59
+33,19,2016-17 - Completed - Works,13
+33,19,2016-17 - Expenditure - Incurred With (Rs. Crore),7.59
+33,19,2016-17 - Completed - Works,13
+33,19,2018-19 - Expenditure - Incurred With (Rs. Crore),3.81
+33,19,2018-19 - Completed - Works,2
+33,19,2019-20 - Expenditure - Incurred With (Rs. Crore),0
+33,19,2019-20 - Completed - Works,0
+33,20,S.No,20
+33,20,State,Madhya Pradesh
+33,20,2016-17 - Expenditure - Incurred With (Rs. Crore),215.52
+33,20,2016-17 - Completed - Works,6353
+33,20,2016-17 - Expenditure - Incurred With (Rs. Crore),215.52
+33,20,2016-17 - Completed - Works,6353
+33,20,2018-19 - Expenditure - Incurred With (Rs. Crore),239.56
+33,20,2018-19 - Completed - Works,7587
+33,20,2019-20 - Expenditure - Incurred With (Rs. Crore),120.02
+33,20,2019-20 - Completed - Works,4586
+33,21,S.No,21
+33,21,State,Maharashtra
+33,21,2016-17 - Expenditure - Incurred With (Rs. Crore),302.47
+33,21,2016-17 - Completed - Works,5787
+33,21,2016-17 - Expenditure - Incurred With (Rs. Crore),302.47
+33,21,2016-17 - Completed - Works,5787
+33,21,2018-19 - Expenditure - Incurred With (Rs. Crore),393.02
+33,21,2018-19 - Completed - Works,5962
+33,21,2019-20 - Expenditure - Incurred With (Rs. Crore),247.67
+33,21,2019-20 - Completed - Works,5458
+33,22,S.No,22
+33,22,State,Manipur
+33,22,2016-17 - Expenditure - Incurred With (Rs. Crore),15.63
+33,22,2016-17 - Completed - Works,58
+33,22,2016-17 - Expenditure - Incurred With (Rs. Crore),15.63
+33,22,2016-17 - Completed - Works,58
+33,22,2018-19 - Expenditure - Incurred With (Rs. Crore),16.01
+33,22,2018-19 - Completed - Works,176
+33,22,2019-20 - Expenditure - Incurred With (Rs. Crore),12.6
+33,22,2019-20 - Completed - Works,228
+33,23,S.No,23
+33,23,State,Meghalaya
+33,23,2016-17 - Expenditure - Incurred With (Rs. Crore),13.15
+33,23,2016-17 - Completed - Works,234
+33,23,2016-17 - Expenditure - Incurred With (Rs. Crore),13.15
+33,23,2016-17 - Completed - Works,234
+33,23,2018-19 - Expenditure - Incurred With (Rs. Crore),13.38
+33,23,2018-19 - Completed - Works,101
+33,23,2019-20 - Expenditure - Incurred With (Rs. Crore),9.86
+33,23,2019-20 - Completed - Works,315
+33,24,S.No,24
+33,24,State,Mizoram
+33,24,2016-17 - Expenditure - Incurred With (Rs. Crore),11.33
+33,24,2016-17 - Completed - Works,221
+33,24,2016-17 - Expenditure - Incurred With (Rs. Crore),11.33
+33,24,2016-17 - Completed - Works,221
+33,24,2018-19 - Expenditure - Incurred With (Rs. Crore),7.37
+33,24,2018-19 - Completed - Works,194
+33,24,2019-20 - Expenditure - Incurred With (Rs. Crore),8.7
+33,24,2019-20 - Completed - Works,154
+33,25,S.No,25
+33,25,State,Nagaland
+33,25,2016-17 - Expenditure - Incurred With (Rs. Crore),12.68
+33,25,2016-17 - Completed - Works,75
+33,25,2016-17 - Expenditure - Incurred With (Rs. Crore),12.68
+33,25,2016-17 - Completed - Works,75
+33,25,2018-19 - Expenditure - Incurred With (Rs. Crore),7.5
+33,25,2018-19 - Completed - Works,35
+33,25,2019-20 - Expenditure - Incurred With (Rs. Crore),4.89
+33,25,2019-20 - Completed - Works,32
+33,26,S.No,26
+33,26,State,Nominated
+33,26,2016-17 - Expenditure - Incurred With (Rs. Crore),60.48
+33,26,2016-17 - Completed - Works,373
+33,26,2016-17 - Expenditure - Incurred With (Rs. Crore),60.48
+33,26,2016-17 - Completed - Works,373
+33,26,2018-19 - Expenditure - Incurred With (Rs. Crore),61.7
+33,26,2018-19 - Completed - Works,353
+33,26,2019-20 - Expenditure - Incurred With (Rs. Crore),32.36
+33,26,2019-20 - Completed - Works,157
+33,27,S.No,27
+33,27,State,Odisha
+33,27,2016-17 - Expenditure - Incurred With (Rs. Crore),143.98
+33,27,2016-17 - Completed - Works,4897
+33,27,2016-17 - Expenditure - Incurred With (Rs. Crore),143.98
+33,27,2016-17 - Completed - Works,4897
+33,27,2018-19 - Expenditure - Incurred With (Rs. Crore),164.76
+33,27,2018-19 - Completed - Works,7917
+33,27,2019-20 - Expenditure - Incurred With (Rs. Crore),63.86
+33,27,2019-20 - Completed - Works,3138
+33,28,S.No,28
+33,28,State,Puducherry
+33,28,2016-17 - Expenditure - Incurred With (Rs. Crore),7.84
+33,28,2016-17 - Completed - Works,55
+33,28,2016-17 - Expenditure - Incurred With (Rs. Crore),7.84
+33,28,2016-17 - Completed - Works,55
+33,28,2018-19 - Expenditure - Incurred With (Rs. Crore),18.34
+33,28,2018-19 - Completed - Works,42
+33,28,2019-20 - Expenditure - Incurred With (Rs. Crore),6.02
+33,28,2019-20 - Completed - Works,61
+33,29,S.No,29
+33,29,State,Punjab
+33,29,2016-17 - Expenditure - Incurred With (Rs. Crore),88.12
+33,29,2016-17 - Completed - Works,5838
+33,29,2016-17 - Expenditure - Incurred With (Rs. Crore),88.12
+33,29,2016-17 - Completed - Works,5838
+33,29,2018-19 - Expenditure - Incurred With (Rs. Crore),109.32
+33,29,2018-19 - Completed - Works,4158
+33,29,2019-20 - Expenditure - Incurred With (Rs. Crore),33.67
+33,29,2019-20 - Completed - Works,1722
+33,30,S.No,30
+33,30,State,Rajasthan
+33,30,2016-17 - Expenditure - Incurred With (Rs. Crore),177.23
+33,30,2016-17 - Completed - Works,2786
+33,30,2016-17 - Expenditure - Incurred With (Rs. Crore),177.23
+33,30,2016-17 - Completed - Works,2786
+33,30,2018-19 - Expenditure - Incurred With (Rs. Crore),188.24
+33,30,2018-19 - Completed - Works,2997
+33,30,2019-20 - Expenditure - Incurred With (Rs. Crore),100.53
+33,30,2019-20 - Completed - Works,1983
+33,31,S.No,31
+33,31,State,Sikkim
+33,31,2016-17 - Expenditure - Incurred With (Rs. Crore),12.33
+33,31,2016-17 - Completed - Works,196
+33,31,2016-17 - Expenditure - Incurred With (Rs. Crore),12.33
+33,31,2016-17 - Completed - Works,196
+33,31,2018-19 - Expenditure - Incurred With (Rs. Crore),9.41
+33,31,2018-19 - Completed - Works,60
+33,31,2019-20 - Expenditure - Incurred With (Rs. Crore),6.03
+33,31,2019-20 - Completed - Works,137
+33,32,S.No,32
+33,32,State,Tamil Nadu
+33,32,2016-17 - Expenditure - Incurred With (Rs. Crore),317.54
+33,32,2016-17 - Completed - Works,3300
+33,32,2016-17 - Expenditure - Incurred With (Rs. Crore),317.54
+33,32,2016-17 - Completed - Works,3300
+33,32,2018-19 - Expenditure - Incurred With (Rs. Crore),353.91
+33,32,2018-19 - Completed - Works,4916
+33,32,2019-20 - Expenditure - Incurred With (Rs. Crore),220.21
+33,32,2019-20 - Completed - Works,2414
+33,33,S.No,33
+33,33,State,Telangana
+33,33,2016-17 - Expenditure - Incurred With (Rs. Crore),124.28
+33,33,2016-17 - Completed - Works,3839
+33,33,2016-17 - Expenditure - Incurred With (Rs. Crore),124.28
+33,33,2016-17 - Completed - Works,3839
+33,33,2018-19 - Expenditure - Incurred With (Rs. Crore),104.59
+33,33,2018-19 - Completed - Works,3331
+33,33,2019-20 - Expenditure - Incurred With (Rs. Crore),68.12
+33,33,2019-20 - Completed - Works,2195
+33,34,S.No,34
+33,34,State,Tripura
+33,34,2016-17 - Expenditure - Incurred With (Rs. Crore),15.88
+33,34,2016-17 - Completed - Works,179
+33,34,2016-17 - Expenditure - Incurred With (Rs. Crore),15.88
+33,34,2016-17 - Completed - Works,179
+33,34,2018-19 - Expenditure - Incurred With (Rs. Crore),19.55
+33,34,2018-19 - Completed - Works,170
+33,34,2019-20 - Expenditure - Incurred With (Rs. Crore),2.52
+33,34,2019-20 - Completed - Works,21
+33,35,S.No,35
+33,35,State,Uttar Pradesh
+33,35,2016-17 - Expenditure - Incurred With (Rs. Crore),483.89
+33,35,2016-17 - Completed - Works,17216
+33,35,2016-17 - Expenditure - Incurred With (Rs. Crore),483.89
+33,35,2016-17 - Completed - Works,17216
+33,35,2018-19 - Expenditure - Incurred With (Rs. Crore),920.88
+33,35,2018-19 - Completed - Works,21703
+33,35,2019-20 - Expenditure - Incurred With (Rs. Crore),236.7
+33,35,2019-20 - Completed - Works,8304
+33,36,S.No,36
+33,36,State,Uttarakhand
+33,36,2016-17 - Expenditure - Incurred With (Rs. Crore),35.88
+33,36,2016-17 - Completed - Works,1381
+33,36,2016-17 - Expenditure - Incurred With (Rs. Crore),35.88
+33,36,2016-17 - Completed - Works,1381
+33,36,2018-19 - Expenditure - Incurred With (Rs. Crore),37.26
+33,36,2018-19 - Completed - Works,1151
+33,36,2019-20 - Expenditure - Incurred With (Rs. Crore),31.08
+33,36,2019-20 - Completed - Works,1460
+33,37,S.No,37
+33,37,State,West Bengal
+33,37,2016-17 - Expenditure - Incurred With (Rs. Crore),338.39
+33,37,2016-17 - Completed - Works,4752
+33,37,2016-17 - Expenditure - Incurred With (Rs. Crore),338.39
+33,37,2016-17 - Completed - Works,4752
+33,37,2018-19 - Expenditure - Incurred With (Rs. Crore),347.82
+33,37,2018-19 - Completed - Works,5151
+33,37,2019-20 - Expenditure - Incurred With (Rs. Crore),123.1
+33,37,2019-20 - Completed - Works,2613
+33,38,S.No,Total
+33,38,State,Total
+33,38,2016-17 - Expenditure - Incurred With (Rs. Crore),4080.68
+33,38,2016-17 - Completed - Works,94373
+33,38,2016-17 - Expenditure - Incurred With (Rs. Crore),4080.68
+33,38,2016-17 - Completed - Works,94373
+33,38,2018-19 - Expenditure - Incurred With (Rs. Crore),5012.13
+33,38,2018-19 - Completed - Works,105167
+33,38,2019-20 - Expenditure - Incurred With (Rs. Crore),2236.28
+33,38,2019-20 - Completed - Works,56946
+34,1,S.No,1
+34,1,States/UTs,A & N Island
+34,1,Unspent Balance (in Rs. Crore),4.22
+34,2,S.No,2
+34,2,States/UTs,Andhra Pradesh
+34,2,Unspent Balance (in Rs. Crore),265.91
+34,3,S.No,3
+34,3,States/UTs,Arunachal Pradesh
+34,3,Unspent Balance (in Rs. Crore),8.73
+34,4,S.No,4
+34,4,States/UTs,Assam
+34,4,Unspent Balance (in Rs. Crore),141.75
+34,5,S.No,5
+34,5,States/UTs,Bihar
+34,5,Unspent Balance (in Rs. Crore),309.03
+34,6,S.No,6
+34,6,States/UTs,Chandigarh
+34,6,Unspent Balance (in Rs. Crore),3.26
+34,7,S.No,7
+34,7,States/UTs,Chhattisgarh
+34,7,Unspent Balance (in Rs. Crore),63.88
+34,8,S.No,8
+34,8,States/UTs,D & N Haveli
+34,8,Unspent Balance (in Rs. Crore),8.36
+34,9,S.No,9
+34,9,States/UTs,Daman & Diu
+34,9,Unspent Balance (in Rs. Crore),6
+34,10,S.No,10
+34,10,States/UTs,Delhi
+34,10,Unspent Balance (in Rs. Crore),73.4
+34,11,S.No,11
+34,11,States/UTs,Goa
+34,11,Unspent Balance (in Rs. Crore),16.1
+34,12,S.No,12
+34,12,States/UTs,Gujarat
+34,12,Unspent Balance (in Rs. Crore),193.56
+34,13,S.No,13
+34,13,States/UTs,Haryana
+34,13,Unspent Balance (in Rs. Crore),88.79
+34,14,S.No,14
+34,14,States/UTs,Himachal Pradesh
+34,14,Unspent Balance (in Rs. Crore),56.94
+34,15,S.No,15
+34,15,States/UTs,Jammu & Kashmir
+34,15,Unspent Balance (in Rs. Crore),58.38
+34,16,S.No,16
+34,16,States/UTs,Jharkhand
+34,16,Unspent Balance (in Rs. Crore),157.67
+34,17,S.No,17
+34,17,States/UTs,Karnataka
+34,17,Unspent Balance (in Rs. Crore),259.7
+34,18,S.No,18
+34,18,States/UTs,Kerala
+34,18,Unspent Balance (in Rs. Crore),108.46
+34,19,S.No,19
+34,19,States/UTs,Lakshadweep
+34,19,Unspent Balance (in Rs. Crore),6.7
+34,20,S.No,20
+34,20,States/UTs,Madhya Pradesh
+34,20,Unspent Balance (in Rs. Crore),225.38
+34,21,S.No,21
+34,21,States/UTs,Maharashtra
+34,21,Unspent Balance (in Rs. Crore),385.49
+34,22,S.No,22
+34,22,States/UTs,Manipur
+34,22,Unspent Balance (in Rs. Crore),14.52
+34,23,S.No,23
+34,23,States/UTs,Meghalaya
+34,23,Unspent Balance (in Rs. Crore),6.64
+34,24,S.No,24
+34,24,States/UTs,Mizoram
+34,24,Unspent Balance (in Rs. Crore),1.91
+34,25,S.No,25
+34,25,States/UTs,Nagaland
+34,25,Unspent Balance (in Rs. Crore),5.15
+34,26,S.No,26
+34,26,States/UTs,Odisha
+34,26,Unspent Balance (in Rs. Crore),249.5
+34,27,S.No,27
+34,27,States/UTs,Puducherry
+34,27,Unspent Balance (in Rs. Crore),10.97
+34,28,S.No,28
+34,28,States/UTs,Punjab
+34,28,Unspent Balance (in Rs. Crore),118.93
+34,29,S.No,29
+34,29,States/UTs,Rajasthan
+34,29,Unspent Balance (in Rs. Crore),240.3
+34,30,S.No,30
+34,30,States/UTs,Sikkim
+34,30,Unspent Balance (in Rs. Crore),9.12
+34,31,S.No,31
+34,31,States/UTs,Tamil Nadu
+34,31,Unspent Balance (in Rs. Crore),247.1
+34,32,S.No,32
+34,32,States/UTs,Telangana
+34,32,Unspent Balance (in Rs. Crore),68.22
+34,33,S.No,33
+34,33,States/UTs,Tripura
+34,33,Unspent Balance (in Rs. Crore),9.13
+34,34,S.No,34
+34,34,States/UTs,Uttar Pradesh
+34,34,Unspent Balance (in Rs. Crore),665.58
+34,35,S.No,35
+34,35,States/UTs,Uttarakhand
+34,35,Unspent Balance (in Rs. Crore),71.34
+34,36,S.No,36
+34,36,States/UTs,West Bengal
+34,36,Unspent Balance (in Rs. Crore),229.49
+34,37,S.No,Sub Total
+34,37,States/UTs,Sub Total
+34,37,Unspent Balance (in Rs. Crore),4389.61
+34,38,S.No,Nominated
+34,38,States/UTs,Nominated
+34,38,Unspent Balance (in Rs. Crore),90.53
+34,39,S.No,Sub Total
+34,39,States/UTs,Sub Total
+34,39,Unspent Balance (in Rs. Crore),90.53
+34,40,S.No,Grand Total
+34,40,States/UTs,Grand Total
+34,40,Unspent Balance (in Rs. Crore),4480.14
+35,1,S. No,1
+35,1,Financial Year,2014-15
+35,1,Released by G.O.I. (Rs. In crore),3350
+35,1,Expenditure Incurred (Rs. In Crore),2634.94
+35,1,Unspent Balance (Rs. In Crore),4857.51
+35,2,S. No,2
+35,2,Financial Year,2015-16
+35,2,Released by G.O.I. (Rs. In crore),3502
+35,2,Expenditure Incurred (Rs. In Crore),3624.78
+35,2,Unspent Balance (Rs. In Crore),4950.34
+35,3,S. No,3
+35,3,Financial Year,2016-17
+35,3,Released by G.O.I. (Rs. In crore),3499.5
+35,3,Expenditure Incurred (Rs. In Crore),3906.36
+35,3,Unspent Balance (Rs. In Crore),5029.31
+35,4,S. No,4
+35,4,Financial Year,2017-18
+35,4,Released by G.O.I. (Rs. In crore),3504
+35,4,Expenditure Incurred (Rs. In Crore),4076.29
+35,4,Unspent Balance (Rs. In Crore),4877.71
+35,5,S. No,5
+35,5,Financial Year,2018-30.11.2018
+35,5,Released by G.O.I. (Rs. In crore),2702
+35,5,Expenditure Incurred (Rs. In Crore),3331.74
+35,5,Unspent Balance (Rs. In Crore),4480.14
+35,6,S. No,Grand Total
+35,6,Financial Year,Grand Total
+35,6,Released by G.O.I. (Rs. In crore),16557.5
+35,6,Expenditure Incurred (Rs. In Crore),17574.11
+35,6,Unspent Balance (Rs. In Crore),NA

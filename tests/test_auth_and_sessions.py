@@ -176,3 +176,25 @@ def test_submit_consumes_camera_session_and_blocks_reuse(db_session: Database, t
             )
         assert second.status_code == 400
         assert "already used" in second.json()["detail"].lower()
+
+
+def test_login_token_lives_the_documented_24_hours(db_session: Database):
+    """Regression: /api/auth/login used to call create_access_token()
+    without expires_delta, silently falling into its 15-minute fallback —
+    every session died mid-use despite ACCESS_TOKEN_EXPIRE_MINUTES (and
+    the README) saying 24h."""
+    from jose import jwt as jose_jwt
+
+    from app.auth import ALGORITHM, SECRET_KEY
+
+    client.post(
+        "/api/auth/register",
+        json={"username": "longlived", "password": "pw", "agency_name": "A", "district": "Pune"},
+    )
+    token = client.post(
+        "/api/auth/login", data={"username": "longlived", "password": "pw"}
+    ).json()["access_token"]
+
+    claims = jose_jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    lifetime_hours = (datetime.utcfromtimestamp(claims["exp"]) - datetime.utcnow()).total_seconds() / 3600
+    assert lifetime_hours > 23, f"token lives only {lifetime_hours:.2f}h — the 15-minute fallback is back"

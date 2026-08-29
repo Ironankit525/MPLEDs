@@ -428,6 +428,57 @@ class DashboardSummaryResponse(BaseModel):
     )
 
 
+class AISummaryResponse(BaseModel):
+    """Narrative summary of the overview figures, drafted by an LLM
+    (`GET /api/stakeholder/ai-summary`). `available=False` means the
+    feature is unconfigured or the generation call failed — the client
+    should render the numeric dashboard without a summary, not an error.
+    """
+    available: bool
+    summary: Optional[str] = Field(None, description="Two paragraphs of plain prose; None when unavailable")
+    model: Optional[str] = Field(None, description="Model that drafted the text, e.g. gemini-2.5-flash")
+    generated_at: Optional[datetime] = Field(None, description="When this response was produced")
+    cached: bool = Field(False, description="True when reused from the in-process cache (same figures)")
+    reason: Optional[str] = Field(
+        None, description="Why unavailable: 'not_configured' or 'generation_failed'"
+    )
+
+
+class AIReportTurn(BaseModel):
+    """One visible message in the AI-report conversation, replayed to the
+    model so follow-up questions resolve against earlier answers."""
+    role: str = Field(description="'user' or 'assistant'")
+    text: str
+
+    @field_validator("role")
+    @classmethod
+    def _validate_role(cls, v: str) -> str:
+        if v not in ("user", "assistant"):
+            raise ValueError("role must be 'user' or 'assistant'")
+        return v
+
+
+class AIReportRequest(BaseModel):
+    """Body for `POST /api/stakeholder/ai-report`."""
+    question: str = Field(min_length=1, max_length=2000)
+    history: list[AIReportTurn] = Field(
+        default_factory=list, description="The visible conversation so far, oldest first"
+    )
+
+
+class AIReportResponse(BaseModel):
+    """One grounded answer for the stakeholder AI-report page. Same
+    availability contract as AISummaryResponse: `available=False` means
+    unconfigured or the generation call failed, never an HTTP error."""
+    available: bool
+    answer: Optional[str] = None
+    model: Optional[str] = None
+    generated_at: Optional[datetime] = None
+    reason: Optional[str] = Field(
+        None, description="Why unavailable: 'not_configured' or 'generation_failed'"
+    )
+
+
 # ── Admin ─────────────────────────────────────────────────────────────
 
 class AdminUserCreate(BaseModel):

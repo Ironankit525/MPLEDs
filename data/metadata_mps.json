@@ -1,0 +1,17 @@
+{
+  "retrieved_at_utc": "2026-08-29T07:57:18.033216+00:00",
+  "member_count": 784,
+  "by_chamber": {
+    "Lok Sabha": 540,
+    "Rajya Sabha": 244
+  },
+  "image_status_counts": {
+    "cached": 784
+  },
+  "sources": {
+    "lok_sabha_directory": "https://sansad.in/ls/members",
+    "lok_sabha_api": "https://sansad.in/api_ls/member",
+    "rajya_sabha_directory": "https://sansad.in/rs/members",
+    "rajya_sabha_api": "https://sansad.in/api_rs/member/sitting-members"
+  }
+}

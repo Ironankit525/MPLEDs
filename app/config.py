@@ -406,6 +406,22 @@ class Settings(BaseSettings):
     CLOUDINARY_CLOUD_NAME: str = ""
     CLOUDINARY_API_KEY: str = ""
     CLOUDINARY_API_SECRET: str = ""
+
+    # ── AI report summary (Gemini) ───────────────────────────────────
+    # Optional, unlike DATABASE_URL/JWT_SECRET_KEY above: an empty key
+    # simply disables the /api/stakeholder/ai-summary narrative and the
+    # dashboard renders numbers-only — same graceful-degradation posture
+    # as CLIP and EasyOCR. Key comes from Google AI Studio.
+    GEMINI_API_KEY: str = ""
+    # Summarising one screen of pre-computed figures is a trivial task,
+    # so default to the cheapest/fastest tier rather than a pro model.
+    # (gemini-2.5-flash is no longer served to new API accounts — the
+    # API's own 404 message names this as the replacement.)
+    GEMINI_MODEL: str = "gemini-3.6-flash"
+    # Bounds how long an already-generated summary is reused. Freshness
+    # does not depend on this: the cache key is a hash of the figures,
+    # so any data change regenerates immediately regardless of TTL.
+    AI_SUMMARY_CACHE_TTL_SECONDS: int = 600
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",
