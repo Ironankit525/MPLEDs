@@ -40,7 +40,7 @@ export default function AppShell() {
       <Sidebar navItems={navItems} isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <div className={`scrim${menuOpen ? ' is-open' : ''}`} onClick={() => setMenuOpen(false)} />
 
-      <div className="stack">
+      <div className="stack" style={{ overflowY: 'auto', height: '100vh', minWidth: 0 }}>
         <div className="topbar">
           <button type="button" className="icon-btn" onClick={() => setMenuOpen(true)} aria-label="Open menu">
             <Icon name="menu" size={22} />

@@ -109,8 +109,8 @@ export default function ProgressTimeline({ status, uploadedAt }) {
             {i < steps.length - 1 && <div className="timeline-line" />}
           </div>
           <div className="timeline-content">
-            <h4>{step.title}</h4>
-            <p>{step.description}</p>
+            <h4 className="!text-slate-900">{step.title}</h4>
+            <p className="!text-slate-600">{step.description}</p>
           </div>
         </div>
       ))}
