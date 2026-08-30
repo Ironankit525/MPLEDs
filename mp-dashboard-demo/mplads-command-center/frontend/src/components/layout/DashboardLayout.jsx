@@ -19,7 +19,7 @@ export const DashboardLayout = () => {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-100/70 text-slate-900 font-sans antialiased">
+    <div className="flex h-screen overflow-hidden bg-slate-100 text-slate-900 font-sans antialiased">
       {/* Mobile Overlay Backdrop */}
       {mobileOpen && (
         <div
@@ -29,7 +29,7 @@ export const DashboardLayout = () => {
         />
       )}
 
-      {/* Sidebar — desktop sticky, mobile fixed drawer */}
+      {/* Sidebar */}
       <Sidebar
         isCollapsed={collapsed}
         onToggle={() => setCollapsed(!collapsed)}
@@ -37,14 +37,19 @@ export const DashboardLayout = () => {
         onMobileClose={() => setMobileOpen(false)}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300">
-        <Navbar onHamburgerClick={() => setMobileOpen(true)} />
-        <main className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
-          <div className="w-full max-w-[1580px] mx-auto">
-            <Outlet />
-          </div>
-        </main>
+      {/* Main Content Area Wrapper */}
+      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out md:pt-2 md:pl-0">
+        
+        {/* Inset White Main Panel Canvas */}
+        <div className="flex-1 flex flex-col bg-white md:rounded-tl-2xl overflow-hidden h-full relative shadow-sm border-l border-t border-slate-200/50">
+          <Navbar onHamburgerClick={() => setMobileOpen(true)} />
+          <main className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 bg-slate-50">
+            <div className="w-full max-w-[1580px] mx-auto">
+              <Outlet />
+            </div>
+          </main>
+        </div>
+
       </div>
     </div>
   );

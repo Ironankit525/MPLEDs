@@ -41,11 +41,12 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
   return (
     <aside
       className={`
-        bg-white border-r border-slate-200 flex flex-col shrink-0 z-50 overflow-hidden transition-all duration-300 ease-in-out
+        flex flex-col shrink-0 z-50 overflow-hidden transition-all duration-300 ease-in-out
+        bg-slate-100 md:bg-transparent
 
         /* Desktop: full-height sidebar in the fixed h-screen layout */
         md:relative md:h-full
-        ${isCollapsed ? 'md:w-16' : 'md:w-56'}
+        ${isCollapsed ? 'md:w-20' : 'md:w-64'}
 
         /* Mobile: fixed drawer that slides in from left */
         fixed inset-y-0 left-0 h-full w-64
@@ -55,8 +56,8 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
     >
       {/* Brand Logo Header with Toggle Button */}
       <div
-        className={`h-16 border-b border-slate-200 shrink-0 bg-white flex items-center justify-between transition-all select-none ${
-          isCollapsed ? 'px-2 md:justify-center' : 'px-3.5'
+        className={`h-16 shrink-0 flex items-center justify-between transition-all select-none ${
+          isCollapsed ? 'px-2 md:justify-center' : 'px-4'
         }`}
       >
         <div
