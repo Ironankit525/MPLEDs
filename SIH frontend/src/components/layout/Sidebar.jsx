@@ -169,6 +169,30 @@ export const Sidebar = () => {
           </div>
         </div>
       </div>
+      
+      {/* Logout Button */}
+      <div className="p-3">
+        <button
+          onClick={() => {
+            document.cookie = 'auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = 'user_role=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            window.location.href = 'http://localhost:3000/';
+          }}
+          className={`flex items-center justify-center w-full py-2.5 rounded-xl font-bold transition-all ${
+            sidebarCollapsed 
+              ? 'text-red-500 bg-red-50 hover:bg-red-100 px-0'
+              : 'text-white bg-red-500 hover:bg-red-600 px-3'
+          }`}
+          title="Log Out"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={sidebarCollapsed ? '' : 'mr-2'}>
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          {!sidebarCollapsed && <span>Log Out</span>}
+        </button>
+      </div>
     </aside>
   );
 };
