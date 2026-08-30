@@ -32,12 +32,12 @@ const MOCK_TREND_DATA = [
 export const MPDetailsPage = () => {
   const { mpId } = useParams();
   const navigate = useNavigate();
-  const { projectsData, loading, error } = useProjects();
+  const { projects: projectsData, loading, error } = useProjects();
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedProject, setSelectedProject] = useState(null);
 
   const mpData = useMemo(() => {
-    if (!projectsData || projectsData.length === 0) return null;
+    if (!projectsData) return null;
     
     // Calculate performance for all MPs (which merges MASTER_MP_RECORDS for fallback stats)
     const records = calculateMPPerformance(projectsData);
@@ -69,8 +69,6 @@ export const MPDetailsPage = () => {
     return (
       <div className="p-8 text-center bg-white min-h-[50vh] flex flex-col items-center justify-center">
         <h2 className="text-xl font-bold text-slate-800">MP Profile Not Found</h2>
-        <p className="text-sm text-slate-500 mt-2">Searched for MP ID: "{mpId}"</p>
-        <p className="text-sm text-slate-500 mb-4">Total projects loaded: {projectsData?.length || 0}</p>
         <button onClick={() => navigate(-1)} className="mt-4 text-indigo-600 font-bold hover:underline">
           Go Back
         </button>
