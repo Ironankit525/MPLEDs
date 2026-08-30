@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Icon from '../Icon'
@@ -31,14 +31,30 @@ const NAV_BY_ROLE = {
 }
 
 export default function AppShell() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const { user } = useAuth()
-  const navItems = NAV_BY_ROLE[user?.role] || []
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+
+  const handleShortcutAction = (actionId) => {
+    if (actionId === 'add-project') {
+      window.location.href = '/app/upload'
+    } else if (actionId === 'generate-report') {
+      alert('Generating consolidated MPLADS Analytics and Utilization report...')
+    } else if (actionId === 'view-alerts') {
+      window.location.href = '/app/ai-risk-monitor'
+    } else if (actionId === 'download-data') {
+      alert('Preparing full CSV/Excel data export of MPLADS project metrics...')
+    }
+  }
 
   return (
-    <div className="app-shell">
-      <Sidebar navItems={navItems} isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      <div className={`scrim${menuOpen ? ' is-open' : ''}`} onClick={() => setMenuOpen(false)} />
+    <div className={`mplads-app-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Dark Sidebar */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        isCollapsed={sidebarCollapsed}
+        onClose={() => setSidebarOpen(false)}
+        onActionClick={handleShortcutAction}
+      />
 
       <div className="stack" style={{ overflowY: 'auto', height: '100vh', minWidth: 0 }}>
         <div className="topbar">
@@ -52,7 +68,8 @@ export default function AppShell() {
           <span style={{ width: 38 }} />
         </div>
 
-        <main className="main-content">
+        {/* Dynamic Page Outlet */}
+        <main className="mplads-page-content">
           <Outlet />
         </main>
       </div>
