@@ -27,8 +27,9 @@ export function App() {
     <AppProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to="/admin" replace />} />
           <Route element={<AuthGuard allowedRoles={['admin']} />}>
-            <Route path="/" element={<DashboardLayout />}>
+            <Route path="/admin" element={<DashboardLayout />}>
               <Route index element={<RootRedirect />} />
               <Route path="overview" element={<OverviewPage />} />
               <Route path="projects" element={<ProjectsPage />} />
@@ -38,7 +39,6 @@ export function App() {
               <Route path="ai-risk/:projectId" element={<AIRiskDetailsPage />} />
               <Route path="analytics" element={<AnalyticsPage />} />
               <Route path="settings" element={<SettingsPage />} />
-              {/* Catch-all fallback */}
               <Route path="*" element={<Navigate to={ROUTES.OVERVIEW} replace />} />
             </Route>
           </Route>
