@@ -24,11 +24,11 @@ import AdminActivityPage from './pages/AdminActivityPage'
 import SettingsPage from './pages/SettingsPage'
 import UnsupportedRolePage from './pages/UnsupportedRolePage'
 import NotFoundPage from './pages/NotFoundPage'
+import ProjectDetailsDashboardPage from './pages/ProjectDetailsDashboardPage'
 
 /** Sends a visitor to the right place for their session: the login
  * page if signed out, or their role's landing page (lib/roles.js) if
- * signed in. A role with no dashboard built yet lands on the
- * "not built" placeholder, same as RequireRole would send them. */
+ * signed in. */
 function IndexRedirect() {
   const { status, user } = useAuth()
   if (status === 'loading') {
@@ -39,14 +39,12 @@ function IndexRedirect() {
     )
   }
   if (status === 'anonymous') return <Navigate to="/login" replace />
-  return <Navigate to={roleLandingPath(user?.role)} replace />
+  return <Navigate to="/app/projects/MP-BR-205-412" replace />
 }
 
-/** The index route under /app — same idea as IndexRedirect, but only
- * reached once auth + role are known, so it can assume `user` exists. */
+/** The index route under /app */
 function AppIndexRedirect() {
-  const { user } = useAuth()
-  return <Navigate to={roleLandingPath(user?.role)} replace />
+  return <Navigate to="/app/projects/MP-BR-205-412" replace />
 }
 
 export default function App() {
@@ -62,7 +60,21 @@ export default function App() {
         <Route path="/app" element={<AppShell />}>
           <Route index element={<AppIndexRedirect />} />
 
-          {/* Submitter (Admin also has Full Access on Document Upload) */}
+          {/* Primary MPLADS AI-Powered Project Dashboard Routes */}
+          <Route path="overview" element={<ProjectDetailsDashboardPage />} />
+          <Route path="projects" element={<ProjectDetailsDashboardPage />} />
+          <Route path="projects/:id" element={<ProjectDetailsDashboardPage />} />
+          <Route path="financials" element={<ProjectDetailsDashboardPage />} />
+          <Route path="ai-risk-monitor" element={<ProjectDetailsDashboardPage />} />
+          <Route path="alerts" element={<ProjectDetailsDashboardPage />} />
+          <Route path="analytics" element={<ProjectDetailsDashboardPage />} />
+          <Route path="map-view" element={<ProjectDetailsDashboardPage />} />
+          <Route path="agency-performance" element={<ProjectDetailsDashboardPage />} />
+          <Route path="compliance" element={<ProjectDetailsDashboardPage />} />
+          <Route path="data-export" element={<ProjectDetailsDashboardPage />} />
+          <Route path="help" element={<ProjectDetailsDashboardPage />} />
+
+          {/* Submitter Workflow */}
           <Route
             path="upload"
             element={
@@ -182,7 +194,7 @@ export default function App() {
             }
           />
 
-          {/* Shared across every role that has a dashboard at all */}
+          {/* Shared Settings */}
           <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Route>
