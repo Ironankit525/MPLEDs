@@ -85,8 +85,91 @@ export const MPDetailsPage = () => {
   return (
     <div className="min-h-[calc(100vh-72px)] bg-white flex -mt-3 sm:-mt-4 lg:-mt-5 -mx-3 sm:-mx-4 lg:-mx-5">
       {/* 35% Left Column */}
-      <div className="w-[35%] shrink-0 border-r border-slate-200 p-6 min-h-full flex flex-col">
-        <p className="text-slate-500">Left Column (35%)</p>
+      <div className="w-[35%] shrink-0 border-r border-slate-200 p-8 min-h-full flex flex-col">
+        {/* Avatar & Name */}
+        <div className="flex flex-col items-center mb-8">
+          <img src={dummyAvatar} alt={record.mpName} className="w-28 h-28 rounded-full object-cover mb-4" />
+          <h1 className="text-xl font-semibold text-slate-900 leading-tight mb-1">{record.mpName}</h1>
+          <p className="text-sm text-slate-500">#{mpId}</p>
+        </div>
+
+        {/* Member Details */}
+        <div className="space-y-4 mb-8">
+          <h3 className="text-[13px] font-bold text-slate-900 mb-5">Member Details</h3>
+          
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Phone</span>
+            <span className="font-medium text-slate-900">(628) 555-0124</span>
+          </div>
+          
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Email</span>
+            <span className="font-medium text-slate-900">{(record.mpName.split(' ')[1] || record.mpName.split(' ')[0] || 'mp').toLowerCase()}@sansad.nic.in</span>
+          </div>
+
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Party</span>
+            <span className="font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md text-[13px]">
+              • {record.party || 'Independent'}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">State</span>
+            <span className="font-medium text-slate-900">{record.state}</span>
+          </div>
+        </div>
+
+        <hr className="border-slate-100 mb-8" />
+
+        {/* Constituency Details */}
+        <div className="space-y-4 mb-8">
+          <h3 className="text-[13px] font-bold text-slate-900 mb-5">Constituency</h3>
+          
+          <div className="flex items-start justify-between text-sm">
+            <span className="text-slate-500">Region</span>
+            <span className="font-medium text-slate-900 text-right">{record.constituency}</span>
+          </div>
+          
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Total Projects</span>
+            <span className="font-medium text-slate-900">{record.totalProjects}</span>
+          </div>
+
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Fund Utilization</span>
+            <span className="font-medium text-slate-900">{record.utilization}%</span>
+          </div>
+        </div>
+
+        <hr className="border-slate-100 mb-8" />
+
+        {/* Active Projects Mini Cards */}
+        <div>
+          <div className="flex items-center gap-3 mb-5">
+            <h3 className="text-[13px] font-bold text-slate-900">Active Projects</h3>
+            <span className="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-0.5 rounded-md">{record.ongoingProjects}</span>
+          </div>
+          <div className="space-y-3">
+            {activeTopProjects.slice(0, 3).map((proj, i) => {
+              const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-amber-500'];
+              const color = colors[i % colors.length];
+              
+              return (
+                <div key={proj.id} className="p-3 border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300 transition-colors group" onClick={() => setSelectedProject(proj)}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`w-2.5 h-2.5 rounded-md ${color} shrink-0`} />
+                    <h4 className="text-[15px] font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">{proj.name}</h4>
+                  </div>
+                  <p className="text-[13px] text-slate-500 ml-[18px]">{formatCurrency(proj.expenditure)} spent • {proj.progress}% completed</p>
+                </div>
+              )
+            })}
+            {activeTopProjects.length === 0 && (
+              <p className="text-sm text-slate-500">No active projects found.</p>
+            )}
+          </div>
+        </div>
       </div>
       
       {/* 65% Right Column */}
