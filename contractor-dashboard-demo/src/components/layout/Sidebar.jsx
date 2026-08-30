@@ -12,7 +12,7 @@ import {
   X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-// import { AshokStambhLogo } from '../common/AshokStambhLogo'; // this might not exist here
+import { AshokStambhLogo } from '../common/AshokStambhLogo';
 
 const ICONS = {
   upload: Upload,
@@ -88,7 +88,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
           className="flex items-center w-full min-w-0 px-2.5 py-1.5 h-12 cursor-pointer rounded-xl hover:bg-slate-200/50 transition-colors group select-none text-left focus:outline-none"
         >
           <div className="flex items-center justify-center shrink-0 w-9 h-9 select-none">
-            <span className="font-bold text-slate-800 text-lg">MP</span>
+            <AshokStambhLogo className="w-9 h-9 shrink-0 pointer-events-none" theme="light" />
           </div>
           <div
             className={`flex flex-col leading-tight overflow-hidden transition-all duration-300 ease-in-out pl-3 select-none ${

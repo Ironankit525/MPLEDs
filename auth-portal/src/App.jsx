@@ -10,6 +10,12 @@ const LIVE_URLS = {
   mp: 'https://legendary-fox-513e66.netlify.app'
 };
 
+const LOCAL_URLS = {
+  admin: 'http://localhost:5173',
+  contractor: 'http://localhost:5174',
+  mp: 'http://localhost:5175'
+};
+
 function setCookie(name, value, days) {
   let expires = "";
   if (days) {
@@ -22,7 +28,10 @@ function setCookie(name, value, days) {
 }
 
 function handleRedirection(role, token) {
-  const baseUrl = LIVE_URLS[role] || LIVE_URLS.admin;
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const urls = isLocal ? LOCAL_URLS : LIVE_URLS;
+  const baseUrl = urls[role] || urls.admin;
+  
   // Pass auth data in URL so the other Netlify domain can pick it up
   const destUrl = role === 'contractor' ? `${baseUrl}/app?token=${token}&role=${role}` : `${baseUrl}/?token=${token}&role=${role}`;
   window.location.href = destUrl;

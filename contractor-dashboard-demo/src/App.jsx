@@ -38,7 +38,8 @@ function IndexRedirect() {
     )
   }
   if (status === 'anonymous') {
-    window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/';
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    window.location.href = isLocal ? 'http://localhost:3000/' : 'https://inspiring-lebkuchen-67d55f.netlify.app/';
     return null;
   }
   return <Navigate to={roleLandingPath(user?.role)} replace />
