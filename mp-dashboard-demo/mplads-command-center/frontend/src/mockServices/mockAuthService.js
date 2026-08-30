@@ -1,6 +1,19 @@
 import { MOCK_USERS } from '../mock/users';
 import { MOCK_MPS } from '../mock/mps';
 
+// Snatch token from URL synchronously before React Router redirects
+if (typeof window !== 'undefined') {
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+  const urlRole = params.get('role');
+  if (urlToken) {
+    document.cookie = `auth_token=${urlToken}; path=/`;
+    document.cookie = `user_role=${urlRole}; path=/`;
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
 export const mockAuthService = {
   loginWithMP: async (mpId) => {
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -21,15 +34,6 @@ export const mockAuthService = {
 
   getCurrentSession: async () => {
     await new Promise(resolve => setTimeout(resolve, 150));
-    
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('token');
-    const urlRole = params.get('role');
-    if (urlToken) {
-      document.cookie = `auth_token=${urlToken}; path=/`;
-      document.cookie = `user_role=${urlRole}; path=/`;
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
     
     const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1];
     if (!token) return null;

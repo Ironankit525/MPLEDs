@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function setCookie(name, value, days) {
@@ -11,6 +11,19 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
+// Snatch token from URL synchronously before React Router redirects
+if (typeof window !== 'undefined') {
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+  const urlRole = params.get('role');
+  if (urlToken) {
+    setCookie('auth_token', urlToken, 1);
+    setCookie('user_role', urlRole, 1);
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -19,31 +32,8 @@ function getCookie(name) {
 }
 
 export function AuthGuard({ allowedRoles }) {
-  const [isInitializing, setIsInitializing] = useState(true);
-  const [token, setToken] = useState(null);
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    // Check URL parameters first (passed from external Auth Portal)
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('token');
-    const urlRole = params.get('role');
-
-    if (urlToken && urlRole) {
-      setCookie('auth_token', urlToken, 1);
-      setCookie('user_role', urlRole, 1);
-      // Clean URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setToken(urlToken);
-      setRole(urlRole);
-    } else {
-      setToken(getCookie('auth_token'));
-      setRole(getCookie('user_role'));
-    }
-    setIsInitializing(false);
-  }, []);
-
-  if (isInitializing) return null;
+  const token = getCookie('auth_token');
+  const role = getCookie('user_role');
 
   if (!token) {
     window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/';
