@@ -320,7 +320,7 @@ export const MPDetailsPage = () => {
                     </div>
                     <div className="flex flex-col items-center text-center">
                       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sanctioned Works</span>
-                      <span className="text-[20px] font-black text-indigo-600">{record.totalProjects}</span>
+                      <span className="text-[20px] font-black text-slate-900">{record.totalProjects}</span>
                     </div>
                   </div>
                 </div>
@@ -335,11 +335,11 @@ export const MPDetailsPage = () => {
                     </div>
                     <div className="flex flex-col items-center text-center">
                       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Completed</span>
-                      <span className="text-[20px] font-black text-emerald-600">{record.completedProjects}</span>
+                      <span className="text-[20px] font-black text-slate-900">{record.completedProjects}</span>
                     </div>
                     <div className="flex flex-col items-center text-center">
                       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Ongoing</span>
-                      <span className="text-[20px] font-black text-blue-600">{record.ongoingProjects}</span>
+                      <span className="text-[20px] font-black text-slate-900">{record.ongoingProjects}</span>
                     </div>
                     <div className="flex flex-col items-center text-center">
                       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Delayed</span>
