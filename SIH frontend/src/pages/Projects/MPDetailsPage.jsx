@@ -132,7 +132,7 @@ export const MPDetailsPage = () => {
         <div className="flex flex-col items-center mb-8">
           <img src={dummyAvatar} alt={record.mpName} className="w-28 h-28 rounded-full object-cover mb-4" />
           <h1 className="text-xl font-semibold text-slate-900 leading-tight mb-1">{record.mpName}</h1>
-          <p className="text-sm text-slate-500">#{mpId}</p>
+          <p className="text-sm text-slate-500 uppercase font-medium">{mpId}</p>
         </div>
 
         {/* Member Details */}
