@@ -4,6 +4,12 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/api';
 
+const LIVE_URLS = {
+  admin: 'https://sihmplads.netlify.app',
+  contractor: 'https://preeminent-youtiao-fd05dd.netlify.app',
+  mp: 'https://legendary-fox-513e66.netlify.app'
+};
+
 function setCookie(name, value, days) {
   let expires = "";
   if (days) {
@@ -11,20 +17,15 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     expires = "; expires=" + date.toUTCString();
   }
-  document.cookie = name + "=" + (value || "")  + expires + "; path=/; domain=localhost";
+  // Remove domain=localhost so it works on any domain
+  document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
-function handleRedirection(role) {
-  if (role === 'admin') {
-    window.location.href = 'http://localhost:5173/';
-  } else if (role === 'contractor') {
-    window.location.href = 'http://localhost:5174/app';
-  } else if (role === 'mp') {
-    window.location.href = 'http://localhost:5175/';
-  } else {
-    // fallback
-    window.location.href = 'http://localhost:5173/';
-  }
+function handleRedirection(role, token) {
+  const baseUrl = LIVE_URLS[role] || LIVE_URLS.admin;
+  // Pass auth data in URL so the other Netlify domain can pick it up
+  const destUrl = role === 'contractor' ? `${baseUrl}/app?token=${token}&role=${role}` : `${baseUrl}/?token=${token}&role=${role}`;
+  window.location.href = destUrl;
 }
 
 function LoginPage() {
@@ -36,21 +37,19 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const params = new URLSearchParams();
-      params.append('username', username);
-      params.append('password', password);
-
-      const res = await axios.post(`${API_URL}/auth/login`, params, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      });
+      // MOCK LOGIN FOR HACKATHON DEMO (No backend needed)
+      let role = 'admin';
+      if (username.toLowerCase().includes('contractor')) role = 'contractor';
+      if (username.toLowerCase() === 'mp') role = 'mp';
       
-      const { access_token, role } = res.data;
+      const access_token = `mock_token_${role}_12345`;
+      
       setCookie('auth_token', access_token, 1);
       setCookie('user_role', role, 1);
       
-      handleRedirection(role);
+      handleRedirection(role, access_token);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Login failed');
+      setError('Login failed');
     }
   };
 

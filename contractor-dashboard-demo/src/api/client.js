@@ -10,15 +10,26 @@ function getCookie(name) {
 }
 
 export function getToken() {
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+  const urlRole = params.get('role');
+  
+  if (urlToken) {
+    document.cookie = `auth_token=${urlToken}; path=/`;
+    document.cookie = `user_role=${urlRole}; path=/`;
+    localStorage.setItem(TOKEN_STORAGE_KEY, urlToken);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    return urlToken;
+  }
   return getCookie('auth_token') || localStorage.getItem(TOKEN_STORAGE_KEY);
 }
 
 export function setToken(token) {
   if (token) {
-    document.cookie = `auth_token=${token}; path=/; domain=localhost`;
+    document.cookie = `auth_token=${token}; path=/`;
     localStorage.setItem(TOKEN_STORAGE_KEY, token);
   } else {
-    document.cookie = `auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    document.cookie = `auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     localStorage.removeItem(TOKEN_STORAGE_KEY);
   }
 }

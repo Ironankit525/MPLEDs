@@ -174,9 +174,9 @@ export const Sidebar = () => {
       <div className="p-3 flex justify-center">
         <button
           onClick={() => {
-            document.cookie = 'auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            document.cookie = 'user_role=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            window.location.href = 'http://localhost:3000/';
+            document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = 'user_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/';
           }}
           className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
           title="Log Out"

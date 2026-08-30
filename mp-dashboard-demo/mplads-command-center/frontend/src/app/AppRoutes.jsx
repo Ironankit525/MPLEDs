@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return null;
   if (!isAuthenticated) {
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/';
     return null;
   }
 

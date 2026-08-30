@@ -21,6 +21,16 @@ export const mockAuthService = {
 
   getCurrentSession: async () => {
     await new Promise(resolve => setTimeout(resolve, 150));
+    
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    const urlRole = params.get('role');
+    if (urlToken) {
+      document.cookie = `auth_token=${urlToken}; path=/`;
+      document.cookie = `user_role=${urlRole}; path=/`;
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     const token = document.cookie.split('; ').find(row => row.startsWith('auth_token='))?.split('=')[1];
     if (!token) return null;
     
@@ -32,11 +42,11 @@ export const mockAuthService = {
   },
 
   logout: async () => {
-    document.cookie = `auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-    document.cookie = `user_role=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    document.cookie = `auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    document.cookie = `user_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     localStorage.removeItem('mplads_auth_token');
     localStorage.removeItem('mplads_active_mp_id');
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/';
     return true;
   }
 };
