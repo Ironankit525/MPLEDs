@@ -93,12 +93,12 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
       </div>
 
       {/* Navigation Groups */}
-      <nav className="flex-1 px-2.5 py-3.5 space-y-3.5 overflow-y-auto overflow-x-hidden">
+      <nav className="flex-1 py-5 space-y-3 overflow-y-auto overflow-x-hidden relative">
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-0.5">
             {/* Show group labels on mobile drawer and desktop expanded */}
             {(!isCollapsed || mobileOpen) ? (
-              <div className="px-2.5 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider transition-opacity">
+              <div className="px-5 pb-1 pt-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider transition-opacity">
                 {group.title}
               </div>
             ) : (
