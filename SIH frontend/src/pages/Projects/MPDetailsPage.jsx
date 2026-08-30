@@ -4,6 +4,7 @@ import { useProjects } from '../../hooks/useProjects';
 import { calculateMPPerformance, getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
+import { ProjectTableSection } from '../../components/projects/ProjectTableSection';
 import { MPSkeletonPreloader } from '../../components/ui/SkeletonPreloader';
 import {
   LineChart,
@@ -236,8 +237,18 @@ export const MPDetailsPage = () => {
               </div>
             </div>
           )}
+
+          {activeTab === 'Projects' && (
+            <div className="animate-in fade-in duration-300 bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
+               <ProjectTableSection 
+                 projects={mpProjects} 
+                 onSelectProject={setSelectedProject}
+                 pagination={{ totalCount: mpProjects.length }}
+               />
+            </div>
+          )}
           
-          {activeTab !== 'Overview' && (
+          {(activeTab !== 'Overview' && activeTab !== 'Projects') && (
             <p className="text-slate-500 text-sm">Content for {activeTab} will go here.</p>
           )}
         </div>
