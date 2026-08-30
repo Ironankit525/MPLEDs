@@ -76,7 +76,6 @@ export const ProjectTableSection = ({
   return (
     <Card
       noHeaderBorder={true}
-      noPadding={true}
       header={
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 w-full">
           {/* Left Title & Match Info */}

@@ -303,7 +303,7 @@ export const MPDetailsPage = () => {
                 </div>
 
                 {/* Financials Section */}
-                <div className="mt-8 mb-8">
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mt-4">
                   <h2 className="text-base font-bold text-slate-800 mb-5">Financials</h2>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="flex flex-col items-center text-center">
@@ -326,7 +326,7 @@ export const MPDetailsPage = () => {
                 </div>
 
                 {/* Work Status Section */}
-                <div className="mt-8 mb-8">
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
                   <h2 className="text-base font-bold text-slate-800 mb-5">Work Status</h2>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="flex flex-col items-center text-center">
