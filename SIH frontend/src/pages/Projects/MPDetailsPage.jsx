@@ -57,12 +57,7 @@ export const MPDetailsPage = () => {
     // Filter projects specifically for this MP's table
     const mpProjects = projectsData.filter((p) => p.mpId === record.mpId);
 
-    // Pick the top 4 active projects for progress bars
-    const activeTopProjects = mpProjects
-      .filter((p) => p.progress < 100)
-      .sort((a, b) => b.progress - a.progress);
-
-    return { record, mpProjects, activeTopProjects };
+    return { record, mpProjects };
   }, [projectsData, mpId]);
 
   const processedProjects = useMemo(() => {
@@ -123,7 +118,7 @@ export const MPDetailsPage = () => {
     );
   }
 
-  const { record, mpProjects, activeTopProjects } = mpData;
+  const { record, mpProjects } = mpData;
   const dummyAvatar = DUMMY_AVATAR; // Simplified to just one dummy for now
   
   // TABS
@@ -189,34 +184,6 @@ export const MPDetailsPage = () => {
           </div>
         </div>
 
-        <hr className="border-slate-100 mb-8" />
-
-        {/* Active Projects Mini Cards */}
-        <div>
-          <div className="flex items-center gap-3 mb-5">
-            <h3 className="text-[13px] font-bold text-slate-900">Active Projects</h3>
-            <span className="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-0.5 rounded-md">{record.ongoingProjects}</span>
-          </div>
-          <div className="space-y-3">
-            {activeTopProjects.slice(0, 3).map((proj, i) => {
-              const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-amber-500'];
-              const color = colors[i % colors.length];
-              
-              return (
-                <div key={proj.id} className="p-3 border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300 transition-colors group" onClick={() => setSelectedProject(proj)}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className={`w-2.5 h-2.5 rounded-md ${color} shrink-0`} />
-                    <h4 className="text-[15px] font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">{proj.name}</h4>
-                  </div>
-                  <p className="text-[13px] text-slate-500 ml-[18px]">{formatCurrency(proj.expenditure)} spent • {proj.progress}% completed</p>
-                </div>
-              )
-            })}
-            {activeTopProjects.length === 0 && (
-              <p className="text-sm text-slate-500">No active projects found.</p>
-            )}
-          </div>
-        </div>
       </div>
       
       {/* 65% Right Column */}
