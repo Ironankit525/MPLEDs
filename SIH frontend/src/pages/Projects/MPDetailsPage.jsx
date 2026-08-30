@@ -36,16 +36,17 @@ export const MPDetailsPage = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Compute MP specific data
   const mpData = useMemo(() => {
     if (!projectsData || projectsData.length === 0) return null;
-    const mpProjects = projectsData.filter((p) => p.mpId === mpId);
-    if (mpProjects.length === 0) return null;
-
-    const records = calculateMPPerformance(mpProjects);
-    const record = records.find((r) => r.mpId === mpId) || records[0];
+    
+    // Calculate performance for all MPs (which merges MASTER_MP_RECORDS for fallback stats)
+    const records = calculateMPPerformance(projectsData);
+    const record = records.find((r) => r.mpId === mpId);
     
     if (!record) return null;
+
+    // Filter projects specifically for this MP's table
+    const mpProjects = projectsData.filter((p) => p.mpId === record.mpId);
 
     // Pick the top 4 active projects for progress bars
     const activeTopProjects = mpProjects
@@ -68,6 +69,8 @@ export const MPDetailsPage = () => {
     return (
       <div className="p-8 text-center bg-white min-h-[50vh] flex flex-col items-center justify-center">
         <h2 className="text-xl font-bold text-slate-800">MP Profile Not Found</h2>
+        <p className="text-sm text-slate-500 mt-2">Searched for MP ID: "{mpId}"</p>
+        <p className="text-sm text-slate-500 mb-4">Total projects loaded: {projectsData?.length || 0}</p>
         <button onClick={() => navigate(-1)} className="mt-4 text-indigo-600 font-bold hover:underline">
           Go Back
         </button>
