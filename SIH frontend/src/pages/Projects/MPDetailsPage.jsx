@@ -83,90 +83,89 @@ export const MPDetailsPage = () => {
   const tabs = ['Overview', 'Projects', 'AI Audit', 'Financials'];
 
   return (
-    <div className="min-h-full bg-slate-50/50 p-2 sm:p-4 lg:p-6 mb-16">
+    <div className="min-h-full bg-white mb-16">
       {/* Breadcrumb Header */}
-      <div className="flex items-center gap-2 text-sm font-semibold text-slate-500 mb-6 font-sans">
+      <div className="flex items-center gap-2 text-sm font-semibold text-slate-500 py-4 px-6 font-sans border-b border-slate-200">
         <button onClick={() => navigate(-1)} className="flex items-center gap-1 hover:text-slate-900 transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-          <span>MPs Directory</span>
+          <span>Team</span>
         </button>
-        <span className="text-slate-300">/</span>
+        <span className="text-slate-300">&gt;</span>
         <span className="text-slate-900 font-bold">{record.mpName}</span>
-        <span className="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-bold text-xs ml-1 border border-indigo-100">
+        <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md font-bold text-xs ml-1">
           • {record.house}
         </span>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
+      <div className="flex flex-col lg:flex-row items-stretch min-h-[calc(100vh-140px)]">
         {/* ==================================================== */}
         {/* LEFT COLUMN: PROFILE SIDEBAR */}
         {/* ==================================================== */}
-        <div className="w-full lg:w-[320px] shrink-0 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col">
+        <div className="w-full lg:w-[340px] shrink-0 bg-white border-r border-slate-200 p-8 flex flex-col">
           {/* Avatar & Name */}
-          <div className="flex flex-col items-center border-b border-slate-100 pb-6 mb-6">
-            <img src={dummyAvatar} alt={record.mpName} className="w-24 h-24 rounded-full object-cover border-2 border-slate-100 shadow-sm mb-4" />
-            <h1 className="text-lg font-bold text-slate-900 text-center leading-tight mb-1">{record.mpName}</h1>
-            <p className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">#{mpId}</p>
+          <div className="flex flex-col items-center mb-8">
+            <img src={dummyAvatar} alt={record.mpName} className="w-28 h-28 rounded-full object-cover mb-4" />
+            <h1 className="text-xl font-bold text-slate-900 text-center leading-tight mb-1">{record.mpName}</h1>
+            <p className="text-sm font-mono text-slate-500 uppercase">#{mpId}</p>
           </div>
 
           {/* Member Details */}
-          <div className="space-y-3.5 mb-8">
-            <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-3">Member Details</h3>
+          <div className="space-y-4 mb-8">
+            <h3 className="text-[13px] font-bold text-slate-900 mb-4">Member Details</h3>
             
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-2"><Phone className="w-3.5 h-3.5"/> Phone</span>
-              <span className="font-bold text-slate-900 font-mono">+91 {Math.floor(Math.random() * 9000000000) + 1000000000}</span>
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-slate-500">Phone</span>
+              <span className="font-medium text-slate-900">+91 {Math.floor(Math.random() * 9000000000) + 1000000000}</span>
             </div>
             
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-2"><Mail className="w-3.5 h-3.5"/> Email</span>
-              <span className="font-bold text-slate-900">{(record.mpName.split(' ')[1] || record.mpName.split(' ')[0] || 'mp').toLowerCase()}@sansad.nic.in</span>
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-slate-500">Email</span>
+              <span className="font-medium text-slate-900">{(record.mpName.split(' ')[1] || record.mpName.split(' ')[0] || 'mp').toLowerCase()}@sansad.nic.in</span>
             </div>
 
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-2"><Briefcase className="w-3.5 h-3.5"/> Party</span>
-              <span className="font-bold text-slate-900">{record.party || 'Independent'}</span>
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-slate-500">Party</span>
+              <span className="font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md text-xs">• {record.party || 'Independent'}</span>
             </div>
 
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-2"><Calendar className="w-3.5 h-3.5"/> State</span>
-              <span className="font-bold text-slate-900">{record.state}</span>
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-slate-500">State</span>
+              <span className="font-medium text-slate-900">{record.state}</span>
             </div>
           </div>
 
           {/* Constituency Address */}
-          <div className="space-y-3.5 mb-8">
-            <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-3">Constituency</h3>
+          <div className="space-y-4 mb-8">
+            <h3 className="text-[13px] font-bold text-slate-900 mb-4">Address</h3>
             
-            <div className="flex items-start justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-2 shrink-0"><MapPin className="w-3.5 h-3.5"/> Region</span>
-              <span className="font-bold text-slate-900 text-right leading-tight max-w-[150px]">{record.constituency}</span>
+            <div className="flex items-start justify-between text-[13px]">
+              <span className="text-slate-500 shrink-0">Region</span>
+              <span className="font-medium text-slate-900 text-right leading-tight max-w-[150px]">{record.constituency}</span>
             </div>
             
-            <div className="flex items-center justify-between text-xs pt-1">
-              <span className="text-slate-500 flex items-center gap-2"><Hash className="w-3.5 h-3.5"/> Total Projects</span>
-              <span className="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{record.totalProjects}</span>
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-slate-500">Total Projects</span>
+              <span className="font-medium text-slate-900">{record.totalProjects}</span>
             </div>
           </div>
 
           {/* Active Projects Mini Cards */}
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-400">Active Projects</h3>
-              <span className="bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{record.ongoingProjects}</span>
+            <div className="flex items-center gap-3 mb-4">
+              <h3 className="text-[13px] font-bold text-slate-900">Active Projects</h3>
+              <span className="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-0.5 rounded-md">{record.ongoingProjects}</span>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {activeTopProjects.slice(0, 3).map((proj, i) => {
                 const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-amber-500'];
                 const color = colors[i % colors.length];
                 
                 return (
-                  <div key={proj.id} className="p-3 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300 hover:shadow-sm transition-all group" onClick={() => setSelectedProject(proj)}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className={`w-2 h-2 rounded-full ${color} shrink-0`} />
-                      <h4 className="text-xs font-bold text-slate-900 truncate group-hover:text-indigo-600 transition-colors">{proj.name}</h4>
+                  <div key={proj.id} className="p-3.5 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300 transition-colors" onClick={() => setSelectedProject(proj)}>
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <div className={`w-3 h-3 rounded-full ${color} shrink-0`} />
+                      <h4 className="text-[13px] font-bold text-slate-900 truncate">{proj.name}</h4>
                     </div>
-                    <p className="text-[10px] text-slate-500 ml-4 font-semibold">{formatCurrency(proj.expenditure)} spent • {proj.progress}% completed</p>
+                    <p className="text-[11px] text-slate-500 ml-5">{formatCurrency(proj.expenditure)} spent • {proj.progress}% completed</p>
                   </div>
                 )
               })}
@@ -177,7 +176,7 @@ export const MPDetailsPage = () => {
         {/* ==================================================== */}
         {/* RIGHT COLUMN: TABS & MAIN CONTENT */}
         {/* ==================================================== */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 p-8">
           {/* Tabs */}
           <div className="flex items-center gap-6 border-b border-slate-200 mb-6 overflow-x-auto hide-scrollbar px-1">
             {tabs.map((tab) => (
@@ -205,12 +204,12 @@ export const MPDetailsPage = () => {
             {activeTab === 'Overview' && (
               <div className="space-y-6 animate-in fade-in duration-300">
                 {/* Chart Card */}
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+                <div className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-base font-bold text-slate-900">KPI / Fund Utilization (₹ Cr)</h2>
+                    <h2 className="text-base font-bold text-slate-900">KPI</h2>
                     <div className="flex items-center gap-2">
-                      <select className="text-[11px] font-bold border border-slate-200 rounded-lg text-slate-700 px-3 py-1.5 focus:ring-0 focus:border-slate-300 bg-slate-50">
-                        <option>Last 6 Months</option>
+                      <select className="text-[13px] font-medium border border-slate-200 rounded-lg text-slate-700 px-3 py-1.5 focus:ring-0 focus:border-slate-300 bg-white">
+                        <option>Last 6 Month</option>
                       </select>
                       <button className="p-1.5 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-colors">
                         <ArrowUpRight className="w-4 h-4" />
@@ -223,30 +222,30 @@ export const MPDetailsPage = () => {
                       <LineChart data={MOCK_TREND_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
                         <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94A3B8', fontWeight: 600 }} axisLine={false} tickLine={false} />
-                        <YAxis tick={{ fontSize: 11, fill: '#94A3B8', fontWeight: 600 }} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}k`} />
+                        <YAxis tick={{ fontSize: 11, fill: '#94A3B8', fontWeight: 600 }} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}h`} />
                         <RechartsTooltip 
                           contentStyle={{ borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', border: '1px solid #E2E8F0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                         />
-                        <Line type="monotone" dataKey="last6" name="Last 6 Months" stroke="#3B82F6" strokeWidth={3} dot={false} />
-                        <Line type="monotone" dataKey="prev6" name="Previous 6 Months" stroke="#CBD5E1" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                        <Line type="monotone" dataKey="last6" name="Last 6 Month" stroke="#3B82F6" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="prev6" name="Previous 6 Month" stroke="#CBD5E1" strokeWidth={2} strokeDasharray="5 5" dot={false} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                   
-                  <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-slate-100">
+                  <div className="flex items-center justify-center gap-6 mt-4 pt-4">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-0.5 bg-blue-500" />
-                      <span className="text-xs font-bold text-slate-600">Last 6 Months</span>
+                      <span className="text-[13px] font-medium text-slate-500">Last 6 Month</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-0.5 bg-slate-300 border border-slate-300 border-dashed" />
-                      <span className="text-xs font-bold text-slate-600">Previous 6 Months</span>
+                      <span className="text-[13px] font-medium text-slate-500">Previous 6 Month</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Progress Bars Card */}
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+                <div className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-base font-bold text-slate-900">Project Completion</h2>
                     <button className="p-1.5 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-colors">
