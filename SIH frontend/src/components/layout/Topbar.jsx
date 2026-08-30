@@ -67,6 +67,18 @@ export const Topbar = () => {
             className="w-10 h-10 rounded-full object-cover border border-slate-200/80 shadow-sm ring-2 ring-slate-100 select-none pointer-events-none"
           />
         </div>
+        
+        {/* Logout Button */}
+        <button
+          onClick={() => {
+            document.cookie = 'auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = 'user_role=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            window.location.href = 'http://localhost:3000/';
+          }}
+          className="ml-2 px-3 py-1.5 text-sm font-semibold text-red-600 border border-red-200 rounded-md hover:bg-red-50 transition-colors"
+        >
+          Log Out
+        </button>
       </div>
     </header>
   );
