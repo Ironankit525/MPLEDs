@@ -99,7 +99,7 @@ export const MPDetailsPage = () => {
           
           <div className="flex items-center justify-between text-sm">
             <span className="text-slate-500">Phone</span>
-            <span className="font-medium text-slate-900">(628) 555-0124</span>
+            <span className="font-medium text-slate-900">91 XXXX XXXX XX</span>
           </div>
           
           <div className="flex items-center justify-between text-sm">
