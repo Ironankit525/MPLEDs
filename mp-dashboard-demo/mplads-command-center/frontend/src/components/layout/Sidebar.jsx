@@ -73,15 +73,23 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
           >
             <span className="font-extrabold text-slate-900 text-base tracking-tight font-sans whitespace-nowrap select-none">
               MPLADS AI
+            </span>
+            <span className="text-[9px] text-slate-500 font-medium leading-snug whitespace-nowrap select-none">
+              Command Center
+            </span>
+          </div>
+        </button>
 
         {/* Mobile close button */}
-        <button
-          onClick={onMobileClose}
-          className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer shrink-0"
-          title="Close menu"
-        >
-          <X className="w-4 h-4" />
-        </button>
+        {mobileOpen && (
+          <button
+            onClick={onMobileClose}
+            className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer shrink-0"
+            title="Close menu"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* Navigation Groups */}
