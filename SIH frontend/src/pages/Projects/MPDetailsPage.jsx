@@ -239,13 +239,13 @@ export const MPDetailsPage = () => {
           )}
 
           {activeTab === 'Projects' && (
-            <div className="animate-in fade-in duration-300 bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
+             <div className="animate-in fade-in duration-300 h-full flex flex-col">
                <ProjectTableSection 
                  projects={mpProjects} 
                  onSelectProject={setSelectedProject}
                  pagination={{ totalCount: mpProjects.length }}
                />
-            </div>
+             </div>
           )}
           
           {(activeTab !== 'Overview' && activeTab !== 'Projects') && (
