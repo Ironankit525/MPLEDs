@@ -56,7 +56,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
     >
       {/* Brand Logo Header with Toggle Button */}
       <div
-        className={`h-16 shrink-0 flex items-center justify-between transition-all select-none ${
+        className={`h-[72px] pt-2 shrink-0 flex items-center justify-between transition-all select-none ${
           isCollapsed ? 'px-2 md:justify-center' : 'px-4'
         }`}
       >
@@ -125,19 +125,19 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
                   onClick={onMobileClose} // close drawer on mobile nav
                   title={isCollapsed && !mobileOpen ? item.label : undefined}
                   className={({ isActive }) =>
-                    `flex items-center gap-2.5 rounded-xl transition-all ${
-                      isCollapsed && !mobileOpen
-                        ? 'justify-center px-0 py-2.5 w-10 mx-auto'
-                        : 'px-3 py-2 text-xs font-semibold'
-                    } ${
+                    `flex items-center px-3 py-2.5 text-sm relative group transition-all duration-300 ease-in-out ${
                       isActive
-                        ? 'bg-slate-900 text-white font-bold shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                        ? isCollapsed && !mobileOpen
+                          ? 'text-slate-900 font-bold ml-3 mr-0 rounded-l-2xl z-20'
+                          : 'bg-white text-slate-900 font-bold mx-3 rounded-xl shadow-xs border border-slate-200/80 z-20'
+                        : isCollapsed && !mobileOpen
+                        ? 'text-slate-600 hover:text-slate-900 font-medium ml-3 mr-0 rounded-l-2xl z-10'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 font-medium mx-3 rounded-xl z-10'
                     }`
                   }
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  {(!isCollapsed || mobileOpen) && <span className="truncate">{item.label}</span>}
+                  <Icon className="w-5 h-5 shrink-0" />
+                  {(!isCollapsed || mobileOpen) && <span className="truncate ml-2.5 tracking-tight">{item.label}</span>}
                 </NavLink>
               );
             })}

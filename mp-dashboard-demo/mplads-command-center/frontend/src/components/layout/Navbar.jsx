@@ -9,9 +9,9 @@ export const Navbar = ({ onHamburgerClick }) => {
   const { financialYear, setFinancialYear } = useUser();
 
   return (
-    <header className="h-auto min-h-14 md:h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 md:px-6 sticky top-0 z-30 shadow-xs">
+    <header className="sticky top-0 z-30 h-20 min-h-[5rem] bg-white border-b border-slate-100 px-6 sm:px-8 flex items-center justify-between transition-all">
       {/* Single row on md+ */}
-      <div className="flex items-center justify-between gap-2 h-14 md:h-16">
+      <div className="flex items-center justify-between gap-2 h-full w-full">
 
         {/* LEFT — Hamburger (mobile only) + MP Profile */}
         <div className="flex items-center gap-2 min-w-0">
