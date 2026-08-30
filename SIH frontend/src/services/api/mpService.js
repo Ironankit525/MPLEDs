@@ -2,7 +2,7 @@ import axiosClient from './axiosClient';
 import { mockMPs } from '../../data/mockMPs';
 import { mockProjects } from '../../data/mockProjects';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 export const mpService = {
   async getMPs(params = {}) {

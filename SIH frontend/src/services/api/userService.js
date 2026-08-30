@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import { getStoredSettings } from './settingsService';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 const mockUser = {
   id: "USR-GOI-001",

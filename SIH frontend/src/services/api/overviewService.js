@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import { computeFilteredOverview } from '../../data/overviewFilterEngine';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 export const overviewService = {
   async getOverviewAnalytics(filters = {}) {

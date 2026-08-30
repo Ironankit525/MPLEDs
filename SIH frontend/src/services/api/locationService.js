@@ -6,7 +6,7 @@ import {
 } from '../../data/locationMappings';
 import { mockConstituencyData } from '../../data/mockConstituencyData';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 export { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP, CONSTITUENCY_DETAILS_MAP };
 

@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import { mockProjects } from '../../data/mockProjects';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 // Dynamically generate canonical alerts referencing real project records in mockProjects
 const generateAlertsFromProjects = () => {
