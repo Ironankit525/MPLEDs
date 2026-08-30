@@ -174,7 +174,7 @@ export const MPDetailsPage = () => {
       </div>
       
       {/* 65% Right Column */}
-      <div className="w-[65%] bg-slate-50 min-h-full flex flex-col">
+      <div className="w-[65%] bg-white min-h-full flex flex-col">
         {/* Tabs Bar */}
         <div className="flex items-center gap-8 border-b border-slate-200 px-8 pt-6 bg-white">
           {[
@@ -239,13 +239,13 @@ export const MPDetailsPage = () => {
           )}
 
           {activeTab === 'Projects' && (
-             <div className="animate-in fade-in duration-300 h-full flex flex-col">
+            <div className="animate-in fade-in duration-300 bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
                <ProjectTableSection 
                  projects={mpProjects} 
                  onSelectProject={setSelectedProject}
                  pagination={{ totalCount: mpProjects.length }}
                />
-             </div>
+            </div>
           )}
           
           {(activeTab !== 'Overview' && activeTab !== 'Projects') && (
