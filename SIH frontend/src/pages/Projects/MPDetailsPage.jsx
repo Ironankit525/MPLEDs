@@ -14,6 +14,9 @@ import {
   CartesianGrid,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell
 } from 'recharts';
 import { MapPin, Phone, Mail, Calendar, ArrowLeft, ArrowUpRight, CheckCircle2, AlertTriangle, FileText, Briefcase, Activity, FolderKanban, Bot, Hash } from 'lucide-react';
 
@@ -204,39 +207,112 @@ export const MPDetailsPage = () => {
 
         {/* Tab Content */}
         <div className="p-8 flex-1">
-          {activeTab === 'Overview' && (
-            <div className="space-y-6">
-              {/* Chart Card */}
-              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-lg font-semibold text-slate-900">KPI</h2>
-                  <div className="flex items-center gap-3">
-                    <select className="text-sm font-medium border border-slate-200 rounded-lg text-slate-700 px-3 py-1.5 focus:ring-0 focus:border-slate-300 bg-white shadow-sm cursor-pointer outline-none hover:bg-slate-50">
-                      <option>Last 6 Month</option>
-                    </select>
-                    <button className="p-2 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-colors shadow-sm">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
+          {activeTab === 'Overview' && (() => {
+            const utilColor = `hsl(${(record.utilization / 100) * 120}, 85%, 45%)`;
+            const riskColor = `hsl(${((100 - record.averageRiskScore) / 100) * 120}, 85%, 45%)`;
+            
+            const utilData = [
+              { name: 'Utilized', value: record.utilization },
+              { name: 'Unutilized', value: Math.max(0, 100 - record.utilization) }
+            ];
+            
+            const riskData = [
+              { name: 'Risk Score', value: record.averageRiskScore },
+              { name: 'Safe', value: Math.max(0, 100 - record.averageRiskScore) }
+            ];
+
+            const unutilizedBalance = Math.max(0, record.sanctionedAmount - record.expenditure);
+
+            return (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Fund Utilization Donut */}
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col items-center">
+                    <h2 className="text-base font-bold text-slate-800 mb-6">Fund Utilization</h2>
+                    <div className="h-48 w-full relative flex items-end justify-center">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={utilData}
+                            cx="50%"
+                            cy="100%"
+                            startAngle={180}
+                            endAngle={0}
+                            innerRadius={70}
+                            outerRadius={90}
+                            paddingAngle={0}
+                            dataKey="value"
+                            stroke="none"
+                            cornerRadius={4}
+                          >
+                            <Cell key="cell-0" fill={utilColor} />
+                            <Cell key="cell-1" fill="#F1F5F9" />
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <div className="absolute bottom-2 text-center">
+                        <span className="text-3xl font-black text-slate-900">{record.utilization}%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* AI Risk Score Donut */}
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col items-center">
+                    <h2 className="text-base font-bold text-slate-800 mb-6">AI Risk Score</h2>
+                    <div className="h-48 w-full relative flex items-end justify-center">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={riskData}
+                            cx="50%"
+                            cy="100%"
+                            startAngle={180}
+                            endAngle={0}
+                            innerRadius={70}
+                            outerRadius={90}
+                            paddingAngle={0}
+                            dataKey="value"
+                            stroke="none"
+                            cornerRadius={4}
+                          >
+                            <Cell key="cell-0" fill={riskColor} />
+                            <Cell key="cell-1" fill="#F1F5F9" />
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <div className="absolute bottom-2 text-center">
+                        <span className="text-3xl font-black text-slate-900">{record.averageRiskScore}</span>
+                        <span className="text-sm text-slate-400 font-bold">/100</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="h-64 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={MOCK_TREND_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-                      <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}h`} />
-                      <RechartsTooltip 
-                        contentStyle={{ borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', border: '1px solid #E2E8F0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                      />
-                      <Line type="monotone" dataKey="last6" name="Last 6 Months" stroke="#3B82F6" strokeWidth={2.5} dot={false} />
-                      <Line type="monotone" dataKey="prev6" name="Previous 6 Months" stroke="#CBD5E1" strokeWidth={2} strokeDasharray="4 4" dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
+
+                {/* Financials Section */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <h2 className="text-base font-bold text-slate-800 mb-6">Financials</h2>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Sanctioned</span>
+                      <span className="text-xl font-black text-slate-900 font-mono">{formatCurrency(record.sanctionedAmount)}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Expenditure Incurred</span>
+                      <span className="text-xl font-black text-emerald-600 font-mono">{formatCurrency(record.expenditure)}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Unutilized Balance</span>
+                      <span className="text-xl font-black text-amber-500 font-mono">{formatCurrency(unutilizedBalance)}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Sanctioned Works</span>
+                      <span className="text-xl font-black text-indigo-600">{record.totalProjects}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {activeTab === 'Projects' && (
             <div className="animate-in fade-in duration-300 bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
@@ -253,6 +329,11 @@ export const MPDetailsPage = () => {
           )}
         </div>
       </div>
+
+      {/* Selected Project Modal View */}
+      {selectedProject && (
+        <ProjectDetailsView project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
     </div>
   );
 };
