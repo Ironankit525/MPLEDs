@@ -173,8 +173,74 @@ export const MPDetailsPage = () => {
       </div>
       
       {/* 65% Right Column */}
-      <div className="w-[65%] p-6 bg-slate-50 min-h-full flex flex-col">
-        <p className="text-slate-500">Right Column (65%)</p>
+      <div className="w-[65%] bg-slate-50 min-h-full flex flex-col">
+        {/* Tabs Bar */}
+        <div className="flex items-center gap-8 border-b border-slate-200 px-8 pt-6 bg-white">
+          {[
+            { id: 'Overview', icon: Activity },
+            { id: 'Projects', icon: FolderKanban },
+            { id: 'AI Audit', icon: Bot },
+            { id: 'Financials', icon: FileText }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 pb-3.5 text-[15px] font-semibold transition-colors border-b-2 relative top-[1px] ${
+                  isActive 
+                    ? 'border-slate-900 text-slate-900' 
+                    : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+                }`}
+              >
+                <Icon className={`w-4 h-4 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
+                {tab.id}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Tab Content */}
+        <div className="p-8 flex-1">
+          {activeTab === 'Overview' && (
+            <div className="space-y-6">
+              {/* Chart Card */}
+              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-lg font-semibold text-slate-900">KPI</h2>
+                  <div className="flex items-center gap-3">
+                    <select className="text-sm font-medium border border-slate-200 rounded-lg text-slate-700 px-3 py-1.5 focus:ring-0 focus:border-slate-300 bg-white shadow-sm cursor-pointer outline-none hover:bg-slate-50">
+                      <option>Last 6 Month</option>
+                    </select>
+                    <button className="p-2 border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-colors shadow-sm">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="h-64 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={MOCK_TREND_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                      <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}h`} />
+                      <RechartsTooltip 
+                        contentStyle={{ borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', border: '1px solid #E2E8F0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                      />
+                      <Line type="monotone" dataKey="last6" name="Last 6 Months" stroke="#3B82F6" strokeWidth={2.5} dot={false} />
+                      <Line type="monotone" dataKey="prev6" name="Previous 6 Months" stroke="#CBD5E1" strokeWidth={2} strokeDasharray="4 4" dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {activeTab !== 'Overview' && (
+            <p className="text-slate-500 text-sm">Content for {activeTab} will go here.</p>
+          )}
+        </div>
       </div>
     </div>
   );
