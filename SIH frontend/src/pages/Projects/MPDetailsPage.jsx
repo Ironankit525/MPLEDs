@@ -83,13 +83,15 @@ export const MPDetailsPage = () => {
   const tabs = ['Overview', 'Projects', 'AI Audit', 'Financials'];
 
   return (
-    <div className="min-h-full bg-slate-50 p-6 flex items-center justify-center">
-      <div className="bg-white p-12 rounded-xl shadow-sm border border-slate-200 text-center">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">MP Dashboard</h1>
-        <p className="text-slate-500">Clean slate ready for new design.</p>
-        <button onClick={() => navigate(-1)} className="mt-6 text-indigo-600 hover:underline">
-          Go Back
-        </button>
+    <div className="min-h-[calc(100vh-80px)] bg-white flex w-full border border-slate-200 mt-4">
+      {/* 30% Left Column */}
+      <div className="w-[30%] shrink-0 border-r border-slate-200 p-6 min-h-full flex flex-col">
+        <p className="text-slate-500">Left Column (30%)</p>
+      </div>
+      
+      {/* 70% Right Column */}
+      <div className="w-[70%] p-6 bg-slate-50 min-h-full flex flex-col">
+        <p className="text-slate-500">Right Column (70%)</p>
       </div>
     </div>
   );
