@@ -65,9 +65,7 @@ const LeafletMap = ({ center, zoom, projects, constituencyName }) => {
       const map = L.map(mapRef.current, { zoomControl: false }).setView(center, zoom);
       mapInstanceRef.current = map;
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
+      // REMOVED tileLayer to only show the solid 2D shape of the Lok Sabha
 
       L.control.zoom({ position: 'bottomright' }).addTo(map);
     });
@@ -86,11 +84,9 @@ const LeafletMap = ({ center, zoom, projects, constituencyName }) => {
     import('leaflet').then((L) => {
       const map = mapInstanceRef.current;
       
-      // Clear old layers (excluding tile layer)
+      // Clear old layers
       map.eachLayer((layer) => {
-        if (!layer._url) { // don't remove tile layers
-          map.removeLayer(layer);
-        }
+        map.removeLayer(layer);
       });
 
       // Draw Lok Sabha boundary
@@ -98,9 +94,9 @@ const LeafletMap = ({ center, zoom, projects, constituencyName }) => {
       if (geoBoundary) {
         const geoLayer = L.geoJSON(geoBoundary, {
           style: {
-            color: '#6366f1',
-            fillColor: '#6366f1',
-            fillOpacity: 0.1,
+            color: '#4f46e5',     // Indigo border
+            fillColor: '#e0e7ff', // Solid light indigo fill
+            fillOpacity: 1.0,     // 100% solid
             weight: 2,
             dashArray: '4 4'
           }
@@ -164,7 +160,7 @@ const LeafletMap = ({ center, zoom, projects, constituencyName }) => {
     });
   }, [geoBoundary, projects, center, zoom]); 
 
-  return <div ref={mapRef} style={{ height: '480px', width: '100%' }} />;
+  return <div ref={mapRef} style={{ height: '480px', width: '100%', backgroundColor: '#ffffff' }} className="rounded-b-xl" />;
 };
 
 export const ConstituencyMap = () => {
