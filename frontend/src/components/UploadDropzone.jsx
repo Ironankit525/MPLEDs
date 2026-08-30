@@ -169,7 +169,7 @@ export default function UploadDropzone({ file, onChange, error }) {
           <Icon name="camera" size={16} />
           Take a photo
         </button>
-        <button type="button" className="btn btn-secondary" onClick={() => inputRef.current?.click()}>
+        <button type="button" className="btn btn-ghost" onClick={() => inputRef.current?.click()}>
           <Icon name="image" size={16} />
           Choose from device
         </button>
