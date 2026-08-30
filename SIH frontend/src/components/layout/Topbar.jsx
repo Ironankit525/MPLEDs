@@ -50,9 +50,12 @@ export const Topbar = () => {
       </div>
 
       {/* Right: Actions & User Info */}
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-4 sm:gap-6">
+        {/* Portal Target for Page-Specific Actions */}
+        <div id="topbar-actions" className="hidden lg:flex items-center"></div>
+
         {/* User Info & Avatar */}
-        <div className="flex items-center gap-3 pl-1 select-none">
+        <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-slate-200 select-none">
           <div className="text-right hidden sm:block select-none">
             <p className="text-sm font-bold text-slate-900 leading-none select-none">
               {currentUser?.name || 'Administrator'}

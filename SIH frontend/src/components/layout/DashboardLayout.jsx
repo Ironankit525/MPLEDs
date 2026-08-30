@@ -42,6 +42,7 @@ export const DashboardLayout = () => {
           sidebarCollapsed ? 'md:ml-20' : 'md:ml-64'
         }`}
       >
+        <Topbar />
         {/* Inset White Main Panel Canvas (Only Top-Left Rounded) */}
         <div className="flex-1 flex flex-col bg-white md:rounded-tl-2xl overflow-hidden h-full relative">
           
