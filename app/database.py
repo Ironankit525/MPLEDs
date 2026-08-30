@@ -28,7 +28,7 @@ try:
     # If the URL contains mongomock, we need to handle it specially
     if "mongomock" in MONGO_URL.lower():
         import mongomock
-        client = mongomock.MongoClient(MONGO_URL)
+        client = mongomock.MongoClient()
     else:
         # Atlas requires TLS; python.org macOS builds (and some Linux
         # minimal images) ship without a system CA path Python can find,
