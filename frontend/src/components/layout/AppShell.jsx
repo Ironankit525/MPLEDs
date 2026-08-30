@@ -56,7 +56,7 @@ export default function AppShell() {
         onActionClick={handleShortcutAction}
       />
 
-      <div className="stack" style={{ overflowY: 'auto', height: '100vh', minWidth: 0 }}>
+      <div className="app-frame stack">
         <div className="topbar">
           <button type="button" className="icon-btn" onClick={() => setMenuOpen(true)} aria-label="Open menu">
             <Icon name="menu" size={22} />

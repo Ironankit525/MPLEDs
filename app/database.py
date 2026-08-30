@@ -28,6 +28,9 @@ try:
     # If the URL contains mongomock, we need to handle it specially
     if "mongomock" in MONGO_URL.lower():
         import mongomock
+        # mongomock delegates URI validation to PyMongo and therefore rejects
+        # the convenient test-only ``mongomock://`` scheme. Do not pass that
+        # pseudo-URI through; the database name is selected below.
         client = mongomock.MongoClient()
     else:
         # Atlas requires TLS; python.org macOS builds (and some Linux
@@ -41,7 +44,11 @@ try:
     # Get database instance
     # Parse DB name from URI or default to MPLADS
     db_name = "MPLADS"
-    if "@" in MONGO_URL and "/" in MONGO_URL.split("@")[-1]:
+    if MONGO_URL.lower().startswith("mongomock://"):
+        parsed_db = MONGO_URL.rsplit("/", 1)[-1].split("?")[0]
+        if parsed_db and parsed_db != "localhost":
+            db_name = parsed_db
+    elif "@" in MONGO_URL and "/" in MONGO_URL.split("@")[-1]:
         parsed_db = MONGO_URL.split("@")[-1].split("/")[1].split("?")[0]
         if parsed_db:
             db_name = parsed_db

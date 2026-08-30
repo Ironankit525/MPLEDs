@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useMySubmissions } from '../hooks/useMySubmissions';
 import { request } from '../api/client';
+import { sanitizeFlagsForSubmitter } from '../lib/sanitizedFlags';
 
 /* ─────────────────────────── HELPERS ────────────────────────────── */
 
@@ -54,6 +55,15 @@ function riskPresentation(level) {
     LOW: ['Low', 'bg-emerald-100 text-emerald-700 border-emerald-200'],
   };
   return styles[level] || ['Not assessed', 'bg-slate-100 text-slate-600 border-slate-200'];
+}
+
+function verificationPresentation(status) {
+  const labels = {
+    VERIFIED: ['Evidence verified', 'text-emerald-700'],
+    REQUIRES_REVIEW: ['Manual review required', 'text-red-700'],
+    INSUFFICIENT_EVIDENCE: ['Evidence incomplete', 'text-amber-700'],
+  };
+  return labels[status] || ['Not assessed', 'text-slate-500'];
 }
 
 async function downloadAuditReport({ kpi, financial, project, works, actions }) {
@@ -431,7 +441,13 @@ function WorksTable({ works }) {
                   <td className="px-4 py-3">
                     {(() => {
                       const [label, className] = riskPresentation(w.riskLevel);
-                      return <span className={`inline-block rounded-full border px-2.5 py-1 text-xs font-semibold ${className}`}>{label}</span>;
+                      const [verificationLabel, verificationClass] = verificationPresentation(w.verificationStatus);
+                      return (
+                        <div>
+                          <span className={`inline-block rounded-full border px-2.5 py-1 text-xs font-semibold ${className}`}>{label}</span>
+                          <p className={`mt-1 text-xs font-semibold ${verificationClass}`}>{verificationLabel}</p>
+                        </div>
+                      );
                     })()}
                   </td>
                   <td className="px-4 py-3 text-gray-700">
@@ -551,7 +567,10 @@ export default function SubmissionsPage() {
     inReview: dashboard ? (byStatus.PENDING_REVIEW || 0) + (byStatus.IN_REVIEW || 0) : localReviewCount,
     inReviewAvgDays: null,
     approvalRate: dashboard?.approval_rate ?? 0,
-    flaggedCount: dashboard?.flagged_submissions ?? submitted.filter((item) => ['MEDIUM', 'HIGH'].includes(item.risk_level)).length,
+    flaggedCount: dashboard?.flagged_submissions ?? submitted.filter((item) =>
+      ['MEDIUM', 'HIGH'].includes(item.risk_level)
+      || ['REQUIRES_REVIEW', 'INSUFFICIENT_EVIDENCE'].includes(item.verification_status)
+    ).length,
     turnaroundDays: null,
     trustRating: dashboard?.average_risk_score == null ? '—' : Math.max(0, Math.round(100 - dashboard.average_risk_score)),
   };
@@ -593,6 +612,7 @@ export default function SubmissionsPage() {
       deadline: item.expected_completion_date ? formatShortDate(item.expected_completion_date) : 'Not set',
       submissionId: latestSubmission?.id,
       riskLevel: latestSubmission?.risk_level,
+      verificationStatus: latestSubmission?.verification_status,
       uploadedAt: latestSubmission?.uploaded_at,
     };
   });
@@ -613,6 +633,7 @@ export default function SubmissionsPage() {
       deadline: 'Not set',
       submissionId: submission.id,
       riskLevel: submission.risk_level,
+      verificationStatus: submission.verification_status,
       uploadedAt: submission.uploaded_at,
     });
   });
@@ -623,7 +644,7 @@ export default function SubmissionsPage() {
       workId: item.work_id,
       district: submission?.district || '—',
       status: 'Resubmission Requested',
-      operationalStatus: submission?.flags?.[0]?.human_message || 'Reviewer action is required',
+      operationalStatus: sanitizeFlagsForSubmitter(submission?.flags)?.[0]?.message || 'Reviewer action is required',
       reviewerNote: item.reason || submission?.reviewer_notes || 'Please review the feedback and submit updated evidence.',
       submissionId: item.image_id || submission?.id,
     };
@@ -654,7 +675,7 @@ export default function SubmissionsPage() {
   if (checklist.length === 0) checklist.push({ id: 'clear', type: 'complete', text: 'No evidence has been uploaded yet.' });
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen p-5">
+    <div className="min-h-full bg-[#f8fafc]">
       {/* Top header */}
       <TopHeader />
 

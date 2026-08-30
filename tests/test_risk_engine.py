@@ -11,6 +11,7 @@ Verifies:
 
 from datetime import datetime
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import numpy as np
@@ -24,9 +25,12 @@ from app.models import District, ImageRecord
 from app.risk_engine import (
     RiskAssessment,
     ScoredFlag,
+    _collapse_correlated_flags,
     _exif_flag_weight,
+    _recommendation_for_assessment,
     _recommendation_from_level,
     _score_from_level,
+    _verification_status_for,
     assess_image,
 )
 
@@ -89,6 +93,45 @@ class TestScoreFromLevel:
         assert _score_from_level(100) == "HIGH"
 
 
+class TestCorrelatedFlagCollapse:
+    def test_same_reuse_is_scored_once_across_detectors(self) -> None:
+        flags = [
+            ScoredFlag(
+                code="EXACT_DUPLICATE", severity="HIGH", points_added=60,
+                message="exact", evidence={"matched_work_id": "WORK-OLD"},
+            ),
+            ScoredFlag(
+                code="PERCEPTUAL_DUPLICATE", severity="HIGH", points_added=50,
+                message="perceptual", evidence={"matched_work_id": "WORK-OLD"},
+            ),
+            ScoredFlag(
+                code="SEMANTIC_DUPLICATE", severity="HIGH", points_added=35,
+                message="semantic", evidence={"matched_work_id": "WORK-OLD"},
+            ),
+            ScoredFlag(
+                code="CROSS_DISTRICT_MATCH", severity="HIGH", points_added=20,
+                message="district via hash", evidence={"matched_district": "Nagpur"},
+            ),
+            ScoredFlag(
+                code="CROSS_DISTRICT_MATCH", severity="HIGH", points_added=20,
+                message="district via clip", evidence={"matched_district": "Nagpur"},
+            ),
+            ScoredFlag(
+                code="EXIF_STRIPPED", severity="MEDIUM", points_added=15,
+                message="exif", evidence={},
+            ),
+        ]
+
+        collapsed = _collapse_correlated_flags(flags)
+
+        assert [flag.code for flag in collapsed] == [
+            "EXACT_DUPLICATE",
+            "CROSS_DISTRICT_MATCH",
+            "EXIF_STRIPPED",
+        ]
+        assert sum(flag.points_added for flag in collapsed) == 95
+
+
 class TestRecommendation:
     """Tests for action recommendations."""
 
@@ -100,6 +143,53 @@ class TestRecommendation:
 
     def test_low_no_action(self) -> None:
         assert "no action" in _recommendation_from_level("LOW").lower()
+
+    def test_low_score_without_evidence_requires_manual_verification(self) -> None:
+        """A low/zero score must not be presented as proof of authenticity."""
+        assessment = RiskAssessment(work_id="W-UNKNOWN", risk_score=0, risk_level="LOW")
+        assessment.layers_skipped = ["clip"]
+
+        assert _verification_status_for(assessment, work_type="road construction", sanction_date=None) == "INSUFFICIENT_EVIDENCE"
+        assessment.verification_status = "INSUFFICIENT_EVIDENCE"
+        assert "manual verification" in _recommendation_for_assessment(assessment).lower()
+
+    def test_borderline_screen_model_result_is_not_auto_verified(self) -> None:
+        assessment = RiskAssessment(
+            work_id="W-BORDERLINE",
+            risk_score=0,
+            risk_level="LOW",
+            capture_date="2026-08-01T10:00:00",
+            screen_probability=0.75,
+            layers_run=["clip", "screen_model"],
+        )
+
+        assert _verification_status_for(
+            assessment,
+            work_type="road construction",
+            sanction_date=datetime(2026, 7, 1),
+        ) == "INSUFFICIENT_EVIDENCE"
+
+    def test_physical_work_without_location_evidence_is_not_verified(self) -> None:
+        assessment = RiskAssessment(
+            work_id="W-NO-LOCATION",
+            risk_score=0,
+            risk_level="LOW",
+            capture_date="2026-08-01T10:00:00",
+            work_evidence_status="VALID",
+            layers_run=["clip", "screen_model", "work_evidence"],
+            flags=[ScoredFlag(
+                code="GPS_MISSING",
+                severity="LOW",
+                message="No location data",
+                points_added=0,
+            )],
+        )
+
+        assert _verification_status_for(
+            assessment,
+            work_type="bridge",
+            sanction_date=datetime(2026, 7, 1),
+        ) == "INSUFFICIENT_EVIDENCE"
 
 
 class TestExifFlagWeights:
@@ -187,6 +277,87 @@ class TestAssessImage:
         assert assessment.risk_score < 30
         assert assessment.sha256 is not None
         assert assessment.phash is not None
+
+    def test_screen_model_high_confidence_adds_review_flag(self, db_session: Database, sample_image: Path) -> None:
+        """A high-confidence ML screen result is explainable and scored."""
+        detector = MagicMock()
+        detector.predict.return_value = SimpleNamespace(
+            available=True,
+            screen_probability=0.97,
+            model_name="test-screen-model",
+        )
+        detector.predict_work_evidence.return_value = SimpleNamespace(
+            available=True,
+            valid_probability=0.9,
+            top_category="valid_project_evidence",
+            top_probability=0.9,
+            category_scores={"valid_project_evidence": 0.9},
+            model_name="test-screen-model",
+        )
+
+        with patch.object(settings, "ENABLE_CLIP", False), \
+             patch.object(settings, "ENABLE_ELA", False), \
+             patch.object(settings, "ENABLE_SCREEN_MODEL", True), \
+             patch("app.risk_engine.get_screen_detector", return_value=detector):
+            assessment = assess_image(
+                image_path=str(sample_image),
+                work_id="WORK-SCREEN-001",
+                work_type="road construction",
+                district="Pune",
+                state="Maharashtra",
+                mp_name="Test MP",
+                sanction_date=datetime(2020, 1, 1),
+                session=db_session,
+            )
+
+        screen_flag = next(flag for flag in assessment.flags if flag.code == "SCREEN_CAPTURE_SUSPECTED")
+        assert screen_flag.points_added == settings.WEIGHT_SCREEN_CAPTURE_SUSPECTED
+        assert assessment.screen_probability == 0.97
+        assert assessment.screen_model_name == "test-screen-model"
+        assert assessment.verification_status == "REQUIRES_REVIEW"
+
+    def test_famous_landmark_is_invalid_work_evidence(self, db_session: Database, sample_image: Path) -> None:
+        """A category-valid landmark must not pass as local contractor evidence."""
+        detector = MagicMock()
+        detector.predict_work_evidence.return_value = SimpleNamespace(
+            available=True,
+            valid_probability=0.04,
+            top_category="famous_landmark_or_stock",
+            top_probability=0.88,
+            category_scores={
+                "valid_project_evidence": 0.04,
+                "famous_landmark_or_stock": 0.88,
+                "generic_non_project_image": 0.06,
+                "unrelated_image": 0.02,
+            },
+            model_name="test-visual-model",
+        )
+        detector.predict.return_value = SimpleNamespace(
+            available=True,
+            screen_probability=0.02,
+            model_name="test-visual-model",
+        )
+
+        with patch.object(settings, "ENABLE_CLIP", False), \
+             patch.object(settings, "ENABLE_ELA", False), \
+             patch.object(settings, "ENABLE_SCREEN_MODEL", True), \
+             patch("app.risk_engine.get_screen_detector", return_value=detector):
+            assessment = assess_image(
+                image_path=str(sample_image),
+                work_id="WORK-LANDMARK-001",
+                work_type="bridge",
+                district="Pune",
+                state="Maharashtra",
+                mp_name="Test MP",
+                sanction_date=datetime(2026, 7, 1),
+                session=db_session,
+            )
+
+        flag = next(flag for flag in assessment.flags if flag.code == "FAMOUS_LANDMARK_SUSPECTED")
+        assert flag.points_added == settings.WEIGHT_INVALID_WORK_EVIDENCE
+        assert assessment.work_evidence_status == "INVALID"
+        assert assessment.risk_level == "HIGH"
+        assert assessment.verification_status == "REQUIRES_REVIEW"
 
     def test_layers_skipped_without_clip(self, db_session: Database, sample_image: Path) -> None:
         """When CLIP disabled, it should appear in layers_skipped."""
@@ -445,6 +616,45 @@ class TestContentMismatchSeverityTiers:
         # The raw match-likelihood figure is still present, but as
         # supporting detail — not the number leading the sentence.
         assert flag.message.index("confident it does not") < flag.message.index("0.1%")
+
+    def test_valid_mandatory_evidence_is_not_overruled_by_legacy_clip(
+        self, db_session: Database, sample_image: Path,
+    ) -> None:
+        """Two correlated vision models must not issue contradictory findings."""
+        clip_engine = MagicMock()
+        clip_engine.embed_image.return_value = np.ones(512, dtype=np.float32)
+        clip_engine.zero_shot_match.return_value = 0.45
+        detector = MagicMock()
+        detector.predict_work_evidence.return_value = SimpleNamespace(
+            available=True,
+            valid_probability=0.92,
+            top_category="valid_project_evidence",
+            top_probability=0.92,
+            category_scores={"valid_project_evidence": 0.92},
+            model_name=settings.SCREEN_MODEL_NAME,
+        )
+
+        with (
+            patch.object(settings, "ENABLE_CLIP", True),
+            patch.object(settings, "ENABLE_ELA", False),
+            patch("app.risk_engine.get_clip_engine", return_value=clip_engine),
+            patch("app.risk_engine.get_screen_detector", return_value=detector),
+            patch("app.risk_engine.search_all_layers", return_value=DuplicateReport()),
+        ):
+            assessment = assess_image(
+                image_path=str(sample_image),
+                work_id="WORK-CONTENT-VALID",
+                work_type="road construction",
+                district="Pune",
+                state="Maharashtra",
+                mp_name="Candidate MP",
+                sanction_date=None,
+                session=db_session,
+            )
+
+        assert assessment.work_evidence_status == "VALID"
+        assert assessment.semantic_match_score == 0.45
+        assert not any(flag.code.startswith("CONTENT_MISMATCH") for flag in assessment.flags)
 
 
 class TestGracefulDegradation:

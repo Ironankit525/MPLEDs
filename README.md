@@ -85,6 +85,29 @@ EasyOCR (Layer 5) downloads its own detection/recognition models
 exists for it yet; the first receipt/invoice/document submission will
 pause briefly for that download.
 
+### Mandatory ML visual-evidence validation
+
+The shared SigLIP detector is mandatory and performs two checks: it
+first distinguishes plausible local contractor evidence from famous-landmark,
+stock/travel, generic non-project, and unrelated images; it then identifies
+rendered browser/editor screenshots. The API loads the configured model during
+startup and fails closed if the model is disabled or cannot load.
+`sentencepiece` and `protobuf` are required by its tokenizer and are included
+in both requirements files.
+
+```bash
+uvicorn app.main:app --reload
+```
+
+The response includes `work_evidence_status`, `work_evidence_probability`,
+`screen_probability`, and the shared model name. Confident invalid evidence
+raises `FAMOUS_LANDMARK_SUSPECTED` or `NOT_PROJECT_WORK_EVIDENCE` before the
+remaining anomaly checks run. High-confidence screen results raise
+`SCREEN_CAPTURE_SUSPECTED`.
+Borderline inference results remain `INSUFFICIENT_EVIDENCE`; the model cannot
+prove an original capture date. `ALLOW_VISUAL_MODEL_TEST_BYPASS` exists only
+for isolated automated tests and must remain false in a deployed environment.
+
 ### Running the API
 
 ```bash
@@ -186,13 +209,26 @@ Layer 1 is fastest and most certain but easiest to defeat. Layer 3 is most robus
 
 **Total is capped at 100.** Risk levels: `LOW` (0–29), `MEDIUM` (30–59), `HIGH` (60–100).
 
+This is a rule-based evidence index, **not a probability of fraud**. Exact,
+perceptual, geometric and semantic detectors can observe the same reused source;
+only the strongest base finding per matched work is scored. Cross-district and
+cross-MP aggravation are each scored at most once per submission. A suspicious
+semantic neighbour carries boundary context but does not receive an additional
+boundary penalty.
+
 CLIP similarity is correlated across nearby database records, so only the
 strongest cross-work neighbour contributes to the score. A similarity in the
 suspicious band is reported as `SEMANTIC_SUSPICIOUS` (MEDIUM, 15 points), not
 as proof of a duplicate; duplicate-tier similarity is reported as
 `SEMANTIC_DUPLICATE` (HIGH, 35 points).
 
-**Content mismatch has two severity tiers, split by a measured gap, not a
+For physical work, mandatory SigLIP work-evidence validation is authoritative.
+The legacy CLIP content score remains in the response for diagnostics and as a
+fallback when SigLIP inference is unavailable; it is not scored on top of a
+SigLIP `VALID`, `REVIEW`, or `INVALID` decision. This prevents contradictory or
+double-counted semantic findings.
+
+**The fallback content mismatch has two severity tiers, split by a measured gap, not a
 guess.** `SEMANTIC_MATCH_THRESHOLD` (0.60) alone treats a hard-but-genuine
 photo the same as an obviously wrong one — e.g. a portrait submitted as
 road-construction evidence scores the same MEDIUM as a real (if awkwardly
@@ -221,13 +257,37 @@ instead of a single static one.
 
 ## Validation
 
-Measured by `scripts/evaluate_detection.py` against `data/fraud_cases/fraud_manifest.json`
-(10 known fraud cases + held-out clean controls). Reported honestly, in
-full, including what still fails and why — see `evaluation_report.json`
-and `evaluation_history.jsonl` (append-only run log, `--compare` diffs
-consecutive runs) for the raw data behind every number here.
+The evaluator now selects the corpus and matching manifest together, retains
+fraud-source photographs in the baseline only for duplicate cases, keeps
+metadata-only case sources isolated, preserves filename-derived work labels,
+and treats stronger equivalent findings such as `GEOMETRIC_DUPLICATE` and
+`CONTENT_MISMATCH_SEVERE` as valid detections.
 
-### Test suite status (2026-08-27, re-measured after rebuilding the real-photo corpus)
+Current real-corpus command:
+
+```bash
+python -m scripts.evaluate_detection --clip --corpus real
+```
+
+Measured 2026-08-30 on 10 planted real-photo fraud transformations and six
+disjoint real-photo controls:
+
+| Metric | Result |
+|---|---:|
+| Detection rate | **10/10 (100.0%)** |
+| Severity accuracy | **10/10 (100.0%)** |
+| False-positive rate | **0/6 (0.0%)** |
+
+These are regression results on a small planted corpus, not a production
+accuracy claim. The corpus still needs substantially more field submissions,
+negative landmark/stock examples, devices, districts and every work category.
+Synthetic `clean_*` results remain useful only for deterministic hash/EXIF
+regressions and must not be used to calibrate ML false-positive rates.
+
+Current complete suite: **271 passed**, including the real SigLIP checkpoint,
+the real CLIP checkpoint, and the full-model real-corpus acceptance test.
+
+### Historical validation notes
 
 `pytest tests/` (full suite, including `@slow` and `@requires_clip`):
 **115 passed, 1 failed, 1 skipped.**
@@ -303,7 +363,7 @@ from both the detection and severity denominators — conflating "cannot
 run" with "ran and failed" would understate what the hash/EXIF layers
 catch on their own and overstate what enabling CLIP needs to fix.
 
-### Measured results (synthetic corpus)
+### Historical synthetic-corpus results (not current production evidence)
 
 Re-measured 2026-08-27, after ELA (Layer 4) and OCR (Layer 5) were wired
 into `risk_engine.py` and the MongoDB migration replaced the SQLite
@@ -971,6 +1031,7 @@ curl -X POST http://localhost:8000/api/images/submit \
   "work_id": "MP-PUN-2024-0231",
   "risk_score": 85,
   "risk_level": "HIGH",
+  "verification_status": "REQUIRES_REVIEW",
   "recommendation": "Block payment pending manual verification",
   "flags": [
     {
@@ -1008,6 +1069,11 @@ curl -X POST http://localhost:8000/api/images/submit \
   "processing_time_ms": 45
 }
 ```
+
+`risk_score` is an automated signal, not proof that an image is genuine. The
+`verification_status` field is `VERIFIED`, `INSUFFICIENT_EVIDENCE`, or
+`REQUIRES_REVIEW`; a low/zero score with insufficient evidence must remain a
+manual-review case.
 
 ### Check health
 

@@ -8,11 +8,16 @@ const LEVEL_CLASS = {
   HIGH: '!border-red-200 !bg-red-50 !text-red-700',
 }
 
-export default function RiskBadge({ level, score }) {
+export default function RiskBadge({ level, score, verificationStatus }) {
   if (!level) return null
-  const className = LEVEL_CLASS[level] || '!border-slate-200 !bg-slate-50 !text-slate-700'
+  const className = verificationStatus && verificationStatus !== 'VERIFIED'
+    ? '!border-amber-200 !bg-amber-50 !text-amber-700'
+    : LEVEL_CLASS[level] || '!border-slate-200 !bg-slate-50 !text-slate-700'
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold ${className}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold ${className}`}
+      title={verificationStatus && verificationStatus !== 'VERIFIED' ? 'Automated score is not a verification decision' : undefined}
+    >
       <span className="h-1.5 w-1.5 rounded-full bg-current" />
       {level} RISK{typeof score === 'number' ? ` · ${score}` : ''}
     </span>

@@ -29,6 +29,9 @@ export default function FlagList({ flags }) {
           <div className="flag-body">
             <div className="flag-code">{flag.code}</div>
             <div className="flag-message">{flag.message}</div>
+            {flag.evidence_summary && (
+              <div className="flag-evidence">{flag.evidence_summary}</div>
+            )}
             {typeof flag.points_added === 'number' && (
               <div className="flag-points">+{flag.points_added} risk points</div>
             )}

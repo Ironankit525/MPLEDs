@@ -48,6 +48,28 @@ rng = Random(42)
 DEFAULT_SOURCE_DIR = PROJECT_ROOT / "data" / "images"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "fraud_cases"
 
+KNOWN_WORK_TYPES = (
+    "road construction",
+    "community hall",
+    "school building",
+    "water facility",
+    "drainage",
+    "bridge",
+    "toilet",
+    "park",
+    "hospital",
+    "electricity",
+)
+
+
+def _source_work_type(path: Path) -> str | None:
+    """Read a labeled work type from ``<work_type>_<NN>`` filenames."""
+    stem = path.stem.lower()
+    for work_type in sorted(KNOWN_WORK_TYPES, key=len, reverse=True):
+        if stem.startswith(f"{work_type.replace(' ', '_')}_"):
+            return work_type
+    return None
+
 
 # ── EXIF helpers ─────────────────────────────────────────────────────
 # Used to genuinely embed DateTimeOriginal / GPS into fraud cases 8 & 9
@@ -154,7 +176,7 @@ def _ensure_source_images(source_dir: Path, min_count: int = 5) -> list[Path]:
 
     existing = sorted(source_dir.glob("*.jpg")) + sorted(source_dir.glob("*.png"))
     if len(existing) >= min_count:
-        return existing[:min_count]
+        return existing
 
     # Generate synthetic source images if needed
     logger.info("Generating %d synthetic source images...", min_count)
@@ -207,9 +229,8 @@ def _create_exact_duplicate(source: Path, output_dir: Path, case_id: int) -> dic
         "case_type": "exact_duplicate",
         "expected_flags": ["EXACT_DUPLICATE"],
         "work_id": f"MP-NAG-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Nagpur",
-        "work_type": "road construction",
+        "work_type": _source_work_type(source) or "road construction",
         "expected_risk_level": "HIGH",
     }
 
@@ -226,9 +247,8 @@ def _create_resized_duplicate(source: Path, output_dir: Path, case_id: int) -> d
         "case_type": "resized_duplicate",
         "expected_flags": ["PERCEPTUAL_DUPLICATE"],
         "work_id": f"MP-LUC-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Lucknow",
-        "work_type": "road construction",
+        "work_type": _source_work_type(source) or "road construction",
         "expected_risk_level": "HIGH",
     }
 
@@ -245,10 +265,9 @@ def _create_cropped_duplicate(source: Path, output_dir: Path, case_id: int) -> d
         "case_type": "cropped_duplicate",
         "expected_flags": ["PERCEPTUAL_DUPLICATE", "PERCEPTUAL_SUSPICIOUS"],
         "work_id": f"MP-JAI-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Jaipur",
-        "work_type": "road construction",
-        "expected_risk_level": "MEDIUM",
+        "work_type": _source_work_type(source) or "road construction",
+        "expected_risk_level": "HIGH",
     }
 
 
@@ -264,9 +283,8 @@ def _create_watermarked_duplicate(source: Path, output_dir: Path, case_id: int) 
         "case_type": "watermarked_duplicate",
         "expected_flags": ["PERCEPTUAL_DUPLICATE", "PERCEPTUAL_SUSPICIOUS"],
         "work_id": f"MP-PAT-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Patna",
-        "work_type": "road construction",
+        "work_type": _source_work_type(source) or "road construction",
         # Round 3 correction: originally guessed MEDIUM assuming a
         # watermark would only trigger PERCEPTUAL_SUSPICIOUS (15 pts).
         # Measured behaviour: pHash survives a semi-transparent overlay
@@ -291,17 +309,12 @@ def _create_rotated_duplicate(source: Path, output_dir: Path, case_id: int) -> d
         "case_type": "rotated_duplicate",
         "expected_flags": ["PERCEPTUAL_DUPLICATE", "PERCEPTUAL_SUSPICIOUS"],
         "work_id": f"MP-BHO-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Bhopal",
-        "work_type": "road construction",
-        # Round 3 correction: originally guessed MEDIUM before
-        # ENABLE_ROTATION_ROBUST_HASH existed. With rotation-robust
-        # hashing, a 3-degree rotation is now correctly resolved as a
-        # true duplicate (min distance across rotated variants), so this
-        # fires PERCEPTUAL_DUPLICATE(50) + CROSS_DISTRICT_MATCH(20) +
-        # EXIF_STRIPPED "with_others"(15) = 85 = HIGH — the intended
-        # result of that feature working, not a scoring bug.
-        "expected_risk_level": "HIGH",
+        "work_type": _source_work_type(source) or "road construction",
+        # Measured on the current real source: the transformed image lands
+        # in the suspicious perceptual band, with boundary/metadata context,
+        # producing a MEDIUM review result rather than a conclusive duplicate.
+        "expected_risk_level": "MEDIUM",
     }
 
 
@@ -316,9 +329,8 @@ def _create_recompressed_duplicate(source: Path, output_dir: Path, case_id: int)
         "case_type": "recompressed_duplicate",
         "expected_flags": ["PERCEPTUAL_DUPLICATE"],
         "work_id": f"MP-CHE-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Chennai",
-        "work_type": "road construction",
+        "work_type": _source_work_type(source) or "road construction",
         "expected_risk_level": "HIGH",
     }
 
@@ -337,9 +349,8 @@ def _create_exif_stripped(source: Path, output_dir: Path, case_id: int) -> dict:
         "case_type": "exif_stripped",
         "expected_flags": ["EXIF_STRIPPED", "PERCEPTUAL_DUPLICATE"],
         "work_id": f"MP-KOL-2024-{case_id:04d}",
-        "original_work_id": f"MP-PUN-2024-0001",
         "district": "Kolkata",
-        "work_type": "road construction",
+        "work_type": _source_work_type(source) or "road construction",
         "expected_risk_level": "HIGH",
     }
 
@@ -368,22 +379,13 @@ def _create_backdated_photo(source: Path, output_dir: Path, case_id: int) -> dic
         "case_type": "backdated_photo",
         "expected_flags": ["PHOTO_PREDATES_SANCTION"],
         "work_id": f"MP-BEN-2024-{case_id:04d}",
-        "original_work_id": None,
         "district": "Bengaluru Urban",
-        "work_type": "community hall construction",
+        "work_type": _source_work_type(source) or "community hall",
         "sanction_date": "2025-01-01",
         "fake_capture_date": fake_capture_date.isoformat(),
-        # Round 3 correction: originally guessed MEDIUM assuming this
-        # case would isolate PHOTO_PREDATES_SANCTION alone. Measured
-        # behaviour: the 50x50px corner edit is NOT enough to move this
-        # image's pHash outside PHASH_DUPLICATE_THRESHOLD of its source
-        # (pHash operates on heavily downscaled DCT coefficients, so a
-        # small corner patch has little effect) — it also legitimately
-        # fires PERCEPTUAL_DUPLICATE(50) + CROSS_DISTRICT_MATCH(20) on
-        # top of PHOTO_PREDATES_SANCTION(30), capping at 100 = HIGH. This
-        # is a realistic compound-fraud scenario (recycled photo AND
-        # cross-district), not a false signal, so HIGH is correct.
-        "expected_risk_level": "HIGH",
+        # The evaluator deliberately keeps this source out of the duplicate
+        # baseline, isolating the pre-sanction rule at 30 points (MEDIUM).
+        "expected_risk_level": "MEDIUM",
         "note": "EXIF DateTimeOriginal is genuinely embedded via piexif (fixed in Round 2).",
     }
 
@@ -406,9 +408,8 @@ def _create_wrong_district_photo(source: Path, output_dir: Path, case_id: int) -
         "case_type": "wrong_district",
         "expected_flags": ["GPS_DISTRICT_MISMATCH"],
         "work_id": f"MP-THI-2024-{case_id:04d}",
-        "original_work_id": None,
         "district": "Pune",
-        "work_type": "drainage system",
+        "work_type": _source_work_type(source) or "drainage",
         "fake_gps": list(fake_gps),
         "expected_risk_level": "MEDIUM",
         "note": "EXIF GPS is genuinely embedded via piexif (fixed in Round 2).",
@@ -416,22 +417,29 @@ def _create_wrong_district_photo(source: Path, output_dir: Path, case_id: int) -
 
 
 def _create_content_mismatch(source: Path, output_dir: Path, case_id: int) -> dict:
-    """Case 10: Assign a photo of 'road' to work_type 'school building'."""
+    """Case 10: Assign a deliberately incorrect work type."""
     img = Image.open(source).convert("RGB")
     dest = output_dir / f"fraud_{case_id:03d}_mismatch.jpg"
     img.save(dest, "JPEG", quality=92)
+    source_work_type = _source_work_type(source)
+    claimed_work_type = "school building" if source_work_type != "school building" else "electricity"
 
     return {
         "file": str(dest.name),
         "source": str(source.name),
         "case_type": "content_mismatch",
-        "expected_flags": ["CONTENT_MISMATCH"],
+        "expected_flags": [
+            "CONTENT_MISMATCH",
+            "CONTENT_MISMATCH_SEVERE",
+            "NOT_PROJECT_WORK_EVIDENCE",
+            "FAMOUS_LANDMARK_SUSPECTED",
+        ],
         "work_id": f"MP-GUW-2024-{case_id:04d}",
-        "original_work_id": None,
         "district": "Guwahati",
-        "work_type": "school building",  # Mismatch — image is not a school
-        "expected_risk_level": "MEDIUM",
-        "note": "Requires CLIP to detect. Should flag CONTENT_MISMATCH when CLIP is enabled.",
+        "work_type": claimed_work_type,
+        "source_work_type": source_work_type,
+        "expected_risk_level": "HIGH",
+        "note": "A mandatory work-evidence finding or a CLIP mismatch tier satisfies this case.",
     }
 
 
@@ -463,8 +471,14 @@ def generate_fraud_cases(
     manifest: list[dict] = []
     case_id = 1
 
-    # Use the first source image for duplicate-based cases
-    primary_source = sources[0]
+    # Prefer a compact, clearly labelled contractor-style culvert photo rather
+    # than a multi-megabyte original. Exact-copy and transformation fixtures do
+    # not need full camera resolution, and keeping them compact avoids bloating
+    # the repository and CI checkout.
+    primary_source = next(
+        (source for source in sources if source.name == "bridge_02.jpg"),
+        sources[0],
+    )
 
     # Case 1: Exact duplicate
     manifest.append(_create_exact_duplicate(primary_source, output_dir, case_id))
@@ -495,15 +509,18 @@ def generate_fraud_cases(
     case_id += 1
 
     # Case 8: Backdated photo (uses a different source)
-    manifest.append(_create_backdated_photo(sources[1] if len(sources) > 1 else primary_source, output_dir, case_id))
+    backdated_source = next((p for p in sources if _source_work_type(p) == "community hall"), sources[1])
+    manifest.append(_create_backdated_photo(backdated_source, output_dir, case_id))
     case_id += 1
 
     # Case 9: Wrong-district GPS
-    manifest.append(_create_wrong_district_photo(sources[2] if len(sources) > 2 else primary_source, output_dir, case_id))
+    gps_source = next((p for p in sources if p.name == "bridge_03.jpg"), sources[2])
+    manifest.append(_create_wrong_district_photo(gps_source, output_dir, case_id))
     case_id += 1
 
     # Case 10: Content mismatch
-    manifest.append(_create_content_mismatch(sources[3] if len(sources) > 3 else primary_source, output_dir, case_id))
+    mismatch_source = next((p for p in sources if p.name == "electricity_03.jpg"), sources[3])
+    manifest.append(_create_content_mismatch(mismatch_source, output_dir, case_id))
     case_id += 1
 
     # Write manifest

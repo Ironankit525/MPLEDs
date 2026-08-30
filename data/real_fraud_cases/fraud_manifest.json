@@ -1,131 +1,122 @@
 {
-  "generated_at": "2026-08-26T19:48:36.721692",
+  "generated_at": "2026-08-29T22:35:18.147525",
   "source_dir": "data/real_images",
   "output_dir": "data/real_fraud_cases",
   "total_cases": 10,
   "cases": [
     {
       "file": "fraud_001_exact_dup.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "exact_duplicate",
       "expected_flags": [
         "EXACT_DUPLICATE"
       ],
       "work_id": "MP-NAG-2024-0001",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Nagpur",
-      "work_type": "road construction",
+      "work_type": "bridge",
       "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_002_resized.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "resized_duplicate",
       "expected_flags": [
         "PERCEPTUAL_DUPLICATE"
       ],
       "work_id": "MP-LUC-2024-0002",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Lucknow",
-      "work_type": "road construction",
+      "work_type": "bridge",
       "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_003_cropped.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "cropped_duplicate",
       "expected_flags": [
         "PERCEPTUAL_DUPLICATE",
         "PERCEPTUAL_SUSPICIOUS"
       ],
       "work_id": "MP-JAI-2024-0003",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Jaipur",
-      "work_type": "road construction",
-      "expected_risk_level": "MEDIUM"
+      "work_type": "bridge",
+      "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_004_watermarked.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "watermarked_duplicate",
       "expected_flags": [
         "PERCEPTUAL_DUPLICATE",
         "PERCEPTUAL_SUSPICIOUS"
       ],
       "work_id": "MP-PAT-2024-0004",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Patna",
-      "work_type": "road construction",
+      "work_type": "bridge",
       "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_005_rotated.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "rotated_duplicate",
       "expected_flags": [
         "PERCEPTUAL_DUPLICATE",
         "PERCEPTUAL_SUSPICIOUS"
       ],
       "work_id": "MP-BHO-2024-0005",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Bhopal",
-      "work_type": "road construction",
-      "expected_risk_level": "HIGH"
+      "work_type": "bridge",
+      "expected_risk_level": "MEDIUM"
     },
     {
       "file": "fraud_006_recompressed.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "recompressed_duplicate",
       "expected_flags": [
         "PERCEPTUAL_DUPLICATE"
       ],
       "work_id": "MP-CHE-2024-0006",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Chennai",
-      "work_type": "road construction",
+      "work_type": "bridge",
       "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_007_stripped.jpg",
-      "source": "real_1.jpg",
+      "source": "bridge_02.jpg",
       "case_type": "exif_stripped",
       "expected_flags": [
         "EXIF_STRIPPED",
         "PERCEPTUAL_DUPLICATE"
       ],
       "work_id": "MP-KOL-2024-0007",
-      "original_work_id": "MP-PUN-2024-0001",
       "district": "Kolkata",
-      "work_type": "road construction",
+      "work_type": "bridge",
       "expected_risk_level": "HIGH"
     },
     {
       "file": "fraud_008_backdated.jpg",
-      "source": "real_10.jpg",
+      "source": "community_hall_01.jpg",
       "case_type": "backdated_photo",
       "expected_flags": [
         "PHOTO_PREDATES_SANCTION"
       ],
       "work_id": "MP-BEN-2024-0008",
-      "original_work_id": null,
       "district": "Bengaluru Urban",
-      "work_type": "community hall construction",
+      "work_type": "community hall",
       "sanction_date": "2025-01-01",
       "fake_capture_date": "2023-06-15T10:30:00",
-      "expected_risk_level": "HIGH",
+      "expected_risk_level": "MEDIUM",
       "note": "EXIF DateTimeOriginal is genuinely embedded via piexif (fixed in Round 2)."
     },
     {
       "file": "fraud_009_wrong_district.jpg",
-      "source": "real_11.jpg",
+      "source": "bridge_03.jpg",
       "case_type": "wrong_district",
       "expected_flags": [
         "GPS_DISTRICT_MISMATCH"
       ],
       "work_id": "MP-THI-2024-0009",
-      "original_work_id": null,
       "district": "Pune",
-      "work_type": "drainage system",
+      "work_type": "bridge",
       "fake_gps": [
         21.15,
         79.09
@@ -135,17 +126,20 @@
     },
     {
       "file": "fraud_010_mismatch.jpg",
-      "source": "real_12.jpg",
+      "source": "electricity_03.jpg",
       "case_type": "content_mismatch",
       "expected_flags": [
-        "CONTENT_MISMATCH"
+        "CONTENT_MISMATCH",
+        "CONTENT_MISMATCH_SEVERE",
+        "NOT_PROJECT_WORK_EVIDENCE",
+        "FAMOUS_LANDMARK_SUSPECTED"
       ],
       "work_id": "MP-GUW-2024-0010",
-      "original_work_id": null,
       "district": "Guwahati",
       "work_type": "school building",
-      "expected_risk_level": "MEDIUM",
-      "note": "Requires CLIP to detect. Should flag CONTENT_MISMATCH when CLIP is enabled."
+      "source_work_type": "electricity",
+      "expected_risk_level": "HIGH",
+      "note": "A mandatory work-evidence finding or a CLIP mismatch tier satisfies this case."
     }
   ]
 }

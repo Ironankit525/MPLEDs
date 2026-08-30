@@ -72,6 +72,13 @@ class RiskAssessmentResponse(BaseModel):
     work_id: str
     risk_score: int = Field(..., ge=0, le=100, description="Aggregate risk score, 0-100")
     risk_level: str = Field(..., description="LOW (0-29), MEDIUM (30-59), HIGH (60-100)")
+    verification_status: str = Field(
+        ...,
+        description=(
+            "Evidence state: VERIFIED, INSUFFICIENT_EVIDENCE, or "
+            "REQUIRES_REVIEW. A LOW/0 risk score is not sufficient by itself."
+        ),
+    )
     recommendation: str = Field(..., description="Human-readable action recommendation")
     flags: list[FlagResponse] = Field(default_factory=list)
     duplicate_report: Optional[DuplicateReportResponse] = None
@@ -88,6 +95,18 @@ class RiskAssessmentResponse(BaseModel):
     gps_coords: Optional[list[float]] = None
     capture_date: Optional[str] = None
     exif_present: Optional[bool] = None
+    screen_probability: Optional[float] = Field(
+        None, description="ML probability that the upload is a rendered screen capture"
+    )
+    screen_model_name: Optional[str] = Field(None, description="Screen-capture model identifier/version")
+    work_evidence_status: str = Field(
+        "UNAVAILABLE", description="VALID, REVIEW, INVALID, UNAVAILABLE, or NOT_APPLICABLE"
+    )
+    work_evidence_probability: Optional[float] = Field(
+        None, description="ML probability that the image is plausible local project evidence"
+    )
+    work_evidence_label: Optional[str] = Field(None, description="Top visual-evidence classification category")
+    work_evidence_model_name: Optional[str] = Field(None, description="Visual-evidence model identifier/version")
 
 
 # ── API request models ───────────────────────────────────────────────
@@ -133,12 +152,27 @@ class ImageRecordResponse(BaseModel):
     photo_timestamp: Optional[datetime] = None
     gps_latitude: Optional[float] = None
     gps_longitude: Optional[float] = None
+    captured_latitude: Optional[float] = None
+    captured_longitude: Optional[float] = None
+    geolocation_accuracy: Optional[float] = None
+    capture_timestamp: Optional[datetime] = None
+    facing_mode: Optional[str] = None
     exif_present: Optional[bool] = None
     submitted_by_username: Optional[str] = Field(
         None, description="Username of the submitter (absent on records stored before this field existed)"
     )
     risk_score: Optional[int] = Field(None, description="Automated risk score snapshot from submit time")
     risk_level: Optional[str] = Field(None, description="LOW/MEDIUM/HIGH snapshot from submit time")
+    verification_status: Optional[str] = Field(
+        None,
+        description="Evidence state at submit time: VERIFIED, INSUFFICIENT_EVIDENCE, or REQUIRES_REVIEW",
+    )
+    screen_probability: Optional[float] = Field(None, description="Screen-capture ML probability at submit time")
+    screen_model_name: Optional[str] = Field(None, description="Screen-capture model identifier/version")
+    work_evidence_status: Optional[str] = Field(None, description="Project-evidence validity state at submit time")
+    work_evidence_probability: Optional[float] = Field(None, description="Project-evidence probability at submit time")
+    work_evidence_label: Optional[str] = Field(None, description="Top project-evidence classifier label")
+    work_evidence_model_name: Optional[str] = Field(None, description="Project-evidence model identifier/version")
     recommendation: Optional[str] = None
     flags: Optional[list[dict[str, Any]]] = Field(
         None, description="Flags raised at submit time, for the submission's detail/timeline view"
@@ -628,6 +662,9 @@ class HealthResponse(BaseModel):
     database: str = "connected"
     clip_loaded: bool = False
     clip_model: Optional[str] = None
+    visual_model_status: str = "not_loaded"
+    visual_model_required: bool = True
+    visual_model_name: Optional[str] = None
     total_images: int = 0
 
 

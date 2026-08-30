@@ -8,6 +8,7 @@ import ErrorBanner from '../components/ErrorBanner'
 import RiskBadge from '../components/RiskBadge'
 import FlagList from '../components/FlagList'
 import Icon from '../components/Icon'
+import { sanitizeFlagsForSubmitter } from '../lib/sanitizedFlags'
 
 // Matches app/config.py's WORK_TYPE_PROMPTS keys, plus the three
 // values that route into the OCR layer (README's Layer 5 — only runs
@@ -29,6 +30,24 @@ const WORK_TYPES = [
 ]
 
 const OCR_WORK_TYPES = new Set(['receipt', 'invoice', 'document'])
+
+const VERIFICATION_COPY = {
+  VERIFIED: {
+    title: 'Evidence checks completed',
+    message: 'All applicable automated checks ran successfully.',
+    className: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+  },
+  REQUIRES_REVIEW: {
+    title: 'Manual verification required',
+    message: 'Automated checks raised one or more findings.',
+    className: 'border-amber-200 bg-amber-50 text-amber-800',
+  },
+  INSUFFICIENT_EVIDENCE: {
+    title: 'Date/photo authenticity could not be verified',
+    message: 'Some required evidence or detection layers were unavailable. Do not treat a zero score as proof that the image is genuine.',
+    className: 'border-amber-200 bg-amber-50 text-amber-800',
+  },
+}
 
 function emptyForm(defaultDistrict, workId = '') {
   return {
@@ -139,7 +158,7 @@ export default function UploadPage() {
 
   if (phase === 'success' && result) {
     return (
-      <div className="bg-[#f8fafc] min-h-screen p-5">
+      <div className="min-h-full bg-[#f8fafc]">
         <div className="mb-5">
           <h1 className="text-xl font-bold !text-slate-900">Submitted</h1>
           <p className="text-xs text-gray-500 mt-0.5">Work ID {form.work_id} — here's the automated check. A verification officer will review it next.</p>
@@ -147,12 +166,39 @@ export default function UploadPage() {
 
         <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5 stack" style={{ gap: 16, maxWidth: 640 }}>
           <div className="cluster" style={{ gap: 10 }}>
-            <RiskBadge level={result.risk_level} score={result.risk_score} />
+            <RiskBadge
+              level={result.risk_level}
+              score={result.risk_score}
+              verificationStatus={result.verification_status || 'INSUFFICIENT_EVIDENCE'}
+            />
+          </div>
+          {(() => {
+            const status = result.verification_status || 'INSUFFICIENT_EVIDENCE'
+            const copy = VERIFICATION_COPY[status] || VERIFICATION_COPY.INSUFFICIENT_EVIDENCE
+            return (
+              <div className={`rounded-lg border px-3 py-2 text-sm ${copy.className}`} role="status">
+                <strong className="block">{copy.title}</strong>
+                <span>{copy.message}</span>
+              </div>
+            )
+          })()}
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs leading-5 text-slate-600">
+              <div>Capture date: {result.capture_date ? new Date(result.capture_date).toLocaleString() : 'Unavailable in the uploaded file'}</div>
+              {result.layers_skipped?.length > 0 && <div>Checks unavailable: {result.layers_skipped.join(', ')}</div>}
+              <div>
+                Project-evidence validity: {result.work_evidence_status || 'UNAVAILABLE'}
+                {typeof result.work_evidence_probability === 'number'
+                  ? ` (${(result.work_evidence_probability * 100).toFixed(1)}% confidence)`
+                  : ''}
+              </div>
+              {typeof result.screen_probability === 'number' && (
+                <div>Screen-capture model: {(result.screen_probability * 100).toFixed(1)}% ({result.screen_model_name || 'ML detector'})</div>
+              )}
           </div>
           <p style={{ color: 'var(--color-ink)' }}>{result.recommendation}</p>
           <hr className="divider" style={{ margin: '4px 0' }} />
           <h3>Automated findings</h3>
-          <FlagList flags={result.flags} />
+          <FlagList flags={sanitizeFlagsForSubmitter(result.flags)} />
         </div>
 
         <div className="cluster" style={{ gap: 12, marginTop: 24 }}>
@@ -169,7 +215,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen p-5">
+    <div className="min-h-full bg-[#f8fafc]">
       <div className="mb-5">
         <h1 className="text-xl font-bold !text-slate-900">Upload Evidence</h1>
         <p className="text-xs text-gray-500 mt-0.5">Submit a work-completion photo for {form.district || 'your district'}.</p>
@@ -205,9 +251,9 @@ export default function UploadPage() {
             </div>
             <div className="field">
               <label className="field-label" htmlFor="work_type">
-                Work type
+                Work type *
               </label>
-              <select id="work_type" className="input" value={form.work_type} onChange={update('work_type')}>
+              <select id="work_type" className="input" value={form.work_type} onChange={update('work_type')} required>
                 <option value="">Select a type…</option>
                 {WORK_TYPES.map((wt) => (
                   <option key={wt} value={wt}>
@@ -230,7 +276,7 @@ export default function UploadPage() {
             </div>
             <div className="field">
               <label className="field-label" htmlFor="sanction_date">
-                Sanction date
+                Sanction date{OCR_WORK_TYPES.has(form.work_type) ? ' *' : ''}
               </label>
               <input
                 id="sanction_date"
@@ -238,7 +284,9 @@ export default function UploadPage() {
                 className="input"
                 value={form.sanction_date}
                 onChange={update('sanction_date')}
+                required={OCR_WORK_TYPES.has(form.work_type)}
               />
+              <span className="field-hint">Used to compare the document/photo date. Upload metadata cannot prove a date when the original capture date is missing.</span>
             </div>
             {OCR_WORK_TYPES.has(form.work_type) && (
               <div className="field">

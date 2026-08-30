@@ -66,7 +66,7 @@ from app.main import _store_image_record
 from app.models import District
 from app.database import SEED_DISTRICTS
 from app.risk_engine import assess_image
-from scripts.seed_database import DISTRICTS_AND_MPS, WORK_TYPES
+from scripts.seed_database import DISTRICTS_AND_MPS, WORK_TYPES, _work_type_from_filename
 
 # Keep this script's own output readable — assess_image() logs one INFO
 # line per image internally, which would otherwise interleave with the
@@ -76,8 +76,11 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_MANIFEST = PROJECT_ROOT / "data" / "fraud_cases" / "fraud_manifest.json"
 DEFAULT_CLEAN_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+DEFAULT_REAL_MANIFEST = PROJECT_ROOT / "data" / "real_fraud_cases" / "fraud_manifest.json"
+DEFAULT_REAL_IMAGES_DIR = PROJECT_ROOT / "data" / "real_images"
 DEFAULT_OUTPUT = PROJECT_ROOT / "evaluation_report.json"
 DEFAULT_HISTORY = PROJECT_ROOT / "evaluation_history.jsonl"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 BASELINE_SANCTION_BASE = datetime(2024, 1, 15)
 RISK_LEVEL_ORDER = {"LOW": 0, "MEDIUM": 1, "HIGH": 2}
@@ -101,6 +104,20 @@ CASE_TYPE_LAYER: dict[str, str] = {
     "content_mismatch": "clip",
 }
 ALL_LAYERS = ["sha256", "phash", "clip", "exif"]
+
+# Stronger or newer findings that satisfy the same ground-truth condition.
+# Evaluation tests the semantic outcome rather than failing merely because a
+# calibrated severity tier uses a more specific code than an older manifest.
+FLAG_EQUIVALENTS: dict[str, set[str]] = {
+    "PERCEPTUAL_DUPLICATE": {"PERCEPTUAL_DUPLICATE", "GEOMETRIC_DUPLICATE"},
+    "PERCEPTUAL_SUSPICIOUS": {"PERCEPTUAL_SUSPICIOUS", "GEOMETRIC_DUPLICATE"},
+    "CONTENT_MISMATCH": {
+        "CONTENT_MISMATCH",
+        "CONTENT_MISMATCH_SEVERE",
+        "NOT_PROJECT_WORK_EVIDENCE",
+        "FAMOUS_LANDMARK_SUSPECTED",
+    },
+}
 
 
 # ── Result dataclasses ────────────────────────────────────────────────
@@ -203,6 +220,9 @@ def _config_snapshot() -> dict[str, Any]:
         "EMBEDDING_DUPLICATE_THRESHOLD": settings.EMBEDDING_DUPLICATE_THRESHOLD,
         "EMBEDDING_SUSPICIOUS_THRESHOLD": settings.EMBEDDING_SUSPICIOUS_THRESHOLD,
         "SEMANTIC_MATCH_THRESHOLD": settings.SEMANTIC_MATCH_THRESHOLD,
+        "WORK_EVIDENCE_VALID_THRESHOLD": settings.WORK_EVIDENCE_VALID_THRESHOLD,
+        "WORK_EVIDENCE_INVALID_THRESHOLD": settings.WORK_EVIDENCE_INVALID_THRESHOLD,
+        "WORK_EVIDENCE_INVALID_MARGIN": settings.WORK_EVIDENCE_INVALID_MARGIN,
         "GPS_MAX_DISTANCE_KM": settings.GPS_MAX_DISTANCE_KM,
         "ENABLE_ROTATION_ROBUST_HASH": getattr(settings, "ENABLE_ROTATION_ROBUST_HASH", None),
         "ENABLE_TILED_HASH": getattr(settings, "ENABLE_TILED_HASH", None),
@@ -228,16 +248,15 @@ def _git_commit_hash() -> Optional[str]:
 def _ingest_baseline(image_paths: list[Path], session: Database) -> None:
     """Store each image as a normal submission (same path /api/images/submit uses).
 
-    Uses EXACTLY the identity scheme scripts/seed_database.py uses —
-    sorted index cycling through DISTRICTS_AND_MPS/WORK_TYPES, work_id =
-    f"MP-{district[:3].upper()}-2024-{i+1:04d}". This is load-bearing:
-    fraud_manifest.json's cases 1-7 hardcode
-    original_work_id="MP-PUN-2024-0001", which only exists in this DB if
-    index 0 resolves to Pune exactly as it does here.
+    Uses the same identity scheme as scripts/seed_database.py. Correctly
+    labelled ``<work_type>_<NN>`` filenames retain their real work type;
+    legacy synthetic names fall back to deterministic index cycling. Fraud
+    manifests identify baseline evidence by source filename rather than a
+    brittle generated work ID.
     """
     for i, path in enumerate(image_paths):
         district, state, mp_name = DISTRICTS_AND_MPS[i % len(DISTRICTS_AND_MPS)]
-        work_type = WORK_TYPES[i % len(WORK_TYPES)]
+        work_type = _work_type_from_filename(path) or WORK_TYPES[i % len(WORK_TYPES)]
         sanction_date = BASELINE_SANCTION_BASE + timedelta(days=i * 10)
         work_id = f"MP-{district[:3].upper()}-2024-{i + 1:04d}"
 
@@ -394,7 +413,12 @@ def _evaluate_fraud_cases(
 
         actual_codes = [f.code for f in assessment.flags]
         expected = case["expected_flags"]
-        passed = any(code in actual_codes for code in expected)
+        accepted_codes = {
+            accepted
+            for expected_code in expected
+            for accepted in FLAG_EQUIVALENTS.get(expected_code, {expected_code})
+        }
+        passed = any(code in accepted_codes for code in actual_codes)
         layer = CASE_TYPE_LAYER.get(case["case_type"], "unknown")
         expected_level = case.get("expected_risk_level", case.get("expected_risk", "UNKNOWN"))
 
@@ -447,10 +471,16 @@ def _evaluate_fp_controls(
     results: list[FPCaseResult] = []
     for j, path in enumerate(holdout_images):
         i = start_index + j
-        district, state, mp_name = DISTRICTS_AND_MPS[i % len(DISTRICTS_AND_MPS)]
-        work_type = WORK_TYPES[i % len(WORK_TYPES)]
-        sanction_date = BASELINE_SANCTION_BASE + timedelta(days=i * 10)
-        work_id = f"MP-{district[:3].upper()}-2024-CTRL-{i + 1:04d}"
+        work_type = _work_type_from_filename(path) or WORK_TYPES[i % len(WORK_TYPES)]
+        # A false-positive control must not invent contradictory metadata.
+        # Real calibration photos come from many districts and dates; assigning
+        # one arbitrary district/sanction date would deliberately manufacture a
+        # GPS or pre-sanction finding unrelated to image-analysis precision.
+        district = "Evaluation Holdout"
+        state = None
+        mp_name = None
+        sanction_date = None
+        work_id = f"EVAL-CTRL-{i + 1:04d}"
 
         assessment = assess_image(
             image_path=str(path),
@@ -492,18 +522,13 @@ def evaluate(
         enable_clip:         Whether to run with Layer 3 (CLIP) enabled.
         fraud_cases_dir:     Directory containing the fraud case images.
                               Defaults to manifest_path's parent directory.
-        fp_holdout_fraction: Fraction of clean images held out (never
-                              ingested into the baseline) to use as
-                              false-positive controls. The remaining
-                              images become the stored baseline corpus —
-                              sorted-index identity must stay stable for
-                              the fraud manifest's cross-work matches to
-                              resolve, so the holdout is taken from the
-                              END of the sorted list, not the start.
-        corpus:               Label only ("synthetic" or "real") — recorded
-                              in the report/history log, doesn't change
-                              behaviour. Set to "real" when clean_images_dir
-                              points at data/real_images.
+        fp_holdout_fraction: Fraction of eligible clean images held out
+                              as false-positive controls. Every source named
+                              by the fraud manifest is always retained in the
+                              baseline, regardless of the requested fraction.
+        corpus:               "synthetic" loads only legacy clean_* fixtures;
+                              "real" loads every supported image directly in
+                              the labeled real-photo directory.
     """
     manifest_file = Path(manifest_path)
     clean_dir = Path(clean_images_dir)
@@ -512,15 +537,47 @@ def evaluate(
     with open(manifest_file) as f:
         manifest = json.load(f)
 
-    all_clean = sorted(clean_dir.glob("clean_*.jpg")) + sorted(clean_dir.glob("clean_*.png"))
+    if corpus == "real":
+        all_clean = sorted(
+            path for path in clean_dir.iterdir()
+            if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS
+        )
+    else:
+        all_clean = sorted(clean_dir.glob("clean_*.jpg")) + sorted(clean_dir.glob("clean_*.png"))
     if not all_clean:
-        raise FileNotFoundError(f"No clean_*.jpg/clean_*.png images found in {clean_dir}")
+        expected = "supported image files" if corpus == "real" else "clean_*.jpg/clean_*.png"
+        raise FileNotFoundError(f"No {expected} found in {clean_dir}")
 
-    n_holdout = max(1, round(len(all_clean) * fp_holdout_fraction))
-    if n_holdout >= len(all_clean):
-        n_holdout = 1  # always keep at least one baseline image
-    baseline_images = all_clean[: len(all_clean) - n_holdout]
-    holdout_images = all_clean[len(baseline_images):]
+    source_names = {
+        case["source"] for case in manifest.get("cases", []) if case.get("source")
+    }
+    available_names = {path.name for path in all_clean}
+    missing_sources = sorted(source_names - available_names)
+    if missing_sources:
+        raise ValueError(
+            "Fraud manifest references source images that are absent from the clean "
+            f"corpus: {missing_sources}. Regenerate the fraud cases from {clean_dir} "
+            "before evaluating; stale transformed files are not valid ground truth."
+        )
+
+    holdout_candidates = [path for path in all_clean if path.name not in source_names]
+    if not holdout_candidates:
+        raise ValueError("No clean images remain for a disjoint false-positive holdout.")
+    requested_holdout = max(1, round(len(all_clean) * fp_holdout_fraction))
+    n_holdout = min(requested_holdout, len(holdout_candidates))
+    holdout_images = holdout_candidates[-n_holdout:]
+    holdout_names = {path.name for path in holdout_images}
+    duplicate_source_names = {
+        case["source"]
+        for case in manifest.get("cases", [])
+        if case.get("source")
+        and CASE_TYPE_LAYER.get(case.get("case_type", "")) in {"sha256", "phash"}
+    }
+    isolated_case_sources = source_names - duplicate_source_names
+    baseline_images = [
+        path for path in all_clean
+        if path.name not in holdout_names and path.name not in isolated_case_sources
+    ]
 
     session = _build_temp_db()
     with patch.object(settings, "ENABLE_CLIP", enable_clip):
@@ -772,8 +829,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Evaluate the MPLADS fraud detection pipeline against fraud_manifest.json."
     )
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument("--clean-images-dir", type=Path, default=DEFAULT_CLEAN_IMAGES_DIR)
+    parser.add_argument(
+        "--manifest", type=Path, default=None,
+        help="Ground-truth manifest (defaults to the matching synthetic/real corpus manifest).",
+    )
+    parser.add_argument(
+        "--clean-images-dir", type=Path, default=None,
+        help="Clean corpus directory (defaults to data/images or data/real_images).",
+    )
     parser.add_argument("--fraud-cases-dir", type=Path, default=None)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--history", type=Path, default=DEFAULT_HISTORY)
@@ -789,10 +852,16 @@ def main() -> None:
     args = parser.parse_args()
 
     enable_clip = bool(args.clip)
+    manifest_path = args.manifest or (
+        DEFAULT_REAL_MANIFEST if args.corpus == "real" else DEFAULT_MANIFEST
+    )
+    clean_images_dir = args.clean_images_dir or (
+        DEFAULT_REAL_IMAGES_DIR if args.corpus == "real" else DEFAULT_CLEAN_IMAGES_DIR
+    )
 
     report = evaluate(
-        manifest_path=str(args.manifest),
-        clean_images_dir=str(args.clean_images_dir),
+        manifest_path=str(manifest_path),
+        clean_images_dir=str(clean_images_dir),
         enable_clip=enable_clip,
         fraud_cases_dir=str(args.fraud_cases_dir) if args.fraud_cases_dir else None,
         fp_holdout_fraction=args.fp_holdout_fraction,

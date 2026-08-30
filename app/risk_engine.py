@@ -6,7 +6,7 @@ This is the single entry point that orchestrates all detection layers:
   2. Compute CLIP embedding if available (Layer 3)
   3. Run duplicate search across all layers
   4. Run EXIF metadata analysis
-  5. Run semantic content match
+  5. Run optional ML screen-capture detection and semantic content match
   6. Aggregate all signals into a single explainable risk score
 
 Every point added to the score is traceable to a specific flag —
@@ -38,6 +38,7 @@ from app.hashing import (
     compute_sha256,
     compute_tiled_phashes,
 )
+from app.screen_detection import get_screen_detector
 
 logger = logging.getLogger(__name__)
 
@@ -69,6 +70,9 @@ class RiskAssessment:
     risk_score: int = 0
     risk_level: str = "LOW"
     recommendation: str = ""
+    # Risk is an automated signal; verification_status tells the UI whether
+    # the evidence was complete enough to treat a low score as meaningful.
+    verification_status: str = "INSUFFICIENT_EVIDENCE"
     flags: list[ScoredFlag] = field(default_factory=list)
     duplicate_report: Optional[DuplicateReport] = None
     semantic_match_score: Optional[float] = None
@@ -84,6 +88,87 @@ class RiskAssessment:
     gps_coords: Optional[list[float]] = None
     capture_date: Optional[str] = None
     exif_present: Optional[bool] = None
+    screen_probability: Optional[float] = None
+    screen_model_name: Optional[str] = None
+    work_evidence_status: str = "UNAVAILABLE"
+    work_evidence_probability: Optional[float] = None
+    work_evidence_label: Optional[str] = None
+    work_evidence_model_name: Optional[str] = None
+
+
+_DUPLICATE_EVIDENCE_PRIORITY = {
+    "EXACT_DUPLICATE": 5,
+    "PERCEPTUAL_DUPLICATE": 4,
+    "GEOMETRIC_DUPLICATE": 4,
+    "SEMANTIC_DUPLICATE": 3,
+    "PERCEPTUAL_SUSPICIOUS": 2,
+    "SEMANTIC_SUSPICIOUS": 1,
+}
+_BOUNDARY_FLAG_CODES = {"CROSS_DISTRICT_MATCH", "CROSS_MP_MATCH"}
+
+
+def _collapse_correlated_flags(flags: list[ScoredFlag]) -> list[ScoredFlag]:
+    """Keep correlated detectors from charging repeatedly for one event.
+
+    Exact hashes, perceptual hashes, SIFT and embedding similarity are four
+    observations of the same underlying event: reuse of a stored photograph.
+    For each matched work, retain only the strongest base finding. Likewise,
+    crossing a district or MP boundary is one aggravating circumstance for the
+    incoming submission, not a fresh penalty every time another detector sees
+    the same reuse.
+
+    The raw ``duplicate_report`` remains available to reviewers, so collapsing
+    scored flags does not discard the underlying detector output.
+    """
+    best_duplicate_by_work: dict[str, tuple[int, ScoredFlag]] = {}
+    best_boundary_by_code: dict[str, tuple[int, ScoredFlag]] = {}
+    passthrough: list[tuple[int, ScoredFlag]] = []
+
+    for index, flag in enumerate(flags):
+        if flag.code in _DUPLICATE_EVIDENCE_PRIORITY:
+            matched_work = str(
+                flag.evidence.get("matched_work_id")
+                or flag.evidence.get("matched_image_path")
+                or f"unknown:{index}"
+            )
+            current = best_duplicate_by_work.get(matched_work)
+            candidate_rank = (
+                _DUPLICATE_EVIDENCE_PRIORITY[flag.code],
+                flag.points_added,
+                -index,
+            )
+            if current is None:
+                best_duplicate_by_work[matched_work] = (index, flag)
+            else:
+                current_index, current_flag = current
+                current_rank = (
+                    _DUPLICATE_EVIDENCE_PRIORITY[current_flag.code],
+                    current_flag.points_added,
+                    -current_index,
+                )
+                if candidate_rank > current_rank:
+                    best_duplicate_by_work[matched_work] = (index, flag)
+            continue
+
+        if flag.code in _BOUNDARY_FLAG_CODES:
+            current = best_boundary_by_code.get(flag.code)
+            if current is None or flag.points_added > current[1].points_added:
+                best_boundary_by_code[flag.code] = (index, flag)
+            continue
+
+        passthrough.append((index, flag))
+
+    selected = (
+        passthrough
+        + list(best_duplicate_by_work.values())
+        + list(best_boundary_by_code.values())
+    )
+    selected.sort(key=lambda item: item[0])
+
+    collapsed_count = len(flags) - len(selected)
+    if collapsed_count:
+        logger.debug("Collapsed %d correlated risk flag(s).", collapsed_count)
+    return [flag for _, flag in selected]
 
 
 def _get_district_coords(district: str, session: Database) -> tuple[float, float] | None:
@@ -127,6 +212,56 @@ def _recommendation_from_level(level: str) -> str:
         return "Flag for supervisory review before payment"
     else:
         return "No action required — image appears legitimate"
+
+
+def _verification_status_for(
+    assessment: RiskAssessment,
+    work_type: str | None,
+    sanction_date: datetime | None,
+) -> str:
+    """Classify whether a low automated score is actually verifiable.
+
+    A zero/low score is not a clean bill of health when an applicable layer
+    was skipped or the submission lacks the dates needed for comparison. Risk
+    flags take precedence and always require a human review.
+    """
+    if any(flag.points_added > 0 for flag in assessment.flags):
+        return "REQUIRES_REVIEW"
+
+    missing_evidence = not work_type or not sanction_date or not assessment.capture_date
+    normalised_work_type = work_type.strip().lower() if work_type else None
+    physical_work = bool(normalised_work_type and normalised_work_type not in settings.DOCUMENT_WORK_TYPES)
+    if physical_work:
+        # A category match is not provenance. Physical work needs both a
+        # plausible project-evidence image and some usable location evidence.
+        if assessment.work_evidence_status != "VALID":
+            missing_evidence = True
+        if any(flag.code == "GPS_MISSING" for flag in assessment.flags):
+            missing_evidence = True
+    if work_type and "clip" in assessment.layers_skipped:
+        missing_evidence = True
+    if settings.ENABLE_SCREEN_MODEL and "screen_model" in assessment.layers_skipped:
+        missing_evidence = True
+    if work_type and work_type.strip().lower() in {"receipt", "invoice", "document"}:
+        if "ocr" in assessment.layers_skipped:
+            missing_evidence = True
+    if (
+        assessment.screen_probability is not None
+        and assessment.screen_probability >= settings.SCREEN_MODEL_REVIEW_THRESHOLD
+        and not any(flag.code == "SCREEN_CAPTURE_SUSPECTED" for flag in assessment.flags)
+    ):
+        missing_evidence = True
+
+    return "INSUFFICIENT_EVIDENCE" if missing_evidence else "VERIFIED"
+
+
+def _recommendation_for_assessment(assessment: RiskAssessment) -> str:
+    """Return a conservative recommendation that accounts for evidence gaps."""
+    if assessment.verification_status != "VERIFIED":
+        if assessment.verification_status == "REQUIRES_REVIEW":
+            return "Manual verification required — automated checks raised one or more findings."
+        return "Manual verification required — automated checks lacked sufficient evidence."
+    return _recommendation_from_level(assessment.risk_level)
 
 
 def assess_image(
@@ -255,6 +390,94 @@ def assess_image(
             assessment.layers_skipped.append("clip")
     else:
         assessment.layers_skipped.append("clip")
+
+    # ── Step 2.1: Mandatory project-evidence validity gate ──────────
+    # Work-type matching alone is not enough: a famous bridge is still a
+    # bridge. Before duplicate and anomaly scoring, ask the mandatory SigLIP
+    # model whether this looks like field evidence from a local project or a
+    # landmark/stock/travel/unrelated image. We keep running later layers so a
+    # reviewer receives all available evidence, even after this gate fires.
+    normalised_work_type = work_type.strip().lower() if work_type else None
+    if normalised_work_type and normalised_work_type not in settings.DOCUMENT_WORK_TYPES:
+        work_evidence_result = get_screen_detector().predict_work_evidence(
+            image_path,
+            normalised_work_type,
+        )
+        assessment.work_evidence_model_name = work_evidence_result.model_name
+
+        if work_evidence_result.available and work_evidence_result.valid_probability is not None:
+            assessment.layers_run.append("work_evidence")
+            assessment.work_evidence_probability = work_evidence_result.valid_probability
+            assessment.work_evidence_label = work_evidence_result.top_category
+
+            top_category = work_evidence_result.top_category or "unavailable"
+            top_probability = work_evidence_result.top_probability or 0.0
+            valid_probability = work_evidence_result.valid_probability
+            invalid_margin = top_probability - valid_probability
+            confidently_invalid = (
+                top_category != "valid_project_evidence"
+                and top_probability >= settings.WORK_EVIDENCE_INVALID_THRESHOLD
+                and invalid_margin >= settings.WORK_EVIDENCE_INVALID_MARGIN
+            )
+
+            if confidently_invalid:
+                assessment.work_evidence_status = "INVALID"
+                points = settings.WEIGHT_INVALID_WORK_EVIDENCE
+                total_points += points
+                is_landmark = top_category == "famous_landmark_or_stock"
+                assessment.flags.append(ScoredFlag(
+                    code="FAMOUS_LANDMARK_SUSPECTED" if is_landmark else "NOT_PROJECT_WORK_EVIDENCE",
+                    severity="HIGH",
+                    message=(
+                        "The visual model identifies this as a famous landmark, stock, "
+                        "or travel-style image rather than contractor evidence from the "
+                        "claimed work site."
+                        if is_landmark else
+                        "The visual model strongly indicates that this is not a field "
+                        "verification photograph of the claimed public work."
+                    ),
+                    evidence={
+                        "work_type": normalised_work_type,
+                        "classification": top_category,
+                        "classification_confidence": round(top_probability, 4),
+                        "valid_project_evidence_probability": round(valid_probability, 4),
+                        "category_scores": work_evidence_result.category_scores or {},
+                        "model": work_evidence_result.model_name,
+                    },
+                    points_added=points,
+                ))
+            elif (
+                top_category != "valid_project_evidence"
+                or valid_probability < settings.WORK_EVIDENCE_VALID_THRESHOLD
+            ):
+                assessment.work_evidence_status = "REVIEW"
+                points = settings.WEIGHT_UNCLEAR_WORK_EVIDENCE
+                total_points += points
+                assessment.flags.append(ScoredFlag(
+                    code="WORK_EVIDENCE_UNCLEAR",
+                    severity="MEDIUM",
+                    message=(
+                        "The image may show the claimed subject, but it does not clearly "
+                        "look like contractor progress or completion evidence from a "
+                        "local project site."
+                    ),
+                    evidence={
+                        "work_type": normalised_work_type,
+                        "classification": top_category,
+                        "classification_confidence": round(top_probability, 4),
+                        "valid_project_evidence_probability": round(valid_probability, 4),
+                        "category_scores": work_evidence_result.category_scores or {},
+                        "model": work_evidence_result.model_name,
+                    },
+                    points_added=points,
+                ))
+            else:
+                assessment.work_evidence_status = "VALID"
+        else:
+            assessment.layers_skipped.append("work_evidence")
+            assessment.work_evidence_status = "UNAVAILABLE"
+    else:
+        assessment.work_evidence_status = "NOT_APPLICABLE"
 
     # ── Step 2.5: Extract ORB keypoints + colour signature (Layer 6) ──
     # Runs independently of CLIP: the colour signature is its own
@@ -497,16 +720,22 @@ def assess_image(
                 points_added=points,
             ))
 
-            # Boundary information from a duplicate-tier CLIP match is strong
-            # evidence. For a suspicious-tier match, preserve it as MEDIUM
-            # review context instead of presenting it as a high-confidence fact.
-            boundary_severity = "HIGH" if is_duplicate_tier else "MEDIUM"
-            if match.cross_district:
+            # Only a duplicate-tier semantic match can support an independent
+            # boundary penalty. A suspicious-tier neighbour is deliberately a
+            # weak review hint; adding a district/MP penalty to it turned one
+            # known 0.85-band false neighbour into a MEDIUM aggregate result.
+            # Preserve boundary context inside the semantic evidence instead.
+            assessment.flags[-1].evidence.update({
+                "cross_district": match.cross_district,
+                "cross_mp": match.cross_mp,
+                "matched_mp": match.matched_record.mp_name,
+            })
+            if is_duplicate_tier and match.cross_district:
                 cd_points = settings.WEIGHT_CROSS_DISTRICT
                 total_points += cd_points
                 assessment.flags.append(ScoredFlag(
                     code="CROSS_DISTRICT_MATCH",
-                    severity=boundary_severity,
+                    severity="HIGH",
                     message=(
                         f"The strongest semantic match belongs to a different district "
                         f"({match.matched_record.district})."
@@ -518,12 +747,12 @@ def assess_image(
                     points_added=cd_points,
                 ))
 
-            if match.cross_mp:
+            if is_duplicate_tier and match.cross_mp:
                 cm_points = settings.WEIGHT_CROSS_MP
                 total_points += cm_points
                 assessment.flags.append(ScoredFlag(
                     code="CROSS_MP_MATCH",
-                    severity=boundary_severity,
+                    severity="HIGH",
                     message=(
                         f"The strongest semantic match belongs to a different MP "
                         f"({match.matched_record.mp_name})."
@@ -737,12 +966,58 @@ def assess_image(
     else:
         assessment.layers_skipped.append("ela")
 
-    # ── Step 5: Semantic content match ───────────────────────────────
+    # ── Step 4.6: Mandatory ML screen-capture detection ─────────────
+    # This is independent of ELA: compression uniformity is not reliable
+    # enough to classify modern camera JPEGs, while the SigLIP layer can use
+    # screen/UI semantics. A borderline result remains an evidence gap; only
+    # a high-confidence result contributes risk points.
+    if settings.ENABLE_SCREEN_MODEL:
+        screen_result = get_screen_detector().predict(image_path)
+        assessment.screen_model_name = screen_result.model_name
+        if screen_result.available and screen_result.screen_probability is not None:
+            assessment.layers_run.append("screen_model")
+            assessment.screen_probability = screen_result.screen_probability
+            if screen_result.screen_probability >= settings.SCREEN_MODEL_HIGH_THRESHOLD:
+                points = settings.WEIGHT_SCREEN_CAPTURE_SUSPECTED
+                total_points += points
+                assessment.flags.append(ScoredFlag(
+                    code="SCREEN_CAPTURE_SUSPECTED",
+                    severity="HIGH",
+                    message=(
+                        "The ML detector strongly indicates that this file is a rendered "
+                        "screen capture rather than a camera photograph."
+                    ),
+                    evidence={
+                        "screen_probability": screen_result.screen_probability,
+                        "review_threshold": settings.SCREEN_MODEL_REVIEW_THRESHOLD,
+                        "high_threshold": settings.SCREEN_MODEL_HIGH_THRESHOLD,
+                        "model": screen_result.model_name,
+                    },
+                    points_added=points,
+                ))
+        else:
+            assessment.layers_skipped.append("screen_model")
+    else:
+        assessment.layers_skipped.append("screen_model")
+
+    # ── Step 5: Legacy semantic content diagnostic ──────────────────
+    # SigLIP's mandatory work-evidence decision already includes the claimed
+    # work type in its prompts. CLIP remains useful as a diagnostic and as a
+    # fallback if that mandatory inference fails, but scoring both models for
+    # the same semantic claim double-counts correlated evidence and previously
+    # produced contradictory findings (VALID project evidence plus CONTENT
+    # MISMATCH). Therefore a physical-work CLIP mismatch is scored only when
+    # the work-evidence result is unavailable. INVALID/REVIEW already carry
+    # their own calibrated finding; VALID is not overruled by the legacy model.
     if work_type and embedding is not None:
         match_score = clip_engine.zero_shot_match(image_path, work_type)
         if match_score is not None:
             assessment.semantic_match_score = match_score
-            if match_score < settings.SEMANTIC_MATCH_THRESHOLD:
+            should_score_legacy_mismatch = assessment.work_evidence_status in {
+                "UNAVAILABLE",
+                "NOT_APPLICABLE",
+            }
+            if match_score < settings.SEMANTIC_MATCH_THRESHOLD and should_score_legacy_mismatch:
                 # Wording note: match_score is the probability the image DOES
                 # depict work_type, so a LOW number means a STRONG mismatch.
                 # A prior phrasing ("the confidence score is 0.1%, below the
@@ -844,9 +1119,15 @@ def assess_image(
     total_points += _resolve_conditional_flags(assessment, pending_conditional_flags)
 
     # ── Step 6: Aggregate and cap ────────────────────────────────────
+    # Multiple duplicate detectors can observe the same reused source. Collapse
+    # those correlated flags before deriving the final score so a single event
+    # cannot be charged repeatedly merely because several layers worked.
+    assessment.flags = _collapse_correlated_flags(assessment.flags)
+    total_points = sum(flag.points_added for flag in assessment.flags)
     assessment.risk_score = min(total_points, 100)
     assessment.risk_level = _score_from_level(assessment.risk_score)
-    assessment.recommendation = _recommendation_from_level(assessment.risk_level)
+    assessment.verification_status = _verification_status_for(assessment, work_type, sanction_date)
+    assessment.recommendation = _recommendation_for_assessment(assessment)
     assessment.file_path = image_path
 
     elapsed_ms = int((time.time() - start_time) * 1000)
