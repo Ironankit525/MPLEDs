@@ -71,17 +71,6 @@ export const Topbar = () => {
           />
         </div>
         
-        {/* Logout Button */}
-        <button
-          onClick={() => {
-            document.cookie = 'auth_token=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            document.cookie = 'user_role=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            window.location.href = 'http://localhost:3000/';
-          }}
-          className="ml-2 px-3 py-1.5 text-sm font-semibold text-red-600 border border-red-200 rounded-md hover:bg-red-50 transition-colors"
-        >
-          Log Out
-        </button>
       </div>
     </header>
   );
