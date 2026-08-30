@@ -84,14 +84,14 @@ export const MPDetailsPage = () => {
 
   return (
     <div className="min-h-[calc(100vh-72px)] bg-white flex -mt-3 sm:-mt-4 lg:-mt-5 -mx-3 sm:-mx-4 lg:-mx-5">
-      {/* 30% Left Column */}
-      <div className="w-[30%] shrink-0 border-r border-slate-200 p-6 min-h-full flex flex-col">
-        <p className="text-slate-500">Left Column (30%)</p>
+      {/* 35% Left Column */}
+      <div className="w-[35%] shrink-0 border-r border-slate-200 p-6 min-h-full flex flex-col">
+        <p className="text-slate-500">Left Column (35%)</p>
       </div>
       
-      {/* 70% Right Column */}
-      <div className="w-[70%] p-6 bg-slate-50 min-h-full flex flex-col">
-        <p className="text-slate-500">Right Column (70%)</p>
+      {/* 65% Right Column */}
+      <div className="w-[65%] p-6 bg-slate-50 min-h-full flex flex-col">
+        <p className="text-slate-500">Right Column (65%)</p>
       </div>
     </div>
   );
