@@ -5,11 +5,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 export const HouseExpenditureSection = ({ houseExpenditure = {} }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const lokSabha = houseExpenditure.lokSabhaAmountCr || 12168;
-  const lokSabhaPct = houseExpenditure.lokSabhaPercentage || 76.8;
-  const rajyaSabha = houseExpenditure.rajyaSabhaAmountCr || 3674;
-  const rajyaSabhaPct = houseExpenditure.rajyaSabhaPercentage || 23.2;
-  const total = houseExpenditure.totalCr || 15842;
+  const lokSabha = houseExpenditure.lokSabhaAmountCr ?? 12168;
+  const lokSabhaPct = houseExpenditure.lokSabhaPercentage ?? 76.8;
+  const rajyaSabha = houseExpenditure.rajyaSabhaAmountCr ?? 3674;
+  const rajyaSabhaPct = houseExpenditure.rajyaSabhaPercentage ?? 23.2;
+  const total = houseExpenditure.totalCr ?? 15842;
 
   const data = [
     { name: 'Lok Sabha', value: lokSabha, percentage: lokSabhaPct, color: '#16A34A' },
