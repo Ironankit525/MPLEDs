@@ -87,8 +87,8 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
           onClick={onToggle}
           className="flex items-center w-full min-w-0 px-2.5 py-1.5 h-12 cursor-pointer rounded-xl hover:bg-slate-200/50 transition-colors group select-none text-left focus:outline-none"
         >
-          <div className="flex items-center justify-center shrink-0 w-9 h-9 select-none">
-            <AshokStambhLogo className="w-9 h-9 shrink-0 pointer-events-none" theme="light" />
+          <div className="flex items-center justify-center shrink-0 w-10 h-10 select-none">
+            <AshokStambhLogo className="w-10 h-10 shrink-0 pointer-events-none" theme="light" />
           </div>
           <div
             className={`flex flex-col leading-tight overflow-hidden transition-all duration-300 ease-in-out pl-3 select-none ${
@@ -119,7 +119,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
       </div>
 
       {/* Navigation Groups */}
-      <nav className="flex-1 py-5 space-y-3 overflow-y-auto overflow-x-hidden relative">
+      <nav className="flex-1 py-5 space-y-1.5 overflow-y-auto overflow-x-hidden relative">
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-0.5">
             {/* Show group labels on mobile drawer and desktop expanded */}
@@ -192,7 +192,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
                       </div>
                       
                       <span
-                        className={`tracking-wide whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out pl-2 relative z-10 ${
+                        className={`tracking-wide whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out pl-3 relative z-10 ${
                           isCollapsed && !mobileOpen
                             ? 'opacity-0 max-w-0 min-w-0'
                             : 'opacity-100 max-w-[160px]'
