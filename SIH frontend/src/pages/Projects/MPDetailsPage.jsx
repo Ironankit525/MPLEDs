@@ -231,13 +231,19 @@ export const MPDetailsPage = () => {
 
             const unutilizedBalance = Math.max(0, record.sanctionedAmount - record.expenditure);
 
+            const formatLakhsCr = (amount) => {
+              if (!amount) return '₹0';
+              if (amount >= 10000000) return `₹${(amount / 10000000).toFixed(2)} Cr`;
+              return `₹${(amount / 100000).toFixed(1)} L`;
+            };
+
             return (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Fund Utilization Donut */}
                   <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col items-center">
-                    <h2 className="text-base font-bold text-slate-800 mb-6">Fund Utilization</h2>
-                    <div className="h-48 w-full relative flex items-end justify-center">
+                    <h2 className="text-[15px] font-bold text-slate-800 mb-2">Fund Utilization</h2>
+                    <div className="h-32 w-full relative flex items-end justify-center">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
@@ -246,8 +252,8 @@ export const MPDetailsPage = () => {
                             cy="100%"
                             startAngle={180}
                             endAngle={0}
-                            innerRadius={70}
-                            outerRadius={90}
+                            innerRadius={45}
+                            outerRadius={65}
                             paddingAngle={0}
                             dataKey="value"
                             stroke="none"
@@ -258,16 +264,16 @@ export const MPDetailsPage = () => {
                           </Pie>
                         </PieChart>
                       </ResponsiveContainer>
-                      <div className="absolute bottom-2 text-center">
-                        <span className="text-3xl font-black text-slate-900">{record.utilization}%</span>
+                      <div className="absolute bottom-1 text-center">
+                        <span className="text-2xl font-black text-slate-900">{record.utilization}%</span>
                       </div>
                     </div>
                   </div>
 
                   {/* AI Risk Score Donut */}
                   <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col items-center">
-                    <h2 className="text-base font-bold text-slate-800 mb-6">AI Risk Score</h2>
-                    <div className="h-48 w-full relative flex items-end justify-center">
+                    <h2 className="text-[15px] font-bold text-slate-800 mb-2">AI Risk Score</h2>
+                    <div className="h-32 w-full relative flex items-end justify-center">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
@@ -276,8 +282,8 @@ export const MPDetailsPage = () => {
                             cy="100%"
                             startAngle={180}
                             endAngle={0}
-                            innerRadius={70}
-                            outerRadius={90}
+                            innerRadius={45}
+                            outerRadius={65}
                             paddingAngle={0}
                             dataKey="value"
                             stroke="none"
@@ -288,9 +294,9 @@ export const MPDetailsPage = () => {
                           </Pie>
                         </PieChart>
                       </ResponsiveContainer>
-                      <div className="absolute bottom-2 text-center">
-                        <span className="text-3xl font-black text-slate-900">{record.averageRiskScore}</span>
-                        <span className="text-sm text-slate-400 font-bold">/100</span>
+                      <div className="absolute bottom-1 text-center">
+                        <span className="text-2xl font-black text-slate-900">{record.averageRiskScore}</span>
+                        <span className="text-xs text-slate-400 font-bold">/100</span>
                       </div>
                     </div>
                   </div>
@@ -298,23 +304,46 @@ export const MPDetailsPage = () => {
 
                 {/* Financials Section */}
                 <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                  <h2 className="text-base font-bold text-slate-800 mb-6">Financials</h2>
+                  <h2 className="text-base font-bold text-slate-800 mb-5">Financials</h2>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Sanctioned</span>
-                      <span className="text-xl font-black text-slate-900 font-mono">{formatCurrency(record.sanctionedAmount)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Sanctioned</span>
+                      <span className="text-[20px] font-black text-slate-900 font-mono">{formatLakhsCr(record.sanctionedAmount)}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Expenditure Incurred</span>
-                      <span className="text-xl font-black text-emerald-600 font-mono">{formatCurrency(record.expenditure)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Expenditure</span>
+                      <span className="text-[20px] font-black text-emerald-600 font-mono">{formatLakhsCr(record.expenditure)}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Unutilized Balance</span>
-                      <span className="text-xl font-black text-amber-500 font-mono">{formatCurrency(unutilizedBalance)}</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Unutilized</span>
+                      <span className="text-[20px] font-black text-amber-500 font-mono">{formatLakhsCr(unutilizedBalance)}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Sanctioned Works</span>
-                      <span className="text-xl font-black text-indigo-600">{record.totalProjects}</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Sanctioned Works</span>
+                      <span className="text-[20px] font-black text-indigo-600">{record.totalProjects}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Work Status Section */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <h2 className="text-base font-bold text-slate-800 mb-5">Work Status</h2>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="flex flex-col">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Work</span>
+                      <span className="text-[20px] font-black text-slate-900">{record.totalProjects}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Completed</span>
+                      <span className="text-[20px] font-black text-emerald-600">{record.completedProjects}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Ongoing</span>
+                      <span className="text-[20px] font-black text-blue-600">{record.ongoingProjects}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Delayed</span>
+                      <span className="text-[20px] font-black text-rose-600">{record.delayedProjects}</span>
                     </div>
                   </div>
                 </div>
