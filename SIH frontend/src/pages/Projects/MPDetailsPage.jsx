@@ -127,7 +127,7 @@ export const MPDetailsPage = () => {
   return (
     <div className="min-h-[calc(100vh-72px)] bg-white flex -mt-3 sm:-mt-4 lg:-mt-5 -mx-3 sm:-mx-4 lg:-mx-5">
       {/* 35% Left Column */}
-      <div className="w-[35%] shrink-0 border-r border-slate-200 p-8 min-h-full flex flex-col">
+      <div className="w-[35%] shrink-0 border-r border-slate-200 p-8 flex flex-col sticky top-0 h-[calc(100vh-72px)] overflow-y-auto">
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-8">
           <img src={dummyAvatar} alt={record.mpName} className="w-28 h-28 rounded-full object-cover mb-4" />
@@ -192,9 +192,7 @@ export const MPDetailsPage = () => {
         <div className="flex items-center gap-8 border-b border-slate-200 px-8 pt-6 bg-white">
           {[
             { id: 'Overview', icon: Activity },
-            { id: 'Projects', icon: FolderKanban },
-            { id: 'AI Audit', icon: Bot },
-            { id: 'Financials', icon: FileText }
+            { id: 'Projects', icon: FolderKanban }
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
