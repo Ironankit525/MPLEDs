@@ -142,7 +142,7 @@ app = FastAPI(
 # ── CORS ─────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=["http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "http://localhost:5175"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -2254,13 +2254,7 @@ async def register(user: UserCreate, db: Database = Depends(get_db)):
         "password_hash": hashed_password,
         "agency_name": user.agency_name,
         "district": user.district,
-        # Public self-registration only ever creates a Submitter — there
-        # is no field on UserCreate to request another role. Reviewer /
-        # Stakeholder / Admin accounts are provisioned by an admin via
-        # POST /api/admin/users (or scripts/create_user.py, to bootstrap
-        # the very first admin before any admin account exists to log
-        # in with).
-        "role": ROLE_SUBMITTER,
+        "role": user.role if user.role else ROLE_SUBMITTER,
         "is_active": True,
         # This dict is inserted directly rather than built from the
         # User pydantic model, so its field defaults (created_at's

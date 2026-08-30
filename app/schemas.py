@@ -681,6 +681,7 @@ class UserCreate(BaseModel):
     password: str
     agency_name: str
     district: str
+    role: Optional[str] = None
 
 
 class TokenResponse(BaseModel):

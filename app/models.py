@@ -53,7 +53,9 @@ ROLE_SUBMITTER = "submitter"
 ROLE_REVIEWER = "reviewer"
 ROLE_STAKEHOLDER = "stakeholder"
 ROLE_ADMIN = "admin"
-USER_ROLES = (ROLE_SUBMITTER, ROLE_REVIEWER, ROLE_STAKEHOLDER, ROLE_ADMIN)
+ROLE_CONTRACTOR = "contractor"
+ROLE_MP = "mp"
+USER_ROLES = (ROLE_SUBMITTER, ROLE_REVIEWER, ROLE_STAKEHOLDER, ROLE_ADMIN, ROLE_CONTRACTOR, ROLE_MP)
 
 # Workflow status for a stored ImageRecord, shown to the submitter as a
 # status badge / timeline stage. Every record starts PENDING_REVIEW at
