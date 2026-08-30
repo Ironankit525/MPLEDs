@@ -68,16 +68,15 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
     <aside
       className={`
         flex flex-col shrink-0 z-50 overflow-hidden transition-all duration-300 ease-in-out
-        bg-slate-100 md:bg-transparent
+        bg-slate-100
 
-        /* Desktop: full-height sidebar in the fixed h-screen layout */
-        md:relative md:h-full
+        /* Fixed sidebar layout (both mobile and desktop) */
+        fixed inset-y-0 left-0 h-screen
         ${isCollapsed ? 'md:w-20' : 'md:w-64'}
 
-        /* Mobile: fixed drawer that slides in from left */
-        fixed inset-y-0 left-0 h-full w-64
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:translate-x-0
+        /* Mobile drawer toggle */
+        w-64
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}
     >
       {/* Brand Header with Official Ashoka Stambha Emblem */}
