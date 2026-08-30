@@ -40,6 +40,11 @@ export const MPDetailsPage = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedProject, setSelectedProject] = useState(null);
 
+  const [tableSearch, setTableSearch] = useState('');
+  const [sortConfig, setSortConfig] = useState({ sortBy: 'id', sortOrder: 'asc' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 25;
+
   const mpData = useMemo(() => {
     if (!projectsData) return null;
     
@@ -55,11 +60,49 @@ export const MPDetailsPage = () => {
     // Pick the top 4 active projects for progress bars
     const activeTopProjects = mpProjects
       .filter((p) => p.progress < 100)
-      .sort((a, b) => b.expenditure - a.expenditure)
-      .slice(0, 4);
+      .sort((a, b) => b.progress - a.progress);
 
     return { record, mpProjects, activeTopProjects };
   }, [projectsData, mpId]);
+
+  const processedProjects = useMemo(() => {
+    if (!mpData?.mpProjects) return [];
+    let result = [...mpData.mpProjects];
+
+    // Search
+    if (tableSearch) {
+      const lower = tableSearch.toLowerCase();
+      result = result.filter((p) =>
+        p.name?.toLowerCase().includes(lower) ||
+        p.id?.toLowerCase().includes(lower) ||
+        p.district?.toLowerCase().includes(lower) ||
+        p.state?.toLowerCase().includes(lower) ||
+        p.projectType?.toLowerCase().includes(lower)
+      );
+    }
+
+    // Sort
+    if (sortConfig.sortBy) {
+      result.sort((a, b) => {
+        let aVal = a[sortConfig.sortBy];
+        let bVal = b[sortConfig.sortBy];
+
+        if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+        if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+
+        if (aVal < bVal) return sortConfig.sortOrder === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortConfig.sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return result;
+  }, [mpData, tableSearch, sortConfig]);
+
+  const paginatedProjects = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return processedProjects.slice(start, start + pageSize);
+  }, [processedProjects, currentPage]);
 
   if (loading) {
     return (
@@ -209,7 +252,7 @@ export const MPDetailsPage = () => {
         <div className="p-8 flex-1">
           {activeTab === 'Overview' && (() => {
             const utilColor = `hsl(${(record.utilization / 100) * 120}, 85%, 45%)`;
-            const riskColor = `hsl(${((100 - record.averageRiskScore) / 100) * 120}, 85%, 45%)`;
+            const riskColor = `hsl(${(record.averageRiskScore / 100) * 120}, 85%, 45%)`; // 0=Red, 100=Green
             
             const utilData = [
               { name: 'Utilized', value: record.utilization },
@@ -317,9 +360,25 @@ export const MPDetailsPage = () => {
           {activeTab === 'Projects' && (
             <div className="animate-in fade-in duration-300 bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
                <ProjectTableSection 
-                 projects={mpProjects} 
+                 projects={paginatedProjects} 
                  onSelectProject={setSelectedProject}
-                 pagination={{ totalCount: mpProjects.length }}
+                 tableSearch={tableSearch}
+                 onTableSearchChange={(val) => { setTableSearch(val); setCurrentPage(1); }}
+                 sortConfig={sortConfig}
+                 onSort={(field) => {
+                   setSortConfig((prev) => ({
+                     sortBy: field,
+                     sortOrder: prev.sortBy === field && prev.sortOrder === 'asc' ? 'desc' : 'asc'
+                   }));
+                 }}
+                 pagination={{ 
+                   currentPage, 
+                   totalPages: Math.ceil(processedProjects.length / pageSize),
+                   totalCount: processedProjects.length,
+                   setPage: setCurrentPage,
+                   pageSize,
+                   setPageSize: () => {}
+                 }}
                />
             </div>
           )}
