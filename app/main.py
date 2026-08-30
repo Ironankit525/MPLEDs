@@ -70,6 +70,7 @@ from app.report_summary import (
     generate_reviewer_summary,
 )
 from app.risk_engine import assess_image, RiskAssessment, ScoredFlag
+from app.screen_detection import get_screen_detector
 from app.schemas import (
     ActionRequiredItem,
     ActivityEvent,
@@ -141,7 +142,7 @@ app = FastAPI(
 # ── CORS ─────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=["http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "http://localhost:5175"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -150,8 +151,25 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup_event() -> None:
-    """Initialise the database on application startup."""
+    """Initialise required infrastructure and fail closed when unavailable."""
     init_db()
+
+    if not settings.ENABLE_SCREEN_MODEL:
+        if not settings.ALLOW_VISUAL_MODEL_TEST_BYPASS:
+            raise RuntimeError(
+                "Mandatory SigLIP visual validation is disabled. "
+                "Remove ENABLE_SCREEN_MODEL=False and restart the API."
+            )
+        logger.warning("Mandatory visual model bypassed for an isolated test run.")
+    elif not get_screen_detector().load():
+        if not settings.ALLOW_VISUAL_MODEL_TEST_BYPASS:
+            raise RuntimeError(
+                f"Mandatory visual model '{settings.SCREEN_MODEL_NAME}' could not load. "
+                "Install the locked dependencies, ensure the model is cached or "
+                "reachable, and restart the API."
+            )
+        logger.warning("Mandatory visual model failed to load during an isolated test run.")
+
     if settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET:
         cloudinary.config(
             cloud_name=settings.CLOUDINARY_CLOUD_NAME,
@@ -188,6 +206,18 @@ def _validate_upload(file: UploadFile) -> None:
         raise HTTPException(
             status_code=422,
             detail=f"File too large ({file.size / (1024*1024):.1f} MB). Maximum size is {max_mb:.0f} MB.",
+        )
+
+
+def _validate_submission_metadata(work_type: Optional[str], sanction_date: Optional[str]) -> None:
+    """Reject submissions that would silently skip their primary checks."""
+    if not work_type or not work_type.strip():
+        raise HTTPException(status_code=422, detail="work_type is required so the image can be assessed.")
+
+    if work_type.strip().lower() in {"receipt", "invoice", "document"} and not sanction_date:
+        raise HTTPException(
+            status_code=422,
+            detail="sanction_date is required for receipt, invoice, and document uploads so dates can be checked.",
         )
 
 
@@ -301,6 +331,7 @@ def _assessment_to_response(assessment: RiskAssessment) -> RiskAssessmentRespons
         work_id=assessment.work_id,
         risk_score=assessment.risk_score,
         risk_level=assessment.risk_level,
+        verification_status=assessment.verification_status,
         recommendation=assessment.recommendation,
         flags=flags,
         duplicate_report=dup_response,
@@ -315,6 +346,12 @@ def _assessment_to_response(assessment: RiskAssessment) -> RiskAssessmentRespons
         gps_coords=assessment.gps_coords,
         capture_date=assessment.capture_date,
         exif_present=assessment.exif_present,
+        screen_probability=assessment.screen_probability,
+        screen_model_name=assessment.screen_model_name,
+        work_evidence_status=assessment.work_evidence_status,
+        work_evidence_probability=assessment.work_evidence_probability,
+        work_evidence_label=assessment.work_evidence_label,
+        work_evidence_model_name=assessment.work_evidence_model_name,
     )
 
 
@@ -440,6 +477,13 @@ def _store_image_record(
         # and flag list without re-running detection later.
         "risk_score": assessment.risk_score,
         "risk_level": assessment.risk_level,
+        "verification_status": assessment.verification_status,
+        "screen_probability": assessment.screen_probability,
+        "screen_model_name": assessment.screen_model_name,
+        "work_evidence_status": assessment.work_evidence_status,
+        "work_evidence_probability": assessment.work_evidence_probability,
+        "work_evidence_label": assessment.work_evidence_label,
+        "work_evidence_model_name": assessment.work_evidence_model_name,
         "recommendation": assessment.recommendation,
         "flags": [dataclasses.asdict(f) for f in assessment.flags],
         "status": STATUS_PENDING_REVIEW,
@@ -478,6 +522,7 @@ async def check_image(
 ) -> RiskAssessmentResponse:
     """Upload + assess an image without storing it.  Dry run."""
     _validate_upload(file)
+    _validate_submission_metadata(work_type, sanction_date)
 
     # Save temporarily for processing
     saved_path = _save_upload(file)
@@ -541,6 +586,7 @@ async def submit_image(
 ) -> RiskAssessmentResponse:
     """Upload, assess, AND store an image in the database."""
     _validate_upload(file)
+    _validate_submission_metadata(work_type, sanction_date)
 
     saved_path = _save_upload(file)
     try:
@@ -1230,6 +1276,9 @@ _PUBLIC_FLAG_LABELS: dict[str, str] = {
     "CROSS_MP_MATCH": "Matching photo belongs to a different constituency",
     "CONTENT_MISMATCH": "Photo may not show the declared type of work",
     "CONTENT_MISMATCH_SEVERE": "Photo does not show the declared type of work",
+    "FAMOUS_LANDMARK_SUSPECTED": "Photo appears to be a famous landmark or stock/travel image",
+    "NOT_PROJECT_WORK_EVIDENCE": "Photo does not appear to be contractor work evidence",
+    "WORK_EVIDENCE_UNCLEAR": "Photo does not clearly document work at the project site",
     "EXIF_STRIPPED": "Photo metadata is missing",
     "GPS_MISSING": "Photo has no location data",
     "GPS_DISTRICT_MISMATCH": "Photo location does not match the work site",
@@ -1238,6 +1287,7 @@ _PUBLIC_FLAG_LABELS: dict[str, str] = {
     "SOFTWARE_EDITED": "Photo was processed with image-editing software",
     "IMAGE_TAMPERED": "Photo shows signs of editing",
     "SCREENSHOT_DETECTED": "File appears to be a screenshot, not a camera photo",
+    "SCREEN_CAPTURE_SUSPECTED": "File appears to be a screenshot, not a camera photo",
     "PHOTO_OF_PHOTO": "Appears to be a photo of a printed photo or a screen",
     "RECEIPT_AMOUNT_MISMATCH": "Receipt amount does not match the claimed amount",
     "RECEIPT_DATE_BEFORE_SANCTION": "Receipt is dated before the work was sanctioned",
@@ -1339,7 +1389,10 @@ def _project_to_summary(project: dict, records: list[dict]) -> ProjectSummaryRes
         by_status[r.get("status") or STATUS_PENDING_REVIEW] = (
             by_status.get(r.get("status") or STATUS_PENDING_REVIEW, 0) + 1
         )
-        if r.get("risk_level") in _FLAGGED_RISK_LEVELS:
+        if (
+            r.get("risk_level") in _FLAGGED_RISK_LEVELS
+            or r.get("verification_status") in {"REQUIRES_REVIEW", "INSUFFICIENT_EVIDENCE"}
+        ):
             flagged += 1
 
     progress, basis = _project_progress(project)
@@ -1636,7 +1689,10 @@ async def get_dashboard_summary(
         status_val = r.get("status") or STATUS_PENDING_REVIEW
         by_status[status_val] = by_status.get(status_val, 0) + 1
 
-        if r.get("risk_level") in _FLAGGED_RISK_LEVELS:
+        if (
+            r.get("risk_level") in _FLAGGED_RISK_LEVELS
+            or r.get("verification_status") in {"REQUIRES_REVIEW", "INSUFFICIENT_EVIDENCE"}
+        ):
             flagged += 1
 
         score = r.get("risk_score")
@@ -2142,7 +2198,7 @@ async def get_stats(
     "/health",
     response_model=HealthResponse,
     summary="Health check",
-    description="Liveness check — reports database connectivity and CLIP model status.",
+    description="Liveness check — reports database connectivity and mandatory visual-model status.",
 )
 async def health_check(
     db: Database = Depends(get_db),
@@ -2159,12 +2215,26 @@ async def health_check(
     # Check CLIP status
     clip_engine = get_clip_engine()
     clip_loaded = clip_engine.is_available
+    visual_detector = get_screen_detector()
+    if not settings.ENABLE_SCREEN_MODEL:
+        visual_model_status = "disabled"
+    elif visual_detector.is_available:
+        visual_model_status = "ready"
+    elif visual_detector.load_attempted:
+        visual_model_status = "error"
+    else:
+        visual_model_status = "not_loaded"
+
+    service_ok = db_status == "connected" and visual_model_status not in {"disabled", "error"}
 
     return HealthResponse(
-        status="ok" if db_status == "connected" else "degraded",
+        status="ok" if service_ok else "degraded",
         database=db_status,
         clip_loaded=clip_loaded,
         clip_model=settings.CLIP_MODEL_NAME if clip_loaded else None,
+        visual_model_status=visual_model_status,
+        visual_model_required=True,
+        visual_model_name=settings.SCREEN_MODEL_NAME,
         total_images=total,
     )
 
@@ -2184,13 +2254,7 @@ async def register(user: UserCreate, db: Database = Depends(get_db)):
         "password_hash": hashed_password,
         "agency_name": user.agency_name,
         "district": user.district,
-        # Public self-registration only ever creates a Submitter — there
-        # is no field on UserCreate to request another role. Reviewer /
-        # Stakeholder / Admin accounts are provisioned by an admin via
-        # POST /api/admin/users (or scripts/create_user.py, to bootstrap
-        # the very first admin before any admin account exists to log
-        # in with).
-        "role": ROLE_SUBMITTER,
+        "role": user.role if user.role else ROLE_SUBMITTER,
         "is_active": True,
         # This dict is inserted directly rather than built from the
         # User pydantic model, so its field defaults (created_at's

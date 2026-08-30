@@ -1,789 +1,324 @@
-# MPLADS Image Fraud Detection Module - System Architecture
+# MPLADS Verify — Code-Derived Architecture
 
-## Executive Summary
+This document describes the system implemented in this repository. It is derived from `app/`, `frontend/src/`, and `tests/`; it is not a product wish-list or a description of an unmounted dashboard.
 
-The MPLADS Image Module is a full-stack fraud detection system built to verify submitted work images against historical duplicates and metadata anomalies. It uses a **6-layer detection pipeline** orchestrated by a risk scoring engine to flag potentially fraudulent submissions across multiple detection dimensions: cryptographic, perceptual, semantic, geometric, metadata, and content anomalies.
+## 1. Boundaries and ownership
 
-### Tech Stack
-- **Backend**: FastAPI (Python 3.10+), MongoDB Atlas (cloud persistence), JWT auth
-- **Frontend**: React + Vite, TypeScript component-based UI
-- **Detection Models**: SHA-256, pHash/dHash (perceptual), CLIP (semantic), SIFT (geometric), EasyOCR (text)
-- **Storage**: MongoDB + Cloudinary for images
+MPLADS Verify has four runtime boundaries:
 
----
+1. **Browser UI** — React/Vite code in `frontend/src/`.
+2. **Backend/application layer** — FastAPI routes and workflow rules in `app/main.py`.
+3. **Risk engine** — image evidence extraction and explainable scoring in `app/risk_engine.py`.
+4. **Persistence/services** — MongoDB, optional Cloudinary, and optional AI report generation.
 
-## System Architecture Diagram
+The backend owns authentication, authorization, validation, persistence, workflow transitions, and response shaping. The risk engine owns image analysis only. A reviewer decision therefore does not rewrite the automated evidence snapshot, and a UI change does not silently change scoring.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CLIENT LAYER (React)                      │
-│  Dashboard | Submission Form | Review Queue | Admin Panel       │
-└─────────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────────┐
-│                   FastAPI Backend (Python)                       │
-│                                                                   │
-│  ┌──────────────────┐                                            │
-│  │  Auth Service    │  JWT tokens, bcrypt, role-based access   │
-│  └────────┬─────────┘                                            │
-│           │                                                       │
-│  ┌────────▼──────────────────────────────────────────┐         │
-│  │        Request Routing Layer (main.py)            │         │
-│  │  ┌──────────┬────────────┬──────────┬────────┐   │         │
-│  │  │ Auth     │ Submission │ Review   │ Admin  │   │         │
-│  │  │ Routes   │ Routes     │ Routes   │ Routes │   │         │
-│  │  └──────────┴────────────┴──────────┴────────┘   │         │
-│  └────────┬──────────────────────────────────────────┘         │
-│           │                                                       │
-│  ┌────────▼──────────────────────────────────────────┐         │
-│  │       Risk Engine Orchestrator (risk_engine.py)   │         │
-│  │                                                   │         │
-│  │   ┌─────────────────────────────────────────┐   │         │
-│  │   │  6-Layer Detection Pipeline             │   │         │
-│  │   │                                         │   │         │
-│  │   │  Layer 1: SHA-256 (Exact)              │   │         │
-│  │   │    ↓                                    │   │         │
-│  │   │  Layer 2: pHash/dHash (Perceptual)    │   │         │
-│  │   │    ↓                                    │   │         │
-│  │   │  Layer 3: CLIP (Semantic)             │   │         │
-│  │   │    ↓                                    │   │         │
-│  │   │  Layer 4: EXIF + ELA (Metadata)       │   │         │
-│  │   │    ↓                                    │   │         │
-│  │   │  Layer 5: OCR (Text Extraction)       │   │         │
-│  │   │    ↓                                    │   │         │
-│  │   │  Layer 6: SIFT+RANSAC (Geometric)     │   │         │
-│  │   └─────────────────────────────────────────┘   │         │
-│  │                    ↓                             │         │
-│  │  ┌─────────────────────────────────────┐       │         │
-│  │  │  Risk Scorer (aggregation & flags)  │       │         │
-│  │  │  Output: Risk Level (LOW/MED/HIGH)  │       │         │
-│  │  └─────────────────────────────────────┘       │         │
-│  └────────┬──────────────────────────────────────────┘         │
-│           │                                                       │
-│  ┌────────▼────────────────────────────┐                      │
-│  │  Data Layer (models.py + schemas)   │                      │
-│  │  User | ImageRecord | Project       │                      │
-│  │  CameraSession | District           │                      │
-│  └────────┬────────────────────────────┘                      │
-│           │                                                       │
-└───────────┼───────────────────────────────────────────────────┘
-            │
-┌───────────▼───────────────────────────────────────────────────┐
-│              MongoDB Atlas (Persistent Storage)                │
-│  Collections: users | image_records | projects | sessions     │
-│              camera_sessions | districts                       │
-└───────────────────────────────────────────────────────────────┘
+## 2. Runtime topology
+
+```mermaid
+flowchart LR
+    Browser[React/Vite browser app<br/>frontend/src] -->|Bearer JWT + multipart/JSON| API[FastAPI app<br/>app/main.py]
+    subgraph App[Backend application]
+      Auth[auth.py<br/>JWT + bcrypt + role guards]
+      Validate[Upload and metadata validation]
+      Workflow[Review, sign-off, admin workflow]
+      API --> Auth
+      API --> Validate
+      API --> Workflow
+    end
+    Validate -->|validated image + work metadata| Engine[risk_engine.assess_image]
+    subgraph Risk[Risk engine]
+      Engine --> Hash[hashing.py<br/>SHA-256, pHash, dHash]
+      Engine --> Embed[embeddings.py<br/>CLIP]
+      Engine --> Geo[keypoint_match.py<br/>SIFT + colour retrieval]
+      Engine --> Meta[exif_analysis.py<br/>EXIF/GPS/date]
+      Engine --> Tamper[ela_analysis.py<br/>ELA + photo-of-photo]
+      Engine --> Screen[screen_detection.py<br/>SigLIP work-evidence + screen validation]
+      Engine --> OCR[ocr_analysis.py<br/>EasyOCR]
+      Hash --> Score[Flags + capped score<br/>LOW / MEDIUM / HIGH]
+      Embed --> Score
+      Geo --> Score
+      Meta --> Score
+      Tamper --> Score
+      Screen --> Score
+      OCR --> Score
+    end
+    Engine -->|RiskAssessment| API
+    API -->|documents| Mongo[(MongoDB<br/>users, projects, image_records,<br/>sessions, districts)]
+    API -->|optional images| Cloud[(Cloudinary)]
+    API -->|optional reports| LLM[Gemini]
+    API --> Browser
 ```
 
----
+### Image request lifecycle
 
-## 1. Backend Architecture
-
-### 1.1 FastAPI Application Structure (main.py - 2,292 lines)
-
-The main application file is organized into 5 route groups plus initialization.
-
-#### A. Authentication & Session Routes
-- `POST /api/auth/register` - Create new user with role
-- `POST /api/auth/login` - Generate JWT token (24-hour expiry)
-- `GET /api/auth/me` - Fetch current user details
-- `POST /api/sessions/create` - Generate a one-time camera session token
-- `POST /api/sessions/validate` - Validate a camera session token
-
-**Implementation**:
-- Uses `bcrypt` for password hashing
-- JWT secret stored in `Settings.JWT_SECRET_KEY`
-- Token includes user_id, role, exp timestamp
-- All endpoints return schema-validated responses
-
-#### B. Image Submission Routes
-- `POST /api/images/submit` - Submit image for risk assessment
-  - File upload handling
-  - Calls risk_engine.assess_image()
-  - Stores ImageRecord in MongoDB
-  - Returns RiskAssessmentResponse
-- `POST /api/images/check` - Dry-run duplicate check
-- `GET /api/images/mine` - Fetch user's own submissions
-- `GET /api/images/{work_id}` - Fetch image records by work ID
-
-**Key Logic**:
-- File validation (size ≤ 10MB, extensions in allowed list)
-- Cloudinary upload for persistence
-- Risk assessment happens synchronously
-- Workflow status starts as `PENDING_REVIEW`
-
-#### C. Reviewer Routes
-- `GET /api/reviews/queue` - Fetch pending images awaiting review
-- `GET /api/reviews/history` - Fetch already reviewed images
-- `POST /api/reviews/{image_id}/claim` - Claim an image for review
-- `POST /api/reviews/{image_id}/decide` - Submit review decision
-  - approve/reject with optional comments
-  - Updates workflow status
-- `GET /api/reviews/ai-summary` - Get AI summary of pending reviews
-
-**Workflow Transition**:
-```
-PENDING_REVIEW
-    ↓ (reviewer claims)
-IN_REVIEW
-    ├─ (reviewer approves)
-    │   ↓
-    │ APPROVED → awaiting stakeholder sign-off
-    │
-    └─ (reviewer rejects)
-        ↓
-        REJECTED → terminal
+```mermaid
+sequenceDiagram
+    participant U as Browser
+    participant M as main.py
+    participant R as risk_engine.py
+    participant D as Detection adapters
+    participant DB as MongoDB
+    U->>M: POST /api/images/check or /api/images/submit
+    M->>M: JWT/role, file, and metadata validation
+    M->>R: assess_image(temp_path, metadata, db)
+    R->>D: hashes, duplicates, metadata, ELA, ML, OCR
+    D-->>R: evidence, flags, matches, layer availability
+    R-->>M: RiskAssessment
+    alt check (dry run)
+      M-->>U: response; temporary file deleted
+    else submit
+      M->>DB: ImageRecord + risk snapshot
+      M-->>U: response; status=PENDING_REVIEW
+    end
 ```
 
-#### D. Stakeholder Routes
-- `GET /api/stakeholder/overview` - High-level stats and workflow summary
-- `GET /api/stakeholder/submissions` - Get fully processed submissions
-- `POST /api/stakeholder/{image_id}/sign-off` - Confirm or deny a project completion
-- `GET /api/stakeholder/ai-summary` - Gemini AI executive summary of stakeholders queue
-- `POST /api/stakeholder/ai-report` - Generate detailed AI report for submissions
+## 3. Backend/application layer
 
-#### E. Admin Routes
-- `POST /api/admin/users` - Create a user directly with any role
-- `GET /api/admin/users` - List all users with pagination
-- `PATCH /api/admin/users/{user_id}/role` - Change user role
-- `PATCH /api/admin/users/{user_id}/active` - Activate/Deactivate user
-- `GET /api/admin/submissions` - Get all submissions (unfiltered)
-- `POST /api/admin/submissions/{image_id}/override-status` - Force image status override
-- `POST /api/admin/submissions/bulk-override-status` - Bulk status override
-- `GET /api/admin/activity` - Fetch admin activity log
-- `GET /api/admin/ai-summary` - Gemini AI summary of the system
+`app/main.py` is the application boundary. It:
 
-#### F. Project Routes
-- `POST /api/admin/projects` - Create new project
-- `GET /api/admin/projects` - List projects (Admin)
-- `PATCH /api/admin/projects/{work_id}/assign` - Assign a contractor to a project
-- `PATCH /api/admin/projects/{work_id}/status` - Update project status
-- `PATCH /api/projects/{work_id}/phases/{order}` - Update a project phase
-- `GET /api/projects/mine` - List assigned projects
-- `GET /api/dashboard/summary` - Get dashboard stats
+- initializes MongoDB indexes and optional Cloudinary at startup;
+- authenticates with `get_current_user` and restricts roles with `require_role`;
+- validates extensions, size, `work_type`, and conditional `sanction_date`;
+- saves a temporary upload, calls the engine, and cleans it up;
+- optionally uploads the file to Cloudinary;
+- persists the risk snapshot and workflow audit fields;
+- enforces reviewer, stakeholder, project, and admin transitions;
+- maps documents and engine results to `app/schemas.py` responses.
 
-#### G. Statistics & Common Routes
-- `GET /api/stats` - General statistics
-- `GET /api/duplicates` - Fetch duplicate clusters across all layers
-- `GET /health` - Health check status
+### Implemented endpoint groups
 
----
+| Group | Endpoints | Purpose |
+|---|---|---|
+| Auth | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me` | Registration, login, profile |
+| Upload | `POST /api/images/check`, `POST /api/images/submit` | Dry-run assessment or persisted submission |
+| Submitter | `GET /api/images/mine`, `GET /api/images/{work_id}` | Own history and work evidence |
+| Reviewer | `GET /api/reviews/queue`, `GET /api/reviews/history`, `GET /api/reviews/ai-summary`, `POST /api/reviews/{id}/claim`, `POST /api/reviews/{id}/decide` | Claim and approve/reject |
+| Stakeholder | `GET /api/stakeholder/overview`, `GET /api/stakeholder/reports`, `POST /api/stakeholder/{id}/sign-off` plus AI endpoints | Oversight and final sign-off |
+| Projects | `/api/admin/projects/*`, `PATCH /api/projects/{work_id}/phases/{order}`, `GET /api/projects/mine`, `GET /api/dashboard/summary` | Sanctioned works and contractor rollups |
+| Admin | `/api/admin/users/*`, `/api/admin/submissions/*`, `GET /api/admin/activity`, `GET /api/admin/ai-summary` | User management, audit, overrides |
+| Utility | `GET /api/duplicates`, `GET /api/stats`, `GET /health` | Diagnostics and health |
+| Camera sessions | `POST /api/sessions/create`, `POST /api/sessions/validate` | One-use capture tokens |
 
-### 1.2 Role-Based Access Control (auth.py - 104 lines)
+## 4. Risk engine
 
-**4 User Roles** (hierarchy):
-1. **Submitter** - Can only submit images and see own submissions
-2. **Reviewer** - Can view review queue, approve/reject, see all submissions
-3. **Stakeholder** - Can see approved items, sign off on projects
-4. **Admin** - Full access: user mgmt, status overrides, district management
+`app/risk_engine.py` exposes one orchestration entry point: `assess_image(...)`. It accepts an image path, work metadata, optional amount/device coordinates, and a Mongo database handle. It returns a `RiskAssessment`; it does not approve, reject, sign off, or mutate workflow status.
 
-**Token Flow**:
-```
-User login → bcrypt verify password
-    ↓
-Generate JWT (user_id, role, exp=now+24h)
-    ↓
-Token returned in response
-    ↓
-Client stores in localStorage
-    ↓
-All subsequent requests: Authorization: Bearer {token}
-    ↓
-Verify JWT secret + expiry + role scopes
-    ↓
-Inject current_user into request context
+```mermaid
+flowchart TD
+    Start[Image + work metadata] --> H[1. SHA-256, pHash, dHash<br/>rotation; optional tiles]
+    H --> C{CLIP enabled/available?}
+    C -->|yes| CE[2. CLIP embedding]
+    C -->|no| CS[layers_skipped += clip]
+    CE --> V[2.1 SigLIP project-evidence gate]
+    CS --> V
+    V --> K[2.5 SIFT/keypoints + colour]
+    K --> D[3. Duplicate retrieval and verification]
+    D --> X[4. EXIF/GPS/capture date]
+    X --> E[4.5 ELA + photo-of-photo]
+    E --> S[4.6 SigLIP screen classifier]
+    S --> M[5. CLIP work-type diagnostic<br/>scored only if SigLIP unavailable]
+    M --> O{Receipt/invoice/document?}
+    O -->|yes| OCR[5.2 EasyOCR date/amount checks]
+    O -->|no| R[5.5 Resolve conditional flags]
+    OCR --> R
+    R --> N[6. Collapse correlated findings<br/>per matched work/boundary]
+    N --> A[Aggregate remaining flags, cap at 100,<br/>derive level/status]
+    A --> Out[RiskAssessment + layers_run/skipped]
 ```
 
----
+### Score, level, and verification are different
 
-## 2. Risk Engine Architecture (risk_engine.py - 931 lines)
+- **Risk score** is a rule-based evidence index, not a fraud probability. It is
+  the capped sum of explainable contributions after correlated duplicate
+  findings have been collapsed.
+- **Risk level** is `LOW` (0–29), `MEDIUM` (30–59), or `HIGH` (60+).
+- **Verification status** is `REQUIRES_REVIEW` when any flag adds points; otherwise it is `INSUFFICIENT_EVIDENCE` when required metadata, models, or layers are missing/borderline; only complete clean evidence is `VERIFIED`.
+- **Recommendation** requires manual verification for every non-verified result. A low score is not an approval.
 
-### 2.1 The 6 Detection Layers
+Each `ScoredFlag` carries `code`, `severity`, `message`, `evidence`, and `points_added`.
 
-#### Layer 1: SHA-256 Cryptographic Hash
-**Purpose**: Detect byte-identical image duplicates
+Exact, perceptual, SIFT/geometric and semantic matches can all observe the same
+reused source. Only the strongest base finding per matched work contributes to
+the score, and cross-district/cross-MP aggravation contributes at most once per
+submission. Suspicious-band semantic neighbours retain boundary context but do
+not add a separate boundary penalty. The full raw `DuplicateReport` remains
+available to the reviewer.
 
-**Detection**: Hash current image, query MongoDB for matches
-- If found: Mark as **EXACT_DUPLICATE** (60 points)
+### Mandatory SigLIP visual validation
 
-**Limitations**: Zero tolerance for byte changes (re-encoding fails this)
+`app/screen_detection.py` provides one shared `google/siglip-base-patch16-224` instance for two independent checks. Startup eagerly loads it and aborts if it is disabled or unavailable, so the API never silently accepts submissions without the mandatory gate. First it distinguishes plausible contractor/project evidence from famous-landmark, stock/travel, generic non-project, and unrelated images. Later it compares a screen/software prompt with a natural camera-photo prompt.
 
----
+- confidently invalid work evidence: `FAMOUS_LANDMARK_SUSPECTED` or `NOT_PROJECT_WORK_EVIDENCE`, high severity, +65;
+- ambiguous work evidence: `WORK_EVIDENCE_UNCLEAR`, medium severity, +25;
+- the exact reported Golden Gate sample measured 0.5028 landmark/stock versus 0.2591 project evidence; the three legitimate bridge samples measured 0.6885–0.9543 project evidence;
+- physical-work submissions also require usable location and capture-time evidence before they can become `VERIFIED`;
 
-#### Layer 2: Perceptual Hashing (pHash/dHash)
-**Purpose**: Detect resized, recompressed, and rotated copies
+- probability `>= 0.90`: `SCREEN_CAPTURE_SUSPECTED`, high severity, +35;
+- probability `0.70–<0.90`: no points, but status remains `INSUFFICIENT_EVIDENCE`;
+- inference unavailable after a successful startup: the affected layer is recorded in `layers_skipped`, so the result cannot be `VERIFIED`;
+- the older ELA screenshot heuristic is disabled by default because it produced false positives; it remains diagnostic only.
 
-**pHash (Perceptual Hash via DCT)**:
-- Captures low-frequency image features using Discrete Cosine Transform
-- Thresholds: Hamming distance ≤ 5: DUPLICATE (50 pts), 6-10: SUSPICIOUS (25 pts)
+For physical work, SigLIP is also authoritative for claimed-work semantics.
+CLIP's older zero-shot work-type score is stored as a diagnostic, but it only
+creates a content-mismatch flag if the mandatory work-evidence inference is
+unavailable. This prevents two correlated models from issuing contradictory
+`VALID` and `CONTENT_MISMATCH` decisions for the same photograph.
 
-**dHash (Difference Hash via Gradients)**:
-- Captures gradient structure (edge patterns)
-- More robust to lighting changes
-- Thresholds: ≤ 3: DUPLICATE, 4-6: SUSPICIOUS
+### Detection adapters
 
-**Rotation Robustness**:
-- Rotation-robust pHash computed as minimum Hamming distance across 4 rotations (0°, 90°, 180°, 270°)
+| Module | Evidence | Failure/persistence behavior |
+|---|---|---|
+| `hashing.py` | SHA-256, pHash, dHash, rotation/tiled hashes | Hashes persist; unreadable images raise `ImageProcessingError` |
+| `duplicate_search.py` | Exact, perceptual, semantic, cross-work/district/MP, geometric matches | Queries Mongo; missing candidate features are skipped |
+| `embeddings.py` | CLIP embedding and semantic similarity | Lazy load; skipped when unavailable/disabled |
+| `keypoint_match.py` | SIFT descriptors, colour signature, RANSAC verification | Retrieve-then-verify; serialized features persist |
+| `exif_analysis.py` | Capture date, GPS, EXIF, editing software | Missing EXIF is evidence state, not proof of fraud |
+| `ela_analysis.py` | ELA tamper and photo-of-photo signal | Thresholded findings become flags |
+| `screen_detection.py` | SigLIP project-evidence class, validity probability, screen probability | Mandatory evidence gates; one shared model instance |
+| `ocr_analysis.py` | Receipt text, dates, amounts, mismatches | Required document types cannot verify if OCR is skipped |
 
-**Known Limitation**:
-- Cropping at ~12% per edge defeats pHash thresholds
-- Workaround: dHash as fallback (less sensitive to cropping)
+## 5. Persistence and workflows
 
----
+`app/database.py` supplies PyMongo. A `mongomock` URL selects an in-memory database for tests. Startup creates indexes for users, sessions, `image_records.work_id`, unique `projects.work_id`, and project assignees, then seeds districts.
 
-#### Layer 3: CLIP Semantic Embeddings
-**Purpose**: Detect same scene photographed from different angles/lighting
-
-**Model**: OpenAI's CLIP (ViT-B/32, 512-dim embeddings)
-- Lazy-loaded (~600 MB on first use)
-
-**Thresholds**:
-- Cosine similarity ≥ 0.92: **DUPLICATE** (35 points)
-- 0.85-0.91: **SUSPICIOUS** (15 points)
-- < 0.10: **SEVERE_CONTENT_MISMATCH** (65 points)
-
-**Known Issue**:
-- Synthetic test corpus causes 100% false positives on CLIP
-- Needs real photo calibration (data/real_images/ incomplete)
-
----
-
-#### Layer 4: EXIF & ELA Analysis
-
-**EXIF Metadata** (exif_analysis.py - 494 lines):
-- Extract: photo_datetime, GPS coordinates, software (camera/editor), orientation
-- Checks: Photo date validation, GPS district mismatch, editing detection
-
-**Flags**:
-- `EXIF_STRIPPED`: 5 points alone, 15 points with other flags (conditional weighting)
-- `PHOTO_BEFORE_SANCTION`: 30 points (photo datetime < project sanction_date)
-- `GPS_LOCATION_MISMATCH`: 30 points (GPS district ≠ claimed district, >2 km tolerance)
-
-**ELA (Error Level Analysis)**:
-- Re-compress image at 95% quality, compare original vs re-compressed
-- High difference regions indicate tampering
-
-**Flags**:
-- `SPLICING_DETECTED`: 35 points
-- `SCREENSHOT_DETECTED`: 25 points (disabled by default)
-- `PHOTO_OF_PHOTO`: 25 points (moiré patterns)
-
----
-
-#### Layer 5: OCR Text Extraction (ocr_analysis.py - 261 lines)
-
-**Purpose**: Verify receipt/invoice dates and amounts match claims
-
-**Engine**: EasyOCR (Tesseract-based)
-- Lazy-loaded ~65 MB on first use
-- Supports 80+ languages
-
-**Validation**:
-- `RECEIPT_DATE_BEFORE_SANCTION`: 25 points (OCR date < sanction_date)
-- `RECEIPT_AMOUNT_MISMATCH`: 20 points (OCR amount ≠ claimed amount, ±5% tolerance)
-
-**Limitations**: Unreliable on handwritten receipts; can be disabled gracefully
-
----
-
-#### Layer 6: Geometric Keypoint Matching (keypoint_match.py - 366 lines)
-
-**Purpose**: Detect heavily cropped or rotated duplicates
-
-**Technique**: SIFT keypoints + RANSAC homography verification
-
-**Process**:
-1. Extract SIFT keypoints and descriptors from both images
-2. Feature matching (BFMatcher or FLANN)
-3. Lowe's ratio test (0.75 threshold) to filter good matches
-4. RANSAC homography estimation
-5. Count inlier matches after RANSAC
-
-**Requirement**: ≥15 inlier matches after RANSAC = DUPLICATE
-
-**Handles**:
-- 90% crops (if enough features remain)
-- Rotations (SIFT is rotation-invariant)
-- Perspective distortion (homography models affine transforms)
-
----
-
-### 2.2 Risk Scoring Algorithm
-
-**Aggregation Logic**:
-```
-Score = 0
-For each layer:
-  - Add points based on flag severity
-  - Track layers_run and layers_skipped
-
-Conditional Weighting:
-  - EXIF_STRIPPED: 5 pts alone, 15 pts with other flags
-
-Cross-District Penalties:
-  - Duplicate in different district: +20 pts
-  - Duplicate in different MP: +20 pts
-
-Cap Score at 100
-
-Risk Level:
-  - LOW (0-29): Likely legitimate
-  - MEDIUM (30-59): Requires investigation
-  - HIGH (60-100): Strong evidence of fraud
+```mermaid
+erDiagram
+    USER ||--o{ PROJECT : assigned_to
+    USER ||--o{ IMAGE_RECORD : submits
+    USER ||--o{ IMAGE_RECORD : reviews
+    USER ||--o{ IMAGE_RECORD : signs_off
+    PROJECT ||--o{ IMAGE_RECORD : work_id
+    DISTRICT ||--o{ IMAGE_RECORD : describes
+    USER ||--o{ CAMERA_SESSION : creates
+    USER {
+      string _id
+      string username
+      string role
+      boolean is_active
+    }
+    PROJECT {
+      string work_id PK
+      string title
+      float sanctioned_amount
+      string status
+    }
+    IMAGE_RECORD {
+      string _id
+      string work_id FK
+      string sha256
+      int risk_score
+      string risk_level
+      string verification_status
+      string status
+    }
+    DISTRICT {
+      string name PK
+      string state
+      float centre_latitude
+      float centre_longitude
+    }
+    CAMERA_SESSION {
+      string token
+      date expires_at
+      boolean is_used
+    }
 ```
 
-**Graceful Degradation**:
-- CLIP disabled → continues without Layer 3
-- EasyOCR not installed → Layer 5 skipped
-- Keypoint matching disabled → Layer 6 unavailable
-- `layers_run` and `layers_skipped` track availability
+There are two distinct state machines:
 
----
+- project: `NOT_STARTED → IN_PROGRESS → COMPLETED` or `CANCELLED`;
+- image workflow: `PENDING_REVIEW → IN_REVIEW → APPROVED/REJECTED`, then `APPROVED → SIGNED_OFF`.
 
-## 3. Data Models & MongoDB Schema (models.py - 313 lines)
+The risk fields are an upload-time snapshot. Reviewer, stakeholder, and admin actions write separate attributable audit fields instead of overwriting that evidence.
 
-### 3.1 User Collection
-```python
+## 6. Contracts and validation
+
+`app/schemas.py` defines request and response contracts. The central `RiskAssessmentResponse` contains the score, level, verification status, recommendation, flags, duplicate report, semantic score, layer availability, processing time, metadata, work-evidence result, and screen-model fields.
+
+```json
 {
-  _id: ObjectId,
-  username: str (unique),
-  password_hash: str,
-  agency_name: str | null,
-  district: str | null,
-  role: str ('submitter'|'reviewer'|'stakeholder'|'admin'),
-  is_active: bool,
-  created_at: datetime
+  "work_id": "MP-PUN-2024-0231",
+  "risk_score": 0,
+  "risk_level": "LOW",
+  "verification_status": "VERIFIED",
+  "recommendation": "No action required — image appears legitimate",
+  "flags": [],
+  "layers_run": ["hashing", "work_evidence", "screen_model"],
+  "layers_skipped": [],
+  "screen_probability": 0.03,
+  "screen_model_name": "google/siglip-base-patch16-224",
+  "work_evidence_status": "VALID",
+  "work_evidence_probability": 0.91
 }
 ```
 
-**Indexes**: username (unique), role, district
+Upload extensions are `.jpg`, `.jpeg`, `.png`, and `.webp`. `work_type` is required; `sanction_date` is required for receipt, invoice, and document submissions. `/check` deletes its temporary file; `/submit` persists an `ImageRecord` starting at `PENDING_REVIEW`.
 
----
+## 7. Frontend architecture
 
-### 3.2 ImageRecord Collection
-```python
-{
-  _id: ObjectId,
-  work_id: str,
-  work_type: str | null,
-  district: str,
-  state: str | null,
-  mp_name: str | null,
-  sanction_date: datetime | null,
-  claimed_amount: float | null,
-  
-  # Storage and hashing
-  file_path: str,
-  sha256: str,
-  phash: str,
-  dhash: str | null,
-  tile_phashes: str | null,
-  
-  # Embeddings and features
-  embedding: bytes | null,
-  orb_features: bytes | null,
-  color_signature: bytes | null,
-  
-  # EXIF/GPS Metadata
-  photo_timestamp: datetime | null,
-  gps_latitude: float | null,
-  gps_longitude: float | null,
-  exif_present: bool | null,
-  
-  # Ownership
-  submitted_by_user_id: str | null,
-  submitted_by_username: str | null,
-  
-  # Risk assessment
-  risk_score: int | null,
-  risk_level: str | null,
-  recommendation: str | null,
-  flags: [dict] | null,
-  
-  # Workflow
-  status: str (PENDING_REVIEW|IN_REVIEW|APPROVED|REJECTED|SIGNED_OFF),
-  reviewed_by_user_id: str | null,
-  reviewed_by_username: str | null,
-  reviewer_notes: str | null,
-  reviewed_at: datetime | null,
-  
-  signed_off_by_user_id: str | null,
-  signed_off_by_username: str | null,
-  signoff_notes: str | null,
-  signed_off_at: datetime | null,
-  
-  admin_override_by_user_id: str | null,
-  admin_override_by_username: str | null,
-  admin_override_previous_status: str | null,
-  admin_override_notes: str | null,
-  admin_override_at: datetime | null,
-  
-  # Audit
-  uploaded_at: datetime
-}
+The active frontend is React + Vite + React Router. `main.jsx` mounts `AuthProvider` and `App`; `App.jsx` defines the authenticated tree under `/app`, wrapped by `AppShell`, `RequireAuth`, and `RequireRole`.
+
+```mermaid
+flowchart TD
+    Main[main.jsx] --> Auth[AuthProvider]
+    Auth --> Router[App.jsx / React Router]
+    Router --> Guard[RequireAuth + RequireRole]
+    Guard --> Shell[AppShell + role navigation]
+    Shell --> S[Submitter<br/>upload, submissions]
+    Shell --> R[Reviewer<br/>queue, history, review]
+    Shell --> T[Stakeholder<br/>dashboard, reports, sign-off]
+    Shell --> A[Admin<br/>submissions, users, activity]
+    S --> Client[api/client.js + api/*.js]
+    R --> Client
+    T --> Client
+    A --> Client
+    Client --> Backend[FastAPI /api/*]
 ```
 
-**Indexes**: work_id, status, sha256_hash, risk_level
+| Role | Landing path | Capabilities |
+|---|---|---|
+| `submitter` | `/app/upload` | Upload, own history, settings |
+| `reviewer` | `/app/queue` | Claim/decide, history |
+| `stakeholder` | `/app/dashboard` | Oversight, reports, sign-off |
+| `admin` | `/app/admin/submissions` | Global submissions, users, activity, overrides |
 
----
+`frontend/src/api/client.js` attaches the bearer token and normalizes errors. Submitter upload/detail views show verification status, project-evidence validity, capture date, location availability, screen probability, and specific contractor-safe findings; they do not infer approval from risk level alone.
 
-### 3.3 Project Collection
-```python
-{
-  _id: ObjectId,
-  work_id: str,
-  title: str,
-  work_type: str | null,
-  district: str,
-  state: str | null,
-  mp_name: str | null,
-  
-  assigned_to_user_id: str | null,
-  assigned_to_username: str | null,
-  
-  sanctioned_amount: float,
-  sanction_date: datetime | null,
-  expected_completion_date: datetime | null,
-  
-  phases: [
-    {name: str, order: int, is_complete: bool, completed_at: datetime | null, completed_by_username: str | null}
-  ],
-  
-  status: str (NOT_STARTED|IN_PROGRESS|COMPLETED|CANCELLED),
-  
-  created_by_user_id: str | null,
-  created_by_username: str | null,
-  created_at: datetime
-}
-```
+### MP dashboard source tree
 
----
+`frontend/src/mp/` exists, but `frontend/src/App.jsx` does not import or route to it. It is an unmounted design/integration source tree, not a live runtime surface. Adding it requires explicit routes and role ownership.
 
-### 3.4 CameraSession Collection
-```python
-{
-  _id: ObjectId,
-  token: str,
-  expires_at: datetime,
-  is_used: bool,
-  created_by_user_id: str | null
-}
-```
+## 8. Configuration, deployment, and operations
 
-**Purpose**: Gate image submissions to authenticated sessions (prevents token reuse)
+`app/config.py` centralizes thresholds, weights, feature flags, model names, and limits. Key defaults are:
 
----
+- `DATABASE_URL` and `JWT_SECRET_KEY` are required settings;
+- CLIP enabled with `openai/clip-vit-base-patch32`;
+- visual model enabled with `google/siglip-base-patch16-224`; work-evidence invalid `0.48` with `0.15` margin; screen review `0.70`, high `0.90`;
+- `sentencepiece` and `protobuf` are required tokenizer dependencies for SigLIP;
+- ELA enabled; legacy screenshot detector disabled;
+- SIFT/keypoint matching enabled; tiled hashing disabled by default;
+- Cloudinary is optional; Gemini summaries are optional and do not affect deterministic scoring.
 
-### 3.5 District Collection
-```python
-{
-  _id: ObjectId,
-  name: str,
-  state: str,
-  centre_latitude: float,
-  centre_longitude: float
-}
-```
+Models load lazily on first use. Disabled/unavailable detectors appear in `layers_skipped`; because the screen model is enabled by default, its absence prevents `VERIFIED`.
 
----
-
-## 4. Database Architecture (database.py - 138 lines)
-
-**MongoDB Atlas Cloud Connection**:
-- Connection: pymongo MongoClient with cluster credentials
-- Database: `mplads_fraud_detection`
-- Collections: users, image_records, projects, camera_sessions, districts
-
-**BSON Type Handling**:
-- MongoDB ObjectId stored as `_id`
-- Pydantic models coerce ObjectId to string for API responses
-- MongoDocument base class handles serialization/deserialization
-
----
-
-## 5. Request/Response Validation (schemas.py - 678 lines)
-
-Pydantic models define the API contract:
-
-**Request Schemas**:
-- `ImageSubmitRequest`: file, work_id, work_type, claimed_amount, claimed_district
-- `ReviewDecisionRequest`: decision (approve/reject), comments
-- `ProjectCreateRequest`: work_id, title, sanctioned_amount, phases
-- `AdminUserUpdateRequest`: role, is_active
-
-**Response Schemas**:
-- `RiskAssessmentResponse`: score, risk_level, flags, layers_run, duplicate_matches, metadata_anomalies
-- `ImageRecordResponse`: file_path, risk_score, risk_level, status, submitted_at, reviewed_at
-- `UserResponse`: username, role, agency_name, district, is_active
-- `ProjectResponse`: work_id, title, sanctioned_amount, status, phases, images_submitted
-
-All responses include proper error messages (422 validation, 401 auth, 403 forbidden, 404 not found)
-
----
-
-## 6. Configuration Management (config.py - 590 lines)
-
-**Settings Class** contains all tunable parameters:
-
-**Hashing Thresholds**:
-- `PHASH_DUPLICATE_THRESHOLD = 5` (Hamming distance)
-- `PHASH_SUSPICIOUS_THRESHOLD = 10`
-- `DHASH_DUPLICATE_THRESHOLD = 3`
-- `DHASH_SUSPICIOUS_THRESHOLD = 6`
-
-**CLIP Thresholds**:
-- `CLIP_DUPLICATE_THRESHOLD = 0.92` (cosine similarity)
-- `CLIP_SUSPICIOUS_THRESHOLD = 0.85`
-- `CLIP_SEVERE_MISMATCH_THRESHOLD = 0.10`
-
-**Risk Weights** (points):
-- Exact duplicate: 60
-- Perceptual duplicate: 50
-- Semantic duplicate: 35
-- Cross-district match: +20
-- Photo before sanction: 30
-- GPS mismatch: 30
-- Content mismatch (severe): 65
-- ELA splicing: 35
-- ELA screenshot: 25
-- OCR date mismatch: 25
-- OCR amount mismatch: 20
-
-**Feature Flags**:
-- `ENABLE_CLIP = True`
-- `ENABLE_KEYPOINT_MATCH = True`
-- `ENABLE_OCR = True`
-- `ENABLE_ELA = True`
-
-**File Upload**:
-- `MAX_UPLOAD_SIZE = 10 * 1024 * 1024` (10 MB)
-- `ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'tiff']`
-
----
-
-## 7. Frontend Architecture
-
-**Technology**: React + Vite + TypeScript
-
-**Key Components**:
-- `Dashboard.tsx` - Overview of submissions and stats
-- `SubmissionForm.tsx` - Image upload and project selection
-- `ReviewQueue.tsx` - Paginated list of pending reviews
-- `ReviewDetail.tsx` - Individual submission review with risk breakdown
-- `AdminPanel.tsx` - User management, district management, overrides
-- `ProjectManagement.tsx` - Create/edit projects
-
-**State Management**: React Context (hooks-based)
-- `AuthContext` - Current user, login/logout
-- `ProjectContext` - Active project, submission history
-- `RiskContext` - Risk assessment details, flag explanations
-
-**API Integration**:
-- Axios client with JWT token in Authorization header
-- All requests include `Bearer {token}` from localStorage
-
----
-
-## 8. API Request/Response Flow
-
-### Image Submission Flow
-```
-1. Client: POST /api/images/submit
-   {
-     file: File,
-     work_id: str,
-     work_type: str,
-     claimed_amount: int,
-     claimed_district: str
-   }
-
-2. Backend:
-   a) Validate JWT token + role (submitter/admin)
-   b) Validate file (size, extension)
-   c) Upload to Cloudinary
-   d) Call risk_engine.assess_image()
-      - Run all 6 detection layers
-      - Compute risk_score
-      - Collect flags
-   e) Create ImageRecord in MongoDB
-      {
-        file_path: str,
-        sha256_hash: str,
-        phash: str,
-        clip_embedding: bytes,
-        risk_score: int,
-        risk_level: str,
-        risk_flags: [...],
-        status: 'PENDING_REVIEW',
-        submitted_by: str,
-        submitted_at: datetime
-      }
-   f) Return RiskAssessmentResponse
-
-3. Client: Display risk_level badge + detailed flags
-   - If HIGH: alert reviewer
-   - If MEDIUM: highlight for manual review
-   - If LOW: auto-approve option (optional)
-```
-
-### Review Workflow
-```
-1. Reviewer: GET /api/reviews/queue
-   - Returns all PENDING_REVIEW images sorted by risk_score (HIGH first)
-
-2. Reviewer: GET /api/reviews/{id}
-   - Returns ImageRecord with full details + duplicate matches
-
-3. Reviewer: PATCH /api/reviews/{id}
-   {
-     decision: 'approve' | 'reject',
-     comments: str
-   }
-   - Updates status: IN_REVIEW → APPROVED | REJECTED
-   - Records reviewed_by, review_timestamp, review_comments
-
-4. Stakeholder: GET /api/stakeholder/overview
-   - Returns APPROVED images awaiting sign-off
-
-5. Stakeholder: POST /api/stakeholder/{id}/sign-off
-   - Updates status: APPROVED → SIGNED_OFF
-   - Updates project.status to COMPLETED if all images signed off
-```
-
----
-
-## 9. Workflow Status Diagram
-
-```
-PENDING_REVIEW
-    ↓ (reviewer action)
-IN_REVIEW
-    ├─ APPROVED (reviewer approves)
-    │      ↓ (stakeholder action)
-    │  SIGNED_OFF (stakeholder confirms)
-    │      ↓ (project complete if all signed off)
-    │  Project.status → COMPLETED
-    │
-    └─ REJECTED (reviewer rejects)
-           ↓ (no sign-off needed)
-           Terminal state
-```
-
----
-
-## 10. Known Limitations & Issues
-
-### 1. Synthetic Test Data Problem
-- **Issue**: Programmatically-generated test images (solid gradients) cause 100% false positives on CLIP and ELA
-- **Impact**: Cannot validate detection accuracy with synthetic corpus
-- **Solution**: Needs real photo calibration (data/real_images/ incomplete; requires 30 photos, 3 same-scene pairs, 10 geotagged photos)
-
-### 2. pHash Crop Sensitivity
-- **Issue**: Cropping at ~12% per edge (cumulative ~48% area loss) defeats pHash thresholds
-- **Impact**: Heavily cropped duplicates may not be detected by Layer 2
-- **Workaround**: dHash as fallback (less sensitive to cropping)
-- **Root Cause**: Algorithm limitation (DCT on small regions loses low-frequency info)
-
-### 3. Model Loading Latency
-- **CLIP**: Lazy-loads ~600 MB on first submission (20-30 second delay)
-- **EasyOCR**: Loads ~65 MB on first receipt submission (10-15 second delay)
-- **Solution**: Pre-load models on application startup OR run in warm pool
-
-### 4. EXIF Conditional Weighting
-- **Issue**: EXIF_STRIPPED flag has context-dependent severity (5 pts alone, 15 pts combined)
-- **Current Implementation**: Hardcoded in risk_engine.py
-- **Improvement**: Could use machine learning to learn optimal weights from historical approvals/rejections
-
-### 5. BSON ObjectId Handling
-- **Issue**: MongoDB `_id` is ObjectId, Pydantic expects string
-- **Current Solution**: MongoDocument base class with custom serializer
-- **Improvement**: Could use PyObjectId wrapper for cleaner code
-
-### 6. Embedding Dimension Consistency
-- **Issue**: CLIP embedding dimension must stay constant (512 for ViT-B/32)
-- **Risk**: If model is upgraded or changed, stored embeddings become incompatible
-- **Solution**: Add schema migration tool + model version field in ImageRecord
-
----
-
-## 11. Deployment & Configuration
-
-### Environment Variables
 ```bash
-# MongoDB
-MONGODB_URL=mongodb+srv://user:pass@cluster.mongodb.net/?retryWrites=true&w=majority
-
-# JWT
-SECRET_KEY=your_secret_key_here
-
-# Cloudinary
-CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
-
-# Google Gemini (for AI summaries)
-GEMINI_API_KEY=...
-
-# Feature Flags
-ENABLE_CLIP=true
-ENABLE_KEYPOINT_MATCH=true
-ENABLE_OCR=true
-ENABLE_ELA=true
+uvicorn app.main:app --reload
+ENABLE_SCREEN_MODEL=true uvicorn app.main:app --reload
+pytest -q
+git diff --check
 ```
 
-### Docker Deployment
-```dockerfile
-FROM python:3.10-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY app/ .
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
+`GET /health` reports database and model availability. Assessment responses include `processing_time_ms`, `layers_run`, and `layers_skipped` for diagnosis.
 
-### Startup Sequence
-1. Initialize MongoDB connection
-2. Create indexes
-3. Load config thresholds
-4. (Optional) Pre-load CLIP and EasyOCR models
-5. Start FastAPI server on port 8000
+## 9. Limitations and extension rules
 
----
+- Automated risk is decision support; human review and stakeholder sign-off remain workflow stages.
+- CLIP, EasyOCR, and SigLIP require model downloads and runtime resources.
+- Perceptual hashes can miss extreme crops/viewpoint changes; SIFT reduces but does not eliminate that gap.
+- Retrieval-then-verification keeps geometric matching bounded but needs production-scale calibration.
+- Missing EXIF is not proof of fraud.
+- AI reports are advisory and isolated from fraud scoring.
 
-## 12. Unresolved Questions & Future Work
-
-1. **Real Photo Calibration**: data/real_images/ folder incomplete - needs curated dataset of 30+ real field photos with ground truth duplicates
-2. **Model Upgrades**: Need strategy for upgrading CLIP or OCR models without re-processing entire image history
-3. **Distributed Processing**: Current risk_engine.assess_image() runs synchronously - could benefit from async task queue (Celery/RabbitMQ) for large-scale deployments
-4. **Accuracy Metrics**: No formal confusion matrix or ROC curve analysis - would need labeled test set with ground truth fraud labels
-5. **Cross-Scene Detection**: Current CLIP threshold (0.92) may be too strict for recognizing same site across seasons/weather; could benefit from active learning feedback loop
-6. **Mobile App Integration**: Frontend is web-only; mobile app submission (iOS/Android) would need camera integration and offline support
-
----
-
-## 13. Key Takeaways
-
-**Detection Philosophy**:
-- **Layered approach**: Each layer catches different fraud patterns (exact, resized, recontextualized, tampered, misreported)
-- **Additive scoring**: Multiple weak signals combine into strong evidence
-- **Explainability**: Every flag has a reason; reviewers see full breakdown
-- **Graceful degradation**: System works even if individual layers fail
-
-**Risk Model**:
-- Designed for India's MPLADS context (receipts in regional languages, GPS verification against district boundaries)
-- Assumes work images are field photos (EXIF-tagged, natural lighting, high resolution)
-- False positive rate traded for recall (better to flag and require review than miss fraud)
-
-**Architecture Strengths**:
-- Clear separation of concerns (routes, risk engine, data layer)
-- MongoDB flexibility for schema evolution
-- Fast exact/perceptual matching via hashes
-- Semantic matching via CLIP embeddings
-- Robust geometric verification via SIFT+RANSAC
-
-**Architecture Weaknesses**:
-- Synchronous risk assessment (no async/queue)
-- Single-model deployment (no ensemble)
-- No active learning or feedback loop
-- Limited multi-modal analysis (text-only OCR, image-only vision)
-- No temporal/contextual fraud detection (pattern of submissions, submission timing)
-
+Add new detectors as structured-evidence adapters called by `assess_image`. Add workflow actions in `main.py` with role guards and audit fields. Keep database writes and role transitions out of detector modules.

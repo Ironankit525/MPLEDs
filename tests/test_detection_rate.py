@@ -15,12 +15,16 @@ Excluded from a default run via -m "not slow".
 """
 
 import pytest
+from unittest.mock import patch
 
-from app.config import PROJECT_ROOT
+import app.screen_detection as screen_module
+from app.config import PROJECT_ROOT, settings
 from scripts.evaluate_detection import evaluate
 
 MANIFEST_PATH = PROJECT_ROOT / "data" / "fraud_cases" / "fraud_manifest.json"
 CLEAN_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+REAL_MANIFEST_PATH = PROJECT_ROOT / "data" / "real_fraud_cases" / "fraud_manifest.json"
+REAL_IMAGES_DIR = PROJECT_ROOT / "data" / "real_images"
 
 
 @pytest.mark.slow
@@ -45,4 +49,29 @@ def test_detection_rate_meets_acceptance_bar() -> None:
     assert report.fp_rate_pct <= 10.0, (
         f"False-positive rate {report.fp_rate_pct}% exceeds the 10% acceptance bar. "
         f"Flagged controls: {[r.file for r in report.fp_results if r.is_false_positive]}"
+    )
+
+
+@pytest.mark.slow
+@pytest.mark.requires_clip
+@pytest.mark.requires_visual_model
+def test_full_model_real_corpus_acceptance_bar() -> None:
+    """Exercise the actual mandatory models and the real planted corpus."""
+    screen_module.reset_screen_detector()
+    try:
+        with patch.object(settings, "ENABLE_SCREEN_MODEL", True):
+            report = evaluate(
+                manifest_path=str(REAL_MANIFEST_PATH),
+                clean_images_dir=str(REAL_IMAGES_DIR),
+                enable_clip=True,
+                corpus="real",
+            )
+    finally:
+        screen_module.reset_screen_detector()
+
+    assert report.detection_rate_pct == 100.0
+    assert report.severity_rate_pct == 100.0
+    assert report.fp_rate_pct <= 10.0, (
+        f"Real holdout false-positive rate {report.fp_rate_pct}% exceeds the bar: "
+        f"{[item.file for item in report.fp_results if item.is_false_positive]}"
     )

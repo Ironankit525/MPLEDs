@@ -331,6 +331,39 @@ class Settings(BaseSettings):
     # are unaffected (0/29 false positives each on the same corpus).
     ENABLE_SCREENSHOT_DETECTION: bool = False
 
+    # Mandatory ML screen-capture detector. Unlike the legacy ELA heuristic
+    # above, this uses image/text understanding to distinguish a rendered
+    # browser or editor screenshot from a natural camera photograph. It is
+    # enabled by default; a failed model load leaves the assessment in the
+    # existing INSUFFICIENT_EVIDENCE state rather than allowing auto-clear.
+    ENABLE_SCREEN_MODEL: bool = True
+    # The API fails startup when the mandatory visual model is disabled or
+    # cannot load. Unit tests may explicitly opt into this bypass so they do
+    # not download an 800 MB checkpoint; deployment environments must leave
+    # it false.
+    ALLOW_VISUAL_MODEL_TEST_BYPASS: bool = False
+    SCREEN_MODEL_NAME: str = "google/siglip-base-patch16-224"
+    SCREEN_MODEL_REVIEW_THRESHOLD: float = 0.70
+    SCREEN_MODEL_HIGH_THRESHOLD: float = 0.90
+    WEIGHT_SCREEN_CAPTURE_SUSPECTED: int = 35
+
+    # The same mandatory SigLIP instance performs an earlier provenance
+    # sanity check for physical-work photos. This is intentionally different
+    # from WORK_TYPE_PROMPTS: a Golden Gate photo matches the noun "bridge"
+    # but must lose against the project-evidence prompts because it is a
+    # famous/stock/travel image, not contractor evidence from a local site.
+    WORK_EVIDENCE_VALID_THRESHOLD: float = 0.45
+    # Calibrated against the exact reported Golden Gate submission and the
+    # repository's three legitimate bridge samples. Golden Gate: landmark
+    # 0.5028 vs valid-project 0.2591; legitimate samples: valid-project
+    # 0.6885–0.9543 and landmark <=0.0237. The separate margin prevents a
+    # close/ambiguous result from being promoted to a HIGH finding.
+    WORK_EVIDENCE_INVALID_THRESHOLD: float = 0.48
+    WORK_EVIDENCE_INVALID_MARGIN: float = 0.15
+    WEIGHT_INVALID_WORK_EVIDENCE: int = 65
+    WEIGHT_UNCLEAR_WORK_EVIDENCE: int = 25
+    DOCUMENT_WORK_TYPES: list[str] = ["receipt", "invoice", "document"]
+
     # Photo-of-photo (moiré) detection thresholds.  A photo of a printed
     # image or screen produces regular repeating patterns that show up as
     # elevated mid-frequency energy in the FFT spectrum.

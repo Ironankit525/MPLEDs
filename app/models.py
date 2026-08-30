@@ -53,7 +53,9 @@ ROLE_SUBMITTER = "submitter"
 ROLE_REVIEWER = "reviewer"
 ROLE_STAKEHOLDER = "stakeholder"
 ROLE_ADMIN = "admin"
-USER_ROLES = (ROLE_SUBMITTER, ROLE_REVIEWER, ROLE_STAKEHOLDER, ROLE_ADMIN)
+ROLE_CONTRACTOR = "contractor"
+ROLE_MP = "mp"
+USER_ROLES = (ROLE_SUBMITTER, ROLE_REVIEWER, ROLE_STAKEHOLDER, ROLE_ADMIN, ROLE_CONTRACTOR, ROLE_MP)
 
 # Workflow status for a stored ImageRecord, shown to the submitter as a
 # status badge / timeline stage. Every record starts PENDING_REVIEW at
@@ -249,7 +251,19 @@ class ImageRecord(MongoDocument):
     photo_timestamp: Optional[datetime] = None
     gps_latitude: Optional[float] = None
     gps_longitude: Optional[float] = None
+    captured_latitude: Optional[float] = None
+    captured_longitude: Optional[float] = None
+    geolocation_accuracy: Optional[float] = None
+    capture_timestamp: Optional[datetime] = None
+    facing_mode: Optional[str] = None
+    session_token: Optional[str] = None
     exif_present: Optional[bool] = None
+    screen_probability: Optional[float] = None
+    screen_model_name: Optional[str] = None
+    work_evidence_status: Optional[str] = None
+    work_evidence_probability: Optional[float] = None
+    work_evidence_label: Optional[str] = None
+    work_evidence_model_name: Optional[str] = None
 
     # Ownership — who submitted this record. Optional because records
     # inserted before this field existed won't have it; new submissions
@@ -266,6 +280,7 @@ class ImageRecord(MongoDocument):
     # later, so it reflects conditions at submission time.
     risk_score: Optional[int] = None
     risk_level: Optional[str] = None
+    verification_status: Optional[str] = None
     recommendation: Optional[str] = None
     flags: Optional[List[dict]] = None
 
