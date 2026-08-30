@@ -31,7 +31,7 @@ export const DEFAULT_SETTINGS = {
   },
   dashboardPreferences: {
     financialYear: '2026-27',
-    landingPage: '/overview',
+    landingPage: '/admin/overview',
     projectView: 'All Projects',
     mapMetric: 'utilization',
     tableDensity: 'compact',

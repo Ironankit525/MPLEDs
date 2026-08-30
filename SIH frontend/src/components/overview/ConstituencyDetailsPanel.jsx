@@ -232,7 +232,7 @@ export const ConstituencyDetailsPanel = ({ selectedConstituency, viewMode }) => 
               {mpRecord.mpName}
             </h3>
             <button
-              onClick={() => navigate(`/mp/${encodeURIComponent(mpRecord.mpId)}`)}
+              onClick={() => navigate(`/admin/mp/${encodeURIComponent(mpRecord.mpId)}`)}
               className="p-1 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
               title={`View ${mpRecord.mpName}'s Profile`}
               aria-label={`View ${mpRecord.mpName}'s Profile`}

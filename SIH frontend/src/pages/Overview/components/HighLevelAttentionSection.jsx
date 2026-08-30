@@ -44,7 +44,7 @@ export const HighLevelAttentionSection = ({
           {highLevelAttention.map((item) => (
             <div
               key={item.id}
-              onClick={() => navigate('/ai-risk')}
+              onClick={() => navigate('/admin/ai-risk')}
               className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 hover:bg-slate-100/50 hover:border-slate-300 transition-colors cursor-pointer"
             >
               <div className="shrink-0 flex items-center justify-center">

@@ -42,8 +42,11 @@ export const MPDetailsPage = () => {
     const mpProjects = projectsData.filter((p) => p.mpId === mpId);
     if (mpProjects.length === 0) return null;
 
-    const record = calculateMPPerformance(mpProjects[0].mpName, mpProjects);
+    const records = calculateMPPerformance(mpProjects);
+    const record = records.find((r) => r.mpId === mpId) || records[0];
     
+    if (!record) return null;
+
     // Pick the top 4 active projects for progress bars
     const activeTopProjects = mpProjects
       .filter((p) => p.progress < 100)
@@ -116,7 +119,7 @@ export const MPDetailsPage = () => {
             
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-500 flex items-center gap-2"><Mail className="w-3.5 h-3.5"/> Email</span>
-              <span className="font-bold text-slate-900">{record.mpName.split(' ')[1]?.toLowerCase()}@sansad.nic.in</span>
+              <span className="font-bold text-slate-900">{(record.mpName.split(' ')[1] || record.mpName.split(' ')[0] || 'mp').toLowerCase()}@sansad.nic.in</span>
             </div>
 
             <div className="flex items-center justify-between text-xs">
@@ -386,7 +389,7 @@ export const MPDetailsPage = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 animate-in fade-in duration-300">
                 <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center group hover:border-slate-300 transition-colors">
                   <span className="text-[11px] uppercase font-black tracking-wider text-slate-400 mb-2">Total Fund Sanctioned</span>
-                  <span className="text-3xl font-mono font-black text-slate-900 group-hover:text-indigo-600 transition-colors">{formatCurrency(record.totalSanctioned)}</span>
+                  <span className="text-3xl font-mono font-black text-slate-900 group-hover:text-indigo-600 transition-colors">{formatCurrency(record.sanctionedAmount)}</span>
                 </div>
                 <div className="bg-emerald-50/50 p-6 sm:p-8 rounded-2xl border border-emerald-100 flex flex-col justify-center items-center text-center">
                   <span className="text-[11px] uppercase font-black tracking-wider text-emerald-600/80 mb-2">Fund Utilization</span>

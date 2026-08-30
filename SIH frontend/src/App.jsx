@@ -18,7 +18,10 @@ import { useApp } from './context/AppContext';
 
 function RootRedirect() {
   const { dashboardPreferences } = useApp();
-  const target = dashboardPreferences?.landingPage || ROUTES.OVERVIEW;
+  let target = dashboardPreferences?.landingPage || ROUTES.OVERVIEW;
+  if (target && !target.startsWith('/admin')) {
+    target = ROUTES.OVERVIEW;
+  }
   return <Navigate to={target} replace />;
 }
 
@@ -42,6 +45,7 @@ export function App() {
               <Route path="*" element={<Navigate to={ROUTES.OVERVIEW} replace />} />
             </Route>
           </Route>
+          <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

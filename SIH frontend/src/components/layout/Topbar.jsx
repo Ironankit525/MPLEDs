@@ -16,7 +16,7 @@ export const Topbar = () => {
       return 'MPLADS Performance Dashboard';
     }
     const activeNav = NAV_ITEMS.find((item) =>
-      location.pathname === item.path || (item.path !== '/overview' && location.pathname.startsWith(item.path))
+      location.pathname === item.path || (item.path !== '/admin/overview' && location.pathname.startsWith(item.path))
     );
     return activeNav?.label || 'Overview';
   };

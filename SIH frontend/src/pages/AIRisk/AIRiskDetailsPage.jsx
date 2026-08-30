@@ -96,7 +96,7 @@ export const AIRiskDetailsPage = () => {
     <div className="space-y-6 pb-16 max-w-7xl mx-auto">
       {/* Back Button */}
       <button
-        onClick={() => navigate('/ai-risk')}
+        onClick={() => navigate('/admin/ai-risk')}
         className="inline-flex items-center gap-2 text-xs font-extrabold text-slate-800 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl transition-colors border border-slate-300/60"
       >
         <ArrowLeft className="w-4 h-4" />
