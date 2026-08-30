@@ -83,7 +83,7 @@ export const MPDetailsPage = () => {
   const tabs = ['Overview', 'Projects', 'AI Audit', 'Financials'];
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-white flex w-full border border-slate-200 mt-4">
+    <div className="min-h-[calc(100vh-80px)] bg-white flex w-full">
       {/* 30% Left Column */}
       <div className="w-[30%] shrink-0 border-r border-slate-200 p-6 min-h-full flex flex-col">
         <p className="text-slate-500">Left Column (30%)</p>
