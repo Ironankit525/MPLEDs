@@ -52,7 +52,7 @@ export const HouseExpenditureSection = ({ houseExpenditure = {} }) => {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={data}
+                  data={data.map(d => ({ ...d, value: Number(d.value) || 0, percentage: Number(d.percentage) || 0 }))}
                   cx="50%"
                   cy="70%"
                   startAngle={180}

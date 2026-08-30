@@ -37,7 +37,7 @@ export const Topbar = () => {
         </button>
 
         <div className="flex items-center gap-3">
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 font-sans tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-sans tracking-tight">
             {pageTitle}
           </h1>
           {isMockMode && (
