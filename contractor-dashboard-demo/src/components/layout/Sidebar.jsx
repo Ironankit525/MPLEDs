@@ -12,7 +12,6 @@ import {
   X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { AshokStambhLogo } from '../common/AshokStambhLogo';
 
 const ICONS = {
   upload: Upload,
@@ -68,7 +67,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
     <aside
       className={`
         flex flex-col shrink-0 z-50 overflow-hidden transition-all duration-300 ease-in-out
-        bg-slate-100
+        bg-[#f1f5f9]
 
         /* Fixed sidebar layout (both mobile and desktop) */
         fixed inset-y-0 left-0 h-screen
@@ -87,7 +86,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
           className="flex items-center w-full min-w-0 px-2.5 py-1.5 h-12 cursor-pointer rounded-xl hover:bg-slate-200/50 transition-colors group select-none text-left focus:outline-none"
         >
           <div className="flex items-center justify-center shrink-0 w-10 h-10 select-none">
-            <AshokStambhLogo className="w-10 h-10 shrink-0 pointer-events-none" theme="light" />
+            <img src="/src/assets/ashok_stambh.png" alt="Logo" className="object-contain shrink-0 w-10 h-10 select-none pointer-events-none" />
           </div>
           <div
             className={`flex flex-col leading-tight overflow-hidden transition-all duration-300 ease-in-out pl-3 select-none ${
@@ -109,7 +108,7 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
         {mobileOpen && (
           <button
             onClick={onMobileClose}
-            className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer shrink-0"
+            className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-[#f1f5f9] transition cursor-pointer shrink-0"
             title="Close menu"
           >
             <X className="w-4 h-4" />
@@ -141,11 +140,11 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
                     `flex items-center px-3 py-2.5 text-sm relative group transition-all duration-300 ease-in-out ${
                       isActive
                         ? isCollapsed && !mobileOpen
-                          ? 'text-slate-900 font-bold ml-3 mr-0 rounded-l-2xl z-20'
-                          : 'bg-white text-slate-900 font-bold mx-3 rounded-xl shadow-xs border border-slate-200/80 z-20'
+                          ? '!text-slate-900 font-bold ml-3 mr-0 rounded-l-2xl z-20'
+                          : 'bg-white !text-slate-900 font-bold mx-3 rounded-xl shadow-xs border border-slate-200/80 z-20'
                         : isCollapsed && !mobileOpen
-                        ? 'text-slate-600 hover:text-slate-900 font-medium ml-3 mr-0 rounded-l-2xl z-10'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 font-medium mx-3 rounded-xl z-10'
+                        ? '!text-slate-600 hover:!text-slate-900 font-medium ml-3 mr-0 rounded-l-2xl z-10'
+                        : '!text-slate-600 hover:!text-slate-900 hover:bg-slate-200/60 font-medium mx-3 rounded-xl z-10'
                     }`
                   }
                 >

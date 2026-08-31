@@ -8,7 +8,7 @@ export default function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-100 text-slate-900 font-sans antialiased">
+    <div className="flex h-screen overflow-hidden bg-[#f1f5f9] text-slate-900 font-sans antialiased">
       {/* Mobile Overlay Backdrop */}
       {mobileOpen && (
         <div
