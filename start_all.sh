@@ -13,8 +13,9 @@ cd ..
 
 # Start SIH frontend (Admin, Port 5173)
 echo "Starting SIH frontend (Admin) on port 5173..."
-cd "SIH frontend"
+cd "sih-frontend"
 npm run dev -- --port 5173 &
+ADMIN_PID=$!
 cd ..
 
 # Start Contractor Dashboard (Port 5174)

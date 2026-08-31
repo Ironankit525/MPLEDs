@@ -15,13 +15,16 @@ cp -r auth-portal/dist/* unified_dist/
 rm -rf auth-portal/node_modules
 
 echo "Building SIH Frontend (Admin)..."
-cd "SIH frontend"
+cd "sih-frontend"
 npm install
 npm run build
 cd ..
+
+# Move Admin Build
+echo "Moving Admin dist..."
 mkdir -p unified_dist/admin
-cp -r "SIH frontend/dist/"* unified_dist/admin/
-rm -rf "SIH frontend/node_modules"
+cp -r "sih-frontend/dist/"* unified_dist/admin/
+rm -rf "sih-frontend/node_modules"
 
 echo "Building Contractor Dashboard..."
 cd contractor-dashboard-demo
