@@ -12,7 +12,7 @@
 # Runtime services do not use the local evaluation/training corpus or the old
 # standalone UI demos.  Excluding them keeps CLI uploads below Vercel's source
 # limits while retaining app/, frontend/, and the model-cache helper.
-data
+/data
 MPLADS_Data
 
 tests
