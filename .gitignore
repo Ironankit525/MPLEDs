@@ -68,6 +68,8 @@ dist/
 # Env
 .env
 .env.*
+!.env.example
+!frontend/.env.example
 
 # Agents
 .agents/

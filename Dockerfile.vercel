@@ -1,0 +1,79 @@
+# syntax=docker/dockerfile:1.7
+
+# Vercel's normal Python function bundle is too small for Torch, SigLIP,
+# CLIP, and EasyOCR together.  The backend is therefore a container service.
+# Keep Python aligned with a currently supported Vercel Python version.
+FROM python:3.12-slim AS python-deps
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /srv/mplads
+
+# Pull CPU-only Torch wheels.  Installing Torch from the default Linux index
+# can pull several gigabytes of CUDA libraries that this CPU service cannot use.
+RUN python -m pip install --upgrade pip && \
+    python -m pip install \
+      --index-url https://download.pytorch.org/whl/cpu \
+      "torch>=2.0,<3" \
+      "torchvision>=0.15,<1"
+
+COPY requirements.vercel.txt ./requirements.vercel.txt
+RUN python -m pip install -r requirements.vercel.txt
+
+
+# Download and shard every local inference model while the image is built.
+# Vercel runtimes are stateless/read-only outside /tmp, so downloading the
+# mandatory SigLIP model during a cold start would be unreliable.  The helper
+# also splits large checkpoints so no final OCI layer exceeds VCR's 500 MB
+# compressed-layer limit.
+FROM python-deps AS model-cache
+
+COPY scripts/cache_vercel_models.py /tmp/cache_vercel_models.py
+RUN python /tmp/cache_vercel_models.py /model-output
+
+
+FROM python-deps AS runtime
+
+ENV VERCEL=1 \
+    MPLADS_DATA_DIR=/tmp/mplads-data \
+    SCREEN_MODEL_NAME=/opt/models/siglip \
+    CLIP_MODEL_NAME=/opt/models/clip \
+    EASYOCR_MODULE_PATH=/opt/models/easyocr \
+    TRANSFORMERS_OFFLINE=1 \
+    HF_HUB_OFFLINE=1 \
+    HF_HUB_DISABLE_TELEMETRY=1 \
+    TOKENIZERS_PARALLELISM=false
+
+RUN mkdir -p /opt/models/siglip /opt/models/clip /opt/models/easyocr
+
+# Metadata is tiny; each numbered directory contains at most one <=190 MB
+# checkpoint shard and is copied in its own OCI layer.
+COPY --from=model-cache /model-output/siglip/meta/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-01/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-02/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-03/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-04/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-05/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-06/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-07/ /opt/models/siglip/
+COPY --from=model-cache /model-output/siglip/layer-08/ /opt/models/siglip/
+
+COPY --from=model-cache /model-output/clip/meta/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-01/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-02/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-03/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-04/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-05/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-06/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-07/ /opt/models/clip/
+COPY --from=model-cache /model-output/clip/layer-08/ /opt/models/clip/
+
+COPY --from=model-cache /model-output/easyocr/ /opt/models/easyocr/
+
+COPY app ./app
+
+# Vercel routes requests to $PORT (80 when no override is configured).
+CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-80}"]

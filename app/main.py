@@ -15,6 +15,7 @@ renders with full schema documentation.
 
 import dataclasses
 import logging
+import os
 import shutil
 import uuid
 import cloudinary
@@ -126,6 +127,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
+def _cloudinary_is_configured() -> bool:
+    """Return True only when the complete durable-storage config is present."""
+    return all(
+        (
+            settings.CLOUDINARY_CLOUD_NAME,
+            settings.CLOUDINARY_API_KEY,
+            settings.CLOUDINARY_API_SECRET,
+        )
+    )
+
 # ── App initialisation ──────────────────────────────────────────────
 app = FastAPI(
     title="MPLADS Image Fraud Detection API",
@@ -152,6 +164,35 @@ app.add_middleware(
 @app.on_event("startup")
 def startup_event() -> None:
     """Initialise required infrastructure and fail closed when unavailable."""
+    # Validate durable storage before connecting to external services or
+    # loading the heavyweight model. A typo should fail immediately instead
+    # of spending cold-start time preparing SigLIP first.
+    cloudinary_values = (
+        settings.CLOUDINARY_CLOUD_NAME,
+        settings.CLOUDINARY_API_KEY,
+        settings.CLOUDINARY_API_SECRET,
+    )
+    if any(cloudinary_values) and not _cloudinary_is_configured():
+        raise RuntimeError(
+            "Cloudinary configuration is incomplete. Set CLOUDINARY_CLOUD_NAME, "
+            "CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET together."
+        )
+    if os.getenv("VERCEL") and not _cloudinary_is_configured():
+        raise RuntimeError(
+            "Cloudinary is required on Vercel because local files are ephemeral. "
+            "Configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and "
+            "CLOUDINARY_API_SECRET in the Vercel project settings."
+        )
+
+    if _cloudinary_is_configured():
+        cloudinary.config(
+            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+            api_key=settings.CLOUDINARY_API_KEY,
+            api_secret=settings.CLOUDINARY_API_SECRET,
+            secure=True
+        )
+        logger.info("Cloudinary storage configured.")
+
     init_db()
 
     if not settings.ENABLE_SCREEN_MODEL:
@@ -170,14 +211,6 @@ def startup_event() -> None:
             )
         logger.warning("Mandatory visual model failed to load during an isolated test run.")
 
-    if settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET:
-        cloudinary.config(
-            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
-            api_key=settings.CLOUDINARY_API_KEY,
-            api_secret=settings.CLOUDINARY_API_SECRET,
-            secure=True
-        )
-        logger.info("Cloudinary storage configured.")
     logger.info("MPLADS Image Fraud Detection API started.")
 
 
@@ -633,14 +666,22 @@ async def submit_image(
             except ValueError:
                 pass
 
-        # Upload to Cloudinary if configured
+        # Upload to durable storage before inserting the database record.  A
+        # failed upload must not leave a record pointing at an ephemeral local
+        # file (especially on Vercel, where /tmp disappears with the instance).
         final_storage_path = str(saved_path)
-        if settings.CLOUDINARY_CLOUD_NAME:
+        if _cloudinary_is_configured():
             try:
                 upload_res = cloudinary.uploader.upload(str(saved_path))
                 final_storage_path = upload_res.get("secure_url")
-            except Exception as e:
-                logger.error(f"Cloudinary upload failed: {e}")
+                if not final_storage_path:
+                    raise RuntimeError("Cloudinary returned no secure_url.")
+            except Exception as exc:
+                logger.exception("Cloudinary upload failed")
+                raise HTTPException(
+                    status_code=status.HTTP_502_BAD_GATEWAY,
+                    detail="The evidence image could not be stored. Nothing was submitted; please retry.",
+                ) from exc
 
         # Store the image record
         _store_image_record(
@@ -672,7 +713,7 @@ async def submit_image(
         raise HTTPException(status_code=422, detail=str(e))
     finally:
         # Clean up local temporary file if it was successfully uploaded to Cloudinary
-        if settings.CLOUDINARY_CLOUD_NAME and saved_path.exists():
+        if _cloudinary_is_configured() and saved_path.exists():
             saved_path.unlink()
 
 
@@ -2243,7 +2284,7 @@ async def health_check(
 
 @app.post("/api/auth/register", summary="Register a new user", status_code=status.HTTP_201_CREATED)
 async def register(user: UserCreate, db: Database = Depends(get_db)):
-    """Create a new user account (for the hackathon demo)."""
+    """Create a Submitter account through the public registration form."""
     existing_user = db.users.find_one({"username": user.username})
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already registered")
@@ -2254,7 +2295,10 @@ async def register(user: UserCreate, db: Database = Depends(get_db)):
         "password_hash": hashed_password,
         "agency_name": user.agency_name,
         "district": user.district,
-        "role": user.role if user.role else ROLE_SUBMITTER,
+        # Public input can never choose a privileged role. Reviewer,
+        # Stakeholder, MP, and Admin accounts are provisioned by an Admin via
+        # /api/admin/users.
+        "role": ROLE_SUBMITTER,
         "is_active": True,
         # This dict is inserted directly rather than built from the
         # User pydantic model, so its field defaults (created_at's

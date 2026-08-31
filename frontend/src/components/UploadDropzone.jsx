@@ -7,7 +7,7 @@ import Icon from './Icon'
 // changes, worst case this just lets a rejected file reach the server
 // once before the user sees the real error.
 const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
-const MAX_SIZE_BYTES = 10 * 1024 * 1024
+const MAX_SIZE_BYTES = 4 * 1024 * 1024
 
 function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`
@@ -124,7 +124,7 @@ export default function UploadDropzone({ file, onChange, error }) {
       >
         <Icon name="upload" size={32} strokeWidth={1.6} />
         <h3>Drag and drop your photo here</h3>
-        <p className="hint">or click to browse — JPG, PNG, or WEBP, up to 10 MB</p>
+        <p className="hint">or click to browse — JPG, PNG, or WEBP, up to 4 MB</p>
         <input
           ref={inputRef}
           type="file"

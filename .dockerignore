@@ -1,0 +1,28 @@
+.git
+.github
+.env
+.env.*
+.venv
+.pytest_cache
+.vercel
+**/__pycache__
+**/*.py[cod]
+**/node_modules
+
+# The backend image only needs app/, its runtime manifest, and the model-cache
+# helper. Training corpora, demo frontends, tests, and generated output would
+# otherwise add gigabytes to the Docker build context.
+data
+MPLADS_Data
+frontend
+SIH frontend
+auth-portal
+contractor-dashboard-demo
+mp-dashboard-demo
+tests
+coverage*
+htmlcov
+*.log
+
+scripts/*
+!scripts/cache_vercel_models.py

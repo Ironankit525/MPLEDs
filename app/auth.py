@@ -52,15 +52,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Database = D
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if token == "demo-token":
-        return {
-            "id": "demo-submitter-id",
-            "username": "pradhanprachi442@gmail.com",
-            "role": "submitter",
-            "agency_name": "XYZ Contractors",
-            "district": "Pune",
-            "is_active": True
-        }
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")

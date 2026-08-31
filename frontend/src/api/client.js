@@ -4,7 +4,10 @@
 // (app/main.py) always returns { detail: "..." } on error, per
 // app/schemas.py's ErrorResponse.
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Production uses the same Vercel origin for both services, so /api requests
+// stay relative and automatically work on previews and custom domains. Local
+// development may still opt into a separate FastAPI origin via frontend/.env.
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 const TOKEN_STORAGE_KEY = 'mplads_token'
 
 export function getToken() {

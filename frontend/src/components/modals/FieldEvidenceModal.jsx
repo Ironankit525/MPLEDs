@@ -12,6 +12,8 @@ import {
 } from 'lucide-react'
 import { API_BASE_URL, getToken } from '../../api/client'
 
+const MAX_SIZE_BYTES = 4 * 1024 * 1024
+
 export default function FieldEvidenceModal({ isOpen, onClose, onUploaded, workId = 'MP/BR/205/412' }) {
   const [file, setFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
@@ -31,6 +33,11 @@ export default function FieldEvidenceModal({ isOpen, onClose, onUploaded, workId
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0]
     if (!selected) return
+    if (selected.size > MAX_SIZE_BYTES) {
+      setError('The image is over the 4 MB upload limit. Choose a smaller photo.')
+      e.target.value = ''
+      return
+    }
     setFile(selected)
     setPreviewUrl(URL.createObjectURL(selected))
     setAssessment(null)
@@ -129,7 +136,7 @@ export default function FieldEvidenceModal({ isOpen, onClose, onUploaded, workId
                   <div className="dropzone-placeholder">
                     <UploadCloud size={36} className="dropzone-icon" />
                     <span className="dropzone-text">Click or drag &amp; drop field photo</span>
-                    <span className="dropzone-sub">JPG, PNG, WebP up to 10MB</span>
+                    <span className="dropzone-sub">JPG, PNG, WebP up to 4MB</span>
                   </div>
                 )}
               </div>

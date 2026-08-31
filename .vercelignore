@@ -1,0 +1,24 @@
+.git
+.github
+.env
+.env.*
+.venv
+.pytest_cache
+.vercel
+**/__pycache__
+**/*.py[cod]
+**/node_modules
+
+# Runtime services do not use the local evaluation/training corpus or the old
+# standalone UI demos.  Excluding them keeps CLI uploads below Vercel's source
+# limits while retaining app/, frontend/, and the model-cache helper.
+data
+MPLADS_Data
+SIH frontend
+auth-portal
+contractor-dashboard-demo
+mp-dashboard-demo
+tests
+coverage*
+htmlcov
+*.log
