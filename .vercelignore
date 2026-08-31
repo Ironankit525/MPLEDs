@@ -14,10 +14,7 @@
 # limits while retaining app/, frontend/, and the model-cache helper.
 data
 MPLADS_Data
-SIH frontend
-auth-portal
-contractor-dashboard-demo
-mp-dashboard-demo
+
 tests
 coverage*
 htmlcov
