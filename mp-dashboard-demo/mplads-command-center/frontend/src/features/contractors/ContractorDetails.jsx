@@ -23,8 +23,13 @@ import {
   Coins, 
   ShieldCheck, 
   Clock, 
-  Layers 
+  Layers,
+  X,
+  AlertTriangle,
+  Image as ImageIcon,
+  ChevronRight
 } from 'lucide-react';
+
 
 const getGradeBadgeVariant = (grade) => {
   if (!grade) return 'slate';
@@ -44,6 +49,7 @@ export const ContractorDetails = () => {
   const [contractor, setContractor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedSub, setSelectedSub] = useState(null);
 
   useEffect(() => {
     const fetchPromoterDetails = async () => {
@@ -87,7 +93,8 @@ export const ContractorDetails = () => {
   const utilizationRate = contractor.globalUtilizationRate || contractor.mpUtilizationRate || 0;
 
   return (
-    <div className="space-y-6">
+    <>
+      <div className="space-y-6">
       {/* Top Back Navigation Bar */}
       <div className="flex items-center justify-between">
         <button
@@ -320,13 +327,17 @@ export const ContractorDetails = () => {
                 'bg-emerald-50 text-emerald-700 border-emerald-200';
               
               return (
-                <div key={sub.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col md:flex-row gap-5">
+                <div
+                  key={sub.id}
+                  onClick={() => setSelectedSub(sub)}
+                  className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col md:flex-row gap-5 cursor-pointer hover:border-indigo-300 hover:shadow-md transition-all group"
+                >
                   {sub.file_path && (
                     <div className="w-full md:w-32 h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-200/60 flex-shrink-0">
                       <img 
                         src={sub.file_path} 
                         alt="Submitted evidence" 
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         style={{ mixBlendMode: 'multiply' }}
                       />
                     </div>
@@ -337,9 +348,12 @@ export const ContractorDetails = () => {
                         <span className="text-[11px] font-bold text-slate-400">{sub.id}</span>
                         <span className="text-xs font-semibold text-slate-500 ml-2">Work ID: {sub.work_id}</span>
                       </div>
-                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${riskColor}`}>
-                        {sub.risk_level} RISK • {sub.risk_score}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${riskColor}`}>
+                          {sub.risk_level} RISK • {sub.risk_score}
+                        </span>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 transition-colors" />
+                      </div>
                     </div>
 
                     <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs text-slate-600">
@@ -356,6 +370,7 @@ export const ContractorDetails = () => {
                         ))}
                       </div>
                     )}
+                    <p className="text-[10px] text-indigo-500 font-semibold">Click to view full submission details →</p>
                   </div>
                 </div>
               );
@@ -364,5 +379,192 @@ export const ContractorDetails = () => {
         )}
       </div>
     </div>
+
+    {/* ── SUBMISSION DETAIL MODAL ── */}
+    {selectedSub && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+        onClick={(e) => { if (e.target === e.currentTarget) setSelectedSub(null); }}
+      >
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+          {/* Modal Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+            <div>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Submission Detail</p>
+              <h2 className="text-lg font-extrabold text-slate-900">{selectedSub.work_id}</h2>
+              <p className="text-xs text-slate-500">{selectedSub.project_type} · {selectedSub.district}, {selectedSub.state}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Risk Badge */}
+              <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                selectedSub.risk_level === 'HIGH' ? 'bg-red-50 text-red-700 border-red-200' :
+                selectedSub.risk_level === 'MEDIUM' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                'bg-emerald-50 text-emerald-700 border-emerald-200'
+              }`}>
+                {selectedSub.risk_level} RISK · {selectedSub.risk_score}
+              </span>
+              <button
+                onClick={() => setSelectedSub(null)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* LEFT: Photo */}
+            <div className="space-y-4">
+              {selectedSub.file_path ? (
+                <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">
+                  <img
+                    src={selectedSub.file_path}
+                    alt="Submission evidence"
+                    className="w-full object-cover max-h-72"
+                  />
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-center h-48">
+                  <ImageIcon className="w-10 h-10 text-slate-300" />
+                </div>
+              )}
+
+              {/* Details table */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                <h3 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Details</h3>
+                {[
+                  { label: 'Submitted', value: selectedSub.submitted_at ? new Date(selectedSub.submitted_at).toLocaleString('en-IN') : '—' },
+                  { label: 'MP', value: selectedSub.mp_name || contractor?.name || '—' },
+                  { label: 'Agency', value: selectedSub.agency_name || '—' },
+                  { label: 'Recommendation', value: selectedSub.recommendation || '—' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between gap-4 text-xs">
+                    <span className="text-slate-500 font-semibold shrink-0">{label}</span>
+                    <span className="text-slate-800 text-right">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT: Review Progress + Automated Findings */}
+            <div className="space-y-4">
+              {/* Review Progress */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4">
+                <h3 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-4">Review Progress</h3>
+                {[
+                  { label: 'Submitted', desc: `Uploaded on ${selectedSub.submitted_at ? new Date(selectedSub.submitted_at).toLocaleString('en-IN') : '—'}`, done: true },
+                  { label: 'Pending Review', desc: 'Waiting for a verification officer to pick this up.', done: false, active: true },
+                  { label: 'In Review', desc: 'A verification officer is checking the evidence.', done: false },
+                  { label: 'Approved', desc: 'Awaiting a final decision.', done: false },
+                  { label: 'Signed Off', desc: 'Awaiting a final decision first.', done: false },
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-3 mb-3 last:mb-0">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        step.done ? 'bg-emerald-500 border-emerald-500' :
+                        step.active ? 'border-indigo-500 bg-indigo-50' :
+                        'border-slate-300'
+                      }`}>
+                        {step.done && <CheckCircle2 className="w-3 h-3 text-white" />}
+                        {step.active && <div className="w-2 h-2 rounded-full bg-indigo-500" />}
+                      </div>
+                      {i < 4 && <div className="w-px h-6 bg-slate-200 mt-1" />}
+                    </div>
+                    <div className="pb-2">
+                      <p className={`text-xs font-bold ${ step.done ? 'text-emerald-700' : step.active ? 'text-indigo-700' : 'text-slate-400' }`}>{step.label}</p>
+                      <p className="text-[11px] text-slate-500">{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Automated Check Details */}
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                <div className={`p-4 border-b ${
+                  selectedSub.risk_level === 'HIGH' ? 'bg-red-50/30 border-red-100' :
+                  selectedSub.risk_level === 'MEDIUM' ? 'bg-amber-50/30 border-amber-100' :
+                  'bg-emerald-50/30 border-emerald-100'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${
+                      selectedSub.risk_level === 'HIGH' ? 'bg-red-50 text-red-700 border-red-200' :
+                      selectedSub.risk_level === 'MEDIUM' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                      'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    }`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${
+                        selectedSub.risk_level === 'HIGH' ? 'bg-red-500' :
+                        selectedSub.risk_level === 'MEDIUM' ? 'bg-amber-500' :
+                        'bg-emerald-500'
+                      }`} />
+                      {selectedSub.risk_level} RISK · {selectedSub.risk_score}
+                    </span>
+                  </div>
+                  
+                  <h3 className={`font-bold text-sm ${
+                    selectedSub.risk_level === 'HIGH' ? 'text-red-800' :
+                    selectedSub.risk_level === 'MEDIUM' ? 'text-amber-800' :
+                    'text-emerald-800'
+                  }`}>
+                    {selectedSub.risk_score === 0 
+                      ? 'System cleared' 
+                      : (selectedSub.recommendation?.split('—')[0]?.trim() || selectedSub.recommendation)}
+                  </h3>
+                  
+                  {(selectedSub.risk_score === 0 || selectedSub.recommendation?.includes('—')) && (
+                    <p className={`text-xs mt-0.5 mb-3 ${
+                      selectedSub.risk_level === 'HIGH' ? 'text-red-600' :
+                      selectedSub.risk_level === 'MEDIUM' ? 'text-amber-600' :
+                      'text-emerald-600'
+                    }`}>
+                      {selectedSub.risk_score === 0 
+                        ? 'automated checks raised no findings.' 
+                        : selectedSub.recommendation.split('—')[1]?.trim()}
+                    </p>
+                  )}
+
+                  <div className="mt-3 space-y-1.5 text-[11px] text-slate-600">
+                    <p><span className="font-semibold text-slate-500">Capture date:</span> {selectedSub.capture_date ? new Date(selectedSub.capture_date).toLocaleString('en-IN') : 'Unavailable in the uploaded file'}</p>
+                    <p><span className="font-semibold text-slate-500">Project-evidence validity:</span> {selectedSub.work_evidence_status || 'UNKNOWN'} ({selectedSub.work_evidence_probability !== undefined ? (selectedSub.work_evidence_probability * 100).toFixed(1) : 0}% confidence)</p>
+                    <p><span className="font-semibold text-slate-500">Screen-capture model:</span> {selectedSub.screen_probability !== undefined ? (selectedSub.screen_probability * 100).toFixed(1) : 0}% ({selectedSub.screen_model_name || 'google/siglip-base-patch16-224'})</p>
+                  </div>
+                </div>
+
+                {selectedSub.flags && selectedSub.flags.length > 0 ? (
+                  <div className="p-4">
+                    <h3 className="text-sm font-bold text-slate-800 mb-4">Automated findings</h3>
+                    <div className="space-y-4">
+                      {selectedSub.flags.map((flag, idx) => {
+                        const isHigh = flag.severity === 'HIGH' || flag.risk_points >= 20 || flag.points_added >= 20;
+                        return (
+                          <div key={idx} className="space-y-1">
+                            <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-bold rounded uppercase tracking-wider ${
+                              isHigh ? 'bg-[#4B2323] text-red-50' : 'bg-[#5B4210] text-amber-50'
+                            }`}>
+                              <AlertTriangle className="w-3 h-3" />
+                              {flag.severity || (isHigh ? 'HIGH' : 'MEDIUM')}
+                            </span>
+                            <p className="text-sm font-semibold text-slate-800 uppercase tracking-wide">{flag.code}</p>
+                            <p className="text-[11px] text-slate-500 leading-relaxed">{flag.human_message || flag.message}</p>
+                            {(flag.points_added || flag.risk_points) && (
+                              <p className="text-[11px] text-slate-800 font-semibold">+{flag.points_added || flag.risk_points} risk points</p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-4 flex items-center gap-3">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                    <p className="text-xs font-semibold text-emerald-700">No anomalies detected by automated checks.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 };

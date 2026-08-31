@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Map, Layers, X, ExternalLink, ShieldAlert, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Map, Layers, X, ExternalLink, ShieldAlert, CheckCircle2, AlertCircle, User } from 'lucide-react';
 import { LokSabhaConstituencyMap } from '../maps/LokSabhaConstituencyMap';
 import { useApp } from '../../context/AppContext';
+import { CONSTITUENCY_DETAILS_MAP } from '../../data/locationMappings';
+import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics';
 
 export const GeographicIntelligenceMap = ({
   analyticsData,
@@ -9,6 +12,7 @@ export const GeographicIntelligenceMap = ({
   onApplyFilter,
 }) => {
   const { dashboardPreferences } = useApp();
+  const navigate = useNavigate();
   const [selectedConstituency, setSelectedConstituency] = useState(null);
   const [selectedMapMetric, setSelectedMapMetric] = useState(() => dashboardPreferences?.mapMetric || 'utilization');
 
@@ -37,14 +41,25 @@ export const GeographicIntelligenceMap = ({
       return;
     }
     // Blend with spatial analytics data if available
-    const cName = (constData.constituencyName || constData.name || '').toLowerCase();
+    const constituencyNameRaw = constData.constituencyName || constData.name || 'Gaya';
+    const cName = constituencyNameRaw.toLowerCase();
     const spatialExtra = analyticsData?.geographicAnalytics?.[cName] || {};
+    
+    // Find MP mapping by name
+    const constituencyKey = Object.keys(CONSTITUENCY_DETAILS_MAP).find(k => k.toLowerCase() === cName) || 'Gaya';
+    const mpInfo = CONSTITUENCY_DETAILS_MAP[constituencyKey];
+
+    const mpName = mpInfo?.mp || 'Shri Rajesh Kumar';
+    const mpRecord = MASTER_MP_RECORDS.find(r => r.mpName === mpName);
 
     setSelectedConstituency({
       ...constData,
       ...spatialExtra,
-      constituencyName: constData.constituencyName || constData.name || 'Gaya',
+      constituencyName: constituencyNameRaw,
       state: constData.state || 'Bihar',
+      mpName: mpName,
+      party: mpInfo?.party || 'IND',
+      photo: mpRecord?.photo || null,
       totalProjects: constData.totalProjects || spatialExtra.totalProjects || 184,
       utilization: constData.utilization || spatialExtra.utilization || 76.4,
       completion: constData.completionRate || spatialExtra.completion || 65.0,
@@ -54,13 +69,18 @@ export const GeographicIntelligenceMap = ({
   };
 
   const handleApplyDetailedAnalyticsFilter = () => {
-    if (selectedConstituency && onApplyFilter) {
+    if (selectedConstituency) {
+      const searchParams = new URLSearchParams();
       if (selectedConstituency.state) {
-        onApplyFilter('state', selectedConstituency.state);
+        searchParams.set('state', selectedConstituency.state);
       }
       if (selectedConstituency.constituencyName) {
-        onApplyFilter('mp', selectedConstituency.constituencyName);
+        searchParams.set('district', selectedConstituency.constituencyName);
       }
+      if (selectedConstituency.mpName) {
+        searchParams.set('mp', selectedConstituency.mpName);
+      }
+      navigate(`/admin/projects?${searchParams.toString()}`);
     }
   };
 
@@ -110,6 +130,22 @@ export const GeographicIntelligenceMap = ({
                 >
                   <X className="w-4 h-4" />
                 </button>
+              </div>
+
+              {/* MP Details Block */}
+              <div className="bg-slate-800/80 p-3 rounded-xl flex items-start gap-3 border border-slate-700/60 mb-6">
+                <div className="w-10 h-10 rounded-full overflow-hidden border border-indigo-500/50 flex items-center justify-center shrink-0 bg-indigo-500/20 text-indigo-400">
+                  {selectedConstituency.photo ? (
+                    <img src={selectedConstituency.photo} alt={selectedConstituency.mpName} className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-5 h-5" />
+                  )}
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Member of Parliament</span>
+                  <h5 className="text-sm font-bold text-white">{selectedConstituency.mpName}</h5>
+                  <span className="inline-block mt-1 px-2 py-0.5 rounded text-[9px] font-extrabold bg-slate-700 text-slate-300">{selectedConstituency.party}</span>
+                </div>
               </div>
 
               {/* Metrics Grid inside Side Panel */}
