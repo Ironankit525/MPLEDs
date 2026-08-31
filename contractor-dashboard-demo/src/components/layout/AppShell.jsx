@@ -32,7 +32,7 @@ export default function AppShell() {
         {/* Inset White Main Panel Canvas */}
         <div className="flex-1 flex flex-col bg-white md:rounded-tl-2xl overflow-hidden h-full relative">
           <Navbar onHamburgerClick={() => setMobileOpen(true)} />
-          <main className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 bg-slate-50">
+          <main className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 ">
             <div className="w-full max-w-[1580px] mx-auto">
               <Outlet />
             </div>

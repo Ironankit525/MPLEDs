@@ -654,7 +654,7 @@ export default function SubmissionsPage() {
   if (checklist.length === 0) checklist.push({ id: 'clear', type: 'complete', text: 'No evidence has been uploaded yet.' });
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen p-5">
+    <div className=" min-h-screen p-5">
       {/* Top header */}
       <TopHeader />
 

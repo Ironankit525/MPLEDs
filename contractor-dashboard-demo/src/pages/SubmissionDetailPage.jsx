@@ -18,7 +18,7 @@ export default function SubmissionDetailPage() {
   const submission = submissions?.find((s) => s.id === id)
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] p-5">
+    <div className="min-h-screen  p-5">
       <Link
         to="/contractor/submissions"
         className="mb-5 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 no-underline shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900"

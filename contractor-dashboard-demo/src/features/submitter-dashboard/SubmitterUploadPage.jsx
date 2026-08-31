@@ -139,7 +139,7 @@ export default function UploadPage() {
 
   if (phase === 'success' && result) {
     return (
-      <div className="bg-[#f8fafc] min-h-screen p-5">
+      <div className=" min-h-screen p-5">
         <div className="mb-5">
           <h1 className="text-xl font-bold !text-slate-900">Submitted</h1>
           <p className="text-xs text-gray-500 mt-0.5">Work ID {form.work_id} — here's the automated check. A verification officer will review it next.</p>
@@ -169,7 +169,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen p-5">
+    <div className=" min-h-screen p-5">
       <div className="mb-5">
         <h1 className="text-xl font-bold !text-slate-900">Upload Evidence</h1>
         <p className="text-xs text-gray-500 mt-0.5">Submit a work-completion photo for {form.district || 'your district'}.</p>

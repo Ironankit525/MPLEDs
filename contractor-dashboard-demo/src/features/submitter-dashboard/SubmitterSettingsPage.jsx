@@ -16,7 +16,7 @@ export default function SettingsPage() {
   const accountName = formatAccountName(user?.username)
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] p-5">
+    <div className="min-h-screen  p-5">
       <div className="page-header">
         <div>
           <h1 className="!text-slate-900">Settings</h1>
