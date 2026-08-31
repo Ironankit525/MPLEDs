@@ -5,7 +5,7 @@
       "root": ".",
       "framework": "vite",
       "buildCommand": "./build_all.sh",
-      "outputDirectory": "dist",
+      "outputDirectory": "unified_dist",
       "rewrites": [
         {
           "source": "/admin/(.*)",
