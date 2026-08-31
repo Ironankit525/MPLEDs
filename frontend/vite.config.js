@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/original/',
   plugins: [react()],
   server: {
     // Keep browser requests same-origin in development just like production.
