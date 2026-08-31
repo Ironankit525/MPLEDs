@@ -119,7 +119,7 @@ export const MPDetailsPage = () => {
   }
 
   const { record, mpProjects } = mpData;
-  const dummyAvatar = DUMMY_AVATAR; // Simplified to just one dummy for now
+  const dummyAvatar = record.photo || DUMMY_AVATAR;
   
   // TABS
   const tabs = ['Overview', 'Projects', 'AI Audit', 'Financials'];

@@ -47,7 +47,10 @@ export function AuthGuard({ allowedRoles }) {
         <h2>Unauthorized Access</h2>
         <p>You are logged in as <strong>{role}</strong>, but this dashboard requires: <strong>{allowedRoles.join(', ')}</strong>.</p>
         <button 
-          onClick={() => window.location.href = 'https://inspiring-lebkuchen-67d55f.netlify.app/'}
+          onClick={() => {
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            window.location.href = isLocal ? 'http://localhost:3000/' : 'https://inspiring-lebkuchen-67d55f.netlify.app/';
+          }}
           style={{ padding: '8px 16px', marginTop: '1rem', cursor: 'pointer' }}
         >
           Return to Auth Portal

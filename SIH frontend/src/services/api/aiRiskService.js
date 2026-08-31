@@ -7,6 +7,20 @@ const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 // Flagged projects memory set for UI state simulation
 const FLAGGED_PROJECTS_SET = new Set();
 
+// Fetch real submissions from the FastAPI backend
+async function fetchRealSubmissions() {
+  try {
+    const res = await fetch('http://localhost:8000/api/images/mine', {
+      headers: { Authorization: 'Bearer demo-token' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.images || [];
+  } catch {
+    return [];
+  }
+}
+
 /**
  * Filter projects based on active AI Risk Monitor filters
  * (State, District, MP, Project Type, Agency, Risk Level, Anomaly Type - NO FY filter!)
@@ -86,7 +100,29 @@ export const aiRiskService = {
     if (USE_MOCK) {
       await new Promise((res) => setTimeout(res, 50));
       const enriched = getEnrichedRiskProjects();
-      const filtered = filterAIRiskProjects(enriched, filters);
+      const realSubmissions = await fetchRealSubmissions();
+
+      // Inject real submissions into matching projects
+      const withSubmissions = enriched.map(p => {
+        const matches = realSubmissions.filter(s => 
+          s.work_id === p.id || (s.district && p.district && s.district.toLowerCase() === p.district.toLowerCase())
+        );
+        if (matches.length > 0) {
+          const match = matches[0];
+          return {
+            ...p,
+            photos: [match.file_path, ...(p.photos || [])].filter(Boolean),
+            riskScore: match.risk_score || p.riskScore,
+            riskLevel: match.risk_level || p.riskLevel,
+            description: p.description + `\n\nAI Findings: ${match.recommendation}`,
+            primaryAnomaly: (match.flags && match.flags.length > 0) ? match.flags[0].code : p.primaryAnomaly,
+            anomalyTypes: match.flags ? match.flags.map(f => f.code) : p.anomalyTypes
+          };
+        }
+        return p;
+      });
+
+      const filtered = filterAIRiskProjects(withSubmissions, filters);
 
       // Attach flagged state
       const processed = filtered.map((p) => ({
@@ -97,7 +133,7 @@ export const aiRiskService = {
       return {
         success: true,
         data: processed,
-        totalActiveCount: enriched.length,
+        totalActiveCount: withSubmissions.length,
         filteredCount: processed.length,
       };
     }
@@ -143,7 +179,24 @@ export const aiRiskService = {
     if (USE_MOCK) {
       await new Promise((res) => setTimeout(res, 50));
       const enriched = getEnrichedRiskProjects();
-      const found = enriched.find((p) => p.id === projectId || p.projectId === projectId) || enriched[0];
+      let found = enriched.find((p) => p.id === projectId || p.projectId === projectId) || enriched[0];
+
+      const realSubmissions = await fetchRealSubmissions();
+      const matches = realSubmissions.filter(s => 
+          s.work_id === found.id || (s.district && found.district && s.district.toLowerCase() === found.district.toLowerCase())
+      );
+      if (matches.length > 0) {
+        const match = matches[0];
+        found = {
+          ...found,
+          photos: [match.file_path, ...(found.photos || [])].filter(Boolean),
+          riskScore: match.risk_score || found.riskScore,
+          riskLevel: match.risk_level || found.riskLevel,
+          description: found.description + `\n\nAI Findings: ${match.recommendation}`,
+          primaryAnomaly: (match.flags && match.flags.length > 0) ? match.flags[0].code : found.primaryAnomaly,
+          anomalyTypes: match.flags ? match.flags.map(f => f.code) : found.anomalyTypes
+        };
+      }
 
       return {
         success: true,

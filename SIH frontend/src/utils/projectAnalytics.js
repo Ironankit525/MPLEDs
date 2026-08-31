@@ -252,7 +252,8 @@ export const MASTER_MP_RECORDS = [
   { mpId: "MP070", mpName: "Shri Biplab Kumar Deb", constituency: "Tripura West", state: "Tripura", house: "Lok Sabha" },
   { mpId: "MP071", mpName: "Shri Nabam Rebia", constituency: "Arunachal Pradesh", state: "Arunachal Pradesh", house: "Rajya Sabha" },
   { mpId: "MP072", mpName: "Smt. S. Phangnon Konyak", constituency: "Nagaland", state: "Nagaland", house: "Rajya Sabha" },
-  { mpId: "MP073", mpName: "Shri Wanweiroy Kharlukhi", constituency: "Meghalaya", state: "Meghalaya", house: "Rajya Sabha" }
+  { mpId: "MP073", mpName: "Shri Wanweiroy Kharlukhi", constituency: "Meghalaya", state: "Meghalaya", house: "Rajya Sabha" },
+  { mpId: "MP099", mpName: "Shri Murlidhar Mohol", constituency: "Pune", state: "Maharashtra", house: "Lok Sabha", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" }
 ];
 
 export const calculateMPPerformance = (projects = []) => {

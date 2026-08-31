@@ -161,14 +161,25 @@ export default function UploadPage() {
 
           {result.recommendation && result.recommendation.includes('—') ? (
             <>
-              <div style={{ background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '12px', color: '#92400e' }}>
-                <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: 4 }}>
-                  {result.recommendation.split('—')[0].trim()}
+              {result.risk_score > 0 ? (
+                <div style={{ background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '12px', color: '#92400e' }}>
+                  <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: 4 }}>
+                    {result.recommendation.split('—')[0].trim()}
+                  </div>
+                  <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                    {result.recommendation.split('—')[1].trim()}
+                  </div>
                 </div>
-                <div style={{ fontSize: '14px', opacity: 0.9 }}>
-                  {result.recommendation.split('—')[1].trim()}
+              ) : (
+                <div style={{ background: '#ecfdf5', border: '1px solid #d1fae5', borderRadius: '8px', padding: '12px', color: '#065f46' }}>
+                  <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: 4 }}>
+                    System cleared
+                  </div>
+                  <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                    automated checks raised no findings.
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', fontSize: '14px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <div>Capture date: {result.capture_date ? new Date(result.capture_date).toLocaleString() : 'Unavailable in the uploaded file'}</div>

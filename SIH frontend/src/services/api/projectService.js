@@ -4,6 +4,108 @@ import { getRiskLevel } from '../../utils/projectAnalytics';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false' || true; // Always default to resilient mock fallback
 
+// Fetch real submissions from the FastAPI backend
+async function fetchRealSubmissions() {
+  try {
+    const res = await fetch('http://localhost:8000/api/images/mine', {
+      headers: { Authorization: 'Bearer demo-token' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.images || [];
+  } catch {
+    return [];
+  }
+}
+
+// Helper to patch a mock project with real submissions
+const patchProjectWithSubmissions = (p, realSubmissions) => {
+  const matches = realSubmissions.filter(s => 
+    s.work_id === p.id || s.work_id === p.projectId
+  );
+  if (matches.length > 0) {
+    const primaryMatch = matches[0];
+    const newPhotos = matches.map(m => ({
+      url: m.file_path,
+      submissionDate: m.timestamp || new Date().toLocaleString(),
+      aiOpinion: m.recommendation || 'AI verified submission.',
+      latitude: p.latitude,
+      longitude: p.longitude,
+      id: m.id || Math.random().toString(36).substr(2, 9)
+    }));
+    return {
+      ...p,
+      photos: [...newPhotos.reverse(), ...(p.photos || [])].filter(Boolean),
+      riskScore: primaryMatch.risk_score || p.riskScore,
+      riskLevel: primaryMatch.risk_level || p.riskLevel,
+    };
+  }
+  return p;
+};
+
+// Helper to dynamically auto-generate a project shell if the work_id is unknown
+const appendDynamicProjects = (existingProjects, realSubmissions) => {
+  const existingIds = new Set(existingProjects.map(p => p.id));
+  const dynamicGroups = {};
+  
+  for (const sub of realSubmissions) {
+    if (sub.work_id && !existingIds.has(sub.work_id)) {
+      if (!dynamicGroups[sub.work_id]) dynamicGroups[sub.work_id] = [];
+      dynamicGroups[sub.work_id].push(sub);
+    }
+  }
+
+  const dynamicProjects = Object.entries(dynamicGroups).map(([workId, subs]) => {
+    const primary = subs[0];
+    return {
+      id: workId,
+      projectId: workId,
+      name: `${primary.work_type || 'Infrastructure'} - Dynamic Auto-Generated`,
+      projectName: `${primary.work_type || 'Infrastructure'} - Dynamic Auto-Generated`,
+      state: primary.state || 'Maharashtra',
+      district: primary.district || 'Pune',
+      constituencyId: "PC-MH-34",
+      constituencyName: primary.district || "Pune",
+      mp: primary.mp_name || 'Shri Murlidhar Mohol',
+      mpId: "MP099",
+      mpName: primary.mp_name || 'Shri Murlidhar Mohol',
+      house: "Lok Sabha",
+      financialYear: "2024-25",
+      projectType: primary.work_type || "Infrastructure",
+      implementingAgency: "Dynamic Agency",
+      contractor: "Dynamic Contractor",
+      sanctionedAmount: 2500000,
+      estimatedCost: 2500000,
+      expenditure: 1200000,
+      unutilizedAmount: 1300000,
+      progress: primary.progress_percent || 50,
+      physicalProgress: primary.progress_percent || 50,
+      financialProgress: primary.progress_percent || 50,
+      status: "ONGOING",
+      startDate: primary.sanction_date || "2024-01-01",
+      sanctionDate: primary.sanction_date || "2024-01-01",
+      expectedCompletion: "2026-12-31",
+      expectedCompletionDate: "2026-12-31",
+      actualCompletionDate: null,
+      daysDelayed: 0,
+      riskScore: 0,
+      riskLevel: "LOW",
+      paymentProgressMismatch: false,
+      costOverrun: false,
+      duplicateRisk: false,
+      suspicious: false,
+      lastUpdated: new Date().toISOString().split('T')[0],
+      description: `Dynamically generated from contractor submission.`,
+      latitude: primary.latitude || 18.5204,
+      longitude: primary.longitude || 73.8567,
+      photos: []
+    };
+  });
+
+  return [...existingProjects, ...dynamicProjects];
+};
+
+
 /**
  * Data Normalization Layer:
  * Normalizes API/Backend responses or mock data into a stable frontend project schema.
@@ -116,7 +218,10 @@ export const projectService = {
     try {
       if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA !== 'false') {
         await new Promise((res) => setTimeout(res, 50));
-        const normalizedList = mockProjects.map(normalizeProject).filter(Boolean);
+        const realSubmissions = await fetchRealSubmissions();
+        const allProjects = appendDynamicProjects(mockProjects, realSubmissions);
+        const patchedProjects = allProjects.map(p => patchProjectWithSubmissions(p, realSubmissions));
+        const normalizedList = patchedProjects.map(normalizeProject).filter(Boolean);
         return { success: true, data: normalizedList, count: normalizedList.length };
       }
 
@@ -126,7 +231,10 @@ export const projectService = {
       return { success: true, data: normalizedList, count: normalizedList.length };
     } catch (err) {
       console.warn('Backend API connection failed, serving mock projects dataset fallback:', err);
-      const normalizedList = mockProjects.map(normalizeProject).filter(Boolean);
+      const realSubmissions = await fetchRealSubmissions();
+      const allProjects = appendDynamicProjects(mockProjects, realSubmissions);
+      const patchedProjects = allProjects.map(p => patchProjectWithSubmissions(p, realSubmissions));
+      const normalizedList = patchedProjects.map(normalizeProject).filter(Boolean);
       return { success: true, data: normalizedList, count: normalizedList.length };
     }
   },
@@ -135,26 +243,33 @@ export const projectService = {
     try {
       if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA !== 'false') {
         await new Promise((res) => setTimeout(res, 50));
-        const found = mockProjects.find((p) => p.id === id || p.projectId === id);
+        const realSubmissions = await fetchRealSubmissions();
+        const allProjects = appendDynamicProjects(mockProjects, realSubmissions);
+        const found = allProjects.find((p) => p.id === id || p.projectId === id);
         if (!found) {
           const first = mockProjects[0];
-          return { success: true, data: normalizeProject(first) };
+          return { success: true, data: normalizeProject(patchProjectWithSubmissions(first, realSubmissions)) };
         }
-        return { success: true, data: normalizeProject(found) };
+        return { success: true, data: normalizeProject(patchProjectWithSubmissions(found, realSubmissions)) };
       }
 
       const response = await axiosClient.get(`/projects/${id}`);
       return { success: true, data: normalizeProject(response.data?.data || response.data) };
     } catch (err) {
-      const found = mockProjects.find((p) => p.id === id || p.projectId === id) || mockProjects[0];
-      return { success: true, data: normalizeProject(found) };
+      const realSubmissions = await fetchRealSubmissions();
+      const allProjects = appendDynamicProjects(mockProjects, realSubmissions);
+      const found = allProjects.find((p) => p.id === id || p.projectId === id) || allProjects[0];
+      return { success: true, data: normalizeProject(patchProjectWithSubmissions(found, realSubmissions)) };
     }
   },
 
   async getProjectsByMP(mpId) {
     try {
-      const filtered = mockProjects
+      const realSubmissions = await fetchRealSubmissions();
+      const allProjects = appendDynamicProjects(mockProjects, realSubmissions);
+      const filtered = allProjects
         .filter((p) => p.mpId === mpId || p.mp === mpId || p.mpName === mpId)
+        .map(p => patchProjectWithSubmissions(p, realSubmissions))
         .map(normalizeProject)
         .filter(Boolean);
       return { success: true, data: filtered };

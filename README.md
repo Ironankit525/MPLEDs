@@ -1,3 +1,38 @@
+# MPLADS Image Fraud & Anomaly Detection System
+
+This repository contains the complete suite for the MPLADS tracking system, including the core Python AI backend and three distinct React frontend dashboards for different user roles.
+
+---
+
+## 🖥️ UI Dashboards Guide
+
+We have recently migrated to a **Unified Authentication System** running out of the `auth-portal` and `SIH frontend` architecture. This acts as the single point of entry for all three primary user roles: Admin, Member of Parliament (MP), and Contractor.
+
+### Unified Login Portal
+- **Folder:** `auth-portal/` (Handles authentication and routing)
+- **Access URL:** `http://localhost:3000` (or `http://localhost:5173/login`)
+- **Authentication Credentials:**
+  All roles use a common password: **`demo1234`**. Your role and dashboard destination are determined by the username you provide:
+  
+  1. **Admin / Command Center**
+     - Username: `admin`
+     - Destination: Redirects to `SIH frontend` (`localhost:5173`)
+     - Purpose: System-wide oversight, risk monitoring, and comprehensive project analytics across all constituencies.
+     
+  2. **MP Dashboard**
+     - Username: `mp`
+     - Destination: Redirects to `mp-dashboard-demo/mplads-command-center/frontend` (`localhost:5175`)
+     - Purpose: Dedicated view for Members of Parliament to monitor progress, view contractor evidence, and see AI insights exclusively for their own constituency.
+     
+  3. **Contractor Upload Portal**
+     - Username: `contractor`
+     - Destination: Redirects to `contractor-dashboard-demo` (`localhost:5174`)
+     - Purpose: Dedicated portal for on-ground contractors to upload live photographic evidence for their assigned projects.
+
+*(Note: Although they share a unified login screen, all three frontend folders must be running concurrently on their respective ports for the role-based routing to work successfully.)*
+
+---
+
 # MPLADS Image Fraud & Anomaly Detection Module
 
 A self-contained Python module and REST API that detects fraudulent photographic evidence submitted under India's **MPLADS (Members of Parliament Local Area Development Scheme)**. It ingests work-completion photographs, checks them against all previously uploaded images using three independent duplicate-detection layers (cryptographic hashing, perceptual hashing, and AI-based semantic analysis), runs EXIF metadata anomaly checks, GPS distance verification, Error Level Analysis for single-image tamper/screenshot detection, and OCR-based receipt cross-checking — and returns a fully explainable risk assessment with every point in the score traceable to a specific finding. Submissions go through a JWT-authenticated, single-use camera-session gate meant to make it harder to submit a photo that wasn't actually taken live for the work being claimed.
