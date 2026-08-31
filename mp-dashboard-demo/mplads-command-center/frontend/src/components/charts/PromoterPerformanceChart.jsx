@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 import { TrendingUp, Activity, DollarSign, Award } from 'lucide-react';
 
 const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];

@@ -1,23 +1,23 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useProject } from '../../hooks/useProject';
+import { useProject } from '../../hooks/useProject.js';
 
-import { ProjectSkeletonLoader } from '../../components/project/details/ProjectSkeletonLoader';
-import { ProjectHeader } from '../../components/project/details/ProjectHeader';
-import { ProjectExecutiveSummary } from '../../components/project/details/ProjectExecutiveSummary';
-import { ProjectTimelineSteps } from '../../components/project/details/ProjectTimelineSteps';
-import { ProjectFinancialsFlow } from '../../components/project/details/ProjectFinancialsFlow';
-import { PhysicalFinancialAlignment } from '../../components/project/details/PhysicalFinancialAlignment';
-import { ExpenditureReviewSection } from '../../components/project/details/ExpenditureReviewSection';
-import { ExplainableRiskAssessment } from '../../components/project/details/ExplainableRiskAssessment';
-import { ContractorProfileSection } from '../../components/project/details/ContractorProfileSection';
-import { AIEvidenceVerification } from '../../components/project/details/AIEvidenceVerification';
-import { ProjectLocationMapSection } from '../../components/project/details/ProjectLocationMapSection';
-import { InspectionHistorySection } from '../../components/project/details/InspectionHistorySection';
-import { ActivityAuditTrail } from '../../components/project/details/ActivityAuditTrail';
+import { ProjectSkeletonLoader } from '../../components/project/details/ProjectSkeletonLoader.jsx';
+import { ProjectHeader } from '../../components/project/details/ProjectHeader.jsx';
+import { ProjectExecutiveSummary } from '../../components/project/details/ProjectExecutiveSummary.jsx';
+import { ProjectTimelineSteps } from '../../components/project/details/ProjectTimelineSteps.jsx';
+import { ProjectFinancialsFlow } from '../../components/project/details/ProjectFinancialsFlow.jsx';
+import { PhysicalFinancialAlignment } from '../../components/project/details/PhysicalFinancialAlignment.jsx';
+import { ExpenditureReviewSection } from '../../components/project/details/ExpenditureReviewSection.jsx';
+import { ExplainableRiskAssessment } from '../../components/project/details/ExplainableRiskAssessment.jsx';
+import { ContractorProfileSection } from '../../components/project/details/ContractorProfileSection.jsx';
+import { AIEvidenceVerification } from '../../components/project/details/AIEvidenceVerification.jsx';
+import { ProjectLocationMapSection } from '../../components/project/details/ProjectLocationMapSection.jsx';
+import { InspectionHistorySection } from '../../components/project/details/InspectionHistorySection.jsx';
+import { ActivityAuditTrail } from '../../components/project/details/ActivityAuditTrail.jsx';
 
-import { ErrorState } from '../../components/common/ErrorState';
-import { Button } from '../../components/common/Button';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
+import { Button } from '../../components/common/Button.jsx';
 import { ArrowLeft, AlertCircle, ShieldAlert, Lock } from 'lucide-react';
 
 export const ProjectDetails = () => {

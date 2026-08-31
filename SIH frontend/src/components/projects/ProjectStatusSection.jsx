@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Layers } from 'lucide-react';
 

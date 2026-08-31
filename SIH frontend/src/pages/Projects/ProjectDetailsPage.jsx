@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useProjects } from '../../hooks/useProjects';
-import { LoadingState } from '../../components/ui/LoadingState';
-import { ErrorState } from '../../components/ui/ErrorState';
-import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
+import { useProjects } from '../../hooks/useProjects.js';
+import { LoadingState } from '../../components/ui/LoadingState.jsx';
+import { ErrorState } from '../../components/ui/ErrorState.jsx';
+import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView.jsx';
 
 export const ProjectDetailsPage = () => {
   const { projectId } = useParams();

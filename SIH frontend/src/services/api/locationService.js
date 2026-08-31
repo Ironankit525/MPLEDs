@@ -4,7 +4,7 @@ import {
   MP_LOCATION_MAP,
   CONSTITUENCY_DETAILS_MAP,
 } from '../../data/locationMappings';
-import { mockConstituencyData } from '../../data/mockConstituencyData';
+import { mockConstituencyData } from '../../data/mockConstituencyData.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 

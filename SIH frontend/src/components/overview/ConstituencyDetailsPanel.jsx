@@ -10,8 +10,8 @@ import {
   Mail,
   ExternalLink,
 } from 'lucide-react';
-import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics';
-import { mockProjects } from '../../data/mockProjects';
+import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics.js';
+import { mockProjects } from '../../data/mockProjects.js';
 
 const MALE_AVATARS = [
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',

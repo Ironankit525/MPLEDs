@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 // Workflow status (app/models.py's STATUS_* constants) — where the
 // submission sits in the human review pipeline. Distinct from

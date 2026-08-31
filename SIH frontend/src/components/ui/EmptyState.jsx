@@ -1,5 +1,5 @@
 import { Inbox } from 'lucide-react';
-import { Button } from './Button';
+import { Button } from './Button.jsx';
 
 export const EmptyState = ({
   title = 'No records found',

@@ -1,4 +1,4 @@
-import { getStatusBadgeStyle, getStatusLabel } from '../../utils/statusUtils';
+import { getStatusBadgeStyle, getStatusLabel } from '../../utils/statusUtils.js';
 
 export const StatusBadge = ({ status, className = '' }) => {
   const style = getStatusBadgeStyle(status);

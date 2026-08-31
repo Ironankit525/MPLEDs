@@ -1,5 +1,5 @@
 import { AlertTriangle } from 'lucide-react';
-import { Button } from './Button';
+import { Button } from './Button.jsx';
 
 export const ErrorState = ({
   title = 'Unable to load project data',

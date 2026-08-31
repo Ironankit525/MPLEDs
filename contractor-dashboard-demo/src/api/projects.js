@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 export function getMyProjects() {
   return request('/api/projects/mine')

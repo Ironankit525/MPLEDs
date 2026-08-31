@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProjects } from '../../hooks/useProjects';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Button } from '../../components/common/Button';
-import { SECTORS } from '../../constants/sectors';
+import { useProjects } from '../../hooks/useProjects.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Button } from '../../components/common/Button.jsx';
+import { SECTORS } from '../../constants/sectors.js';
 import { ArrowLeft, Save } from 'lucide-react';
 
 export const ProjectCreate = () => {

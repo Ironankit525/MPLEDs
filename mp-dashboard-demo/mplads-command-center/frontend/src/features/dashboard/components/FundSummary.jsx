@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../../components/common/Card';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { Card } from '../../../components/common/Card.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 import { Landmark, TrendingUp, CheckCircle, Wallet } from 'lucide-react';
 
 export const FundSummary = ({ fund }) => {

@@ -1,5 +1,5 @@
-import { MOCK_USERS } from '../mock/users';
-import { MOCK_MPS } from '../mock/mps';
+import { MOCK_USERS } from '../mock/users.js';
+import { MOCK_MPS } from '../mock/mps.js';
 
 // Snatch token from URL synchronously before React Router redirects
 if (typeof window !== 'undefined') {

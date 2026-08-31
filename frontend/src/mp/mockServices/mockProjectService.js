@@ -1,4 +1,4 @@
-import { MOCK_PROJECTS } from '../mock/projects';
+import { MOCK_PROJECTS } from '../mock/projects.js';
 
 let projectsStore = [...MOCK_PROJECTS];
 

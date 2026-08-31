@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Filter, X } from 'lucide-react';
 import { STATE_DISTRICT_MAP } from '../../data/locationMappings.js';
-import { CustomSelect } from '../ui/CustomSelect';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
 
 const PROJECT_TYPES = [
   'All Types',

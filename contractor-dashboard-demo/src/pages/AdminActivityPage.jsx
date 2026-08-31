@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { useActivity } from '../hooks/useActivity'
-import EmptyState from '../components/EmptyState'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
-import { formatDate } from '../lib/format'
+import { useActivity } from '../hooks/useActivity.js'
+import EmptyState from '../components/EmptyState.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
+import { formatDate } from '../lib/format.js'
 
 const EVENT_CONFIG = {
   submitted: { icon: 'upload', verb: 'submitted' },

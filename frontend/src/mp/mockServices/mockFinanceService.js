@@ -1,5 +1,5 @@
-import { MOCK_FUNDS } from '../mock/funds';
-import { MOCK_EXPENDITURES } from '../mock/expenditures';
+import { MOCK_FUNDS } from '../mock/funds.js';
+import { MOCK_EXPENDITURES } from '../mock/expenditures.js';
 
 export const mockFinanceService = {
   getFundSummary: async (mpId = "MP001", financialYear = "2026-27") => {

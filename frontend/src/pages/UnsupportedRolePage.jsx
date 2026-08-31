@@ -1,5 +1,5 @@
-import { useAuth } from '../context/AuthContext'
-import EmptyState from '../components/EmptyState'
+import { useAuth } from '../context/AuthContext.jsx'
+import EmptyState from '../components/EmptyState.jsx'
 
 /**
  * Where a logged-in Reviewer/Stakeholder/Admin lands today. Only the

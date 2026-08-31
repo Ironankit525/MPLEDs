@@ -1,2 +1,2 @@
-export { default } from './SubmissionsPage';
+export { default } from './SubmissionsPage.jsx';
 

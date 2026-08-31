@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import { reportService } from './reportService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Button } from '../../components/common/Button';
-import { Loader } from '../../components/common/Loader';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useUser } from '../../hooks/useUser.js';
+import { reportService } from './reportService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Button } from '../../components/common/Button.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
 import { FileSpreadsheet, Download, FileText } from 'lucide-react';
 
 export const Reports = () => {

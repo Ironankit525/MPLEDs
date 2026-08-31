@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { formatDate } from '../../../utils/formatDate';
-import { getFinancialStats } from '../../../utils/projectCalculations';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { formatDate } from '../../../utils/formatDate.js';
+import { getFinancialStats } from '../../../utils/projectCalculations.js';
 import { 
   Coins, 
   ArrowRight, 

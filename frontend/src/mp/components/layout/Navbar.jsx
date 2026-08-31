@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import { FINANCIAL_YEARS } from '../../constants/financialYears';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useUser } from '../../hooks/useUser.js';
+import { FINANCIAL_YEARS } from '../../constants/financialYears.js';
 import { Calendar, User, LogOut, ChevronDown } from 'lucide-react';
 
 export const Navbar = () => {

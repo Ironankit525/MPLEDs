@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { mockAuthService } from '../mockServices/mockAuthService';
-import { MOCK_MPS } from '../mock/mps';
+import { mockAuthService } from '../mockServices/mockAuthService.js';
+import { MOCK_MPS } from '../mock/mps.js';
 
 export const AuthContext = createContext(null);
 

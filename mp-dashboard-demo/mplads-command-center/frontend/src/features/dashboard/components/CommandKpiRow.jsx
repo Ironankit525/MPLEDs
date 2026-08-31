@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Landmark, Wallet, FolderKanban, CheckCircle2, Clock, AlertTriangle, ArrowUpRight } from 'lucide-react';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 export const CommandKpiRow = ({ kpis, fundPosition }) => {
   const navigate = useNavigate();

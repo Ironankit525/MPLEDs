@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 // User management — the self-service replacement for
 // scripts/create_user.py, which stays as the way to bootstrap the

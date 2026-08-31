@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from '../../common/Badge';
-import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../../constants/projectStatus';
+import { Badge } from '../../common/Badge.jsx';
+import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../../constants/projectStatus.js';
 import { ArrowLeft, MapPin, Calendar, Copy, Check, Clock, ShieldCheck, Tag } from 'lucide-react';
 
 export const ProjectHeader = ({ project }) => {

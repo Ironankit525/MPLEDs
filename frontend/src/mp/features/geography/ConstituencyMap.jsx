@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useAuth } from '../../hooks/useAuth';
-import { geographyService } from './geographyService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Badge } from '../../components/common/Badge';
-import { Loader } from '../../components/common/Loader';
+import { useAuth } from '../../hooks/useAuth.js';
+import { geographyService } from './geographyService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Badge } from '../../components/common/Badge.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
 import { MapPin, AlertTriangle, CheckCircle2, Clock, XCircle } from 'lucide-react';
 
 // Fix Leaflet default icon path issue with bundlers

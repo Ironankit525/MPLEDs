@@ -1,5 +1,5 @@
-import axiosClient from './axiosClient';
-import { getStoredSettings } from './settingsService';
+import axiosClient from './axiosClient.js';
+import { getStoredSettings } from './settingsService.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ROUTES } from '../constants/routes';
-import { useAuth } from '../hooks/useAuth';
-import { DashboardLayout } from '../components/layout/DashboardLayout';
-import { Login } from '../features/auth/Login';
-import { Dashboard } from '../features/dashboard/Dashboard';
-import { Projects } from '../features/projects/Projects';
-import { ProjectDetails } from '../features/projects/ProjectDetails';
-import { ProjectCreate } from '../features/projects/ProjectCreate';
-import { FinancialOverview } from '../features/finance/FinancialOverview';
-import { ConstituencyMap } from '../features/geography/ConstituencyMap';
-import { Contractors } from '../features/contractors/Contractors';
-import { ContractorDetails } from '../features/contractors/ContractorDetails';
+import { ROUTES } from '../constants/routes.js';
+import { useAuth } from '../hooks/useAuth.js';
+import { DashboardLayout } from '../components/layout/DashboardLayout.jsx';
+import { Login } from '../features/auth/Login.jsx';
+import { Dashboard } from '../features/dashboard/Dashboard.jsx';
+import { Projects } from '../features/projects/Projects.jsx';
+import { ProjectDetails } from '../features/projects/ProjectDetails.jsx';
+import { ProjectCreate } from '../features/projects/ProjectCreate.jsx';
+import { FinancialOverview } from '../features/finance/FinancialOverview.jsx';
+import { ConstituencyMap } from '../features/geography/ConstituencyMap.jsx';
+import { Contractors } from '../features/contractors/Contractors.jsx';
+import { ContractorDetails } from '../features/contractors/ContractorDetails.jsx';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();

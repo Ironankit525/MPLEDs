@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { contractorService } from './contractorService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Badge } from '../../components/common/Badge';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
-import { SpeedometerGauge } from '../../components/common/SpeedometerGauge';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { ROUTES } from '../../constants/routes';
+import { useAuth } from '../../hooks/useAuth.js';
+import { contractorService } from './contractorService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Badge } from '../../components/common/Badge.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
+import { SpeedometerGauge } from '../../components/common/SpeedometerGauge.jsx';
+import { formatCurrency } from '../../utils/formatCurrency.js';
+import { ROUTES } from '../../constants/routes.js';
 import { 
   Building2, 
   Star, 

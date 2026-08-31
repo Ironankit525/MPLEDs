@@ -1,5 +1,5 @@
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 import { Calendar, TrendingUp, TrendingDown } from 'lucide-react';
 
 export const YearOverYearSection = ({ yoyData = [] }) => {

@@ -1,4 +1,4 @@
-import { MOCK_PLANNING } from '../mock/planning';
+import { MOCK_PLANNING } from '../mock/planning.js';
 
 export const mockPlanningService = {
   getProposedProjects: async (mpId = "MP001") => {

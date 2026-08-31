@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { createCameraSession, submitImage } from '../api/images'
-import { ApiError } from '../api/client'
-import UploadDropzone from '../components/UploadDropzone'
-import ErrorBanner from '../components/ErrorBanner'
-import RiskBadge from '../components/RiskBadge'
-import FlagList from '../components/FlagList'
-import Icon from '../components/Icon'
+import { useAuth } from '../context/AuthContext.jsx'
+import { createCameraSession, submitImage } from '../api/images.js'
+import { ApiError } from '../api/client.js'
+import UploadDropzone from '../components/UploadDropzone.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import RiskBadge from '../components/RiskBadge.jsx'
+import FlagList from '../components/FlagList.jsx'
+import Icon from '../components/Icon.jsx'
 
 // Matches app/config.py's WORK_TYPE_PROMPTS keys, plus the three
 // values that route into the OCR layer (README's Layer 5 — only runs

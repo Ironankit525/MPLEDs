@@ -1,5 +1,5 @@
-import axiosClient from './axiosClient';
-import { DEFAULT_SETTINGS } from '../../data/mock/defaultSettings';
+import axiosClient from './axiosClient.js';
+import { DEFAULT_SETTINGS } from '../../data/mock/defaultSettings.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 const SETTINGS_STORAGE_KEY = 'mplads_user_settings_v1';

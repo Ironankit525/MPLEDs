@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 // Submissions awaiting a decision (PENDING_REVIEW or IN_REVIEW),
 // highest automated risk first — the Reviewer dashboard's worklist.

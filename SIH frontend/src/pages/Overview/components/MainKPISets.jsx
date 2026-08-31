@@ -8,8 +8,8 @@ import {
   Clock,
   ShieldAlert,
 } from 'lucide-react';
-import { KPICard } from '../../../components/common/KPICard';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { KPICard } from '../../../components/common/KPICard.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 export const MainKPISets = ({ kpis = {} }) => {
   const allocatedDisplay = formatCurrency(kpis.totalAllocated || 200000000000, true);

@@ -1,7 +1,7 @@
 import { X, Filter } from 'lucide-react';
-import { CustomSelect } from '../../../components/ui/CustomSelect';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../../../services/api/locationService';
-import { useApp } from '../../../context/AppContext';
+import { CustomSelect } from '../../../components/ui/CustomSelect.jsx';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../../../services/api/locationService.js';
+import { useApp } from '../../../context/AppContext.jsx';
 
 const STATES = [
   'Maharashtra',

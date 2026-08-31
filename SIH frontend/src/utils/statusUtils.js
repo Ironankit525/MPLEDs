@@ -1,4 +1,4 @@
-import { PROJECT_STATUS } from '../constants/projectStatus';
+import { PROJECT_STATUS } from '../constants/projectStatus.js';
 
 export const getProjectStatus = (progress, isDelayed = false) => {
   if (isDelayed) return 'DELAYED';

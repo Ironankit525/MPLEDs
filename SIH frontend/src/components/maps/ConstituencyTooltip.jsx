@@ -1,4 +1,4 @@
-import { getMetricFormattedValue } from '../../utils/constituencyDataMapper';
+import { getMetricFormattedValue } from '../../utils/constituencyDataMapper.js';
 
 export const ConstituencyTooltip = ({ feature, data, metric = 'utilization', isState = false }) => {
   const p = feature?.properties || {};

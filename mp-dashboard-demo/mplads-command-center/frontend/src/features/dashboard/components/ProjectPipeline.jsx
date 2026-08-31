@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { ChevronRight, FileSpreadsheet, ShieldCheck, CheckCircle2, PlayCircle, Award, ArrowUpRight } from 'lucide-react';
 
 export const ProjectPipeline = ({ pipeline = [] }) => {

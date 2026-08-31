@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import Icon from '../Icon'
-import { useAuth } from '../../context/AuthContext'
+import Sidebar from './Sidebar.jsx'
+import Icon from '../Icon.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 
 const NAV_BY_ROLE = {
   submitter: [

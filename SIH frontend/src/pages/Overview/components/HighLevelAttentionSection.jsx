@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/ui/Card';
+import { Card } from '../../../components/ui/Card.jsx';
 import { AlertTriangle, Clock, Copy, AlertCircle, Building2, Sparkles } from 'lucide-react';
 
 export const HighLevelAttentionSection = ({

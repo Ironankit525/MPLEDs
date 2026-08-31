@@ -1,6 +1,6 @@
-import { mockOverview } from './mockOverview';
-import { mockProjects } from './mockProjects';
-import { CONSTITUENCY_DETAILS_MAP } from './locationMappings';
+import { mockOverview } from './mockOverview.js';
+import { mockProjects } from './mockProjects.js';
+import { CONSTITUENCY_DETAILS_MAP } from './locationMappings.js';
 
 /**
  * Computes filtered Overview Command Center dataset based on active filter params.

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { listUsers } from '../api/admin'
-import { ApiError } from '../api/client'
+import { listUsers } from '../api/admin.js'
+import { ApiError } from '../api/client.js'
 
 export function useUsers() {
   const [users, setUsers] = useState(null)

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getMySubmissions } from '../api/images'
-import { ApiError } from '../api/client'
+import { getMySubmissions } from '../api/images.js'
+import { ApiError } from '../api/client.js'
 
 /**
  * Shared data source for the submissions list and detail pages so a

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 import { 
   ReceiptText, 
   Sparkles, 

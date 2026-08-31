@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { projectService } from '../features/projects/projectService';
-import { useAuth } from './useAuth';
-import { useUser } from './useUser';
-import { handleServiceError } from '../utils/errorHandler';
+import { projectService } from '../features/projects/projectService.js';
+import { useAuth } from './useAuth.js';
+import { useUser } from './useUser.js';
+import { handleServiceError } from '../utils/errorHandler.js';
 
 export const useProjects = (filters = {}) => {
   const { currentMP } = useAuth();

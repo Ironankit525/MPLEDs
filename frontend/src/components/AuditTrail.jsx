@@ -1,5 +1,5 @@
-import Icon from './Icon'
-import { formatDate } from '../lib/format'
+import Icon from './Icon.jsx'
+import { formatDate } from '../lib/format.js'
 
 /**
  * Who touched a submission and when — submitted, reviewed, signed off,

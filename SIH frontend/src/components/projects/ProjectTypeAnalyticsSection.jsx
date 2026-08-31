@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 import { Layers } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from 'recharts';
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import { useFinance } from '../../hooks/useFinance';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { FundUtilizationChart } from '../../components/charts/FundUtilizationChart';
-import { ExpenditureChart } from '../../components/charts/ExpenditureChart';
-import { SectorAllocationChart } from '../../components/charts/SectorAllocationChart';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { useFinance } from '../../hooks/useFinance.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { FundUtilizationChart } from '../../components/charts/FundUtilizationChart.jsx';
+import { ExpenditureChart } from '../../components/charts/ExpenditureChart.jsx';
+import { SectorAllocationChart } from '../../components/charts/SectorAllocationChart.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 
 export const FinancialOverview = () => {
   const { fundSummary, expenditures, sectorAllocation, loading, error, refresh } = useFinance();

@@ -1,4 +1,4 @@
-import { mockRequest } from './mockData'
+import { mockRequest } from './mockData.js'
 
 const TOKEN_STORAGE_KEY = 'mplads_demo_token';
 const REAL_API_BASE = 'http://localhost:8000';

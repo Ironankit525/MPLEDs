@@ -1,4 +1,4 @@
-import { RISK_LEVELS } from '../constants/riskLevels';
+import { RISK_LEVELS } from '../constants/riskLevels.js';
 
 /**
  * Returns risk level string (LOW, MEDIUM, HIGH, CRITICAL) for a score 0-100

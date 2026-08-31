@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
-import { useOverview } from '../hooks/useOverview'
-import DailyVolumeChart from '../components/charts/DailyVolumeChart'
-import StatusBreakdownChart from '../components/charts/StatusBreakdownChart'
-import RiskBreakdownChart from '../components/charts/RiskBreakdownChart'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
+import { useOverview } from '../hooks/useOverview.js'
+import DailyVolumeChart from '../components/charts/DailyVolumeChart.jsx'
+import StatusBreakdownChart from '../components/charts/StatusBreakdownChart.jsx'
+import RiskBreakdownChart from '../components/charts/RiskBreakdownChart.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
 
 // The backend only returns days that had at least one submission
 // (app/main.py's get_stakeholder_overview) — fill in the full 14-day

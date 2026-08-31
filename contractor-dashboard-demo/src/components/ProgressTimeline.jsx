@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 const STAGE_ORDER = { PENDING_REVIEW: 0, IN_REVIEW: 1, APPROVED: 2, REJECTED: 2, SIGNED_OFF: 3 }
 

@@ -1,5 +1,5 @@
-import axiosClient from './axiosClient';
-import { mockProjects } from '../../data/mockProjects';
+import axiosClient from './axiosClient.js';
+import { mockProjects } from '../../data/mockProjects.js';
 import {
   filterProjects,
   calculateAnalyticsKPIs,
@@ -36,7 +36,7 @@ import {
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
-import { overviewService } from './overviewService';
+import { overviewService } from './overviewService.js';
 
 export const analyticsService = {
   async getOverviewAnalytics(filters = {}) {

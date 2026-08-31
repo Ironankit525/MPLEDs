@@ -1,5 +1,5 @@
-import { Card } from '../../../components/ui/Card';
-import { HouseExpenditureSection } from './HouseExpenditureSection';
+import { Card } from '../../../components/ui/Card.jsx';
+import { HouseExpenditureSection } from './HouseExpenditureSection.jsx';
 import {
   LineChart,
   Line,

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
-import { useRecordList } from '../hooks/useRecordList'
-import { getReviewHistory } from '../api/reviews'
-import StatusBadge from '../components/StatusBadge'
-import RiskBadge from '../components/RiskBadge'
-import EmptyState from '../components/EmptyState'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
-import { isRemoteUrl, formatDate } from '../lib/format'
+import { useRecordList } from '../hooks/useRecordList.js'
+import { getReviewHistory } from '../api/reviews.js'
+import StatusBadge from '../components/StatusBadge.jsx'
+import RiskBadge from '../components/RiskBadge.jsx'
+import EmptyState from '../components/EmptyState.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
+import { isRemoteUrl, formatDate } from '../lib/format.js'
 
 export default function ReviewHistoryPage() {
   const { items, loading, error, reload } = useRecordList(getReviewHistory, 'Could not load reviewed submissions.')

@@ -1,10 +1,10 @@
 import { useState, lazy, Suspense, useCallback, useEffect } from 'react';
-import { Card } from '../../../components/ui/Card';
-import { ConstituencyDetailsPanel } from '../../../components/overview/ConstituencyDetailsPanel';
-import { MapLoadingSkeleton } from '../../../components/ui/MapLoadingSkeleton';
+import { Card } from '../../../components/ui/Card.jsx';
+import { ConstituencyDetailsPanel } from '../../../components/overview/ConstituencyDetailsPanel.jsx';
+import { MapLoadingSkeleton } from '../../../components/ui/MapLoadingSkeleton.jsx';
 import { MapPin } from 'lucide-react';
-import { METRIC_OPTIONS } from '../../../utils/constituencyDataMapper';
-import { CustomSelect } from '../../../components/ui/CustomSelect';
+import { METRIC_OPTIONS } from '../../../utils/constituencyDataMapper.js';
+import { CustomSelect } from '../../../components/ui/CustomSelect.jsx';
 
 const StateMap = lazy(() => import('../../../components/maps/StateMap'));
 const DistrictMap = lazy(() => import('../../../components/maps/DistrictMap'));

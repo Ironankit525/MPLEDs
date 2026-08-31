@@ -1,5 +1,5 @@
-import { mockFinanceService } from '../../mockServices/mockFinanceService';
-// import apiClient from '../../services/apiClient';
+import { mockFinanceService } from '../../mockServices/mockFinanceService.js';
+// import apiClient from '../../services/apiClient.js';
 
 /**
  * Financial Management Feature Service Layer.

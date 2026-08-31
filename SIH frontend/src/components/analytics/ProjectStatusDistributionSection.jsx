@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 
 export const ProjectStatusDistributionSection = ({ data = [], onStatusClick }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);

@@ -1,20 +1,20 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AppProvider } from './context/AppContext';
-import { DashboardLayout } from './components/layout/DashboardLayout';
-import { ROUTES } from './constants/routes';
+import { AppProvider } from './context/AppContext.jsx';
+import { DashboardLayout } from './components/layout/DashboardLayout.jsx';
+import { ROUTES } from './constants/routes.js';
 
 // Page Placeholders
-import OverviewPage from './pages/Overview/OverviewPage';
-import ProjectsPage from './pages/Projects/ProjectsPage';
-import ProjectDetailsPage from './pages/Projects/ProjectDetailsPage';
-import MPDetailsPage from './pages/Projects/MPDetailsPage';
-import AIRiskPage from './pages/AIRisk/AIRiskPage';
-import AIRiskDetailsPage from './pages/AIRisk/AIRiskDetailsPage';
-import AnalyticsPage from './pages/Analytics/AnalyticsPage';
-import SettingsPage from './pages/Settings/SettingsPage';
+import OverviewPage from './pages/Overview/OverviewPage.jsx';
+import ProjectsPage from './pages/Projects/ProjectsPage.jsx';
+import ProjectDetailsPage from './pages/Projects/ProjectDetailsPage.jsx';
+import MPDetailsPage from './pages/Projects/MPDetailsPage.jsx';
+import AIRiskPage from './pages/AIRisk/AIRiskPage.jsx';
+import AIRiskDetailsPage from './pages/AIRisk/AIRiskDetailsPage.jsx';
+import AnalyticsPage from './pages/Analytics/AnalyticsPage.jsx';
+import SettingsPage from './pages/Settings/SettingsPage.jsx';
 
-import { AuthGuard } from './components/AuthGuard';
-import { useApp } from './context/AppContext';
+import { AuthGuard } from './components/AuthGuard.jsx';
+import { useApp } from './context/AppContext.jsx';
 
 function RootRedirect() {
   const { dashboardPreferences } = useApp();

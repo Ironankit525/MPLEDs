@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
-import { Button } from './Button';
+import { Button } from './Button.jsx';
 
 export const ErrorState = ({ title = 'Failed to load data', message, onRetry }) => {
   return (

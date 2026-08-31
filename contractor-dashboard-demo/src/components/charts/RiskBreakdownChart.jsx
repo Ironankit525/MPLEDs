@@ -1,4 +1,4 @@
-import Icon from '../Icon'
+import Icon from '../Icon.jsx'
 
 // Risk levels are already a severity scale (LOW -> HIGH), so this
 // reuses the fixed, reserved status palette rather than categorical

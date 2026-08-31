@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { planningService } from './planningService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Badge } from '../../components/common/Badge';
-import { Loader } from '../../components/common/Loader';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { useAuth } from '../../hooks/useAuth.js';
+import { planningService } from './planningService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Badge } from '../../components/common/Badge.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 import { Lightbulb, Target, Sparkles } from 'lucide-react';
 
 export const Planning = () => {

@@ -1,6 +1,6 @@
-import { MOCK_PROJECTS } from '../mock/projects';
-import { MOCK_PROJECT_DETAILS } from '../mock/projectDetailData';
-import { normalizeProject } from '../types/project';
+import { MOCK_PROJECTS } from '../mock/projects.js';
+import { MOCK_PROJECT_DETAILS } from '../mock/projectDetailData.js';
+import { normalizeProject } from '../types/project.js';
 
 let projectsStore = [...MOCK_PROJECTS];
 

@@ -1,5 +1,5 @@
-import { mockContractorService } from '../../mockServices/mockContractorService';
-// import apiClient from '../../services/apiClient';
+import { mockContractorService } from '../../mockServices/mockContractorService.js';
+// import apiClient from '../../services/apiClient.js';
 
 export const contractorService = {
   getContractors: async (mpId = null) => {

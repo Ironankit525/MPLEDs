@@ -7,12 +7,12 @@ import {
   getConstituencyColor,
   matchConstituencyData,
 } from '../../utils/constituencyDataMapper';
-import { locationService } from '../../services/api/locationService';
-import { MapLegend } from './MapLegend';
-import { ConstituencyTooltip } from './ConstituencyTooltip';
-import { Button } from '../ui/Button';
-import { LoadingState } from '../ui/LoadingState';
-import { ErrorState } from '../ui/ErrorState';
+import { locationService } from '../../services/api/locationService.js';
+import { MapLegend } from './MapLegend.jsx';
+import { ConstituencyTooltip } from './ConstituencyTooltip.jsx';
+import { Button } from '../ui/Button.jsx';
+import { LoadingState } from '../ui/LoadingState.jsx';
+import { ErrorState } from '../ui/ErrorState.jsx';
 import { Layers } from 'lucide-react';
 import ReactDOMServer from 'react-dom/server';
 

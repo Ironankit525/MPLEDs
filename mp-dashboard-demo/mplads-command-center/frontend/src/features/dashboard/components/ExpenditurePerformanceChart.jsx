@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card } from '../../../components/common/Card';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { Card } from '../../../components/common/Card.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 export const ExpenditurePerformanceChart = ({ performance, financialYear }) => {
   const [activeMonth, setActiveMonth] = useState(null);

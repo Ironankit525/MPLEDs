@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useProjects } from '../../hooks/useProjects';
-import { ProjectsSkeletonPreloader } from '../../components/ui/SkeletonPreloader';
-import { ErrorState } from '../../components/ui/ErrorState';
+import { useProjects } from '../../hooks/useProjects.js';
+import { ProjectsSkeletonPreloader } from '../../components/ui/SkeletonPreloader.jsx';
+import { ErrorState } from '../../components/ui/ErrorState.jsx';
 
-import { ProjectHeader } from '../../components/projects/ProjectHeader';
-import { ProjectFilterBar } from '../../components/projects/ProjectFilterBar';
-import { ProjectKPICards } from '../../components/projects/ProjectKPICards';
-import { ProjectStatusSection } from '../../components/projects/ProjectStatusSection';
-import { ProjectRiskSummarySection } from '../../components/projects/ProjectRiskSummarySection';
-import { ProjectTypeAnalyticsSection } from '../../components/projects/ProjectTypeAnalyticsSection';
-import { StateDistrictPerformanceSection } from '../../components/projects/StateDistrictPerformanceSection';
-import { ProjectTableSection } from '../../components/projects/ProjectTableSection';
-import { MPPerformanceSection } from '../../components/projects/MPPerformanceSection';
-import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
+import { ProjectHeader } from '../../components/projects/ProjectHeader.jsx';
+import { ProjectFilterBar } from '../../components/projects/ProjectFilterBar.jsx';
+import { ProjectKPICards } from '../../components/projects/ProjectKPICards.jsx';
+import { ProjectStatusSection } from '../../components/projects/ProjectStatusSection.jsx';
+import { ProjectRiskSummarySection } from '../../components/projects/ProjectRiskSummarySection.jsx';
+import { ProjectTypeAnalyticsSection } from '../../components/projects/ProjectTypeAnalyticsSection.jsx';
+import { StateDistrictPerformanceSection } from '../../components/projects/StateDistrictPerformanceSection.jsx';
+import { ProjectTableSection } from '../../components/projects/ProjectTableSection.jsx';
+import { MPPerformanceSection } from '../../components/projects/MPPerformanceSection.jsx';
+import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView.jsx';
 
 export const ProjectsPage = () => {
   const [searchParams] = useSearchParams();

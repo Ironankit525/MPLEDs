@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
 import { Sparkles, CheckCircle2, AlertTriangle, AlertCircle, Info, Lightbulb, ArrowRight } from 'lucide-react';
 
 const SEVERITY_CONFIG = {

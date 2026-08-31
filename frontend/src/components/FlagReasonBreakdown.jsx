@@ -1,5 +1,5 @@
 import React from 'react';
-import { sanitizeFlagsForSubmitter } from '../lib/sanitizedFlags';
+import { sanitizeFlagsForSubmitter } from '../lib/sanitizedFlags.js';
 
 /**
  * FlagReasonBreakdown aggregates flags across the submitter's submissions

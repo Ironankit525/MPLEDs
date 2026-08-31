@@ -1,4 +1,4 @@
-import { getMockDashboardData } from '../mock/dashboard';
+import { getMockDashboardData } from '../mock/dashboard.js';
 
 export const mockDashboardService = {
   getDashboardData: async (mpId = "MP001", financialYear = "2026-27") => {

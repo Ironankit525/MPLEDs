@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from './Sidebar'
-import { Navbar } from './Navbar'
+import { Sidebar } from './Sidebar.jsx'
+import { Navbar } from './Navbar.jsx'
 
 export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false)

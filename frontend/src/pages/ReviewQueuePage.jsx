@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { useRecordList } from '../hooks/useRecordList'
-import { getReviewQueue } from '../api/reviews'
-import RiskBadge from '../components/RiskBadge'
-import EmptyState from '../components/EmptyState'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
-import { formatDate } from '../lib/format'
+import { useRecordList } from '../hooks/useRecordList.js'
+import { getReviewQueue } from '../api/reviews.js'
+import RiskBadge from '../components/RiskBadge.jsx'
+import EmptyState from '../components/EmptyState.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
+import { formatDate } from '../lib/format.js'
 
 export default function ReviewQueuePage() {
   const { items, loading, error, reload } = useRecordList(getReviewQueue, 'Could not load the review queue.')

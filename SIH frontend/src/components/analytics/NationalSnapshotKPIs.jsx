@@ -1,5 +1,5 @@
 import { IndianRupee, TrendingUp, CheckCircle2, Clock, Activity, ShieldAlert } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const NationalSnapshotKPIs = ({ kpis = {} }) => {
   const {

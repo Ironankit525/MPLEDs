@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { analyticsService } from '../services/api/analyticsService';
-import { DEFAULT_ANALYTICS_FILTERS } from '../utils/analyticsEngine';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../services/api/locationService';
+import { analyticsService } from '../services/api/analyticsService.js';
+import { DEFAULT_ANALYTICS_FILTERS } from '../utils/analyticsEngine.js';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../services/api/locationService.js';
 
 export const useAnalyticsDashboard = () => {
   const [filters, setFilters] = useState(DEFAULT_ANALYTICS_FILTERS);

@@ -1,6 +1,6 @@
 import React from 'react';
-import { SECTOR_COLORS } from '../../constants/sectors';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { SECTOR_COLORS } from '../../constants/sectors.js';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 
 export const SectorAllocationChart = ({ sectors = [] }) => {
   if (!sectors || sectors.length === 0) {

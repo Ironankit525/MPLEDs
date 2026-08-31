@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useProjects } from '../../hooks/useProjects';
-import { calculateMPPerformance, getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
-import { ProjectTableSection } from '../../components/projects/ProjectTableSection';
-import { MPSkeletonPreloader } from '../../components/ui/SkeletonPreloader';
+import { useProjects } from '../../hooks/useProjects.js';
+import { calculateMPPerformance, getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics.js';
+import { formatCurrency } from '../../utils/formatCurrency.js';
+import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView.jsx';
+import { ProjectTableSection } from '../../components/projects/ProjectTableSection.jsx';
+import { MPSkeletonPreloader } from '../../components/ui/SkeletonPreloader.jsx';
 import {
   LineChart,
   Line,

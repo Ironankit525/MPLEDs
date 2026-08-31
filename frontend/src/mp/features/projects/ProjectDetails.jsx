@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react';
-import { projectService } from './projectService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Badge } from '../../components/common/Badge';
-import { ProjectTimeline } from '../../components/project/ProjectTimeline';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
-import { Button } from '../../components/common/Button';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { projectService } from './projectService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Badge } from '../../components/common/Badge.jsx';
+import { ProjectTimeline } from '../../components/project/ProjectTimeline.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
+import { Button } from '../../components/common/Button.jsx';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 import { MapPin, ArrowLeft, Building2, Users } from 'lucide-react';
 
 export const ProjectDetails = () => {

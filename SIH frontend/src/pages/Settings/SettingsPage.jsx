@@ -1,12 +1,12 @@
-import { useSettings } from '../../hooks/useSettings';
-import { SettingsNav } from '../../components/settings/SettingsNav';
-import { ProfileSettings } from '../../components/settings/ProfileSettings';
-import { DashboardPreferences } from '../../components/settings/DashboardPreferences';
-import { SecuritySettings } from '../../components/settings/SecuritySettings';
-import { AppearanceSettings } from '../../components/settings/AppearanceSettings';
-import { AboutSettings } from '../../components/settings/AboutSettings';
-import { ToastNotification } from '../../components/ui/ToastNotification';
-import { Modal } from '../../components/ui/Modal';
+import { useSettings } from '../../hooks/useSettings.js';
+import { SettingsNav } from '../../components/settings/SettingsNav.jsx';
+import { ProfileSettings } from '../../components/settings/ProfileSettings.jsx';
+import { DashboardPreferences } from '../../components/settings/DashboardPreferences.jsx';
+import { SecuritySettings } from '../../components/settings/SecuritySettings.jsx';
+import { AppearanceSettings } from '../../components/settings/AppearanceSettings.jsx';
+import { AboutSettings } from '../../components/settings/AboutSettings.jsx';
+import { ToastNotification } from '../../components/ui/ToastNotification.jsx';
+import { Modal } from '../../components/ui/Modal.jsx';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export const SettingsPage = () => {

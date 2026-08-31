@@ -1,5 +1,5 @@
-import { useAuth } from '../context/AuthContext'
-import Icon from '../components/Icon'
+import { useAuth } from '../context/AuthContext.jsx'
+import Icon from '../components/Icon.jsx'
 
 export default function SettingsPage() {
   const { user, logout } = useAuth()

@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { getFinancialStats, getRiskCategory, getTimelineMetrics } from '../../../utils/projectCalculations';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { getFinancialStats, getRiskCategory, getTimelineMetrics } from '../../../utils/projectCalculations.js';
 import { Activity, Coins, ShieldAlert, Calendar, CheckCircle2, TrendingUp, AlertTriangle } from 'lucide-react';
 
 export const ProjectExecutiveSummary = ({ project }) => {

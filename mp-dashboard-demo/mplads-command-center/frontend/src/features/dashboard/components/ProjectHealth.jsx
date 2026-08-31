@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { Card } from '../../../components/common/Card.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 import { AlertTriangle, Clock, CheckCircle2, CircleDashed, ArrowRight } from 'lucide-react';
 
 export const ProjectHealth = ({ projectHealth }) => {

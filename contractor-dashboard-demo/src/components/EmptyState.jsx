@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 export default function EmptyState({ icon = 'inbox', title, description, action }) {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDate } from '../../utils/formatDate';
+import { formatDate } from '../../utils/formatDate.js';
 import { CheckCircle2, Clock, Calendar } from 'lucide-react';
 
 export const ProjectTimeline = ({ startDate, expectedCompletionDate, completionPercentage }) => {

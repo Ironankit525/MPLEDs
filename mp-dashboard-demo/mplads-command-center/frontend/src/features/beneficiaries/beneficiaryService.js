@@ -1,5 +1,5 @@
-import { mockBeneficiaryService } from '../../mockServices/mockBeneficiaryService';
-// import apiClient from '../../services/apiClient';
+import { mockBeneficiaryService } from '../../mockServices/mockBeneficiaryService.js';
+// import apiClient from '../../services/apiClient.js';
 
 export const beneficiaryService = {
   getBeneficiaries: async (mpId) => {

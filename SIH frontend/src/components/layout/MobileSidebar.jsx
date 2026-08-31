@@ -7,8 +7,8 @@ import {
   Settings,
   X,
 } from 'lucide-react';
-import { NAV_ITEMS } from '../../constants/routes';
-import { useApp } from '../../context/AppContext';
+import { NAV_ITEMS } from '../../constants/routes.js';
+import { useApp } from '../../context/AppContext.jsx';
 import emblemImg from '../../assets/ashoka-stambha.png';
 
 const iconMap = {

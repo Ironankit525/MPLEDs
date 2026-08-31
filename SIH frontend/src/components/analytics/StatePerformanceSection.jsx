@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 import { Search, ArrowUpDown } from 'lucide-react';
 
 export const StatePerformanceSection = ({ data = [], onStateSelect }) => {

@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 const SEVERITY_ICON = { LOW: 'clock', MEDIUM: 'alert', HIGH: 'x-circle' }
 const SEVERITY_CLASS = { LOW: 'badge-low', MEDIUM: 'badge-medium', HIGH: 'badge-high' }

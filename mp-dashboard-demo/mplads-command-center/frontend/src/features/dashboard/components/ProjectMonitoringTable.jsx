@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
-import { Badge } from '../../../components/common/Badge';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { Card } from '../../../components/common/Card.jsx';
+import { Badge } from '../../../components/common/Badge.jsx';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 import { Eye, Filter, ArrowRight, ArrowUpRight, Search } from 'lucide-react';
 
 export const ProjectMonitoringTable = ({ projects = [] }) => {

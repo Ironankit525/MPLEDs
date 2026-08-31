@@ -1,4 +1,4 @@
-import { getMetricLegend } from '../../utils/constituencyDataMapper';
+import { getMetricLegend } from '../../utils/constituencyDataMapper.js';
 
 export const MapLegend = ({ metric = 'utilization' }) => {
   const legend = getMetricLegend(metric);

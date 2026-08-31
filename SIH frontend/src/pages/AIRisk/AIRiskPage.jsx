@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useAiRiskData } from '../../hooks/useAiRiskData';
-import { AIRiskHeader } from '../../components/ai-risk/AIRiskHeader';
-import { AIRiskFilterBar } from '../../components/ai-risk/AIRiskFilterBar';
-import { RiskKpiCards } from '../../components/ai-risk/RiskKpiCards';
-import { ProjectsRequiringAttentionTable } from '../../components/ai-risk/ProjectsRequiringAttentionTable';
-import { RiskDistributionSection } from '../../components/ai-risk/RiskDistributionSection';
-import { AnomalyDistributionSection } from '../../components/ai-risk/AnomalyDistributionSection';
-import { StateRiskOverviewSection } from '../../components/ai-risk/StateRiskOverviewSection';
-import { AgencyRiskOverviewSection } from '../../components/ai-risk/AgencyRiskOverviewSection';
-import { MPRiskOverviewSection } from '../../components/ai-risk/MPRiskOverviewSection';
-import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
+import { useAiRiskData } from '../../hooks/useAiRiskData.js';
+import { AIRiskHeader } from '../../components/ai-risk/AIRiskHeader.jsx';
+import { AIRiskFilterBar } from '../../components/ai-risk/AIRiskFilterBar.jsx';
+import { RiskKpiCards } from '../../components/ai-risk/RiskKpiCards.jsx';
+import { ProjectsRequiringAttentionTable } from '../../components/ai-risk/ProjectsRequiringAttentionTable.jsx';
+import { RiskDistributionSection } from '../../components/ai-risk/RiskDistributionSection.jsx';
+import { AnomalyDistributionSection } from '../../components/ai-risk/AnomalyDistributionSection.jsx';
+import { StateRiskOverviewSection } from '../../components/ai-risk/StateRiskOverviewSection.jsx';
+import { AgencyRiskOverviewSection } from '../../components/ai-risk/AgencyRiskOverviewSection.jsx';
+import { MPRiskOverviewSection } from '../../components/ai-risk/MPRiskOverviewSection.jsx';
+import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView.jsx';
 
-import { LoadingState } from '../../components/ui/LoadingState';
+import { LoadingState } from '../../components/ui/LoadingState.jsx';
 
 export const AIRiskPage = () => {
   const [selectedProject, setSelectedProject] = useState(null);

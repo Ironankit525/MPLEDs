@@ -1,5 +1,5 @@
-import { useAuth } from '../../context/AuthContext'
-import Icon from '../../components/Icon'
+import { useAuth } from '../../context/AuthContext.jsx'
+import Icon from '../../components/Icon.jsx'
 
 function formatAccountName(username) {
   const localPart = (username || 'Account').split('@')[0].replace(/\d+$/, '')

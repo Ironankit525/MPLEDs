@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   ShieldAlert,
 } from 'lucide-react'
-import { API_BASE_URL, getToken } from '../../api/client'
+import { API_BASE_URL, getToken } from '../../api/client.js'
 
 const MAX_SIZE_BYTES = 4 * 1024 * 1024
 

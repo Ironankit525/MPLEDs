@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth.js';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../components/common/Card';
-import { Button } from '../../components/common/Button';
+import { Card } from '../../components/common/Card.jsx';
+import { Button } from '../../components/common/Button.jsx';
 import { ShieldCheck, UserCheck, ChevronRight } from 'lucide-react';
 
 export const Login = () => {

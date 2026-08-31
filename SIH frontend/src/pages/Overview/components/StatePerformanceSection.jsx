@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Card } from '../../../components/ui/Card';
-import { Button } from '../../../components/ui/Button';
-import { CustomSelect } from '../../../components/ui/CustomSelect';
-import { STATE_DISTRICT_MAP } from '../../../services/api/locationService';
+import { Card } from '../../../components/ui/Card.jsx';
+import { Button } from '../../../components/ui/Button.jsx';
+import { CustomSelect } from '../../../components/ui/CustomSelect.jsx';
+import { STATE_DISTRICT_MAP } from '../../../services/api/locationService.js';
 
 export const StatePerformanceSection = ({
   statePerformance = [],

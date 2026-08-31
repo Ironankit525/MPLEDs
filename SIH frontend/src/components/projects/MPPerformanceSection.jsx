@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../ui/Card';
-import { CustomSelect } from '../ui/CustomSelect';
+import { Card } from '../ui/Card.jsx';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
 import { UserCheck, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const DUMMY_AVATARS = [

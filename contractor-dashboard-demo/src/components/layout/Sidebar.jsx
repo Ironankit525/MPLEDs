@@ -11,7 +11,7 @@ import {
   ChevronRight,
   X
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const ICONS = {
   upload: Upload,

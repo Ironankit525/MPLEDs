@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card } from '../../../components/ui/Card';
+import { Card } from '../../../components/ui/Card.jsx';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 export const HouseExpenditureSection = ({ houseExpenditure = {} }) => {

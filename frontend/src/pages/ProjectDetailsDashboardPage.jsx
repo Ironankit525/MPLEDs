@@ -27,15 +27,15 @@ import {
   Info,
 } from 'lucide-react'
 
-import CircularGauge from '../components/charts/CircularGauge'
-import DonutChart from '../components/charts/DonutChart'
-import FundFlowChart from '../components/charts/FundFlowChart'
-import ExpenditureTrendChart from '../components/charts/ExpenditureTrendChart'
-import ProjectMap from '../components/map/ProjectMap'
-import FieldEvidenceModal from '../components/modals/FieldEvidenceModal'
-import FlagProjectModal from '../components/modals/FlagProjectModal'
-import UpdateProgressModal from '../components/modals/UpdateProgressModal'
-import PhotoLightboxModal from '../components/modals/PhotoLightboxModal'
+import CircularGauge from '../components/charts/CircularGauge.jsx'
+import DonutChart from '../components/charts/DonutChart.jsx'
+import FundFlowChart from '../components/charts/FundFlowChart.jsx'
+import ExpenditureTrendChart from '../components/charts/ExpenditureTrendChart.jsx'
+import ProjectMap from '../components/map/ProjectMap.jsx'
+import FieldEvidenceModal from '../components/modals/FieldEvidenceModal.jsx'
+import FlagProjectModal from '../components/modals/FlagProjectModal.jsx'
+import UpdateProgressModal from '../components/modals/UpdateProgressModal.jsx'
+import PhotoLightboxModal from '../components/modals/PhotoLightboxModal.jsx'
 
 export default function ProjectDetailsDashboardPage() {
   const { id } = useParams()

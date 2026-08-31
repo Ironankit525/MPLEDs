@@ -1,5 +1,5 @@
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 import { Building2, ArrowRightLeft, ShieldAlert, Clock, CheckCircle2, Coins } from 'lucide-react';
 
 export const AgencyPerformanceSection = ({

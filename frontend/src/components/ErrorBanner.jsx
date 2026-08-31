@@ -1,4 +1,4 @@
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 export default function ErrorBanner({ message, onRetry }) {
   if (!message) return null

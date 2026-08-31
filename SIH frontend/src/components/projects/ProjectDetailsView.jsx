@@ -30,8 +30,8 @@ import {
   DollarSign,
   Filter,
 } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics';
+import { Button } from '../ui/Button.jsx';
+import { getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics.js';
 
 export const ProjectDetailsView = ({ project, onClose }) => {
   const [selectedStagePercentage, setSelectedStagePercentage] = useState(25);

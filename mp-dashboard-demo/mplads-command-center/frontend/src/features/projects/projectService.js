@@ -1,6 +1,6 @@
-import { mockProjectService } from '../../mockServices/mockProjectService';
-import apiClient from '../../services/apiClient';
-import { normalizeProject } from '../../types/project';
+import { mockProjectService } from '../../mockServices/mockProjectService.js';
+import apiClient from '../../services/apiClient.js';
+import { normalizeProject } from '../../types/project.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
 

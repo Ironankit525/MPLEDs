@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAiRiskData } from '../../hooks/useAiRiskData';
-import { Card } from '../../components/ui/Card';
-import { PhotoModal } from '../../components/ai-risk/PhotoModal';
-import { ReceiptModal } from '../../components/ai-risk/ReceiptModal';
+import { useAiRiskData } from '../../hooks/useAiRiskData.js';
+import { Card } from '../../components/ui/Card.jsx';
+import { PhotoModal } from '../../components/ai-risk/PhotoModal.jsx';
+import { ReceiptModal } from '../../components/ai-risk/ReceiptModal.jsx';
 import {
   ArrowLeft,
   Bot,

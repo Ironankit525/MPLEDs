@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
 import { MessageSquare, Star, CheckCircle2, Clock, AlertTriangle, MapPin, User } from 'lucide-react';
 
 export const CitizenFeedbackSection = ({ feedback = [] }) => {

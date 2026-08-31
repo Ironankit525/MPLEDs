@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card } from '../common/Card';
-import { Badge } from '../common/Badge';
-import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../constants/projectStatus';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { Card } from '../common/Card.jsx';
+import { Badge } from '../common/Badge.jsx';
+import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../constants/projectStatus.js';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 import { MapPin, Calendar, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

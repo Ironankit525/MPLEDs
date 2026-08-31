@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth.js';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../components/common/Card';
-import { Button } from '../../components/common/Button';
-import { AshokStambhLogo } from '../../components/common/AshokStambhLogo';
+import { Card } from '../../components/common/Card.jsx';
+import { Button } from '../../components/common/Button.jsx';
+import { AshokStambhLogo } from '../../components/common/AshokStambhLogo.jsx';
 
 export const Login = () => {
   const { availableMPs, loginAsMP } = useAuth();

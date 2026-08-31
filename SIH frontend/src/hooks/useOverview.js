@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { analyticsService } from '../services/api/analyticsService';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../services/api/locationService';
-import { useApp } from '../context/AppContext';
+import { analyticsService } from '../services/api/analyticsService.js';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP, MP_LOCATION_MAP } from '../services/api/locationService.js';
+import { useApp } from '../context/AppContext.jsx';
 
 export const useOverview = () => {
   const { dashboardPreferences } = useApp();

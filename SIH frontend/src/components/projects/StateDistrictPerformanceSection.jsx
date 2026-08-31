@@ -1,4 +1,4 @@
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 import { Building2 } from 'lucide-react';
 
 export const StateDistrictPerformanceSection = ({ statePerformance = [] }) => {

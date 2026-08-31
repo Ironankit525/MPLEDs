@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { projectService } from '../services/api/projectService';
+import { projectService } from '../services/api/projectService.js';
 import {
   calculateProjectKPIs,
   calculateStatusDistribution,
@@ -8,8 +8,8 @@ import {
   calculateStatePerformance,
   calculateMPPerformance,
 } from '../utils/projectAnalytics';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../services/api/locationService';
-import { useApp } from '../context/AppContext';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../services/api/locationService.js';
+import { useApp } from '../context/AppContext.jsx';
 
 export const useProjects = (initialFilters = {}) => {
   const { dashboardPreferences } = useApp();

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, ArrowUpDown, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
-import { Card } from '../ui/Card';
-import { CustomSelect } from '../ui/CustomSelect';
+import { Card } from '../ui/Card.jsx';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
 
 export const ProjectsRequiringAttentionTable = ({
   projects = [],

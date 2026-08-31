@@ -1,4 +1,4 @@
-import { MOCK_BENEFICIARIES } from '../mock/beneficiaries';
+import { MOCK_BENEFICIARIES } from '../mock/beneficiaries.js';
 
 export const mockBeneficiaryService = {
   getBeneficiaries: async (mpId = "MP001") => {

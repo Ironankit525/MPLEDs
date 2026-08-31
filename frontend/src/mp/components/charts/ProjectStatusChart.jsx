@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from '../common/Badge';
+import { Badge } from '../common/Badge.jsx';
 
 export const ProjectStatusChart = ({ statusCounts = { completed: 0, ongoing: 0, notStarted: 0 } }) => {
   const total = (statusCounts.completed || 0) + (statusCounts.ongoing || 0) + (statusCounts.notStarted || 0) || 1;

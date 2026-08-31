@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 // Public self-registration — the backend hardcodes every account created
 // this way to role "submitter" (app/main.py's register()). There is no

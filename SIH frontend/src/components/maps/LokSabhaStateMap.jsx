@@ -2,12 +2,12 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { MapContainer, GeoJSON, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { getConstituencyColor } from '../../utils/constituencyDataMapper';
-import { MapLegend } from './MapLegend';
-import { ConstituencyTooltip } from './ConstituencyTooltip';
-import { Button } from '../ui/Button';
-import { MapLoadingSkeleton } from '../ui/MapLoadingSkeleton';
-import { ErrorState } from '../ui/ErrorState';
+import { getConstituencyColor } from '../../utils/constituencyDataMapper.js';
+import { MapLegend } from './MapLegend.jsx';
+import { ConstituencyTooltip } from './ConstituencyTooltip.jsx';
+import { Button } from '../ui/Button.jsx';
+import { MapLoadingSkeleton } from '../ui/MapLoadingSkeleton.jsx';
+import { ErrorState } from '../ui/ErrorState.jsx';
 import { ArrowLeft } from 'lucide-react';
 import ReactDOMServer from 'react-dom/server';
 

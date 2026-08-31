@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { riskService } from '../services/api/riskService';
-import { aiRiskService } from '../services/ai/riskService';
+import { riskService } from '../services/api/riskService.js';
+import { aiRiskService } from '../services/ai/riskService.js';
 
 export const useRisk = (projectId = null) => {
   const [highRiskProjects, setHighRiskProjects] = useState([]);

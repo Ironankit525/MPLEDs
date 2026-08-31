@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
-import { getProgressAlignment } from '../../../utils/projectCalculations';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
+import { getProgressAlignment } from '../../../utils/projectCalculations.js';
 import { Scale, CheckCircle2, AlertTriangle, ArrowRightLeft, TrendingUp } from 'lucide-react';
 
 export const PhysicalFinancialAlignment = ({ physical = 0, financial = 0 }) => {

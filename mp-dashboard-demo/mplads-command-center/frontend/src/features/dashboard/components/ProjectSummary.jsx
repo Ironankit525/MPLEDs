@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { FolderKanban, CheckCircle2, Clock, PlayCircle } from 'lucide-react';
 
 export const ProjectSummary = ({ projects }) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
 import { History, Sparkles, Upload, Coins, CheckCircle2, ClipboardCheck, ArrowRight, User } from 'lucide-react';
 
 const ACTIVITY_ICON_MAP = {

@@ -1,10 +1,10 @@
 // All data in the demo environment is fictional and used only for development/testing.
 
-import { MOCK_MPS } from './mps';
-import { MOCK_FUNDS } from './funds';
-import { MOCK_PROJECTS } from './projects';
-import { MOCK_EXPENDITURES } from './expenditures';
-import { MOCK_GEOGRAPHY } from './geography';
+import { MOCK_MPS } from './mps.js';
+import { MOCK_FUNDS } from './funds.js';
+import { MOCK_PROJECTS } from './projects.js';
+import { MOCK_EXPENDITURES } from './expenditures.js';
+import { MOCK_GEOGRAPHY } from './geography.js';
 
 export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") => {
   const mp = MOCK_MPS.find(m => m.id === mpId) || MOCK_MPS[0];

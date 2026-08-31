@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
-import { formatDate } from '../../../utils/formatDate';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
+import { formatDate } from '../../../utils/formatDate.js';
 import { ClipboardCheck, CheckCircle2, AlertTriangle, UserCheck, Calendar } from 'lucide-react';
 
 export const InspectionHistorySection = ({ inspections = [] }) => {

@@ -1,1 +1,1 @@
-export { default } from '../features/submitter-dashboard/SubmitterDashboardPage';
+export { default } from '../features/submitter-dashboard/SubmitterDashboardPage.jsx';

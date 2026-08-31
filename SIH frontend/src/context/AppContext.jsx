@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { userService } from '../services/api/userService';
-import { getStoredSettings } from '../services/api/settingsService';
+import { userService } from '../services/api/userService.js';
+import { getStoredSettings } from '../services/api/settingsService.js';
 
 const AppContext = createContext(null);
 

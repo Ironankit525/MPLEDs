@@ -1,7 +1,7 @@
 import { X, Filter } from 'lucide-react';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../../services/api/locationService';
-import { CustomSelect } from '../ui/CustomSelect';
-import { useApp } from '../../context/AppContext';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../../services/api/locationService.js';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 export const ProjectFilterBar = ({ filters = {}, onFilterChange, onReset }) => {
   const { dashboardPreferences } = useApp();

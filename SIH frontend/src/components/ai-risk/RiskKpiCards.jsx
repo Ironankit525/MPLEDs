@@ -1,5 +1,5 @@
 import { Activity, ShieldAlert, AlertTriangle, IndianRupee, Camera, Award } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const RiskKpiCards = ({ kpis = {} }) => {
   const {

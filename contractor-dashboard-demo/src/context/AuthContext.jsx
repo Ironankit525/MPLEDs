@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { getToken, setToken as persistToken } from '../api/client'
-import { getProfile, login as apiLogin, register as apiRegister } from '../api/auth'
+import { getToken, setToken as persistToken } from '../api/client.js'
+import { getProfile, login as apiLogin, register as apiRegister } from '../api/auth.js'
 
 const AuthContext = createContext(null)
 

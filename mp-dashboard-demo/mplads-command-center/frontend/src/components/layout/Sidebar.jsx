@@ -11,8 +11,8 @@ import {
   ChevronRight,
   X
 } from 'lucide-react';
-import { ROUTES } from '../../constants/routes';
-import { AshokStambhLogo } from '../common/AshokStambhLogo';
+import { ROUTES } from '../../constants/routes.js';
+import { AshokStambhLogo } from '../common/AshokStambhLogo.jsx';
 
 export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onMobileClose }) => {
   const navGroups = [

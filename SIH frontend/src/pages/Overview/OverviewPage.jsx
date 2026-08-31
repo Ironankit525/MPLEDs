@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useOverview } from '../../hooks/useOverview';
-import { LoadingState } from '../../components/ui/LoadingState';
-import { ErrorState } from '../../components/ui/ErrorState';
+import { useOverview } from '../../hooks/useOverview.js';
+import { LoadingState } from '../../components/ui/LoadingState.jsx';
+import { ErrorState } from '../../components/ui/ErrorState.jsx';
 
-import { OverviewHeader } from './components/OverviewHeader';
-import { OverviewFilterBar } from './components/OverviewFilterBar';
-import { MainKPISets } from './components/MainKPISets';
-import { FinancialOverviewSection } from './components/FinancialOverviewSection';
-import { ProjectStatusSection } from './components/ProjectStatusSection';
-import { SectorExpenditureSection } from './components/SectorExpenditureSection';
-import { IndiaMapSection } from './components/IndiaMapSection';
-import { StatePerformanceSection } from './components/StatePerformanceSection';
-import { ExpenditureTrendSection } from './components/ExpenditureTrendSection';
-import { HighLevelAttentionSection } from './components/HighLevelAttentionSection';
-import { Card } from '../../components/ui/Card';
+import { OverviewHeader } from './components/OverviewHeader.jsx';
+import { OverviewFilterBar } from './components/OverviewFilterBar.jsx';
+import { MainKPISets } from './components/MainKPISets.jsx';
+import { FinancialOverviewSection } from './components/FinancialOverviewSection.jsx';
+import { ProjectStatusSection } from './components/ProjectStatusSection.jsx';
+import { SectorExpenditureSection } from './components/SectorExpenditureSection.jsx';
+import { IndiaMapSection } from './components/IndiaMapSection.jsx';
+import { StatePerformanceSection } from './components/StatePerformanceSection.jsx';
+import { ExpenditureTrendSection } from './components/ExpenditureTrendSection.jsx';
+import { HighLevelAttentionSection } from './components/HighLevelAttentionSection.jsx';
+import { Card } from '../../components/ui/Card.jsx';
 
 export const OverviewPage = () => {
   const {

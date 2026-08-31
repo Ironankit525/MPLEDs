@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { projectService } from '../features/projects/projectService';
-import { useAuth } from './useAuth';
-import { handleServiceError } from '../utils/errorHandler';
+import { projectService } from '../features/projects/projectService.js';
+import { useAuth } from './useAuth.js';
+import { handleServiceError } from '../utils/errorHandler.js';
 
 /**
  * Custom hook to retrieve a single project by ID with strict Constituency Data Isolation.

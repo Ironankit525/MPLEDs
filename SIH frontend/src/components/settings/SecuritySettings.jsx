@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Shield, KeyRound } from 'lucide-react';
-import { Modal } from '../ui/Modal';
+import { Modal } from '../ui/Modal.jsx';
 
 export const SecuritySettings = ({
   securityData = {},

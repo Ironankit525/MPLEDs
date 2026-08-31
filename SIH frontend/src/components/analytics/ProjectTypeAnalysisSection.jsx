@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 
 export const ProjectTypeAnalysisSection = ({ data = [], onSectorClick }) => {
   return (

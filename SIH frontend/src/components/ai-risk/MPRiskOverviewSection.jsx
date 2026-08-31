@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { UserCheck } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const MPRiskOverviewSection = ({
   data = [],

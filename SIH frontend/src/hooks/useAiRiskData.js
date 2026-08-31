@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { aiRiskService } from '../services/api/aiRiskService';
-import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../services/api/locationService';
+import { aiRiskService } from '../services/api/aiRiskService.js';
+import { STATE_DISTRICT_MAP, DISTRICT_STATE_MAP } from '../services/api/locationService.js';
 
 export const DEFAULT_RISK_FILTERS = {
   state: 'All States',

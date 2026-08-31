@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import Icon from '../Icon'
-import { useAuth } from '../../context/AuthContext'
+import Icon from '../Icon.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 
 /**
  * Reusable role-aware sidebar shell. `navItems` is passed in per role

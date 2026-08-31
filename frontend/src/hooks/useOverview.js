@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getStakeholderOverview } from '../api/stakeholder'
-import { ApiError } from '../api/client'
+import { getStakeholderOverview } from '../api/stakeholder.js'
+import { ApiError } from '../api/client.js'
 
 export function useOverview() {
   const [overview, setOverview] = useState(null)

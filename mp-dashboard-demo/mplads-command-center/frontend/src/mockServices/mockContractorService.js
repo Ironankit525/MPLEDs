@@ -1,5 +1,5 @@
-import { MOCK_CONTRACTORS } from '../mock/contractors';
-import { MOCK_PROJECTS } from '../mock/projects';
+import { MOCK_CONTRACTORS } from '../mock/contractors.js';
+import { MOCK_PROJECTS } from '../mock/projects.js';
 
 const BACKEND_URL = 'http://localhost:8000';
 

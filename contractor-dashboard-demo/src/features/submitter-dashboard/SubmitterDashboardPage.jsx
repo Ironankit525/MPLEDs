@@ -17,8 +17,8 @@ import {
   TriangleAlert,
   Zap,
 } from 'lucide-react';
-import { useMySubmissions } from '../../hooks/useMySubmissions';
-import { request } from '../../api/client';
+import { useMySubmissions } from '../../hooks/useMySubmissions.js';
+import { request } from '../../api/client.js';
 
 /* ─────────────────────────── HELPERS ────────────────────────────── */
 

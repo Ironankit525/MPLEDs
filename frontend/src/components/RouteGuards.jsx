@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { roleLandingPath } from '../lib/roles'
-import Spinner from './Spinner'
+import { useAuth } from '../context/AuthContext.jsx'
+import { roleLandingPath } from '../lib/roles.js'
+import Spinner from './Spinner.jsx'
 
 /** Blocks every child route until a valid session is confirmed. */
 export function RequireAuth() {

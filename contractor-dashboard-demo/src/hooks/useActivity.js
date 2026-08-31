@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getActivity } from '../api/admin'
-import { ApiError } from '../api/client'
+import { getActivity } from '../api/admin.js'
+import { ApiError } from '../api/client.js'
 
 export function useActivity() {
   const [events, setEvents] = useState(null)

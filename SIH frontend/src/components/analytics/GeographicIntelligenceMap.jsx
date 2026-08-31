@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Map, Layers, X, ExternalLink, ShieldAlert, CheckCircle2, AlertCircle, User } from 'lucide-react';
-import { LokSabhaConstituencyMap } from '../maps/LokSabhaConstituencyMap';
-import { useApp } from '../../context/AppContext';
+import { LokSabhaConstituencyMap } from '../maps/LokSabhaConstituencyMap.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 import { CONSTITUENCY_DETAILS_MAP } from '../../data/locationMappings.js';
-import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics';
+import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics.js';
 
 export const GeographicIntelligenceMap = ({
   analyticsData,

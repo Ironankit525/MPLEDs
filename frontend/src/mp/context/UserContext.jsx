@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { DEFAULT_FINANCIAL_YEAR } from '../constants/financialYears';
+import { DEFAULT_FINANCIAL_YEAR } from '../constants/financialYears.js';
 
 export const UserContext = createContext(null);
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import { dashboardService } from './dashboardService';
-import { AttentionRequired } from './components/AttentionRequired';
-import { CommandKpiRow } from './components/CommandKpiRow';
-import { FundPositionPipeline } from './components/FundPositionPipeline';
-import { ExpenditurePerformanceChart } from './components/ExpenditurePerformanceChart';
-import { ConstituencyMapSnapshot } from './components/ConstituencyMapSnapshot';
-import { AgencyPerformance } from './components/AgencyPerformance';
-import { IntegrityRiskSignals } from './components/IntegrityRiskSignals';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useUser } from '../../hooks/useUser.js';
+import { dashboardService } from './dashboardService.js';
+import { AttentionRequired } from './components/AttentionRequired.jsx';
+import { CommandKpiRow } from './components/CommandKpiRow.jsx';
+import { FundPositionPipeline } from './components/FundPositionPipeline.jsx';
+import { ExpenditurePerformanceChart } from './components/ExpenditurePerformanceChart.jsx';
+import { ConstituencyMapSnapshot } from './components/ConstituencyMapSnapshot.jsx';
+import { AgencyPerformance } from './components/AgencyPerformance.jsx';
+import { IntegrityRiskSignals } from './components/IntegrityRiskSignals.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
 
 export const Dashboard = () => {
   const { currentMP } = useAuth();

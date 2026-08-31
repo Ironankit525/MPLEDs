@@ -1,5 +1,5 @@
 import { BarChart2 } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const AnomalyDistributionSection = ({ data = [] }) => {
   const maxCount = Math.max(...data.map((d) => d.count), 1);

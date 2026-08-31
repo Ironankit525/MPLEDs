@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { settingsService } from '../services/api/settingsService';
-import { DEFAULT_SETTINGS } from '../data/mock/defaultSettings';
-import { useApp } from '../context/AppContext';
-import { applyTheme } from '../utils/themeUtils';
+import { settingsService } from '../services/api/settingsService.js';
+import { DEFAULT_SETTINGS } from '../data/mock/defaultSettings.js';
+import { useApp } from '../context/AppContext.jsx';
+import { applyTheme } from '../utils/themeUtils.js';
 
 export const useSettings = () => {
   const { updateCurrentUser, updateDashboardPreferences } = useApp();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { Users, MapPin } from 'lucide-react';
 
 export const BeneficiarySummary = ({ beneficiaries = 245000, villagesCovered = 126 }) => {

@@ -8,7 +8,7 @@ import {
   Flame,
   ShieldAlert,
 } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const ProjectKPICards = ({ kpis = {} }) => {
   const formatCr = (amount) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { formatPercentage } from '../../utils/formatPercentage';
+import { formatCurrency } from '../../utils/formatCurrency.js';
+import { formatPercentage } from '../../utils/formatPercentage.js';
 
 export const FundUtilizationChart = ({ allocation = 50000000, released = 38000000, utilized = 31500000 }) => {
   const releasedPercent = (released / allocation) * 100;

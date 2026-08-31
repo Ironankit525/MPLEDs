@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Info, ExternalLink, ShieldCheck, FileText, HelpCircle } from 'lucide-react';
-import { Modal } from '../ui/Modal';
+import { Modal } from '../ui/Modal.jsx';
 
 export const AboutSettings = () => {
   const [modalType, setModalType] = useState(null);

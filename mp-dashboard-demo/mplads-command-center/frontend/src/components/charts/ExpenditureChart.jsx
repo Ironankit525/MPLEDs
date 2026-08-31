@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 
 export const ExpenditureChart = ({ data = [] }) => {
   const [hoveredIdx, setHoveredIdx] = useState(null);

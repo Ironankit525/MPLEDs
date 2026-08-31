@@ -1,5 +1,5 @@
-import axiosClient from './axiosClient';
-import { computeFilteredOverview } from '../../data/overviewFilterEngine';
+import axiosClient from './axiosClient.js';
+import { computeFilteredOverview } from '../../data/overviewFilterEngine.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
-import { getRiskCategory } from '../../../utils/projectCalculations';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
+import { getRiskCategory } from '../../../utils/projectCalculations.js';
 import { ShieldAlert, AlertTriangle, CheckCircle2, Info, Layers } from 'lucide-react';
 
 const SEVERITY_BADGES = {

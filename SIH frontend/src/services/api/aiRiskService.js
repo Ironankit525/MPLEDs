@@ -1,6 +1,6 @@
-import axiosClient from './axiosClient';
-import { getEnrichedRiskProjects } from '../../data/aiRiskData';
-import { calculateMPPerformance } from '../../utils/projectAnalytics';
+import axiosClient from './axiosClient.js';
+import { getEnrichedRiskProjects } from '../../data/aiRiskData.js';
+import { calculateMPPerformance } from '../../utils/projectAnalytics.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
 import { FileText, Download, Eye, CheckCircle2, AlertCircle, FileCheck, X } from 'lucide-react';
 
 export const ProjectDocumentsSection = ({ documents = [] }) => {

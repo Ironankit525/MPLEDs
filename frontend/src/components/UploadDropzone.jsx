@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Icon from './Icon'
+import Icon from './Icon.jsx'
 
 // Mirrors app/config.py's Settings.ALLOWED_EXTENSIONS / MAX_UPLOAD_SIZE_BYTES.
 // Client-side validation here is just a fast, friendly first check — the

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { contractorService } from './contractorService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Badge } from '../../components/common/Badge';
-import { Loader } from '../../components/common/Loader';
-import { PromoterPerformanceChart } from '../../components/charts/PromoterPerformanceChart';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { useAuth } from '../../hooks/useAuth.js';
+import { contractorService } from './contractorService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Badge } from '../../components/common/Badge.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { PromoterPerformanceChart } from '../../components/charts/PromoterPerformanceChart.jsx';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 import { 
   Building2, 
   Star, 

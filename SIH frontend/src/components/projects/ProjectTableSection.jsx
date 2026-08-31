@@ -8,9 +8,9 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import { Card } from '../ui/Card';
-import { CustomSelect } from '../ui/CustomSelect';
-import { getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics';
+import { Card } from '../ui/Card.jsx';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
+import { getStatusBadgeClass, getRiskColorClass } from '../../utils/projectAnalytics.js';
 
 export const ProjectTableSection = ({
   projects = [],

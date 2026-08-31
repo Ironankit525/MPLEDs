@@ -1,6 +1,6 @@
-import { mockDashboardService } from '../../mockServices/mockDashboardService';
+import { mockDashboardService } from '../../mockServices/mockDashboardService.js';
 // Future Real Backend API Client:
-// import apiClient from '../../services/apiClient';
+// import apiClient from '../../services/apiClient.js';
 
 /**
  * Dashboard Feature Service Layer.

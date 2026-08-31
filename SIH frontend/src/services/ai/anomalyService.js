@@ -1,4 +1,4 @@
-import axiosClient from '../api/axiosClient';
+import axiosClient from '../api/axiosClient.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 

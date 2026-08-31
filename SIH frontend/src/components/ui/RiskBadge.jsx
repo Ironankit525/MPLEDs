@@ -1,4 +1,4 @@
-import { getRiskColorClass, getRiskLevel, getRiskLabel } from '../../utils/riskUtils';
+import { getRiskColorClass, getRiskLevel, getRiskLabel } from '../../utils/riskUtils.js';
 
 export const RiskBadge = ({ score, showScore = true, className = '' }) => {
   const level = typeof score === 'number' ? getRiskLevel(score) : score;

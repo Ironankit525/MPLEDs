@@ -1,5 +1,5 @@
-import { mockProjects } from './mockProjects';
-import { MASTER_MP_RECORDS } from '../utils/projectAnalytics';
+import { mockProjects } from './mockProjects.js';
+import { MASTER_MP_RECORDS } from '../utils/projectAnalytics.js';
 
 /**
  * Normalizer & AI Risk Enrichment Module.

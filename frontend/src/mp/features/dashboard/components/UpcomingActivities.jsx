@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { Calendar, CheckCircle } from 'lucide-react';
 
 export const UpcomingActivities = () => {

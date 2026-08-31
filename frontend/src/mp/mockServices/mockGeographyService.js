@@ -1,5 +1,5 @@
-import { MOCK_GEOGRAPHY } from '../mock/geography';
-import { MOCK_PROJECTS } from '../mock/projects';
+import { MOCK_GEOGRAPHY } from '../mock/geography.js';
+import { MOCK_PROJECTS } from '../mock/projects.js';
 
 export const mockGeographyService = {
   getConstituencyData: async (mpId = "MP001") => {

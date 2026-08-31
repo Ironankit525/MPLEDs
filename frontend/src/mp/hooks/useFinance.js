@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { financeService } from '../features/finance/financeService';
-import { useAuth } from './useAuth';
-import { useUser } from './useUser';
-import { handleServiceError } from '../utils/errorHandler';
+import { financeService } from '../features/finance/financeService.js';
+import { useAuth } from './useAuth.js';
+import { useUser } from './useUser.js';
+import { handleServiceError } from '../utils/errorHandler.js';
 
 export const useFinance = () => {
   const { currentMP } = useAuth();

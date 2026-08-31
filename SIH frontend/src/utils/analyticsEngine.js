@@ -1,4 +1,4 @@
-import { mockProjects } from '../data/mockProjects';
+import { mockProjects } from '../data/mockProjects.js';
 import {
   LIFECYCLE_STAGES,
   COST_PRESSURE_SECTORS,

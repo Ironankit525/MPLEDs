@@ -1,6 +1,6 @@
-import axiosClient from './axiosClient';
-import { mockProjects } from '../../data/mockProjects';
-import { getRiskLevel } from '../../utils/projectAnalytics';
+import axiosClient from './axiosClient.js';
+import { mockProjects } from '../../data/mockProjects.js';
+import { getRiskLevel } from '../../utils/projectAnalytics.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false' || true; // Always default to resilient mock fallback
 

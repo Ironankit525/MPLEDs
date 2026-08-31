@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 // Mints a single-use camera-session token immediately before upload —
 // the anti-fraud gate this whole module exists for (see README's "Auth

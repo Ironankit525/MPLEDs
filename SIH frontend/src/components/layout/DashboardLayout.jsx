@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { Sidebar } from './Sidebar';
-import { MobileSidebar } from './MobileSidebar';
-import { Topbar } from './Topbar';
-import { useApp } from '../../context/AppContext';
+import { Sidebar } from './Sidebar.jsx';
+import { MobileSidebar } from './MobileSidebar.jsx';
+import { Topbar } from './Topbar.jsx';
+import { useApp } from '../../context/AppContext.jsx';
 
 export const DashboardLayout = () => {
   const { sidebarCollapsed, toggleSidebarCollapse } = useApp();

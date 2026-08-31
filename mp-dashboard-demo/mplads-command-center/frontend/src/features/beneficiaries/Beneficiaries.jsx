@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { beneficiaryService } from './beneficiaryService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { Card } from '../../components/common/Card';
-import { Loader } from '../../components/common/Loader';
+import { useAuth } from '../../hooks/useAuth.js';
+import { beneficiaryService } from './beneficiaryService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
 import { Users, MapPin, CheckCircle } from 'lucide-react';
 
 export const Beneficiaries = () => {

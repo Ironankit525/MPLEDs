@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { useUsers } from '../hooks/useUsers'
-import { useAuth } from '../context/AuthContext'
-import { createUser, updateUserActive, updateUserRole } from '../api/admin'
-import { ApiError } from '../api/client'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
-import { formatDate } from '../lib/format'
+import { useUsers } from '../hooks/useUsers.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { createUser, updateUserActive, updateUserRole } from '../api/admin.js'
+import { ApiError } from '../api/client.js'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
+import { formatDate } from '../lib/format.js'
 
 const ROLES = ['submitter', 'reviewer', 'stakeholder', 'admin']
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { ApiError } from '../api/client'
+import { ApiError } from '../api/client.js'
 
 /**
  * Generic loader for any endpoint shaped like { images, count } —

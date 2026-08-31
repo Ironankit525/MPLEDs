@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { alertService } from '../services/api/alertService';
+import { alertService } from '../services/api/alertService.js';
 
 export const useAlerts = (initialSeverity = null) => {
   const [alerts, setAlerts] = useState([]);

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../common/Card';
-import { Badge } from '../../common/Badge';
+import { Card } from '../../common/Card.jsx';
+import { Badge } from '../../common/Badge.jsx';
 import { CheckCircle2, Clock, Calendar, GitCommit, ArrowDown, Flag } from 'lucide-react';
 
 export const ProjectTimelineSteps = ({ timeline = [] }) => {

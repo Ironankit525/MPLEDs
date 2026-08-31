@@ -1,6 +1,6 @@
-import axiosClient from './axiosClient';
-import { mockProjects } from '../../data/mockProjects';
-import { normalizeProject } from './projectService';
+import axiosClient from './axiosClient.js';
+import { mockProjects } from '../../data/mockProjects.js';
+import { normalizeProject } from './projectService.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { X, Filter } from 'lucide-react';
-import { CustomSelect } from '../ui/CustomSelect';
+import { CustomSelect } from '../ui/CustomSelect.jsx';
 import { STATE_DISTRICT_MAP, MP_LOCATION_MAP } from '../../data/locationMappings.js';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../context/AppContext.jsx';
 
 const FY_OPTIONS = [
   { value: '2026-27', label: '2026–27' },

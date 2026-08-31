@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useProjects } from '../../hooks/useProjects';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { ProjectFilters } from '../../components/project/ProjectFilters';
-import { ProjectCard } from '../../components/project/ProjectCard';
-import { ProjectTable } from '../../components/project/ProjectTable';
-import { Button } from '../../components/common/Button';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
-import { EmptyState } from '../../components/common/EmptyState';
+import { useProjects } from '../../hooks/useProjects.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { ProjectFilters } from '../../components/project/ProjectFilters.jsx';
+import { ProjectCard } from '../../components/project/ProjectCard.jsx';
+import { ProjectTable } from '../../components/project/ProjectTable.jsx';
+import { Button } from '../../components/common/Button.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
+import { EmptyState } from '../../components/common/EmptyState.jsx';
 import { Plus, LayoutGrid, List } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

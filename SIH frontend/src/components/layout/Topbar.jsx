@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Menu, Shield } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { NAV_ITEMS } from '../../constants/routes';
+import { useApp } from '../../context/AppContext.jsx';
+import { NAV_ITEMS } from '../../constants/routes.js';
 
 export const Topbar = () => {
   const location = useLocation();

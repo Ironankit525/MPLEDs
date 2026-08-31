@@ -1,5 +1,5 @@
-import { PageHeader } from '../../components/common/PageHeader';
-import { Card } from '../../components/ui/Card';
+import { PageHeader } from '../../components/common/PageHeader.jsx';
+import { Card } from '../../components/ui/Card.jsx';
 
 export const AlertsPage = () => {
   return (

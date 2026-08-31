@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { ApiError } from '../api/client'
-import ErrorBanner from '../components/ErrorBanner'
+import { useAuth } from '../context/AuthContext.jsx'
+import { ApiError } from '../api/client.js'
+import ErrorBanner from '../components/ErrorBanner.jsx'
 
 export default function RegisterPage() {
   const { register, login } = useAuth()

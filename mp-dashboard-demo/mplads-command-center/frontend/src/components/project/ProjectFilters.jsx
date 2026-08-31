@@ -1,6 +1,6 @@
 import React from 'react';
-import { SECTORS } from '../../constants/sectors';
-import { PROJECT_STATUS } from '../../constants/projectStatus';
+import { SECTORS } from '../../constants/sectors.js';
+import { PROJECT_STATUS } from '../../constants/projectStatus.js';
 import { Search, Filter } from 'lucide-react';
 
 export const ProjectFilters = ({ filters, onChange }) => {

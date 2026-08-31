@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
-import { Badge } from '../../../components/common/Badge';
+import { Card } from '../../../components/common/Card.jsx';
+import { Badge } from '../../../components/common/Badge.jsx';
 import { Building2, AlertTriangle, CheckCircle2, ArrowUpRight, HardHat, ShieldAlert } from 'lucide-react';
 
 export const AgencyPerformance = ({ agencyPerformance = [], contractorPerformance = [] }) => {

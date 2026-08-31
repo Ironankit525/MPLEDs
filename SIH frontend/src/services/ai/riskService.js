@@ -1,5 +1,5 @@
-import axiosClient from '../api/axiosClient';
-import { mockRiskData } from '../../data/mockRiskData';
+import axiosClient from '../api/axiosClient.js';
+import { mockRiskData } from '../../data/mockRiskData.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { ApiError } from '../api/client'
-import { roleLandingPath } from '../lib/roles'
-import ErrorBanner from '../components/ErrorBanner'
-import Icon from '../components/Icon'
+import { useAuth } from '../context/AuthContext.jsx'
+import { ApiError } from '../api/client.js'
+import { roleLandingPath } from '../lib/roles.js'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Icon from '../components/Icon.jsx'
 
 export default function LoginPage() {
   const { login } = useAuth()

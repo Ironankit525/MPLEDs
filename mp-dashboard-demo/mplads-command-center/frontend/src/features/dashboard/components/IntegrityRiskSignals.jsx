@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { ShieldAlert, AlertCircle, AlertTriangle, FileCheck, ArrowRight, ArrowUpRight, Scale } from 'lucide-react';
 
 export const IntegrityRiskSignals = ({ signals = [] }) => {

@@ -1,5 +1,5 @@
 import { Building2 } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const AgencyRiskOverviewSection = ({
   data = [],

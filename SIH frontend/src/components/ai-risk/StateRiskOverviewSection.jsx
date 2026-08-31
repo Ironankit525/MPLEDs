@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { MapPin, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
-import { Card } from '../ui/Card';
+import { Card } from '../ui/Card.jsx';
 
 export const StateRiskOverviewSection = ({
   data = [],

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Badge } from '../common/Badge';
-import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../constants/projectStatus';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
+import { Badge } from '../common/Badge.jsx';
+import { PROJECT_STATUS_COLORS, PROJECT_STATUS_LABELS } from '../../constants/projectStatus.js';
+import { formatCurrency } from '../../utils/formatCurrency.js';
+import { formatDate } from '../../utils/formatDate.js';
 import { useNavigate } from 'react-router-dom';
 import { Eye } from 'lucide-react';
 

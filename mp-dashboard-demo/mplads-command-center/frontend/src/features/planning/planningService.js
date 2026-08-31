@@ -1,5 +1,5 @@
-import { mockPlanningService } from '../../mockServices/mockPlanningService';
-// import apiClient from '../../services/apiClient';
+import { mockPlanningService } from '../../mockServices/mockPlanningService.js';
+// import apiClient from '../../services/apiClient.js';
 
 export const planningService = {
   getProposedProjects: async (mpId) => {

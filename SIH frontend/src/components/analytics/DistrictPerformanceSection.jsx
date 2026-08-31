@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Card } from '../ui/Card';
-import { SectionHeader } from '../common/SectionHeader';
+import { Card } from '../ui/Card.jsx';
+import { SectionHeader } from '../common/SectionHeader.jsx';
 import { Award, AlertTriangle } from 'lucide-react';
 
 export const DistrictPerformanceSection = ({ districtData = {} }) => {

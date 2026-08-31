@@ -1,5 +1,5 @@
-import { mockGeographyService } from '../../mockServices/mockGeographyService';
-// import apiClient from '../../services/apiClient';
+import { mockGeographyService } from '../../mockServices/mockGeographyService.js';
+// import apiClient from '../../services/apiClient.js';
 
 export const geographyService = {
   getConstituencyData: async (mpId) => {

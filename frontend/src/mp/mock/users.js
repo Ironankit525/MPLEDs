@@ -1,6 +1,6 @@
 // All data in the demo environment is fictional and used only for development/testing.
 
-import { MOCK_MPS } from './mps';
+import { MOCK_MPS } from './mps.js';
 
 export const MOCK_USERS = MOCK_MPS.map(mp => ({
   id: `USR_${mp.id}`,

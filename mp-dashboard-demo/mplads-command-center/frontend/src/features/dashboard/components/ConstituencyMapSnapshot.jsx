@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../../components/common/Card';
+import { Card } from '../../../components/common/Card.jsx';
 import { MapPin, ArrowUpRight, Navigation } from 'lucide-react';
 
 export const ConstituencyMapSnapshot = ({ constituencyMap, constituencyName = 'Pune' }) => {

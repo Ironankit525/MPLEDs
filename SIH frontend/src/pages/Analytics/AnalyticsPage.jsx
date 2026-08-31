@@ -1,13 +1,13 @@
-import { useAnalyticsDashboard } from '../../hooks/useAnalyticsDashboard';
-import { AnalyticsHeader } from '../../components/analytics/AnalyticsHeader';
-import { AnalyticsFilterBar } from '../../components/analytics/AnalyticsFilterBar';
-import { FutureOutlookHero } from '../../components/analytics/FutureOutlookHero';
-import { ProjectCompletionForecast } from '../../components/analytics/ProjectCompletionForecast';
-import { DelayBottleneckAnalysis } from '../../components/analytics/DelayBottleneckAnalysis';
-import { CostPressureAnalysis } from '../../components/analytics/CostPressureAnalysis';
-import { GeographicIntelligenceMap } from '../../components/analytics/GeographicIntelligenceMap';
-import { AgencyOutlookSection } from '../../components/analytics/AgencyOutlookSection';
-import { WhatIfScenarioSimulator } from '../../components/analytics/WhatIfScenarioSimulator';
+import { useAnalyticsDashboard } from '../../hooks/useAnalyticsDashboard.js';
+import { AnalyticsHeader } from '../../components/analytics/AnalyticsHeader.jsx';
+import { AnalyticsFilterBar } from '../../components/analytics/AnalyticsFilterBar.jsx';
+import { FutureOutlookHero } from '../../components/analytics/FutureOutlookHero.jsx';
+import { ProjectCompletionForecast } from '../../components/analytics/ProjectCompletionForecast.jsx';
+import { DelayBottleneckAnalysis } from '../../components/analytics/DelayBottleneckAnalysis.jsx';
+import { CostPressureAnalysis } from '../../components/analytics/CostPressureAnalysis.jsx';
+import { GeographicIntelligenceMap } from '../../components/analytics/GeographicIntelligenceMap.jsx';
+import { AgencyOutlookSection } from '../../components/analytics/AgencyOutlookSection.jsx';
+import { WhatIfScenarioSimulator } from '../../components/analytics/WhatIfScenarioSimulator.jsx';
 import { AlertCircle, RefreshCw, Filter } from 'lucide-react';
 
 export const AnalyticsPage = () => {

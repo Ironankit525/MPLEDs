@@ -1,4 +1,4 @@
-import { request } from './client'
+import { request } from './client.js'
 
 // Total volume, pipeline bottlenecks (by-status/by-risk breakdown),
 // completion rate, and average time-to-decision — the dashboard's
