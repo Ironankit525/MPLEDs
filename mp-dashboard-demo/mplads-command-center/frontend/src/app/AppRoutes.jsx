@@ -41,25 +41,25 @@ export const AppRoutes = () => {
         }
       >
         <Route index element={<Navigate to={ROUTES.DASHBOARD} replace />} />
-        <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
 
         {/* Projects */}
-        <Route path={ROUTES.PROJECTS} element={<Projects />} />
-        <Route path={ROUTES.PROJECT_CREATE} element={<ProjectCreate />} />
-        <Route path={ROUTES.PROJECT_DETAILS} element={<ProjectDetails />} />
+        <Route path="projects" element={<Projects />} />
+        <Route path="projects/new" element={<ProjectCreate />} />
+        <Route path="projects/:id" element={<ProjectDetails />} />
 
         {/* Finance */}
-        <Route path={ROUTES.FINANCE} element={<FinancialOverview />} />
-        <Route path={ROUTES.FUND_UTILIZATION} element={<FinancialOverview />} />
-        <Route path={ROUTES.EXPENDITURE} element={<FinancialOverview />} />
+        <Route path="finance" element={<FinancialOverview />} />
+        <Route path="finance/fund-utilization" element={<FinancialOverview />} />
+        <Route path="finance/expenditure" element={<FinancialOverview />} />
 
         {/* Geography */}
-        <Route path={ROUTES.GEOGRAPHY} element={<ConstituencyMap />} />
-        <Route path={ROUTES.DEVELOPMENT_GAPS} element={<ConstituencyMap />} />
+        <Route path="geography" element={<ConstituencyMap />} />
+        <Route path="geography/development-gaps" element={<ConstituencyMap />} />
 
         {/* Contractors */}
-        <Route path={ROUTES.CONTRACTORS} element={<Contractors />} />
-        <Route path={ROUTES.CONTRACTOR_DETAILS} element={<ContractorDetails />} />
+        <Route path="contractors" element={<Contractors />} />
+        <Route path="contractors/:id" element={<ContractorDetails />} />
       </Route>
 
       <Route path="*" element={<Navigate to={ROUTES.DASHBOARD} replace />} />
