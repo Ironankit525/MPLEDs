@@ -20,7 +20,7 @@ export const ProjectPipeline = ({ pipeline = [] }) => {
       subtitle="Track bottleneck stages from constituent proposal to ground commissioning"
       action={
         <button
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate('/mp/projects')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer"
         >
           <span>View All Projects</span>
@@ -37,7 +37,7 @@ export const ProjectPipeline = ({ pipeline = [] }) => {
           return (
             <div
               key={idx}
-              onClick={() => navigate('/projects')}
+              onClick={() => navigate('/mp/projects')}
               className={`p-4 rounded-xl border transition cursor-pointer flex flex-col justify-between group ${
                 isCompleted
                   ? 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300'

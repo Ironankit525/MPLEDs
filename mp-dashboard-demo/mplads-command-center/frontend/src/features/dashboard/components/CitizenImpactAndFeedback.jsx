@@ -15,7 +15,7 @@ export const CitizenImpactAndFeedback = ({ impact, financialYear }) => {
       subtitle="Tangible community outcomes delivered through grounded works"
       action={
         <button
-          onClick={() => navigate('/beneficiaries')}
+          onClick={() => navigate('/mp/beneficiaries')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer"
         >
           <span>Impact Dossier</span>

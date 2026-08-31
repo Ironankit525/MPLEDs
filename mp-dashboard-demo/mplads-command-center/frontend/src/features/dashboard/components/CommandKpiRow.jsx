@@ -16,7 +16,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: Landmark,
       color: 'text-indigo-600',
       bgColor: 'bg-indigo-50 border-indigo-100',
-      path: '/finance'
+      path: '/mp/finance'
     },
     {
       id: 'utilized',
@@ -25,7 +25,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: Wallet,
       color: 'text-emerald-600',
       bgColor: 'bg-emerald-50 border-emerald-100',
-      path: '/finance'
+      path: '/mp/finance'
     },
     {
       id: 'proposed',
@@ -34,7 +34,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: FolderKanban,
       color: 'text-indigo-600',
       bgColor: 'bg-indigo-50 border-indigo-100',
-      path: '/projects'
+      path: '/mp/projects'
     },
     {
       id: 'atRisk',
@@ -43,7 +43,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: AlertTriangle,
       color: 'text-rose-600',
       bgColor: 'bg-rose-50 border-rose-100',
-      path: '/projects'
+      path: '/mp/projects'
     },
     {
       id: 'ongoing',
@@ -52,7 +52,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: Clock,
       color: 'text-sky-600',
       bgColor: 'bg-sky-50 border-sky-100',
-      path: '/projects'
+      path: '/mp/projects'
     },
     {
       id: 'completed',
@@ -61,7 +61,7 @@ export const CommandKpiRow = ({ kpis, fundPosition }) => {
       icon: CheckCircle2,
       color: 'text-emerald-600',
       bgColor: 'bg-emerald-50 border-emerald-100',
-      path: '/projects'
+      path: '/mp/projects'
     }
   ];
 

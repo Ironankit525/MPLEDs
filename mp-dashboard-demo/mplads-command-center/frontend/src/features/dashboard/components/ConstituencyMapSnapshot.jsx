@@ -30,7 +30,7 @@ export const ConstituencyMapSnapshot = ({ constituencyMap, constituencyName = 'P
       subtitle={`${constituencyMap.totalProjects} Projects Across ${constituencyMap.areasCount} Assembly Segments & Blocks`}
       action={
         <button
-          onClick={() => navigate('/geography')}
+          onClick={() => navigate('/mp/geography')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer"
         >
           <span>Open Full GIS Map</span>
@@ -158,7 +158,7 @@ export const ConstituencyMapSnapshot = ({ constituencyMap, constituencyName = 'P
           </div>
 
           <button
-            onClick={() => navigate('/projects')}
+            onClick={() => navigate('/mp/projects')}
             className="w-full mt-3 py-2 px-2 bg-white hover:bg-slate-100 text-black hover:text-slate-700 text-xs font-bold rounded-xl border border-slate-300 transition shadow-xs flex items-center justify-center gap-1 cursor-pointer truncate"
           >
             <span className="truncate">Inspect Project Dossier</span>

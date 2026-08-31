@@ -42,7 +42,7 @@ export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") 
         title: "Road Improvement Project",
         issue: "18 days behind schedule",
         actionLabel: "View Project",
-        targetPath: "/projects/PRJ003",
+        targetPath: "/mp/projects/PRJ003",
         category: "Delayed Execution",
         area: "Mulshi Block"
       },
@@ -62,7 +62,7 @@ export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") 
         title: "Contractor Payment Pending",
         issue: "Payment pending for 12 days",
         actionLabel: "Review Payment",
-        targetPath: "/contractors",
+        targetPath: "/mp/contractors",
         category: "Verification Required",
         area: "Pune Cantonment"
       }
@@ -292,7 +292,7 @@ export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") 
         count: 2,
         unit: "projects",
         description: "Disbursement pace exceeds ground execution percentage by >15%",
-        investigatePath: "/projects"
+        investigatePath: "/mp/projects"
       },
       {
         id: "SIG002",
@@ -301,7 +301,7 @@ export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") 
         count: 2,
         unit: "projects",
         description: "Revised estimates deviate from initial approved technical sanction",
-        investigatePath: "/projects"
+        investigatePath: "/mp/projects"
       },
       {
         id: "SIG003",
@@ -310,7 +310,7 @@ export const getMockDashboardData = (mpId = "MP001", financialYear = "2026-27") 
         count: 1,
         unit: "agency",
         description: "Vendor flagged for concurrent project delay across 2 wards",
-        investigatePath: "/contractors"
+        investigatePath: "/mp/contractors"
       }
     ],
 

@@ -363,7 +363,7 @@ export const Contractors = () => {
                   </div>
 
                   <button
-                    onClick={() => navigate(`/contractors/${c.id}`)}
+                    onClick={() => navigate(`/mp/contractors/${c.id}`)}
                     className="px-4 py-2 bg-slate-50 hover:bg-slate-900 text-black hover:text-white border border-slate-200 hover:border-slate-900 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
                   >
                     <span>View Details</span>

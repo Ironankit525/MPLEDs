@@ -64,7 +64,7 @@ export const ProjectMonitoringTable = ({ projects = [] }) => {
       subtitle="Execution telemetry across line agencies & civil contractors"
       action={
         <button
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate('/mp/projects')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer"
         >
           <span>View All Projects</span>
@@ -155,7 +155,7 @@ export const ProjectMonitoringTable = ({ projects = [] }) => {
               filteredProjects.map((proj) => (
                 <tr
                   key={proj.id}
-                  onClick={() => navigate(`/projects/${proj.id}`)}
+                  onClick={() => navigate(`/mp/projects/${proj.id}`)}
                   className="hover:bg-slate-50/90 transition cursor-pointer group"
                 >
                   <td className="py-3.5 px-4 max-w-xs">

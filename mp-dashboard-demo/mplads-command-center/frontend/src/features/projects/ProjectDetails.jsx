@@ -58,7 +58,7 @@ export const ProjectDetails = () => {
             </p>
           </div>
           <div className="pt-2">
-            <Button icon={ArrowLeft} onClick={() => navigate('/projects')} className="mx-auto">
+            <Button icon={ArrowLeft} onClick={() => navigate('/mp/projects')} className="mx-auto">
               Back to My Constituency Projects
             </Button>
           </div>
@@ -71,7 +71,7 @@ export const ProjectDetails = () => {
   if (error) {
     return (
       <div className="space-y-4 max-w-2xl mx-auto pt-10">
-        <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={() => navigate('/projects')}>
+        <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={() => navigate('/mp/projects')}>
           Back to Projects
         </Button>
         <ErrorState
@@ -97,7 +97,7 @@ export const ProjectDetails = () => {
               The requested MPLADS project dossier (ID: <code className="font-mono text-slate-700">{id}</code>) could not be located.
             </p>
           </div>
-          <Button icon={ArrowLeft} onClick={() => navigate('/projects')} className="mx-auto">
+          <Button icon={ArrowLeft} onClick={() => navigate('/mp/projects')} className="mx-auto">
             Back to Projects Directory
           </Button>
         </div>

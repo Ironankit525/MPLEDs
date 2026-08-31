@@ -41,7 +41,7 @@ export const Projects = () => {
                 <List className="w-4 h-4" />
               </button>
             </div>
-            <Button icon={Plus} onClick={() => navigate('/projects/new')}>
+            <Button icon={Plus} onClick={() => navigate('/mp/projects/new')}>
               Propose New Project
             </Button>
           </div>

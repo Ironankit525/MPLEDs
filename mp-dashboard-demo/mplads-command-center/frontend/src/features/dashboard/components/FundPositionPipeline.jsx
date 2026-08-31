@@ -28,7 +28,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
       subtitle={`Lifecycle flow and balance traceability for FY ${financialYear}`}
       action={
         <button
-          onClick={() => navigate('/finance')}
+          onClick={() => navigate('/mp/finance')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer"
         >
           <span>Detailed Audit</span>
@@ -137,7 +137,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
               {/* CARD 1: TOTAL AVAILABLE CAPITAL (100% - Height: 290px, y: 35px, Width: 170px) */}
               <foreignObject x="30" y="35" width="170" height="290">
                 <div
-                  onClick={() => navigate('/finance')}
+                  onClick={() => navigate('/mp/finance')}
                   className="w-full h-full rounded-2xl bg-white border-2 border-slate-300 p-4 flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:border-slate-800 transition cursor-pointer box-border"
                 >
                   <div className="flex flex-col items-center">
@@ -163,7 +163,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
               {/* CARD 2: ADMINISTRATIVELY APPROVED (84% - Height: 255px, y: 52.5px, Width: 170px) */}
               <foreignObject x="350" y="52.5" width="170" height="255">
                 <div
-                  onClick={() => navigate('/finance')}
+                  onClick={() => navigate('/mp/finance')}
                   className="w-full h-full rounded-2xl bg-white border-2 border-slate-300 p-4 flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:border-slate-800 transition cursor-pointer box-border"
                 >
                   <div className="flex flex-col items-center">
@@ -189,7 +189,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
               {/* CARD 3: GROUND EXPENDITURE (63% - Height: 215px, y: 72.5px, Width: 170px) */}
               <foreignObject x="670" y="72.5" width="170" height="215">
                 <div
-                  onClick={() => navigate('/finance')}
+                  onClick={() => navigate('/mp/finance')}
                   className="w-full h-full rounded-2xl bg-white border-2 border-slate-300 p-4 flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:border-slate-800 transition cursor-pointer box-border"
                 >
                   <div className="flex flex-col items-center">
@@ -215,7 +215,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
               {/* CARD 4A (TOP-RIGHT): RELEASED (UTILIZED) (Height: 155px, y: 15px, Width: 170px) */}
               <foreignObject x="940" y="15" width="170" height="155">
                 <div
-                  onClick={() => navigate('/finance')}
+                  onClick={() => navigate('/mp/finance')}
                   className="w-full h-full rounded-2xl bg-white border-2 border-slate-300 p-3.5 flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:border-slate-800 transition cursor-pointer box-border"
                 >
                   <div className="flex flex-col items-center">
@@ -241,7 +241,7 @@ export const FundPositionPipeline = ({ fundPosition, financialYear }) => {
               {/* CARD 4B (BOTTOM-RIGHT): UNSPENT / UNUTILIZED (Height: 155px, y: 190px, Width: 170px) */}
               <foreignObject x="940" y="190" width="170" height="155">
                 <div
-                  onClick={() => navigate('/finance')}
+                  onClick={() => navigate('/mp/finance')}
                   className="w-full h-full rounded-2xl bg-white border-2 border-slate-300 p-3.5 flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:border-slate-800 transition cursor-pointer box-border"
                 >
                   <div className="flex flex-col items-center">

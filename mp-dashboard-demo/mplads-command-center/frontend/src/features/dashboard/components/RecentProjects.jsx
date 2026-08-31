@@ -12,7 +12,7 @@ export const RecentProjects = ({ projects = [] }) => {
     <Card
       title="Recent Constituency Projects"
       action={
-        <Button variant="ghost" size="sm" onClick={() => navigate('/projects')} icon={ArrowRight}>
+        <Button variant="ghost" size="sm" onClick={() => navigate('/mp/projects')} icon={ArrowRight}>
           View All
         </Button>
       }

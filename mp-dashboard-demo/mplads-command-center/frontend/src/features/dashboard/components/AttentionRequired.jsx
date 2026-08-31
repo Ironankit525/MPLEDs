@@ -52,7 +52,7 @@ export const AttentionRequired = ({ alerts = [] }) => {
           </div>
         </div>
         <button
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate('/mp/projects')}
           className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 self-start sm:self-auto cursor-pointer"
         >
           <span>View All Issues</span>

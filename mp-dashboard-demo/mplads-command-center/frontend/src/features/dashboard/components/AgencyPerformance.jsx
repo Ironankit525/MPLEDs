@@ -38,7 +38,7 @@ export const AgencyPerformance = ({ agencyPerformance = [], contractorPerformanc
           </div>
 
           <button
-            onClick={() => navigate(tab === 'agencies' ? '/contractors' : '/contractors')}
+            onClick={() => navigate(tab === 'agencies' ? '/mp/contractors' : '/mp/contractors')}
             className="text-xs font-bold text-black hover:text-slate-700 flex items-center gap-1 cursor-pointer ml-1"
           >
             <span>View Full Directory</span>
@@ -125,7 +125,7 @@ export const AgencyPerformance = ({ agencyPerformance = [], contractorPerformanc
               <span><strong className="text-amber-800">Agency Action Flag:</strong> PMC has 2 projects delayed beyond 14 days. Meeting notice suggested for municipal engineer.</span>
             </span>
             <button
-              onClick={() => navigate('/projects')}
+              onClick={() => navigate('/mp/projects')}
               className="text-xs font-bold text-black hover:text-slate-700 hover:underline shrink-0 cursor-pointer"
             >
               Filter PMC Works →

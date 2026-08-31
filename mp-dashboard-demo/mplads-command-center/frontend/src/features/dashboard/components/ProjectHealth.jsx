@@ -88,7 +88,7 @@ export const ProjectHealth = ({ projectHealth }) => {
         {healthCards.map((item) => (
           <div
             key={item.key}
-            onClick={() => navigate('/projects')}
+            onClick={() => navigate('/mp/projects')}
             className={`p-3 rounded-xl border ${item.bg} flex items-center justify-between cursor-pointer hover:shadow-xs transition`}
           >
             <div>
@@ -109,7 +109,7 @@ export const ProjectHealth = ({ projectHealth }) => {
 
       {/* Delayed Project Funds Impact Callout */}
       <div
-        onClick={() => navigate('/projects')}
+        onClick={() => navigate('/mp/projects')}
         className="p-3.5 rounded-xl bg-rose-50/80 border border-rose-200 flex items-center justify-between gap-3 cursor-pointer hover:bg-rose-50 transition"
       >
         <div className="flex items-center gap-2.5">

@@ -47,7 +47,7 @@ export const ProjectCreate = () => {
         expectedCompletionDate: formData.expectedCompletionDate || '2026-12-31',
         beneficiaries: Number(formData.beneficiaries || 1000)
       });
-      navigate('/projects');
+      navigate('/mp/projects');
     } catch (err) {
       setError(err.message || 'Failed to register project proposal.');
     } finally {
@@ -57,7 +57,7 @@ export const ProjectCreate = () => {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={() => navigate('/projects')}>
+      <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={() => navigate('/mp/projects')}>
         Back to Projects
       </Button>
 
@@ -137,7 +137,7 @@ export const ProjectCreate = () => {
           </div>
 
           <div className="pt-4 flex justify-end gap-3 border-t border-slate-100">
-            <Button variant="secondary" onClick={() => navigate('/projects')}>Cancel</Button>
+            <Button variant="secondary" onClick={() => navigate('/mp/projects')}>Cancel</Button>
             <Button type="submit" disabled={submitting} icon={Save}>
               {submitting ? 'Registering...' : 'Save & Register Work'}
             </Button>
