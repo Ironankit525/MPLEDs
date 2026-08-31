@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Map, Layers, X, ExternalLink, ShieldAlert, CheckCircle2, AlertCircle, User } from 'lucide-react';
 import { LokSabhaConstituencyMap } from '../maps/LokSabhaConstituencyMap';
 import { useApp } from '../../context/AppContext';
-import { CONSTITUENCY_DETAILS_MAP } from '../../data/locationMappings';
+import { CONSTITUENCY_DETAILS_MAP } from '../../data/locationMappings.js';
 import { MASTER_MP_RECORDS } from '../../utils/projectAnalytics';
 
 export const GeographicIntelligenceMap = ({

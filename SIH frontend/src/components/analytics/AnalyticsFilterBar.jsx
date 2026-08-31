@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { X, Filter } from 'lucide-react';
 import { CustomSelect } from '../ui/CustomSelect';
-import { STATE_DISTRICT_MAP, MP_LOCATION_MAP } from '../../data/locationMappings';
+import { STATE_DISTRICT_MAP, MP_LOCATION_MAP } from '../../data/locationMappings.js';
 import { useApp } from '../../context/AppContext';
 
 const FY_OPTIONS = [

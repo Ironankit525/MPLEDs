@@ -1,4 +1,4 @@
-import { CONSTITUENCY_DETAILS_MAP } from '../data/locationMappings';
+import { CONSTITUENCY_DETAILS_MAP } from '../data/locationMappings.js';
 
 /**
  * Single source of truth calculation utilities for Projects section.
