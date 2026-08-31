@@ -34,7 +34,7 @@ import {
   calculateWhatIfSimulation,
 } from '../../utils/analyticsEngine';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
 import { overviewService } from './overviewService';
 

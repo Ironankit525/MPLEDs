@@ -2,7 +2,7 @@ import axiosClient from './axiosClient';
 import { getEnrichedRiskProjects } from '../../data/aiRiskData';
 import { calculateMPPerformance } from '../../utils/projectAnalytics';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
 // Flagged projects memory set for UI state simulation
 const FLAGGED_PROJECTS_SET = new Set();

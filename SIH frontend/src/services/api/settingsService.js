@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import { DEFAULT_SETTINGS } from '../../data/mock/defaultSettings';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 const SETTINGS_STORAGE_KEY = 'mplads_user_settings_v1';
 
 // Helper to retrieve saved settings from localStorage or fallback to defaults
