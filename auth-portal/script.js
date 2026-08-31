@@ -242,8 +242,8 @@ function handleGoogleLogin() {
 
 
 // Form Handlers
-function handleLoginSubmit(event) {
-    event.preventDefault();
+function handleLoginSubmit(asyncEvent) {
+    asyncEvent.preventDefault();
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-pass').value;
 
@@ -254,7 +254,39 @@ function handleLoginSubmit(event) {
     }
 
     console.log('Login attempt:', { email, pass });
-    alert(`Attempting login for: ${email}`);
+    
+    // Create form data for OAuth2
+    const formData = new URLSearchParams();
+    formData.append('username', email);
+    formData.append('password', pass);
+
+    fetch('http://localhost:8000/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Login successful:', data);
+        alert('Login successful!');
+        // Save the token (assuming the response contains access_token)
+        if (data.access_token) {
+            localStorage.setItem('access_token', data.access_token);
+        }
+        // Redirect to a dashboard or home page if needed
+        // window.location.href = '/dashboard';
+    })
+    .catch(error => {
+        console.error('Login error:', error);
+        alert('Login failed. Please check your credentials.');
+    });
 }
 
 function handleForgotPasswordSubmit(event) {
@@ -286,8 +318,37 @@ function handleSignupVerifySubmit(event) {
     inputs.forEach(input => code += input.value);
 
     if (code.length === 4) {
-        alert(`Account created and verified! Code: ${code}. Redirecting to login...`);
-        showLogin();
+        const email = document.getElementById('signup-email').value;
+        const firstName = document.getElementById('signup-firstname').value;
+        const lastName = document.getElementById('signup-lastname').value;
+        const password = passwordInput.value;
+        
+        fetch('http://localhost:8000/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: email,
+                password: password,
+                agency_name: firstName + ' ' + lastName,
+                district: 'Unknown'
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(`Account created and verified! Redirecting to login...`);
+            showLogin();
+        })
+        .catch(error => {
+            console.error('Registration error:', error);
+            alert('Registration failed. Username may already exist.');
+        });
     } else {
         alert('Please enter the complete 4-digit code.');
     }
