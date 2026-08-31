@@ -255,15 +255,15 @@ function handleLoginSubmit(asyncEvent) {
 
     // Demo redirect logic
     if (pass === 'demo1234') {
-        const username = email.toLowerCase();
+        const username = email.trim().toLowerCase();
         if (username === 'admin') {
-            window.location.href = 'http://localhost:5173/?token=demo-token&role=admin';
+            window.location.href = 'http://localhost:8080/admin/?token=demo-token&role=admin';
             return;
         } else if (username === 'contractor') {
-            window.location.href = 'http://localhost:5174/?token=demo-token&role=contractor';
+            window.location.href = 'http://localhost:5174/contractor/?token=demo-token&role=contractor';
             return;
         } else if (username === 'mp') {
-            window.location.href = 'http://localhost:5175/?token=demo-token&role=mp';
+            window.location.href = 'http://localhost:5175/mp/?token=demo-token&role=mp';
             return;
         }
     }

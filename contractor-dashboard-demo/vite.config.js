@@ -13,7 +13,7 @@ export default defineConfig({
     extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
   },
   server: {
-    port: 5173,
+    port: 5174,
     strictPort: true, // Forces Vite to exit instead of jumping to 5174 if occupied
   },
 })
