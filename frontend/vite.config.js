@@ -1,15 +1,19 @@
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react(),
-  ],
+  base: '/original/',
+  plugins: [react()],
+  resolve: {
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']
+  },
   server: {
-    port: 5173,
-    strictPort: true, // Forces Vite to exit instead of jumping to 5174 if occupied
+    // Keep browser requests same-origin in development just like production.
+    // Vite forwards API traffic to the separately running FastAPI process.
+    proxy: {
+      '/api': 'http://localhost:8000',
+      '/health': 'http://localhost:8000',
+    },
   },
 })

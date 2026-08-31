@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatCurrency } from '../../utils/formatCurrency';
+import { formatCurrency } from '../../utils/formatCurrency.js';
 
 export const ExpenditureChart = ({ data = [] }) => {
   if (!data || data.length === 0) {

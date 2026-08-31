@@ -1,5 +1,7 @@
 """Request validation that prevents primary assessment layers being skipped."""
 
+import os
+
 import pytest
 from fastapi import HTTPException
 from unittest.mock import Mock, patch
@@ -26,6 +28,21 @@ def test_receipt_requires_sanction_date() -> None:
 
 def test_regular_work_can_be_assessed_without_receipt_date() -> None:
     _validate_submission_metadata("road construction", None)
+
+
+def test_vercel_startup_requires_durable_image_storage() -> None:
+    with (
+        patch.dict(os.environ, {"VERCEL": "1"}),
+        patch("app.main.init_db") as init_db,
+        patch.object(settings, "CLOUDINARY_CLOUD_NAME", ""),
+        patch.object(settings, "CLOUDINARY_API_KEY", ""),
+        patch.object(settings, "CLOUDINARY_API_SECRET", ""),
+        pytest.raises(RuntimeError, match="Cloudinary is required on Vercel"),
+    ):
+        startup_event()
+
+    # Configuration must fail before a database connection or model load.
+    init_db.assert_not_called()
 
 
 def test_startup_rejects_disabled_mandatory_visual_model() -> None:

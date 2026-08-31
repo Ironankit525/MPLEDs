@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom'
-import { useActivity } from '../hooks/useActivity'
-import { getAdminAiSummary } from '../api/admin'
-import AiSummaryCard from '../components/AiSummaryCard'
-import EmptyState from '../components/EmptyState'
-import ErrorBanner from '../components/ErrorBanner'
-import Spinner from '../components/Spinner'
-import Icon from '../components/Icon'
-import { formatDate } from '../lib/format'
+import { useActivity } from '../hooks/useActivity.js'
+import EmptyState from '../components/EmptyState.jsx'
+import ErrorBanner from '../components/ErrorBanner.jsx'
+import Spinner from '../components/Spinner.jsx'
+import Icon from '../components/Icon.jsx'
+import { formatDate } from '../lib/format.js'
 
 const EVENT_CONFIG = {
   submitted: { icon: 'upload', verb: 'submitted' },
@@ -34,9 +32,6 @@ export default function AdminActivityPage() {
 
       {error && <ErrorBanner message={error} onRetry={reload} />}
       {loading && !events && <Spinner label="Loading activity…" />}
-
-      {events && <AiSummaryCard fetcher={getAdminAiSummary} reloadKey={events} style={{ marginBottom: 20 }} />}
-
       {events && events.length === 0 && <EmptyState icon="history" title="No activity yet" />}
 
       {events && events.length > 0 && (

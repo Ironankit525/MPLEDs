@@ -1,34 +1,33 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
-import { RequireAuth, RequireRole } from './components/RouteGuards'
-import { roleLandingPath } from './lib/roles'
-import Spinner from './components/Spinner'
-import AppShell from './components/layout/AppShell'
+import { useAuth } from './context/AuthContext.jsx'
+import { RequireAuth, RequireRole } from './components/RouteGuards.jsx'
+import { roleLandingPath } from './lib/roles.js'
+import Spinner from './components/Spinner.jsx'
+import AppShell from './components/layout/AppShell.jsx'
 
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import UploadPage from './pages/UploadPage'
-import SubmissionsPage from './pages/SubmissionsPage'
-import SubmissionDetailPage from './pages/SubmissionDetailPage'
-import ReviewQueuePage from './pages/ReviewQueuePage'
-import ReviewHistoryPage from './pages/ReviewHistoryPage'
-import ReviewWorkspacePage from './pages/ReviewWorkspacePage'
-import StakeholderDashboardPage from './pages/StakeholderDashboardPage'
-import StakeholderAiReportPage from './pages/StakeholderAiReportPage'
-import StakeholderReportsPage from './pages/StakeholderReportsPage'
-import StakeholderDetailPage from './pages/StakeholderDetailPage'
-import AdminSubmissionsPage from './pages/AdminSubmissionsPage'
-import AdminSubmissionDetailPage from './pages/AdminSubmissionDetailPage'
-import AdminUsersPage from './pages/AdminUsersPage'
-import AdminActivityPage from './pages/AdminActivityPage'
-import SettingsPage from './pages/SettingsPage'
-import UnsupportedRolePage from './pages/UnsupportedRolePage'
-import NotFoundPage from './pages/NotFoundPage'
-import ProjectDetailsDashboardPage from './pages/ProjectDetailsDashboardPage'
+import LoginPage from './pages/LoginPage.jsx'
+import RegisterPage from './pages/RegisterPage.jsx'
+import UploadPage from './pages/UploadPage.jsx'
+import SubmissionsPage from './pages/SubmissionsPage.jsx'
+import SubmissionDetailPage from './pages/SubmissionDetailPage.jsx'
+import ReviewQueuePage from './pages/ReviewQueuePage.jsx'
+import ReviewHistoryPage from './pages/ReviewHistoryPage.jsx'
+import ReviewWorkspacePage from './pages/ReviewWorkspacePage.jsx'
+import StakeholderDashboardPage from './pages/StakeholderDashboardPage.jsx'
+import StakeholderReportsPage from './pages/StakeholderReportsPage.jsx'
+import StakeholderDetailPage from './pages/StakeholderDetailPage.jsx'
+import AdminSubmissionsPage from './pages/AdminSubmissionsPage.jsx'
+import AdminSubmissionDetailPage from './pages/AdminSubmissionDetailPage.jsx'
+import AdminUsersPage from './pages/AdminUsersPage.jsx'
+import AdminActivityPage from './pages/AdminActivityPage.jsx'
+import SettingsPage from './pages/SettingsPage.jsx'
+import UnsupportedRolePage from './pages/UnsupportedRolePage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 /** Sends a visitor to the right place for their session: the login
  * page if signed out, or their role's landing page (lib/roles.js) if
- * signed in. */
+ * signed in. A role with no dashboard built yet lands on the
+ * "not built" placeholder, same as RequireRole would send them. */
 function IndexRedirect() {
   const { status, user } = useAuth()
   if (status === 'loading') {
@@ -39,12 +38,14 @@ function IndexRedirect() {
     )
   }
   if (status === 'anonymous') return <Navigate to="/login" replace />
-  return <Navigate to="/app/projects/MP-BR-205-412" replace />
+  return <Navigate to={roleLandingPath(user?.role)} replace />
 }
 
-/** The index route under /app */
+/** The index route under /app — same idea as IndexRedirect, but only
+ * reached once auth + role are known, so it can assume `user` exists. */
 function AppIndexRedirect() {
-  return <Navigate to="/app/projects/MP-BR-205-412" replace />
+  const { user } = useAuth()
+  return <Navigate to={roleLandingPath(user?.role)} replace />
 }
 
 export default function App() {
@@ -60,21 +61,7 @@ export default function App() {
         <Route path="/app" element={<AppShell />}>
           <Route index element={<AppIndexRedirect />} />
 
-          {/* Primary MPLADS AI-Powered Project Dashboard Routes */}
-          <Route path="overview" element={<ProjectDetailsDashboardPage />} />
-          <Route path="projects" element={<ProjectDetailsDashboardPage />} />
-          <Route path="projects/:id" element={<ProjectDetailsDashboardPage />} />
-          <Route path="financials" element={<ProjectDetailsDashboardPage />} />
-          <Route path="ai-risk-monitor" element={<ProjectDetailsDashboardPage />} />
-          <Route path="alerts" element={<ProjectDetailsDashboardPage />} />
-          <Route path="analytics" element={<ProjectDetailsDashboardPage />} />
-          <Route path="map-view" element={<ProjectDetailsDashboardPage />} />
-          <Route path="agency-performance" element={<ProjectDetailsDashboardPage />} />
-          <Route path="compliance" element={<ProjectDetailsDashboardPage />} />
-          <Route path="data-export" element={<ProjectDetailsDashboardPage />} />
-          <Route path="help" element={<ProjectDetailsDashboardPage />} />
-
-          {/* Submitter Workflow */}
+          {/* Submitter (Admin also has Full Access on Document Upload) */}
           <Route
             path="upload"
             element={
@@ -136,14 +123,6 @@ export default function App() {
             }
           />
           <Route
-            path="ai-report"
-            element={
-              <RequireRole role="stakeholder">
-                <StakeholderAiReportPage />
-              </RequireRole>
-            }
-          />
-          <Route
             path="reports"
             element={
               <RequireRole role="stakeholder">
@@ -194,7 +173,7 @@ export default function App() {
             }
           />
 
-          {/* Shared Settings */}
+          {/* Shared across every role that has a dashboard at all */}
           <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Route>

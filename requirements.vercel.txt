@@ -1,0 +1,29 @@
+# Runtime-only dependencies for the Vercel backend container.
+# Torch and torchvision are installed separately from PyTorch's CPU index in
+# Dockerfile.vercel. Test-only packages (pytest, mongomock, piexif) stay out of
+# the production image.
+
+Pillow>=10.0.0,<13
+imagehash>=4.3.0,<5
+numpy>=1.24.0,<3
+
+transformers>=4.30.0,<6
+sentencepiece>=0.2.0,<1
+protobuf>=5.0.0,<8
+safetensors>=0.4.0,<1
+
+fastapi>=0.100.0,<1
+uvicorn[standard]>=0.22.0,<1
+python-multipart>=0.0.6,<1
+
+pymongo[srv]>=4.6.0,<5
+pydantic>=2.0.0,<3
+pydantic-settings>=2.0.0,<3
+
+bcrypt>=4.1.0,<6
+python-jose[cryptography]>=3.3.0,<4
+
+easyocr>=1.7.0,<2
+httpx>=0.24.0,<1
+python-dateutil>=2.8.0,<3
+cloudinary>=1.41.0,<2

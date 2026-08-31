@@ -11,7 +11,7 @@ import {
   FileSpreadsheet,
   ShieldAlert
 } from 'lucide-react';
-import { ROUTES } from '../../constants/routes';
+import { ROUTES } from '../../constants/routes.js';
 
 export const Sidebar = () => {
   const navItems = [

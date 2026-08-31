@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import { dashboardService } from './dashboardService';
-import { PageHeader } from '../../components/layout/PageHeader';
-import { FundSummary } from './components/FundSummary';
-import { ProjectSummary } from './components/ProjectSummary';
-import { BeneficiarySummary } from './components/BeneficiarySummary';
-import { RecentProjects } from './components/RecentProjects';
-import { UpcomingActivities } from './components/UpcomingActivities';
-import { FundUtilizationChart } from '../../components/charts/FundUtilizationChart';
-import { ExpenditureChart } from '../../components/charts/ExpenditureChart';
-import { SectorAllocationChart } from '../../components/charts/SectorAllocationChart';
-import { ProjectStatusChart } from '../../components/charts/ProjectStatusChart';
-import { Card } from '../../components/common/Card';
-import { Loader } from '../../components/common/Loader';
-import { ErrorState } from '../../components/common/ErrorState';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useUser } from '../../hooks/useUser.js';
+import { dashboardService } from './dashboardService.js';
+import { PageHeader } from '../../components/layout/PageHeader.jsx';
+import { FundSummary } from './components/FundSummary.jsx';
+import { ProjectSummary } from './components/ProjectSummary.jsx';
+import { BeneficiarySummary } from './components/BeneficiarySummary.jsx';
+import { RecentProjects } from './components/RecentProjects.jsx';
+import { UpcomingActivities } from './components/UpcomingActivities.jsx';
+import { FundUtilizationChart } from '../../components/charts/FundUtilizationChart.jsx';
+import { ExpenditureChart } from '../../components/charts/ExpenditureChart.jsx';
+import { SectorAllocationChart } from '../../components/charts/SectorAllocationChart.jsx';
+import { ProjectStatusChart } from '../../components/charts/ProjectStatusChart.jsx';
+import { Card } from '../../components/common/Card.jsx';
+import { Loader } from '../../components/common/Loader.jsx';
+import { ErrorState } from '../../components/common/ErrorState.jsx';
 
 export const Dashboard = () => {
   const { currentMP } = useAuth();

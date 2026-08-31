@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { askAiReport } from '../api/stakeholder'
-import Icon from '../components/Icon'
+import { askAiReport } from '../api/stakeholder.js'
+import Icon from '../components/Icon.jsx'
 
 // Conversational report page for the Stakeholder — the flow follows the
 // familiar assistant pattern (start screen with suggested prompts →

@@ -48,6 +48,32 @@ def test_register_user(db_session: Database):
     assert user["agency_name"] == "Test Agency"
 
 
+def test_public_registration_cannot_choose_a_privileged_role(db_session: Database):
+    response = client.post(
+        "/api/auth/register",
+        json={
+            "username": "role-escalation-attempt",
+            "password": "testpassword",
+            "agency_name": "Untrusted Agency",
+            "district": "Pune",
+            "role": "admin",
+        },
+    )
+
+    assert response.status_code == 201
+    user = db_session.users.find_one({"username": "role-escalation-attempt"})
+    assert user["role"] == "submitter"
+
+
+def test_hard_coded_demo_token_is_not_accepted(db_session: Database):
+    response = client.get(
+        "/api/auth/me",
+        headers={"Authorization": "Bearer demo-token"},
+    )
+
+    assert response.status_code == 401
+
+
 def test_login_success(db_session: Database):
     # Register first
     client.post(

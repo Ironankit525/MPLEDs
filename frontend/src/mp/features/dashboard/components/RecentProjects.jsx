@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card } from '../../../components/common/Card';
-import { ProjectCard } from '../../../components/project/ProjectCard';
-import { Button } from '../../../components/common/Button';
+import { Card } from '../../../components/common/Card.jsx';
+import { ProjectCard } from '../../../components/project/ProjectCard.jsx';
+import { Button } from '../../../components/common/Button.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 

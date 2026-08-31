@@ -10,6 +10,7 @@ affects detection behaviour, it belongs in this file with a comment
 explaining *why* that default was chosen.
 """
 
+import os
 from typing import Any
 
 from pydantic_settings import BaseSettings
@@ -19,7 +20,11 @@ from pathlib import Path
 # ── Project paths ────────────────────────────────────────────────────
 # All paths are relative to the project root (one level above app/).
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
+# Vercel Functions (including container-backed Functions) are stateless and
+# only guarantee a writable /tmp directory.  Local development keeps the
+# existing repository-relative data/ path; deployments can override it with
+# MPLADS_DATA_DIR without changing application code.
+DATA_DIR = Path(os.getenv("MPLADS_DATA_DIR", str(PROJECT_ROOT / "data"))).expanduser()
 IMAGES_DIR = DATA_DIR / "images"
 DB_PATH = DATA_DIR / "mplads.db"
 
@@ -572,7 +577,9 @@ class Settings(BaseSettings):
 
     # ── Upload limits ────────────────────────────────────────────────
 
-    MAX_UPLOAD_SIZE_BYTES: int = 10 * 1024 * 1024  # 10 MB
+    # Vercel caps a Function's complete request body at 4.5 MB.  Keep the
+    # image itself at 4 MiB so multipart headers and the form fields still fit.
+    MAX_UPLOAD_SIZE_BYTES: int = 4 * 1024 * 1024
     ALLOWED_EXTENSIONS: list[str] = [".jpg", ".jpeg", ".png", ".webp"]
 
     # ── Database ─────────────────────────────────────────────────────

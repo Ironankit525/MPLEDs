@@ -1,5 +1,5 @@
-import { mockProjectService } from '../../mockServices/mockProjectService';
-// import apiClient from '../../services/apiClient';
+import { mockProjectService } from '../../mockServices/mockProjectService.js';
+// import apiClient from '../../services/apiClient.js';
 
 /**
  * Projects Feature Service Layer.
