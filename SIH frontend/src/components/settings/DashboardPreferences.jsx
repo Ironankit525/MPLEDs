@@ -9,7 +9,7 @@ export const DashboardPreferences = ({
 }) => {
   const [formData, setFormData] = useState({
     financialYear: preferencesData.financialYear || '2026-27',
-    landingPage: preferencesData.landingPage || '/overview',
+    landingPage: preferencesData.landingPage || '/admin/overview',
     projectView: preferencesData.projectView || 'All Projects',
     mapMetric: preferencesData.mapMetric || 'utilization',
     tableDensity: preferencesData.tableDensity || 'compact',
@@ -18,7 +18,7 @@ export const DashboardPreferences = ({
   useEffect(() => {
     setFormData({
       financialYear: preferencesData.financialYear || '2026-27',
-      landingPage: preferencesData.landingPage || '/overview',
+      landingPage: preferencesData.landingPage || '/admin/overview',
       projectView: preferencesData.projectView || 'All Projects',
       mapMetric: preferencesData.mapMetric || 'utilization',
       tableDensity: preferencesData.tableDensity || 'compact',
@@ -75,9 +75,9 @@ export const DashboardPreferences = ({
               onChange={(e) => setFormData({ ...formData, landingPage: e.target.value })}
               className="w-full text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500"
             >
-              <option value="/overview">Overview</option>
-              <option value="/projects">Projects</option>
-              <option value="/ai-risk">AI Risk Monitor</option>
+              <option value="/admin/overview">Overview</option>
+              <option value="/admin/projects">Projects</option>
+              <option value="/admin/ai-risk">AI Risk Monitor</option>
               <option value="/analytics">Analytics & Trends</option>
             </select>
           </div>

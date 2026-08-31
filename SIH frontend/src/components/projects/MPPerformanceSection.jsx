@@ -159,7 +159,7 @@ export const MPPerformanceSection = ({ mpPerformance = [] }) => {
             {paginatedMPs.map((mp, idx) => (
               <div
                 key={mp.mpId}
-                onClick={() => navigate(`/mp/${encodeURIComponent(mp.mpId)}`)}
+                onClick={() => navigate(`/admin/mp/${encodeURIComponent(mp.mpId)}`)}
                 className="p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50/70 hover:border-slate-300 hover:shadow-xs active:scale-[0.99] transition-all shadow-2xs space-y-3 group cursor-pointer"
               >
                 {/* MP Header with Top-Right Profile Picture Avatar */}

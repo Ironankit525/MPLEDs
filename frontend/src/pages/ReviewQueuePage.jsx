@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useRecordList } from '../hooks/useRecordList'
-import { getReviewQueue, getReviewerAiSummary } from '../api/reviews'
-import AiSummaryCard from '../components/AiSummaryCard'
+import { getReviewQueue } from '../api/reviews'
 import RiskBadge from '../components/RiskBadge'
 import EmptyState from '../components/EmptyState'
 import ErrorBanner from '../components/ErrorBanner'
@@ -30,8 +29,6 @@ export default function ReviewQueuePage() {
 
       {error && <ErrorBanner message={error} onRetry={reload} />}
       {loading && !items && <Spinner label="Loading the queue…" />}
-
-      {items && <AiSummaryCard fetcher={getReviewerAiSummary} reloadKey={items} style={{ marginBottom: 20 }} />}
 
       {items && items.length === 0 && (
         <EmptyState icon="shield" title="Queue is empty" description="Nothing is waiting for review right now." />

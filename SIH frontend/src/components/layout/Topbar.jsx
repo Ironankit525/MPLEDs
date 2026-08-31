@@ -16,7 +16,7 @@ export const Topbar = () => {
       return 'MPLADS Performance Dashboard';
     }
     const activeNav = NAV_ITEMS.find((item) =>
-      location.pathname === item.path || (item.path !== '/overview' && location.pathname.startsWith(item.path))
+      location.pathname === item.path || (item.path !== '/admin/overview' && location.pathname.startsWith(item.path))
     );
     return activeNav?.label || 'Overview';
   };
@@ -37,7 +37,7 @@ export const Topbar = () => {
         </button>
 
         <div className="flex items-center gap-3">
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 font-sans tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-sans tracking-tight">
             {pageTitle}
           </h1>
           {isMockMode && (
@@ -50,9 +50,12 @@ export const Topbar = () => {
       </div>
 
       {/* Right: Actions & User Info */}
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-4 sm:gap-6">
+        {/* Portal Target for Page-Specific Actions */}
+        <div id="topbar-actions" className="hidden lg:flex items-center"></div>
+
         {/* User Info & Avatar */}
-        <div className="flex items-center gap-3 pl-1 select-none">
+        <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-slate-200 select-none">
           <div className="text-right hidden sm:block select-none">
             <p className="text-sm font-bold text-slate-900 leading-none select-none">
               {currentUser?.name || 'Administrator'}
@@ -67,6 +70,7 @@ export const Topbar = () => {
             className="w-10 h-10 rounded-full object-cover border border-slate-200/80 shadow-sm ring-2 ring-slate-100 select-none pointer-events-none"
           />
         </div>
+        
       </div>
     </header>
   );

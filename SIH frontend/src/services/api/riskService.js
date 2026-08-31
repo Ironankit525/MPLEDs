@@ -2,7 +2,7 @@ import axiosClient from './axiosClient';
 import { mockProjects } from '../../data/mockProjects';
 import { normalizeProject } from './projectService';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false';
 
 export const riskService = {
   async getRiskProjects(params = {}) {

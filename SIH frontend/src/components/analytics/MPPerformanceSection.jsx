@@ -60,7 +60,7 @@ export const MPPerformanceSection = ({ data = [] }) => {
               filteredMPs.map((mp, index) => (
                 <tr
                   key={mp.mpId}
-                  onClick={() => navigate(`/mp/${mp.mpId}`)}
+                  onClick={() => navigate(`/admin/mp/${mp.mpId}`)}
                   className="hover:bg-slate-100/40 cursor-pointer transition-colors group"
                 >
                   <td className="py-2.5 px-3 text-center font-extrabold text-slate-400">{index + 1}</td>

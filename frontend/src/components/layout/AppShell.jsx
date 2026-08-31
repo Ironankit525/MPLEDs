@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Icon from '../Icon'
@@ -17,7 +17,6 @@ const NAV_BY_ROLE = {
   ],
   stakeholder: [
     { to: '/app/dashboard', label: 'Dashboard', icon: 'shield', end: true },
-    { to: '/app/ai-report', label: 'AI Report', icon: 'spark' },
     { to: '/app/reports', label: 'Reports', icon: 'history' },
     { to: '/app/settings', label: 'Settings', icon: 'settings' },
   ],
@@ -31,32 +30,16 @@ const NAV_BY_ROLE = {
 }
 
 export default function AppShell() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-
-  const handleShortcutAction = (actionId) => {
-    if (actionId === 'add-project') {
-      window.location.href = '/app/upload'
-    } else if (actionId === 'generate-report') {
-      alert('Generating consolidated MPLADS Analytics and Utilization report...')
-    } else if (actionId === 'view-alerts') {
-      window.location.href = '/app/ai-risk-monitor'
-    } else if (actionId === 'download-data') {
-      alert('Preparing full CSV/Excel data export of MPLADS project metrics...')
-    }
-  }
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { user } = useAuth()
+  const navItems = NAV_BY_ROLE[user?.role] || []
 
   return (
-    <div className={`mplads-app-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      {/* Dark Sidebar */}
-      <Sidebar
-        isOpen={sidebarOpen}
-        isCollapsed={sidebarCollapsed}
-        onClose={() => setSidebarOpen(false)}
-        onActionClick={handleShortcutAction}
-      />
+    <div className="app-shell">
+      <Sidebar navItems={navItems} isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <div className={`scrim${menuOpen ? ' is-open' : ''}`} onClick={() => setMenuOpen(false)} />
 
-      <div className="app-frame stack">
+      <div className="stack">
         <div className="topbar">
           <button type="button" className="icon-btn" onClick={() => setMenuOpen(true)} aria-label="Open menu">
             <Icon name="menu" size={22} />
@@ -68,8 +51,7 @@ export default function AppShell() {
           <span style={{ width: 38 }} />
         </div>
 
-        {/* Dynamic Page Outlet */}
-        <main className="mplads-page-content">
+        <main className="main-content">
           <Outlet />
         </main>
       </div>

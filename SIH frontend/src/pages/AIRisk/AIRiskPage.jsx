@@ -11,8 +11,12 @@ import { AgencyRiskOverviewSection } from '../../components/ai-risk/AgencyRiskOv
 import { MPRiskOverviewSection } from '../../components/ai-risk/MPRiskOverviewSection';
 import { ProjectDetailsView } from '../../components/projects/ProjectDetailsView';
 
+import { LoadingState } from '../../components/ui/LoadingState';
+
 export const AIRiskPage = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   const handleSelectProject = (proj) => {
     setSelectedProject(proj);
@@ -35,6 +39,7 @@ export const AIRiskPage = () => {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [selectedProject]);
+
   const {
     filters,
     projectsData,
@@ -52,19 +57,18 @@ export const AIRiskPage = () => {
     resetFilters,
   } = useAiRiskData();
 
-  if (loading && projectsData.length === 0) {
-    return (
-      <div className="p-12 text-center">
-        <div className="w-10 h-10 border-4 border-slate-700 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <h3 className="text-sm font-extrabold text-slate-800">
-          Running AI Risk & Anomaly Diagnostics...
-        </h3>
-        <p className="text-xs text-slate-500 mt-1">
-          Evaluating financial claims, photo evidence, spatial distance, and execution progress for active MPLADS works.
-        </p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!loading && projectsData) {
+      setIsFadingOut(true);
+      const timer = setTimeout(() => {
+        setShowSkeleton(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (loading && !projectsData) {
+      setShowSkeleton(true);
+      setIsFadingOut(false);
+    }
+  }, [loading, projectsData]);
 
   if (error) {
     return (
@@ -76,7 +80,18 @@ export const AIRiskPage = () => {
   }
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 relative min-h-screen">
+      {showSkeleton && (
+        <div 
+          className={`absolute inset-0 z-50 transition-opacity duration-1000 bg-white ${
+            isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          }`}
+        >
+          <LoadingState message="Running AI Risk & Anomaly Diagnostics..." />
+        </div>
+      )}
+
+      <div className={`space-y-8 transition-opacity duration-1000 ${isFadingOut ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
       {/* 1. Header with System Active indicator & Counts */}
       <AIRiskHeader
         totalActiveProjects={kpis.totalActiveProjects}
@@ -131,6 +146,7 @@ export const AIRiskPage = () => {
             onResetMp={() => handleFilterChange('search', '')}
           />
         </div>
+      </div>
       </div>
 
       {/* Selected Project Modal View */}

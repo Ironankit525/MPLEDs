@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
 import { useActivity } from '../hooks/useActivity'
-import { getAdminAiSummary } from '../api/admin'
-import AiSummaryCard from '../components/AiSummaryCard'
 import EmptyState from '../components/EmptyState'
 import ErrorBanner from '../components/ErrorBanner'
 import Spinner from '../components/Spinner'
@@ -34,9 +32,6 @@ export default function AdminActivityPage() {
 
       {error && <ErrorBanner message={error} onRetry={reload} />}
       {loading && !events && <Spinner label="Loading activity…" />}
-
-      {events && <AiSummaryCard fetcher={getAdminAiSummary} reloadKey={events} style={{ marginBottom: 20 }} />}
-
       {events && events.length === 0 && <EmptyState icon="history" title="No activity yet" />}
 
       {events && events.length > 0 && (

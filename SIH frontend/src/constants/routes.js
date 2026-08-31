@@ -1,13 +1,13 @@
 export const ROUTES = {
   HOME: '/',
-  OVERVIEW: '/overview',
-  PROJECTS: '/projects',
-  PROJECT_DETAILS: '/projects/:projectId',
-  MP_DETAILS: '/mp/:mpId',
-  AI_RISK: '/ai-risk',
-  AI_RISK_DETAILS: '/ai-risk/:projectId',
-  ANALYTICS: '/analytics',
-  SETTINGS: '/settings',
+  OVERVIEW: '/admin/overview',
+  PROJECTS: '/admin/projects',
+  PROJECT_DETAILS: '/admin/projects/:projectId',
+  MP_DETAILS: '/admin/mp/:mpId',
+  AI_RISK: '/admin/ai-risk',
+  AI_RISK_DETAILS: '/admin/ai-risk/:projectId',
+  ANALYTICS: '/admin/analytics',
+  SETTINGS: '/admin/settings',
 };
 
 export const NAV_ITEMS = [

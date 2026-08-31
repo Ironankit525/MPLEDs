@@ -2,7 +2,7 @@ import axiosClient from './axiosClient';
 import { mockProjects } from '../../data/mockProjects';
 import { getRiskLevel } from '../../utils/projectAnalytics';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA === 'true' || true; // Always default to resilient mock fallback
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_DATA !== 'false' || true; // Always default to resilient mock fallback
 
 /**
  * Data Normalization Layer:
@@ -114,7 +114,7 @@ export const normalizeProject = (p) => {
 export const projectService = {
   async getProjects(params = {}) {
     try {
-      if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+      if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA !== 'false') {
         await new Promise((res) => setTimeout(res, 50));
         const normalizedList = mockProjects.map(normalizeProject).filter(Boolean);
         return { success: true, data: normalizedList, count: normalizedList.length };
@@ -133,7 +133,7 @@ export const projectService = {
 
   async getProjectById(id) {
     try {
-      if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+      if (!import.meta.env.VITE_USE_MOCK_DATA || import.meta.env.VITE_USE_MOCK_DATA !== 'false') {
         await new Promise((res) => setTimeout(res, 50));
         const found = mockProjects.find((p) => p.id === id || p.projectId === id);
         if (!found) {
