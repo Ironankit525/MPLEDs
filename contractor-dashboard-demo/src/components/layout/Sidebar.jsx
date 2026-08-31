@@ -69,12 +69,12 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
         flex flex-col shrink-0 z-50 overflow-hidden transition-all duration-300 ease-in-out
         bg-[#f1f5f9]
 
-        /* Fixed sidebar layout (both mobile and desktop) */
-        fixed inset-y-0 left-0 h-screen
+        /* Desktop: relative flex child */
+        md:relative md:h-full
         ${isCollapsed ? 'md:w-20' : 'md:w-64'}
 
         /* Mobile drawer toggle */
-        w-64
+        fixed inset-y-0 left-0 h-full w-64
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}
     >

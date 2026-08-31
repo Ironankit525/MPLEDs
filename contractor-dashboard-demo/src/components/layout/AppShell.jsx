@@ -27,11 +27,7 @@ export default function AppShell() {
       />
 
       {/* Main Content Area Wrapper */}
-      <div
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out md:pt-2 md:pl-0 ${
-          collapsed ? 'md:ml-20' : 'md:ml-64'
-        }`}
-      >
+      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out md:pt-2 md:pl-0">
         
         {/* Inset White Main Panel Canvas */}
         <div className="flex-1 flex flex-col bg-white md:rounded-tl-2xl overflow-hidden h-full relative">
