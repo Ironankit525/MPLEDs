@@ -86,19 +86,17 @@ export const Sidebar = ({ isCollapsed = false, onToggle, mobileOpen = false, onM
           className="flex items-center w-full min-w-0 px-2.5 py-1.5 h-12 cursor-pointer rounded-xl hover:bg-slate-200/50 transition-colors group select-none text-left focus:outline-none"
         >
           <div className="flex items-center justify-center shrink-0 w-10 h-10 select-none">
-            <img src="/src/assets/ashok_stambh.png" alt="Logo" className="object-contain shrink-0 w-10 h-10 select-none pointer-events-none" />
+            <img src="/src/assets/ashoka-stambha.png" alt="Logo" className="object-contain shrink-0 w-10 h-10 select-none pointer-events-none" />
           </div>
           <div
-            className={`flex flex-col leading-tight overflow-hidden transition-all duration-300 ease-in-out pl-3 select-none ${
-              isCollapsed && !mobileOpen
-                ? 'opacity-0 max-w-0 min-w-0 pointer-events-none'
-                : 'opacity-100 max-w-[150px]'
+            className={`flex flex-col justify-center ml-2 transition-all duration-300 ease-in-out overflow-hidden ${
+              isCollapsed && !mobileOpen ? 'opacity-0 max-w-0 ml-0' : 'opacity-100 max-w-[160px]'
             }`}
           >
-            <span className="font-extrabold text-slate-900 text-base tracking-tight font-sans whitespace-nowrap select-none">
+            <span className="font-extrabold text-slate-900 text-[15px] leading-tight font-sans whitespace-nowrap select-none">
               MPLADS Verify
             </span>
-            <span className="text-[9px] text-slate-500 font-medium leading-snug whitespace-nowrap select-none">
+            <span className="text-[10px] text-slate-500 font-semibold tracking-wide uppercase mt-0.5 whitespace-nowrap select-none">
               Contractor Portal
             </span>
           </div>
