@@ -286,6 +286,83 @@ export const ContractorDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Section: Work Evidence Submissions */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-indigo-600" />
+              <span>AI Verification Logs & Submissions</span>
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Real-time audit reports, photo forensics, and verification records for this contractor's works.
+            </p>
+          </div>
+
+          <span className="px-3 py-1 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-full text-xs font-bold">
+            {contractor.totalSubmissions || 0} Submissions
+          </span>
+        </div>
+
+        {(!contractor.recentSubmissions || contractor.recentSubmissions.length === 0) ? (
+          <div className="p-12 text-center bg-white border border-slate-200 rounded-2xl space-y-2">
+            <ShieldCheck className="w-8 h-8 text-slate-300 mx-auto" />
+            <h4 className="text-sm font-bold text-slate-700">No Submissions Logged</h4>
+            <p className="text-xs text-slate-400">This contractor hasn't uploaded any work-evidence photos yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {contractor.recentSubmissions.map((sub) => {
+              const riskColor = 
+                sub.risk_level === 'HIGH' ? 'bg-red-50 text-red-700 border-red-200' :
+                sub.risk_level === 'MEDIUM' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                'bg-emerald-50 text-emerald-700 border-emerald-200';
+              
+              return (
+                <div key={sub.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col md:flex-row gap-5">
+                  {sub.file_path && (
+                    <div className="w-full md:w-32 h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-200/60 flex-shrink-0">
+                      <img 
+                        src={sub.file_path} 
+                        alt="Submitted evidence" 
+                        className="w-full h-full object-cover"
+                        style={{ mixBlendMode: 'multiply' }}
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <span className="text-[11px] font-bold text-slate-400">{sub.id}</span>
+                        <span className="text-xs font-semibold text-slate-500 ml-2">Work ID: {sub.work_id}</span>
+                      </div>
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${riskColor}`}>
+                        {sub.risk_level} RISK • {sub.risk_score}
+                      </span>
+                    </div>
+
+                    <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs text-slate-600">
+                      <div className="font-semibold text-slate-800 mb-1">AI Verdict:</div>
+                      {sub.recommendation}
+                    </div>
+
+                    {sub.flags && sub.flags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {sub.flags.map((flag, idx) => (
+                          <span key={idx} className="px-2 py-0.5 text-[10px] font-medium bg-red-50 text-red-600 rounded border border-red-100">
+                            {flag.code}: {flag.human_message || flag.message}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

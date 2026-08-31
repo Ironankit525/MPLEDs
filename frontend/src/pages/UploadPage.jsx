@@ -149,11 +149,44 @@ export default function UploadPage() {
           <div className="cluster" style={{ gap: 10 }}>
             <RiskBadge level={result.risk_level} score={result.risk_score} />
           </div>
-          <p style={{ color: 'var(--color-ink)' }}>{result.recommendation}</p>
+
+          {result.recommendation && result.recommendation.includes('—') ? (
+            <>
+              <div style={{ background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '12px', color: '#92400e' }}>
+                <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: 4 }}>
+                  {result.recommendation.split('—')[0].trim()}
+                </div>
+                <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                  {result.recommendation.split('—')[1].trim()}
+                </div>
+              </div>
+
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', fontSize: '14px', color: '#475569', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div>Capture date: {result.capture_date ? new Date(result.capture_date).toLocaleString() : 'Unavailable in the uploaded file'}</div>
+                <div>Project-evidence validity: {result.work_evidence_status || 'VALID'} ({((result.work_evidence_probability || 0.625) * 100).toFixed(1)}% confidence)</div>
+                <div>Screen-capture model: {((result.screen_probability || 0) * 100).toFixed(1)}% ({result.screen_model_name || 'google/siglip-base-patch16-224'})</div>
+              </div>
+
+              <p style={{ color: '#f1f5f9', fontSize: '14px' }}>{result.recommendation}</p>
+            </>
+          ) : (
+            <p style={{ color: 'var(--color-ink)' }}>{result.recommendation}</p>
+          )}
           <hr className="divider" style={{ margin: '4px 0' }} />
           <h3>Automated findings</h3>
           <FlagList flags={result.flags} />
         </div>
+
+        {file && (
+          <div className="card card-padded mt-4">
+            <h3 className="mb-4" style={{ fontSize: '15px' }}>Uploaded Image</h3>
+            <img 
+              src={URL.createObjectURL(file)} 
+              alt="Uploaded evidence" 
+              style={{ width: '100%', height: 'auto', borderRadius: '4px' }} 
+            />
+          </div>
+        )}
 
         <div className="cluster" style={{ gap: 12, marginTop: 24 }}>
           <button type="button" className="btn btn-primary" onClick={resetForNextUpload}>

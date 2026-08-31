@@ -6,17 +6,12 @@ const user = {
 }
 
 const projects = [
-  { work_id: 'MP-PUN-2026-0142', district: 'Pune', status: 'IN_PROGRESS', progress_percent: 72, expected_completion_date: '2026-10-15T00:00:00.000Z', financials: { sanctioned_amount: 2500000, amount_utilised: 1800000 } },
-  { work_id: 'MP-PUN-2026-0187', district: 'Pune', status: 'IN_PROGRESS', progress_percent: 48, expected_completion_date: '2026-11-30T00:00:00.000Z', financials: { sanctioned_amount: 1800000, amount_utilised: 860000 } },
-  { work_id: 'MP-PUN-2026-0098', district: 'Pune', status: 'COMPLETED', progress_percent: 100, expected_completion_date: '2026-07-20T00:00:00.000Z', financials: { sanctioned_amount: 1200000, amount_utilised: 1200000 } },
+  { work_id: 'MP-PUN-2024-0123', district: 'Pune', state: 'Maharashtra', mp_name: 'Girish Bapat', work_type: 'bridge', sanction_date: '2024-01-15', status: 'IN_PROGRESS', progress_percent: 72, expected_completion_date: '2026-10-15T00:00:00.000Z', financials: { sanctioned_amount: 2500000, amount_utilised: 1800000 } },
+  { work_id: 'MP-PUN-2024-0231', district: 'Pune', state: 'Maharashtra', mp_name: 'Girish Bapat', work_type: 'road construction', sanction_date: '2024-03-22', status: 'IN_PROGRESS', progress_percent: 48, expected_completion_date: '2026-11-30T00:00:00.000Z', financials: { sanctioned_amount: 1800000, amount_utilised: 860000 } },
+  { work_id: 'MP-PUN-2024-0098', district: 'Pune', state: 'Maharashtra', mp_name: 'Girish Bapat', work_type: 'school building', sanction_date: '2023-11-05', status: 'COMPLETED', progress_percent: 100, expected_completion_date: '2024-07-20T00:00:00.000Z', financials: { sanctioned_amount: 1200000, amount_utilised: 1200000 } },
 ]
 
-const submissions = [
-  { id: 'submission-001', work_id: 'MP-PUN-2026-0142', district: 'Pune', work_type: 'road construction', status: 'PENDING_REVIEW', risk_level: 'LOW', risk_score: 14, uploaded_at: '2026-08-29T09:30:00.000Z', mp_name: 'Demo MP', sanction_date: '2026-02-12T00:00:00.000Z', recommendation: 'Evidence is consistent and awaiting officer review.', flags: [] },
-  { id: 'submission-002', work_id: 'MP-PUN-2026-0187', district: 'Pune', work_type: 'water facility', status: 'IN_REVIEW', risk_level: 'MEDIUM', risk_score: 42, uploaded_at: '2026-08-27T11:15:00.000Z', mp_name: 'Demo MP', sanction_date: '2026-03-03T00:00:00.000Z', recommendation: 'Officer review is in progress.', flags: [{ code: 'IMAGE_QUALITY', human_message: 'Please ensure the next photo clearly shows the completed work.' }] },
-  { id: 'submission-003', work_id: 'MP-PUN-2026-0098', district: 'Pune', work_type: 'community hall', status: 'REJECTED', risk_level: 'HIGH', risk_score: 78, uploaded_at: '2026-08-20T08:00:00.000Z', reviewed_at: '2026-08-22T10:00:00.000Z', mp_name: 'Demo MP', sanction_date: '2026-01-18T00:00:00.000Z', reviewer_notes: 'Upload a new wide-angle photo that includes the entrance and project signboard.', recommendation: 'A clearer replacement photo is required before verification can continue.', flags: [{ code: 'INSUFFICIENT_EVIDENCE', human_message: 'The project signboard is not visible in this photo.' }] },
-  { id: 'submission-004', work_id: 'MP-PUN-2026-0098', district: 'Pune', work_type: 'community hall', status: 'SIGNED_OFF', risk_level: 'LOW', risk_score: 9, uploaded_at: '2026-07-17T09:45:00.000Z', reviewed_at: '2026-07-19T13:30:00.000Z', mp_name: 'Demo MP', sanction_date: '2026-01-18T00:00:00.000Z', recommendation: 'Verified and signed off.', flags: [] },
-]
+const submissions = []
 
 function summary() {
   const byStatus = submissions.reduce((counts, item) => ({ ...counts, [item.status]: (counts[item.status] || 0) + 1 }), { PENDING_REVIEW: 0, IN_REVIEW: 0, APPROVED: 0, REJECTED: 0, SIGNED_OFF: 0 })
@@ -44,9 +39,42 @@ export function mockRequest(path, options = {}) {
   if (path === '/api/projects/mine') return { projects }
   if (path === '/api/images/submit') {
     const form = options.form
-    const record = { id: `submission-${String(submissions.length + 1).padStart(3, '0')}`, work_id: form.get('work_id') || 'MP-PUN-2026-DEMO', district: form.get('district') || user.district, work_type: form.get('work_type') || 'document', status: 'PENDING_REVIEW', risk_level: 'LOW', risk_score: 12, uploaded_at: new Date().toISOString(), mp_name: form.get('mp_name') || '', sanction_date: form.get('sanction_date') || '', recommendation: 'Demo evidence accepted and queued for verification.', flags: [] }
+    const record = { 
+      id: `submission-${String(submissions.length + 1).padStart(3, '0')}`, 
+      work_id: form.get('work_id') || 'MP-PUN-2026-DEMO', 
+      district: form.get('district') || user.district, 
+      work_type: form.get('work_type') || 'document', 
+      status: 'PENDING_REVIEW', 
+      risk_level: 'MEDIUM', 
+      risk_score: 45, 
+      uploaded_at: new Date().toISOString(), 
+      mp_name: form.get('mp_name') || '', 
+      sanction_date: form.get('sanction_date') || '', 
+      recommendation: 'Manual verification required — automated checks raised one or more findings.', 
+      flags: [
+        { code: 'EXIF_STRIPPED', severity: 'MEDIUM', human_message: 'Original camera metadata is missing, so capture date and device provenance cannot be confirmed.', points_added: 15 },
+        { code: 'GPS_DISTRICT_MISMATCH', severity: 'HIGH', human_message: 'The captured location is outside the claimed project district. Captured approximately 609.6 km from the claimed district centre.', points_added: 30 }
+      ],
+      capture_date: null,
+      work_evidence_status: 'VALID',
+      work_evidence_probability: 0.625,
+      screen_probability: 0.0,
+      screen_model_name: 'google/siglip-base-patch16-224',
+      file_path: form.get('file') ? URL.createObjectURL(form.get('file')) : null
+    }
     submissions.unshift(record)
-    return { risk_level: record.risk_level, risk_score: record.risk_score, recommendation: record.recommendation, flags: record.flags }
+    return { 
+      risk_level: record.risk_level, 
+      risk_score: record.risk_score, 
+      recommendation: record.recommendation, 
+      flags: record.flags,
+      capture_date: record.capture_date,
+      work_evidence_status: record.work_evidence_status,
+      work_evidence_probability: record.work_evidence_probability,
+      screen_probability: record.screen_probability,
+      screen_model_name: record.screen_model_name,
+      file_path: record.file_path
+    }
   }
   throw new Error(`No mock response configured for ${options.method || 'GET'} ${path}`)
 }

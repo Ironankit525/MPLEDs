@@ -253,6 +253,21 @@ function handleLoginSubmit(asyncEvent) {
         return;
     }
 
+    // Demo redirect logic
+    if (pass === 'demo1234') {
+        const username = email.toLowerCase();
+        if (username === 'admin') {
+            window.location.href = 'http://localhost:5173/?token=demo-token&role=admin';
+            return;
+        } else if (username === 'contractor') {
+            window.location.href = 'http://localhost:5174/?token=demo-token&role=contractor';
+            return;
+        } else if (username === 'mp') {
+            window.location.href = 'http://localhost:5175/?token=demo-token&role=mp';
+            return;
+        }
+    }
+
     console.log('Login attempt:', { email, pass });
     
     // Create form data for OAuth2

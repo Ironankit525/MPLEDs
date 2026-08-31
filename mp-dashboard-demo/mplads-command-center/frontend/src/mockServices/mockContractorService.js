@@ -1,9 +1,29 @@
 import { MOCK_CONTRACTORS } from '../mock/contractors';
 import { MOCK_PROJECTS } from '../mock/projects';
 
+const BACKEND_URL = 'http://localhost:8000';
+
+// Fetch real submissions from the FastAPI backend
+async function fetchRealSubmissions() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/images/mine`, {
+      headers: { Authorization: 'Bearer demo-token' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.images || [];
+  } catch {
+    // Backend not running — return empty
+    return [];
+  }
+}
+
 export const mockContractorService = {
   getContractors: async (mpId = null) => {
     await new Promise(resolve => setTimeout(resolve, 200));
+
+    // Fetch real submissions from the backend
+    const realSubmissions = await fetchRealSubmissions();
 
     return MOCK_CONTRACTORS.map(contractor => {
       const allProjects = MOCK_PROJECTS.filter(p => p.contractorId === contractor.id);
@@ -25,6 +45,12 @@ export const mockContractorService = {
         ? Math.round(allProjects.reduce((sum, p) => sum + (p.completionPercentage || 0), 0) / allProjects.length)
         : 0;
 
+      // Match real submissions to this contractor by district overlap
+      const contractorDistricts = new Set(allProjects.map(p => p.location?.district?.toLowerCase()));
+      const matchedSubmissions = realSubmissions.filter(s => 
+        contractorDistricts.has(s.district?.toLowerCase())
+      );
+
       return {
         ...contractor,
         mpProjectsCount: mpProjects.length,
@@ -44,7 +70,11 @@ export const mockContractorService = {
         globalTotalUtilized: globalUtilized,
         globalUtilizationRate: globalSanctioned > 0 ? Math.round((globalUtilized / globalSanctioned) * 100) : 0,
         globalAvgProgress: globalAvgProgress,
-        allProjects: allProjects
+        allProjects: allProjects,
+
+        // Real submissions from the backend
+        recentSubmissions: matchedSubmissions,
+        totalSubmissions: matchedSubmissions.length
       };
     });
   },
@@ -57,3 +87,4 @@ export const mockContractorService = {
     return contractor;
   }
 };
+
