@@ -17,7 +17,7 @@ rm -rf auth-portal/node_modules
 echo "Building SIH Frontend (Admin)..."
 cd "sih-frontend"
 npm install
-npm run build
+VITE_USE_MOCK_DATA=true npm run build
 cd ..
 
 # Move Admin Build
