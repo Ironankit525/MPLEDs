@@ -10,6 +10,7 @@ echo "Building Auth Portal..."
 cd auth-portal
 npm install
 npm run build
+cp script.js dist/
 cd ..
 cp -r auth-portal/dist/* unified_dist/
 rm -rf auth-portal/node_modules
