@@ -58,6 +58,11 @@ def _save_sharded_model(
     del processor
     gc.collect()
 
+    # Clear Hugging Face cache to prevent OOM / out of disk space on Vercel
+    hf_cache = Path.home() / ".cache" / "huggingface" / "hub"
+    if hf_cache.exists():
+        shutil.rmtree(hf_cache)
+        
     meta_dir, layer_dirs = _prepare_layout(destination)
     weight_files = sorted(
         path
