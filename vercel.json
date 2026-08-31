@@ -3,7 +3,7 @@
   "services": {
     "frontend": {
       "root": ".",
-      "framework": null,
+      "framework": "vite",
       "buildCommand": "./build_all.sh",
       "outputDirectory": "dist",
       "rewrites": [
@@ -31,7 +31,6 @@
     },
     "backend": {
       "root": ".",
-      "framework": null,
       "entrypoint": "Dockerfile.vercel",
       "runtime": "container"
     }
